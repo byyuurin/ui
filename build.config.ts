@@ -2,11 +2,16 @@ import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
   entries: [
-    'src/index',
+    {
+      builder: 'copy',
+      input: './src/components/',
+      outDir: './dist/components/',
+    },
+    './src/',
   ],
   declaration: true,
   clean: true,
-  rollup: {
-    emitCJS: true,
-  },
+  externals: [
+    '@byyuurin/ui-kit',
+  ],
 })
