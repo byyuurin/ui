@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Button as UButton } from '@byyuurin/ui'
 </script>
 
 <template>

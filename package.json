@@ -22,6 +22,10 @@
     "./theme": {
       "types": "./dist/theme.d.ts",
       "import": "./dist/theme.mjs"
+    },
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "import": "./dist/resolver.mjs"
     }
   },
   "main": "./dist/index.mjs",
@@ -69,6 +73,7 @@
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.2",
     "unbuild": "^3.0.1",
+    "unplugin-vue-components": "^0.27.5",
     "vitest": "^2.1.8",
     "vue": "^3.5.13",
     "vue-tsc": "^2.1.10"
