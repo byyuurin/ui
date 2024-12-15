@@ -6,12 +6,12 @@
   "description": "",
   "author": "Yuurin <byyuurin@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/byyuurin/@byyuurin/ui#readme",
+  "homepage": "https://github.com/byyuurin/ui#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byyuurin/@byyuurin/ui.git"
+    "url": "git+https://github.com/byyuurin/ui.git"
   },
-  "bugs": "https://github.com/byyuurin/@byyuurin/ui/issues",
+  "bugs": "https://github.com/byyuurin/ui/issues",
   "keywords": [],
   "sideEffects": false,
   "exports": {
@@ -26,6 +26,10 @@
     "./resolver": {
       "types": "./dist/resolver.d.ts",
       "import": "./dist/resolver.mjs"
+    },
+    "./nuxt": {
+      "types": "./dist/nuxt.d.ts",
+      "import": "./dist/nuxt.mjs"
     }
   },
   "main": "./dist/index.mjs",
@@ -64,6 +68,8 @@
   "devDependencies": {
     "@antfu/ni": "^0.23.1",
     "@byyuurin/eslint-config": "^1.6.6",
+    "@nuxt/kit": "^3.14.1592",
+    "@nuxt/schema": "^3.14.1592",
     "@types/node": "^22.10.2",
     "bumpp": "^9.9.1",
     "eslint": "^9.17.0",

@@ -7,5 +7,12 @@ export default defineNuxtConfig({
   },
   modules: [
     '@unocss/nuxt',
+    '@byyuurin/ui/nuxt',
   ],
+  css: [
+    '@unocss/reset/tailwind.css',
+  ],
+  ui: {
+    prefix: 'U',
+  },
 })

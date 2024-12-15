@@ -1,11 +1,11 @@
 import type { ComponentResolver } from 'unplugin-vue-components'
-import { components } from './shared/constants'
+import { componentNames, packageName } from './constants'
 
 export interface ResolverOptions {
   /**
    * prefix for components used in templates
    *
-   * @defaultValue ""
+   * @default ""
    */
   prefix?: string
 }
@@ -19,10 +19,10 @@ export default function (options: ResolverOptions = {}): ComponentResolver {
       if (name.toLowerCase().startsWith(prefix.toLowerCase())) {
         const componentName = name.slice(prefix.length)
 
-        if (components.includes(componentName)) {
+        if (componentNames.includes(componentName)) {
           return {
             name: componentName,
-            from: '@byyuurin/ui',
+            from: packageName,
           }
         }
       }

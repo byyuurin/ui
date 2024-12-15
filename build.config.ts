@@ -13,5 +13,7 @@ export default defineBuildConfig({
   clean: true,
   externals: [
     '@byyuurin/ui-kit',
+    '@nuxt/kit',
+    'vue',
   ],
 })
