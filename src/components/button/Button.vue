@@ -1,11 +1,12 @@
 <script lang="ts">
-import { cv } from '@byyuurin/ui-kit'
+import type { VariantProps } from '@byyuurin/ui-kit'
+import { createVariants } from '../../internal'
 import type { ComponentProps } from '../../types'
 import theme from './theme'
 
-const ui = cv(theme)
+const ui = createVariants(theme)
 
-export type ButtonVariants = typeof ui.theme.defaultVariants
+export type ButtonVariants = VariantProps<typeof ui>
 
 export interface ButtonProps extends ComponentProps {
   label?: string

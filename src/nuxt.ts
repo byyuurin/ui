@@ -1,6 +1,6 @@
 import { addComponent, defineNuxtModule } from '@nuxt/kit'
 import type {} from '@nuxt/schema' // Mandatory to avoid a bug when building
-import { componentNames, packageName } from './constants'
+import { componentNames, packageName } from './internal'
 
 export interface ModuleOptions {
   /**
