@@ -19,10 +19,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs"
     },
-    "./theme": {
-      "types": "./dist/theme.d.ts",
-      "import": "./dist/theme.mjs"
-    },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
       "import": "./dist/resolver.mjs"

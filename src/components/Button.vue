@@ -1,12 +1,12 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import { createVariants } from '../../internal'
-import type { ComponentProps } from '../../types'
-import theme from './theme'
+import { createVariants } from '../internal'
+import { button } from '../theme'
+import type { ComponentProps } from '../types'
 
-const ui = createVariants(theme)
+const theme = createVariants(button)
 
-export type ButtonVariants = VariantProps<typeof ui>
+export type ButtonVariants = VariantProps<typeof theme>
 
 export interface ButtonProps extends ComponentProps {
   label?: string
@@ -21,8 +21,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   type: 'solid',
 })
 
-const uiStyle = computed(() => {
-  return ui({
+const ui = computed(() => {
+  return theme({
     class: props.class,
     type: props.type,
   })
@@ -30,7 +30,7 @@ const uiStyle = computed(() => {
 </script>
 
 <template>
-  <button :class="uiStyle">
+  <button :class="ui">
     <slot>
       {{ label }}
     </slot>
