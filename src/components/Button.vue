@@ -10,7 +10,10 @@ export type ButtonVariants = VariantProps<typeof theme>
 
 export interface ButtonProps extends ComponentProps {
   label?: string
-  type?: ButtonVariants['type']
+  variant?: ButtonVariants['variant']
+  size?: ButtonVariants['size']
+  round?: boolean
+  disabled?: boolean
 }
 </script>
 
@@ -18,19 +21,26 @@ export interface ButtonProps extends ComponentProps {
 import { computed } from 'vue'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  type: 'solid',
+  variant: 'solid',
+  size: 'md',
 })
 
 const ui = computed(() => {
+  const uiVariants: Required<ButtonVariants> = {
+    variant: props.variant,
+    size: props.size,
+    round: props.round,
+    disabled: props.disabled,
+  }
   return theme({
+    ...uiVariants,
     class: props.class,
-    type: props.type,
   })
 })
 </script>
 
 <template>
-  <button :class="ui">
+  <button :class="ui" :disabled="props.disabled">
     <slot>
       {{ label }}
     </slot>
