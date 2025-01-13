@@ -8,11 +8,18 @@ const theme = createVariants(button)
 
 export type ButtonVariants = VariantProps<typeof theme>
 
+export interface ButtonSlots {
+  default: ((props?: any) => any) | undefined
+  icon: ((props?: any) => any) | undefined
+}
+
 export interface ButtonProps extends ComponentProps {
+  icon?: string
   label?: string
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
   round?: boolean
+  loading?: boolean
   disabled?: boolean
 }
 </script>
@@ -25,24 +32,34 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   size: 'md',
 })
 
-const ui = computed(() => {
+const slots = defineSlots<ButtonSlots>()
+
+const style = computed(() => {
   const uiVariants: Required<ButtonVariants> = {
     variant: props.variant,
     size: props.size,
     round: props.round,
-    disabled: props.disabled,
+    loading: props.loading,
   }
-  return theme({
+  const ui = theme({
     ...uiVariants,
     class: props.class,
   })
+  return {
+    base: ui.base(),
+    label: ui.label(),
+    icon: ui.icon({ class: props.icon }),
+  }
 })
 </script>
 
 <template>
-  <button :class="ui" :disabled="props.disabled">
-    <slot>
-      {{ label }}
+  <button :class="style.base" :disabled="props.disabled">
+    <slot name="icon">
+      <i v-if="props.icon" :class="style.icon"></i>
     </slot>
+    <span v-if="slots.default || props.label" :class="style.label">
+      <slot>{{ label }}</slot>
+    </span>
   </button>
 </template>

@@ -1,91 +1,94 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
-  base: 'transition',
+  slots: {
+    base: 'inline-flex items-center leading-normal transition-colors disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
+    label: 'color-inherit',
+    icon: 'font-size-1.25em',
+  },
   variants: {
     variant: {
-      solid: 'color-white',
-      outline: 'bg-transparent border',
-      soft: '',
-      ghost: 'bg-transparent',
-      link: 'bg-transparent',
+      solid: {
+        base: [
+          'color-ui-c1 bg-ui-fill/90',
+          'hover:bg-ui-fill/75 active:bg-ui-fill',
+          'disabled:bg-ui-fill/90 aria-disabled:bg-ui-fill/90',
+        ],
+      },
+      outline: {
+        base: [
+          'bg-transparent ring ring-inset ring-ui-fill color-ui-fill',
+          'hover:bg-ui-fill/10 active:bg-ui-fill/25',
+          'disabled:bg-transparent aria-disabled:bg-transparent',
+        ],
+      },
+      soft: {
+        base: [
+          'bg-ui-fill/10 color-ui-content/75',
+          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/85',
+          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/75 aria-disabled:color-ui-content/75',
+        ],
+      },
+      ghost: {
+        base: [
+          'bg-transparent color-ui-fill/75',
+          'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/85',
+          'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/75 aria-disabled:color-ui-fill/75',
+        ],
+      },
+      link: {
+        base: [
+          'bg-transparent color-ui-fill',
+          'hover:color-ui-fill/80 active:color-ui-fill/90',
+          'disabled:color-ui-fill aria-disabled:color-ui-fill',
+        ],
+      },
     },
     size: {
-      none: 'font-size-[calc(var(--ui-units)*0)]',
-      xs: 'font-size-[calc(var(--ui-units)*0.75)]',
-      sm: 'font-size-[calc(var(--ui-units)*0.875)]',
-      md: 'font-size-[calc(var(--ui-units)*1)]',
-      lg: 'font-size-[calc(var(--ui-units)*1.25)]',
-      xl: 'font-size-[calc(var(--ui-units)*1.5)]',
+      xs: {
+        base: 'font-size-xs',
+      },
+      sm: {
+        base: 'font-size-sm',
+      },
+      md: {
+        base: 'font-size-base',
+      },
+      lg: {
+        base: 'font-size-lg',
+      },
+      xl: {
+        base: 'font-size-xl',
+      },
     },
     round: {
-      true: 'rounded-full',
-      false: 'rounded-[--ui-radius]',
+      true: {
+        base: 'rounded-full',
+      },
+      false: {
+        base: 'rounded-ui-button',
+      },
     },
-    disabled: {
-      true: 'cursor-not-allowed',
-      false: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+    loading: {
+      true: {
+        icon: 'animate-spin',
+      },
     },
   },
   compoundVariants: [
     {
-      variant: 'solid',
-      disabled: true,
-      class: 'bg-[rgb(var(--ui-bg))]/50',
+      size: ['xs', 'sm', 'md'],
+      class: {
+        base: 'p-1',
+        label: 'px-1',
+      },
     },
     {
-      variant: 'solid',
-      disabled: false,
-      class: 'bg-[rgb(var(--ui-bg))]/90 hover:bg-[rgb(var(--ui-bg))]/75 active:bg-[rgb(var(--ui-bg))]',
-    },
-
-    {
-      variant: 'outline',
-      disabled: true,
-      class: ' border-[rgb(var(--ui-border))]/50 color-[rgb(var(--ui-text))]/50',
-    },
-    {
-      variant: 'outline',
-      disabled: false,
-      class: 'border-[rgb(var(--ui-border))] color-[rgb(var(--ui-text))] hover:bg-[rgb(var(--ui-bg))]/10 active:bg-[rgb(var(--ui-bg))]/25',
-    },
-
-    {
-      variant: 'soft',
-      disabled: true,
-      class: 'bg-[rgb(var(--ui-bg))]/5 color-[rgb(var(--ui-text))]/25',
-    },
-    {
-      variant: 'soft',
-      disabled: false,
-      class: 'bg-[rgb(var(--ui-bg))]/10 color-[rgb(var(--ui-text))]/75 hover:bg-[rgb(var(--ui-bg))]/15 hover:color-[rgb(var(--ui-text))]/80 active:bg-[rgb(var(--ui-bg))]/20 active:color-[rgb(var(--ui-text))]/85',
-    },
-
-    {
-      variant: 'ghost',
-      disabled: true,
-      class: 'color-[rgb(var(--ui-text))]/50',
-    },
-    {
-      variant: 'ghost',
-      disabled: false,
-      class: 'color-[rgb(var(--ui-text))]/75 hover:bg-[rgb(var(--ui-bg))]/10 hover:color-[rgb(var(--ui-text))]/80 active:bg-[rgb(var(--ui-bg))]/20 active:color-[rgb(var(--ui-text))]/85',
-    },
-
-    {
-      variant: 'link',
-      disabled: true,
-      class: 'color-[rgb(var(--ui-text))]/50',
-    },
-    {
-      variant: 'link',
-      disabled: false,
-      class: 'color-[rgb(var(--ui-text))] hover:color-[rgb(var(--ui-text))]/80 active:color-[rgb(var(--ui-text))]/90',
-    },
-
-    {
-      size: ['xs', 'sm', 'md', 'lg', 'xl'],
-      class: 'p-[calc(var(--ui-units)*0.125)] px-[calc(var(--ui-units)*0.5)]',
+      size: ['lg', 'xl'],
+      class: {
+        base: 'p-1',
+        label: 'px-2',
+      },
     },
   ],
 })

@@ -1,41 +1,46 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+
+const theme = ref('light')
 </script>
 
 <template>
-  <div class="ui-green-600">
-    <div class="grid grid-cols-3 max-w-screen-sm gap-4 p-4 all:min-w-40">
-      <UButton label="Solid" />
-      <UButton label="Solid" round />
-      <UButton label="Solid" disabled />
-      <UButton label="Outline" variant="outline" />
-      <UButton label="Outline" variant="outline" round />
-      <UButton label="Outline" variant="outline" disabled />
-      <UButton label="Soft" variant="soft" />
-      <UButton label="Soft" variant="soft" round />
-      <UButton label="Soft" variant="soft" disabled />
-      <UButton label="Ghost" variant="ghost" />
-      <UButton label="Ghost" variant="ghost" round />
-      <UButton label="Ghost" variant="ghost" disabled />
-      <UButton label="Link" variant="link" />
-      <UButton label="Link" variant="link" round />
-      <UButton label="Link" variant="link" disabled />
-    </div>
-    <div class="flex items-start gap-4 p-4">
-      <UButton size="xs">
-        size: xs
-      </UButton>
-      <UButton size="sm">
-        size: sm
-      </UButton>
-      <UButton size="md">
-        size: md
-      </UButton>
-      <UButton size="lg">
-        size: lg
-      </UButton>
-      <UButton size="xl">
-        size: xl
-      </UButton>
-    </div>
+  <div class="h-screen overflow-auto" :data-theme="theme">
+    <DemoBlock title="Native">
+      <div class="flex gap-4">
+        <input class="size-5" type="checkbox" checked />
+        <input class="size-5" type="radio" checked />
+        <input type="range" />
+      </div>
+    </DemoBlock>
+    <DemoTheme v-model="theme" :options="['light', 'dark', 'coffee']" />
+    <DemoButton />
   </div>
 </template>
+
+<style>
+html,
+body,
+#app {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+[data-theme] {
+  --uno: "bg-ui-c1 transition";
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --uno: "ui-c1-#ffffff ui-c2-#F2F2F2 ui-c3-#E5E6E6 ui-cb-#1f2937";
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --uno: "ui-c1-#1d232a ui-c2-#191e24 ui-c3-#15191e ui-cb-#A6ADBB";
+}
+[data-theme="coffee"] {
+  color-scheme: dark;
+  --uno: "ui-c1-#20161f ui-c2-#1c131b ui-c3-#181017 ui-cb-#c59f60";
+}
+</style>

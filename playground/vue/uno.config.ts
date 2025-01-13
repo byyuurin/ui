@@ -1,11 +1,18 @@
 import ui from '@byyuurin/ui/unocss-preset'
-import { defineConfig, presetUno, transformerDirectives } from 'unocss'
+import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'unocss'
 
 export default defineConfig({
   presets: [
     presetUno(),
+    presetIcons({
+      cdn: 'https://esm.sh/',
+      extraProperties: {
+        display: 'inline-block',
+        verticalAlign: 'middle',
+      },
+    }),
     ui({
-      radius: '2px',
+      radius: '0.125rem',
     }),
   ],
   transformers: [

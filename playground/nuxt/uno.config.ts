@@ -1,22 +1,9 @@
-import ui from '@byyuurin/ui/unocss-preset'
-import { defineConfig, presetUno, transformerDirectives } from 'unocss'
+import { defineConfig } from 'unocss'
+import config from '../vue/uno.config'
 
 export default defineConfig({
-  presets: [
-    presetUno(),
-    ui({
-      radius: '2px',
-    }),
+  ...config,
+  configDeps: [
+    '../vue/uno.config',
   ],
-  transformers: [
-    transformerDirectives(),
-  ],
-  content: {
-    pipeline: {
-      include: [
-        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
-        /\/(?:theme).*\.(ts|m?js)($|\?)/,
-      ],
-    },
-  },
 })
