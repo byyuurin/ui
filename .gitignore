@@ -23,4 +23,5 @@ logs
 .env.*
 !.env.example
 
-components.d.ts
+typed-components.d.ts
+typed-imports.d.ts

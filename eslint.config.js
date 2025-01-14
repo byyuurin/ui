@@ -6,6 +6,7 @@ export default byyuurin({
   vue: {
     overrides: {
       'import/first': 'off',
+      'ts/no-empty-object-type': 'off',
     },
   },
   formatters: {

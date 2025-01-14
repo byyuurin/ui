@@ -1,11 +1,16 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-
 const theme = ref('light')
+
+onMounted(() => {
+  watchEffect(() => {
+    const html = document.querySelector('html')!
+    html.dataset.theme = theme.value
+  })
+})
 </script>
 
 <template>
-  <div class="h-screen overflow-auto" :data-theme="theme">
+  <div class="h-screen overflow-auto">
     <DemoBlock title="Native">
       <div class="flex gap-4">
         <input class="size-5" type="checkbox" checked />
