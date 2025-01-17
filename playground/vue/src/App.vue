@@ -10,17 +10,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen overflow-auto">
-    <DemoBlock title="Native">
-      <div class="flex gap-4">
-        <input class="size-5" type="checkbox" checked />
-        <input class="size-5" type="radio" checked />
-        <input type="range" />
-      </div>
-    </DemoBlock>
-    <DemoTheme v-model="theme" :options="['light', 'dark', 'coffee']" />
-    <DemoButton />
-  </div>
+  <UApp>
+    <div class="h-screen overflow-auto">
+      <DemoTheme v-model="theme" :options="['light', 'dark', 'coffee']" />
+      <DemoNative />
+      <DemoButton />
+      <DemoLink />
+      <DemoModal />
+      <DemoTooltip />
+    </div>
+  </UApp>
 </template>
 
 <style>

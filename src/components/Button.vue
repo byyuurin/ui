@@ -1,19 +1,16 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import { createVariants } from '../internal'
 import { button } from '../theme'
-import type { ComponentProps } from '../types'
+import type { ComponentAttrs } from '../types'
 
-const theme = createVariants(button)
-
-export type ButtonVariants = VariantProps<typeof theme>
+export type ButtonVariants = VariantProps<typeof button>
 
 export interface ButtonSlots {
-  default: ((props?: any) => any) | undefined
-  icon: ((props?: any) => any) | undefined
+  default?: (props?: any) => any
+  icon?: (props?: any) => any
 }
 
-export interface ButtonProps extends ComponentProps {
+export interface ButtonProps extends ComponentAttrs<typeof button> {
   icon?: string
   label?: string
   variant?: ButtonVariants['variant']
@@ -26,6 +23,7 @@ export interface ButtonProps extends ComponentProps {
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'solid',
@@ -35,30 +33,26 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const slots = defineSlots<ButtonSlots>()
 
 const style = computed(() => {
-  const uiVariants: Required<ButtonVariants> = {
-    variant: props.variant,
-    size: props.size,
-    round: props.round,
-    loading: props.loading,
-  }
-  const ui = theme({
-    ...uiVariants,
-    class: props.class,
-  })
-  return {
-    base: ui.base(),
-    label: ui.label(),
-    icon: ui.icon({ class: props.icon }),
-  }
+  const styler = createStyler(button)
+  return styler(props)
 })
 </script>
 
 <template>
-  <button :class="style.base" :disabled="props.disabled">
+  <button
+    :class="style.base({ class: [props.ui?.base, props.class] })"
+    :disabled="props.disabled"
+  >
     <slot name="icon">
-      <i v-if="props.icon" :class="style.icon"></i>
+      <i
+        v-if="props.icon"
+        :class="style.icon({ class: [props.ui?.icon, props.icon] })"
+      ></i>
     </slot>
-    <span v-if="slots.default || props.label" :class="style.label">
+    <span
+      v-if="slots.default || props.label"
+      :class="style.label({ class: props.ui?.label })"
+    >
       <slot>{{ label }}</slot>
     </span>
   </button>

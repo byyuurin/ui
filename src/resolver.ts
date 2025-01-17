@@ -19,7 +19,7 @@ export default function (options: ResolverOptions = {}): ComponentResolver {
       if (name.toLowerCase().startsWith(prefix.toLowerCase())) {
         const componentName = name.slice(prefix.length)
 
-        if (componentNames.includes(componentName)) {
+        if ((componentNames as string[]).includes(componentName)) {
           return {
             name: componentName,
             from: packageName,

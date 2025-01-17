@@ -8,6 +8,8 @@ export interface PresetOptions {
   radius?: string
   /** @default "[radius]" */
   radiusButton?: string
+  /** @default "[radius]" */
+  radiusBox?: string
   /**
    * Base content color
    * @default "#1f2937"
@@ -63,18 +65,22 @@ export default definePreset((
     },
     borderColor: {
       [cssVarsPrefix]: {
-        base: cssColor(cssVar('c2')),
+        base: cssColor(cssVar('fill', cssVar('c2'))),
       },
     },
     borderRadius: {
       [`${cssVarsPrefix}-base`]: cssVar('radius'),
       [`${cssVarsPrefix}-button`]: cssVar('radius-button', cssVar('radius')),
+      [`${cssVarsPrefix}-box`]: cssVar('radius-box', cssVar('radius')),
     },
     ringWidth: {
       DEFAULT: '1px',
     },
     animation: {
-      keyframes: {},
+      keyframes: {
+        'scale-in': '{from {opacity: 0;scale: 0.95;}to {opacity: 1;scale: 1;}}',
+        'scale-out': '{from {opacity: 1;scale: 1;}to {opacity: 0;scale: 0.95;}}',
+      },
     },
   }
 
@@ -117,9 +123,14 @@ export default definePreset((
         },
         { autocomplete: `${cssVarsPrefix}-(${cssVarsAll.join('|')})-$colors` },
       ],
+      // overrides
+      [/^rotate-(\d+)$/, ([_, d]) => ({ rotate: `${d}deg` })],
     ],
     preflights: [
       { getCSS: () => createRootCSS(mergeOptions(options)) },
+    ],
+    safelist: [
+      ...['fade-in', 'fade-out', 'scale-in', 'scale-out'].map((v) => `keyframes-${v}`),
     ],
   }
 })
@@ -128,6 +139,7 @@ function mergeOptions(options: PresetOptions): PresetOptions {
   const defaults: Required<PresetOptions> = {
     radius: '0rem',
     radiusButton: '',
+    radiusBox: '',
     cb: '#1f2937',
     c1: '#ffffff',
     c2: '#f2f2f2',
@@ -162,10 +174,12 @@ function createRootCSS(kv: PresetOptions) {
         return `--${cssVarsPrefix}-${name}:${content}`
       }))}}`,
     // reset
+    `:root{${join([
+      `color:${cssColor(cssVar('cb'))}`,
+    ])}}`,
     `*,::before,::after{${join([
       `--un-default-border-color:${cssColor(cssVar('c3'))}`,
       `accent-color:${cssColor(cssVar('cb'))}`,
-      `color:${cssColor(cssVar('cb'))}`,
       `scrollbar-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 35%,transparent) transparent`,
     ])}}`,
   ]

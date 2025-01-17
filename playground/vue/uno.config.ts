@@ -7,8 +7,8 @@ export default defineConfig({
     presetIcons({
       cdn: 'https://esm.sh/',
       extraProperties: {
-        display: 'inline-block',
-        verticalAlign: 'middle',
+        'display': 'inline-block',
+        'vertical-align': 'middle',
       },
     }),
     ui({
