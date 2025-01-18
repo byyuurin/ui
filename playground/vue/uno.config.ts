@@ -1,5 +1,5 @@
-import ui from '@byyuurin/ui/unocss-preset'
 import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'unocss'
+import ui from '../../src/unocss-preset'
 
 export default defineConfig({
   presets: [

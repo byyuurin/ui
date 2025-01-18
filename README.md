@@ -1,10 +1,18 @@
 # @byyuurin/ui
 
+A collection of Vue.js components for my projects.
+
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
+
+## Setup
+
+```ssh
+pnpm i @byyuurin/ui
+```
 
 ## License
 

@@ -49,7 +49,7 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub",
-    "dev": "unbuild && pnpm --filter \"./playground/*\" run dev:prepare",
+    "dev:prepare": "pnpm --filter \"./playground/*\" run dev:prepare",
     "dev:vue": "pnpm --filter \"./playground/vue\" run dev",
     "dev:nuxt": "pnpm --filter \"./playground/nuxt\" run dev",
     "lint": "eslint .",

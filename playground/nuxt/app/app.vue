@@ -1,65 +1,50 @@
 <script lang="ts" setup>
+const theme = ref('light')
+
+onMounted(() => {
+  watchEffect(() => {
+    const html = document.querySelector('html')!
+    html.dataset.theme = theme.value
+  })
+})
 </script>
 
 <template>
-  <div class="p-4">
-    <h2 class="font-600 text-xl leading-normal mb-4 border-b border-dotted">
-      Button
-    </h2>
-    <div class="flex max-w-screen-sm gap-4">
-      <UButton label="Solid" />
-      <UButton label="Solid" round />
-      <UButton label="Solid" disabled />
+  <UApp>
+    <div class="h-screen overflow-auto">
+      <DemoTheme v-model="theme" :options="['light', 'dark', 'coffee']" />
+      <DemoNative />
+      <DemoButton />
+      <DemoLink />
+      <DemoModal />
+      <DemoTooltip />
     </div>
-    <div class="flex max-w-screen-sm gap-4">
-      <UButton label="Outline" variant="outline" />
-      <UButton label="Outline" variant="outline" round />
-      <UButton label="Outline" variant="outline" disabled />
-    </div>
-    <div class="flex max-w-screen-sm gap-4">
-      <UButton label="Soft" variant="soft" />
-      <UButton label="Soft" variant="soft" round />
-      <UButton label="Soft" variant="soft" disabled />
-    </div>
-    <div class="flex max-w-screen-sm gap-4">
-      <UButton label="Ghost" variant="ghost" />
-      <UButton label="Ghost" variant="ghost" round />
-      <UButton label="Ghost" variant="ghost" disabled />
-    </div>
-    <div class="flex max-w-screen-sm gap-4">
-      <UButton label="Link" variant="link" />
-      <UButton label="Link" variant="link" disabled />
-    </div>
-    <div class="flex items-start gap-4">
-      <UButton size="xs" icon="i-carbon-asleep-filled" />
-      <UButton size="sm" icon="i-carbon-asleep-filled" />
-      <UButton size="md" icon="i-carbon-asleep-filled" />
-      <UButton size="lg" icon="i-carbon-asleep-filled" />
-      <UButton size="xl" icon="i-carbon-asleep-filled" />
-    </div>
-    <div class="flex items-start gap-4">
-      <UButton label="Size: xs" size="xs" />
-      <UButton label="Size: sm" size="sm" />
-      <UButton label="Size: md" size="md" />
-      <UButton label="Size: lg" size="lg" />
-      <UButton label="Size: xl" size="xl" />
-    </div>
-    <div class="flex items-start gap-4">
-      <UButton size="xs" icon="i-carbon-asleep-filled">
-        Size: xs
-      </UButton>
-      <UButton size="sm" icon="i-carbon-asleep-filled">
-        Size: sm
-      </UButton>
-      <UButton size="md" icon="i-carbon-asleep-filled">
-        Size: md
-      </UButton>
-      <UButton size="lg" icon="i-carbon-asleep-filled">
-        Size: lg
-      </UButton>
-      <UButton size="xl" icon="i-carbon-asleep-filled">
-        Size: xl
-      </UButton>
-    </div>
-  </div>
+  </UApp>
 </template>
+
+<style>
+html,
+body,
+#app {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+[data-theme] {
+  --uno: "bg-ui-c1 transition";
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --uno: "ui-c1-#ffffff ui-c2-#F2F2F2 ui-c3-#E5E6E6 ui-cb-#1f2937";
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --uno: "ui-c1-#1d232a ui-c2-#191e24 ui-c3-#15191e ui-cb-#A6ADBB";
+}
+[data-theme="coffee"] {
+  color-scheme: dark;
+  --uno: "ui-c1-#20161f ui-c2-#1c131b ui-c3-#181017 ui-cb-#c59f60";
+}
+</style>
