@@ -25,7 +25,7 @@ export interface TooltipSlots {
 import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, useForwardPropsEmits } from 'reka-ui'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<TooltipProps>(), {

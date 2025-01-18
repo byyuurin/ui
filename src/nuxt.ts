@@ -1,4 +1,4 @@
-import { addComponent, defineNuxtModule, logger, useLogger } from '@nuxt/kit'
+import { addComponent, defineNuxtModule, useLogger } from '@nuxt/kit'
 import type {} from '@nuxt/schema' // Mandatory to avoid a bug when building
 import { componentNames, packageName } from './internal'
 
