@@ -48,6 +48,7 @@
   ],
   "scripts": {
     "build": "unbuild",
+    "stub": "unbuild --stub",
     "dev": "unbuild && pnpm --filter \"./playground/*\" run dev:prepare",
     "dev:vue": "pnpm --filter \"./playground/vue\" run dev",
     "dev:nuxt": "pnpm --filter \"./playground/nuxt\" run dev",
@@ -90,7 +91,8 @@
     "vue-tsc": "^2.2.0"
   },
   "resolutions": {
-    "@byyuurin/ui": "workspace:*"
+    "@byyuurin/ui": "workspace:*",
+    "mkdist": "^1.6.0"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
