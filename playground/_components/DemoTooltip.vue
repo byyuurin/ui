@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+import {
+  Button as UButton,
+  Tooltip as UTooltip,
+} from '@byyuurin/ui'
+</script>
+
 <template>
   <DemoBlock title="Tooltip">
     <div class="flex gap-4">

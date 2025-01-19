@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+import {
+  Button as UButton,
+  Modal as UModal,
+} from '@byyuurin/ui'
+</script>
+
 <template>
   <DemoBlock title="Modal">
     <div class="flex gap-4">

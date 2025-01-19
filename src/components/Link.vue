@@ -7,10 +7,7 @@ import type { ComponentAttrs } from '../types'
 
 export type LinkVariants = VariantProps<typeof link>
 
-// TODO: type issue
-type _ComponentAttrs = Omit<ComponentAttrs<typeof link>, 'ui'>
-
-export interface LinkProps extends _ComponentAttrs, Pick<PrimitiveProps, 'as'> {
+export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, Pick<PrimitiveProps, 'as'> {
   type?: string
   onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
   href?: string
@@ -20,6 +17,12 @@ export interface LinkProps extends _ComponentAttrs, Pick<PrimitiveProps, 'as'> {
   isExternal?: boolean
   active?: boolean
   disabled?: boolean
+  raw?: boolean
+  ui?: {
+    active?: string
+    inactive?: string
+    disabled?: string
+  }
 }
 </script>
 
@@ -48,13 +51,37 @@ const linkProps = computed(() => {
   }
 
   if (as === 'button')
-    return { ...base, as, type, disabled }
+    return { ...base, type, disabled }
 
   return base
 })
 
 const style = computed(() => {
-  const styler = createStyler(link)
+  if (props.raw) {
+    return [
+      props.class,
+      props.active
+        ? props.ui?.active
+        : props.ui?.inactive,
+      props.disabled
+        ? props.ui?.disabled
+        : undefined,
+    ]
+  }
+
+  const styler = createStyler({
+    ...link,
+    variants: {
+      ...link.variants,
+      active: {
+        true: props.ui?.active ?? link.variants.active.true,
+        false: props.ui?.inactive ?? link.variants.active.false,
+      },
+      disabled: {
+        true: props.ui?.disabled ?? link.variants.disabled.true,
+      },
+    },
+  })
   return styler(props)
 })
 

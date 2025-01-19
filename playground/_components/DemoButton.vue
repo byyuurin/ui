@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+import { Button as UButton } from '@byyuurin/ui'
+</script>
+
 <template>
   <DemoBlock title="Button">
     <div class="flex max-w-screen-sm gap-4">

@@ -8,7 +8,7 @@ export default ct({
       false: 'color-ui-fill hover:color-ui-fill/80 transition-colors',
     },
     disabled: {
-      true: 'cursor-not-allowed color-ui-fill opacity-50',
+      true: 'cursor-not-allowed color-ui-fill opacity-50 hover:color-ui-fill',
     },
   },
 })
