@@ -53,7 +53,12 @@ const props = withDefaults(defineProps<ModalProps>(), {
 const emit = defineEmits<ModalEmits>()
 const slots = defineSlots<ModalSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emit)
-const contentProps = toRef(() => props.content)
+const contentProps = toRef(() => ({
+  ...props.content,
+  ...(slots.description || props.description)
+    ? {}
+    : { 'aria-describedby': undefined },
+}))
 const contentEvents = computed(() => {
   if (props.required) {
     return {

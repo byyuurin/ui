@@ -59,5 +59,13 @@ import { Button as UButton } from '@byyuurin/ui'
         Size: xl
       </UButton>
     </div>
+    <div class="flex items-start gap-4">
+      <UButton :ui="{ active: 'ui-fill-green' }" active>
+        custom (active)
+      </UButton>
+      <UButton :ui="{ disabled: 'ui-fill-red' }" disabled>
+        custom (disabled)
+      </UButton>
+    </div>
   </DemoBlock>
 </template>

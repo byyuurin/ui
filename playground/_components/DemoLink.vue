@@ -19,7 +19,7 @@ import { Link as ULink } from '@byyuurin/ui'
       <ULink
         :ui="{
           active: 'color-green',
-          inactive: 'color-green-700 hover:color-green',
+          inactive: 'color-green/90 hover:color-green',
           disabled: 'color-green/50 hover:color-green/50',
         }"
       >
@@ -28,7 +28,7 @@ import { Link as ULink } from '@byyuurin/ui'
       <ULink
         :ui="{
           active: 'color-green',
-          inactive: 'color-green-700 hover:color-green',
+          inactive: 'color-green/90 hover:color-green',
           disabled: 'color-green/50 hover:color-green/50',
         }"
         active
@@ -38,7 +38,7 @@ import { Link as ULink } from '@byyuurin/ui'
       <ULink
         :ui="{
           active: 'color-green',
-          inactive: 'color-green-700 hover:color-green',
+          inactive: 'color-green/90 hover:color-green',
           disabled: 'color-green/50 hover:color-green/50',
         }"
         disabled

@@ -3,20 +3,24 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import { createStyler } from '../internal'
 import { link } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentAttrs, HintString, MaybeArray } from '../types'
 
 export type LinkVariants = VariantProps<typeof link>
 
 export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, Pick<PrimitiveProps, 'as'> {
   type?: string
-  onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
+  onClick?: MaybeArray<(e: MouseEvent) => void | Promise<void>>
   href?: string
   navigate?: (e: MouseEvent) => void
-  rel?: string
-  target?: string
+  /** A rel attribute value to apply on the link. */
+  rel?: HintString<'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc'> | null
+  noRel?: boolean
+  /** Where to display the linked URL, as the name for a browsing context. */
+  target?: HintString<'_blank' | '_parent' | '_self' | '_top'> | null
   isExternal?: boolean
   active?: boolean
   disabled?: boolean
+  /** When `true`, only styles from `class`, `ui.active`, and `ui.inactive` will be applied. */
   raw?: boolean
   ui?: {
     active?: string
@@ -57,28 +61,19 @@ const linkProps = computed(() => {
 })
 
 const style = computed(() => {
-  if (props.raw) {
-    return [
-      props.class,
-      props.active
-        ? props.ui?.active
-        : props.ui?.inactive,
-      props.disabled
-        ? props.ui?.disabled
-        : undefined,
-    ]
-  }
+  if (props.raw)
+    return props.class
 
   const styler = createStyler({
     ...link,
     variants: {
       ...link.variants,
       active: {
-        true: props.ui?.active ?? link.variants.active.true,
-        false: props.ui?.inactive ?? link.variants.active.false,
+        true: [link.variants.active.true, props.ui?.active],
+        false: [link.variants.active.false, props.ui?.inactive],
       },
       disabled: {
-        true: props.ui?.disabled ?? link.variants.disabled.true,
+        true: [link.variants.disabled.true, props.ui?.disabled],
       },
     },
   })
@@ -111,6 +106,6 @@ function handleClick(e: MouseEvent) {
     :class="style"
     @click="handleClick"
   >
-    <slot></slot>
+    <slot :active="props.active"></slot>
   </Primitive>
 </template>

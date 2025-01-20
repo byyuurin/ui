@@ -2,6 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import { button } from '../theme'
 import type { ComponentAttrs } from '../types'
+import type { LinkProps } from './Link.vue'
 
 export type ButtonVariants = VariantProps<typeof button>
 
@@ -10,7 +11,9 @@ export interface ButtonSlots {
   icon?: (props?: any) => any
 }
 
-export interface ButtonProps extends ComponentAttrs<typeof button> {
+type UIOptions = ComponentAttrs<typeof button>['ui'] & LinkProps['ui']
+
+export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, Omit<LinkProps, 'ui' | 'raw'> {
   icon?: string
   label?: string
   variant?: ButtonVariants['variant']
@@ -18,12 +21,14 @@ export interface ButtonProps extends ComponentAttrs<typeof button> {
   round?: boolean
   loading?: boolean
   disabled?: boolean
+  ui?: UIOptions
 }
 </script>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { createStyler } from '../internal'
+import { createStyler, omit, pickLinkProps } from '../internal'
+import Link from './Link.vue'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'solid',
@@ -32,21 +37,33 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 const slots = defineSlots<ButtonSlots>()
 
+const linkProps = pickLinkProps(props)
+
 const style = computed(() => {
   const styler = createStyler(button)
-  return styler(props)
+  return styler({
+    ...props,
+    class: [
+      props.class,
+      props.active ? props.ui?.active : props.ui?.inactive,
+      props.disabled ? props.ui?.disabled : undefined,
+    ],
+  })
 })
 </script>
 
 <template>
-  <button
-    :class="style.base({ class: [props.ui?.base, props.class] })"
-    :disabled="props.disabled"
+  <Link
+    :class="style.base({ class: [props.class, props.ui?.base] })"
+    :type="props.type"
+    :disabled="props.disabled || props.loading"
+    v-bind="omit(linkProps, ['type', 'disabled'])"
+    raw
   >
     <slot name="icon">
       <i
         v-if="props.icon"
-        :class="style.icon({ class: [props.ui?.icon, props.icon] })"
+        :class="style.icon({ class: [props.icon, props.ui?.icon] })"
       ></i>
     </slot>
     <span
@@ -55,5 +72,5 @@ const style = computed(() => {
     >
       <slot>{{ label }}</slot>
     </span>
-  </button>
+  </Link>
 </template>
