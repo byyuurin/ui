@@ -1,3 +1,4 @@
+export { default as accordion } from './accordion'
 export { default as button } from './button'
 export { default as link } from './link'
 export { default as modal } from './modal'

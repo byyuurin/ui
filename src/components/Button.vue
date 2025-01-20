@@ -27,7 +27,8 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { createStyler, omit, pickLinkProps } from '../internal'
+import { createStyler, pickLinkProps } from '../internal'
+import { omit } from '../utils'
 import Link from './Link.vue'
 
 const props = withDefaults(defineProps<ButtonProps>(), {

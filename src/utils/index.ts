@@ -1,7 +1,5 @@
-import { reactivePick } from '@vueuse/core'
 import type { InjectionKey, MaybeRefOrGetter } from 'vue'
 import { inject as vueInject, provide as vueProvide, toValue } from 'vue'
-import type { LinkProps } from '../components'
 
 export function createInjection<T>(
   name: string,
@@ -48,8 +46,41 @@ export function omit<
   return result as Omit<Data, Keys>
 }
 
-export function pickLinkProps(
-  props: LinkProps & Partial<Pick<HTMLAnchorElement, 'ariaLabel' | 'title'>>,
-) {
-  return reactivePick(props, 'ui', 'active', 'ariaLabel', 'as', 'disabled', 'href', 'rel', 'noRel', 'type', 'target', 'title', 'onClick')
+export function get(object: Record<string, any> | undefined, path: (string | number)[] | string, defaultValue?: any): any {
+  if (typeof path === 'string') {
+    path = path.split('.').map((key) => {
+      const numKey = Number(key)
+      return Number.isNaN(numKey) ? key : numKey
+    })
+  }
+
+  let result: any = object
+
+  for (const key of path) {
+    if (result === undefined || result === null)
+      return defaultValue
+
+    result = result[key]
+  }
+
+  return result === undefined ? defaultValue : result
+}
+
+export function set(object: Record<string, any>, path: (string | number)[] | string, value: any): void {
+  if (typeof path === 'string') {
+    path = path.split('.').map((key) => {
+      const numKey = Number(key)
+      return Number.isNaN(numKey) ? key : numKey
+    })
+  }
+
+  path.reduce((acc, key, i) => {
+    if (acc[key] === undefined)
+      acc[key] = {}
+
+    if (i === path.length - 1)
+      acc[key] = value
+
+    return acc[key]
+  }, object)
 }

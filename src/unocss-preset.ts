@@ -78,6 +78,8 @@ export default definePreset((
     },
     animation: {
       keyframes: {
+        'accordion-up': '{from {height: var(--reka-accordion-content-height);}to {height: 0;}}',
+        'accordion-down': '{from {height: 0;}to {height: var(--reka-accordion-content-height);}}',
         'scale-in': '{from {opacity: 0;scale: 0.95;}to {opacity: 1;scale: 1;}}',
         'scale-out': '{from {opacity: 1;scale: 1;}to {opacity: 0;scale: 0.95;}}',
       },
@@ -130,8 +132,10 @@ export default definePreset((
       { getCSS: () => createRootCSS(mergeOptions(options)) },
     ],
     safelist: [
-      ...['fade-in', 'fade-out', 'scale-in', 'scale-out'].map((v) => `keyframes-${v}`),
-    ],
+      'fade-in',
+      'fade-out',
+      ...Object.keys(theme.animation!.keyframes!),
+    ].map((v) => `keyframes-${v}`),
   }
 })
 

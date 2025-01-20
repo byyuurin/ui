@@ -7,6 +7,7 @@ export default byyuurin({
     overrides: {
       'import/first': 'off',
       'ts/no-empty-object-type': 'off',
+      'ts/no-redeclare': 'off',
     },
   },
   formatters: {

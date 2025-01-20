@@ -1,0 +1,102 @@
+<script lang="ts">
+import type { VariantProps } from '@byyuurin/ui-kit'
+import type { AccordionRootEmits, AccordionRootProps, PrimitiveProps } from 'reka-ui'
+import { accordion } from '../theme'
+import type { ComponentAttrs, DynamicSlots } from '../types'
+
+export interface AccordionItem {
+  label?: string
+  icon?: string
+  trailingIcon?: string
+  slot?: string
+  content?: string
+  /** A unique value for the accordion item. Defaults to the index. */
+  value?: string
+  disabled?: boolean
+}
+
+export type AccordionVariants = VariantProps<typeof accordion>
+
+export interface AccordionEmits extends AccordionRootEmits {}
+
+type SlotProps<T> = (props: { item: T, index: number, open: boolean }) => any
+
+export type AccordionSlots<T extends { slot?: string }> = {
+  default?: SlotProps<T>
+  icon?: SlotProps<T>
+  content?: SlotProps<T>
+  body?: SlotProps<T>
+} & DynamicSlots<T, SlotProps<T>>
+
+export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pick<AccordionRootProps, 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
+  as?: PrimitiveProps['as']
+  items?: T[]
+  labelKey?: string
+}
+</script>
+
+<script setup lang="ts" generic="T extends AccordionItem">
+import { reactivePick } from '@vueuse/core'
+import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
+import { computed } from 'vue'
+import { createStyler } from '../internal'
+import { get } from '../utils'
+
+const props = withDefaults(defineProps<AccordionProps<T>>(), {
+  type: 'single',
+  collapsible: true,
+  unmountOnHide: true,
+  labelKey: 'label',
+  items: () => [],
+})
+const slots = defineSlots<AccordionSlots<T>>()
+
+const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'type', 'unmountOnHide'))
+
+const style = computed(() => {
+  const styler = createStyler(accordion)
+  return styler(props)
+})
+</script>
+
+<template>
+  <AccordionRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
+    <AccordionItem
+      v-for="(item, index) in props.items"
+      v-slot="{ open }"
+      :key="index"
+      :value="item.value || String(index)"
+      :disabled="item.disabled"
+      :class="style.item({ class: props.ui?.item })"
+    >
+      <AccordionHeader :class="style.header({ class: props.ui?.header })">
+        <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })">
+          <slot name="icon" v-bind="{ item, index, open }">
+            <i v-if="item.icon" :class="style.icon({ class: [item.icon, props.ui?.icon] })"></i>
+          </slot>
+
+          <span v-if="get(item, props.labelKey as string) || slots.default" :class="style.label({ class: props.ui?.label })">
+            <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey as string) }}</slot>
+          </span>
+
+          <slot name="trailing-icon" v-bind="{ item, index, open }">
+            <i v-if="item.trailingIcon" :class="style.icon({ class: [item.trailingIcon, props.ui?.trailingIcon] })"></i>
+          </slot>
+        </AccordionTrigger>
+      </AccordionHeader>
+
+      <AccordionContent
+        v-if="item.content || slots.content || (item.slot && slots[item.slot]) || slots.body || (slots[`${item.slot}-body`])"
+        :class="style.content({ class: props.ui?.content })"
+      >
+        <slot :name="item.slot || 'content'" v-bind="{ item, index, open }">
+          <div :class="style.body({ class: props.ui?.body })">
+            <slot :name="item.slot ? item.slot : 'body'" v-bind="{ item, index, open }">
+              {{ item.content }}
+            </slot>
+          </div>
+        </slot>
+      </AccordionContent>
+    </AccordionItem>
+  </AccordionRoot>
+</template>

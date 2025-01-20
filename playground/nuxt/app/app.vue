@@ -14,6 +14,7 @@ onMounted(() => {
     <div class="h-screen overflow-auto">
       <DemoTheme v-model="theme" :options="['light', 'dark', 'coffee']" />
       <DemoNative />
+      <DemoAccordion />
       <DemoButton />
       <DemoLink />
       <DemoModal />

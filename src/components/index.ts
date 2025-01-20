@@ -1,3 +1,5 @@
+export type * from './Accordion.vue'
+export { default as Accordion } from './Accordion.vue'
 export type * from './App.vue'
 export { default as App } from './App.vue'
 export type * from './Button.vue'
