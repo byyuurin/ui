@@ -1,13 +1,11 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import { createStyler } from '../internal'
 import { link } from '../theme'
 import type { ComponentAttrs, HintString, MaybeArray } from '../types'
 
-export type LinkVariants = VariantProps<typeof link>
-
-export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, Pick<PrimitiveProps, 'as'> {
+export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
+  as?: PrimitiveProps['as']
   type?: string
   onClick?: MaybeArray<(e: MouseEvent) => void | Promise<void>>
   href?: string

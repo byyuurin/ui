@@ -16,6 +16,7 @@ onMounted(() => {
       <DemoNative />
       <DemoAccordion />
       <DemoButton />
+      <DemoCard />
       <DemoLink />
       <DemoModal />
       <DemoTooltip />

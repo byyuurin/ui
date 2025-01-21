@@ -1,10 +1,7 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TooltipArrowProps, TooltipContentProps, TooltipRootEmits, TooltipRootProps } from 'reka-ui'
 import { tooltip } from '../theme'
 import type { ComponentAttrs } from '../types'
-
-export type TooltipVariants = VariantProps<typeof tooltip>
 
 export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRootProps {
   text?: string

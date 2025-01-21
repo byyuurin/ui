@@ -76,6 +76,11 @@ export default definePreset((
     ringWidth: {
       DEFAULT: '1px',
     },
+    shadowColor: {
+      [cssVarsPrefix]: {
+        base: cssColor(cssVar('fill', cssVar('c3'))),
+      },
+    },
     animation: {
       keyframes: {
         'accordion-up': '{from {height: var(--reka-accordion-content-height);}to {height: 0;}}',

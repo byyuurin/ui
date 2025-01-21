@@ -5,8 +5,6 @@ import { modal } from '../theme'
 import type { ComponentAttrs } from '../types'
 import type { ButtonProps } from './index'
 
-export type ModalVariants = VariantProps<typeof modal>
-
 export interface ModalEmits extends DialogRootEmits {}
 
 export interface ModalSlots {
@@ -19,6 +17,8 @@ export interface ModalSlots {
   body?: (props?: any) => any
   footer?: (props?: any) => any
 }
+
+type ModalVariants = VariantProps<typeof modal>
 
 export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProps {
   title?: string

@@ -1,5 +1,4 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AccordionRootEmits, AccordionRootProps, PrimitiveProps } from 'reka-ui'
 import { accordion } from '../theme'
 import type { ComponentAttrs, DynamicSlots } from '../types'
@@ -14,8 +13,6 @@ export interface AccordionItem {
   value?: string
   disabled?: boolean
 }
-
-export type AccordionVariants = VariantProps<typeof accordion>
 
 export interface AccordionEmits extends AccordionRootEmits {}
 

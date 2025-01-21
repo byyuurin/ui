@@ -4,13 +4,12 @@ import { button } from '../theme'
 import type { ComponentAttrs } from '../types'
 import type { LinkProps } from './Link.vue'
 
-export type ButtonVariants = VariantProps<typeof button>
-
 export interface ButtonSlots {
   default?: (props?: any) => any
   icon?: (props?: any) => any
 }
 
+type ButtonVariants = VariantProps<typeof button>
 type UIOptions = ComponentAttrs<typeof button>['ui'] & LinkProps['ui']
 
 export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, Omit<LinkProps, 'ui' | 'raw'> {
