@@ -78,7 +78,7 @@ export default definePreset((
     },
     shadowColor: {
       [cssVarsPrefix]: {
-        base: cssColor(cssVar('fill', cssVar('c3'))),
+        base: cssColor(cssVar('fill', cssVar('c2'))),
       },
     },
     animation: {
@@ -161,8 +161,8 @@ function mergeOptions(options: PresetOptions): PresetOptions {
   }
 }
 
-function cssVar(name: string, defaultValue?: string) {
-  return defaultValue ? `var(--${cssVarsPrefix}-${name},${defaultValue})` : `var(--${cssVarsPrefix}-${name})`
+function cssVar(name: string, ...defaultValue: string[]) {
+  return `var(${[`--${cssVarsPrefix}-${name}`, ...defaultValue].join(',')})`
 }
 
 function cssColor(...rgb: (string | number)[]) {
@@ -187,7 +187,7 @@ function createRootCSS(kv: PresetOptions) {
       `color:${cssColor(cssVar('cb'))}`,
     ])}}`,
     `*,::before,::after{${join([
-      `--un-default-border-color:${cssColor(cssVar('c3'))}`,
+      `--un-default-border-color:${cssColor(cssVar('c2'))}`,
       `accent-color:${cssColor(cssVar('cb'))}`,
       `scrollbar-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 35%,transparent) transparent`,
     ])}}`,

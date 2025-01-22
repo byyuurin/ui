@@ -40,7 +40,7 @@ export default ct({
     {
       size: ['sm', 'md', 'lg', 'xl'],
       class: {
-        content: 'top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] sm:h-auto sm:max-h-[calc(100vh-4rem)] sm:rounded-ui-box sm:shadow-lg sm:ring ring-ui-c3',
+        content: 'top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] sm:h-auto sm:max-h-[calc(100vh-4rem)] sm:rounded-ui-box sm:shadow-lg sm:ring ring-ui-c2',
       },
     },
   ],
