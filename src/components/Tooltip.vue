@@ -7,6 +7,7 @@ export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRoo
   text?: string
   content?: Omit<TooltipContentProps, 'as' | 'asChild'>
   arrow?: boolean | Omit<TooltipArrowProps, 'as' | 'asChild'>
+  /** @default true */
   portal?: boolean
 }
 

@@ -19,6 +19,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
   size?: ButtonVariants['size']
   round?: boolean
   loading?: boolean
+  loadingIcon?: string
   disabled?: boolean
   ui?: UIOptions
 }
@@ -38,6 +39,11 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const slots = defineSlots<ButtonSlots>()
 
 const linkProps = pickLinkProps(props)
+
+const icon = computed(() => {
+  const { loading, loadingIcon, icon } = props
+  return loading && loadingIcon ? loadingIcon : icon
+})
 
 const style = computed(() => {
   const styler = createStyler(button)
@@ -62,8 +68,8 @@ const style = computed(() => {
   >
     <slot name="icon">
       <i
-        v-if="props.icon || props.loading"
-        :class="style.icon({ class: [props.icon, props.ui?.icon] })"
+        v-if="props.icon || (props.loading && props.loadingIcon)"
+        :class="style.icon({ class: [icon, props.ui?.icon] })"
       ></i>
     </slot>
     <span

@@ -25,10 +25,17 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
   description?: string
   size?: ModalVariants['size']
   content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'>
-  overlay?: boolean
-  transition?: boolean
+  /** @default true */
   portal?: boolean
-  required?: boolean
+  /** @default true */
+  overlay?: boolean
+  /** @default true */
+  transition?: boolean
+  /**
+   * When `false`, the modal will not close when clicking outside or pressing escape.
+   * @default true
+   */
+  dismissible?: boolean
   close?: ButtonProps | boolean
   closeIcon?: string
 }
@@ -42,13 +49,14 @@ import { createStyler } from '../internal'
 import UButton from './Button.vue'
 
 const props = withDefaults(defineProps<ModalProps>(), {
+  modal: true,
   size: 'md',
   portal: true,
   overlay: true,
   transition: true,
+  dismissible: true,
   close: true,
   closeIcon: 'i-carbon-close-large',
-  modal: true,
 })
 const emit = defineEmits<ModalEmits>()
 const slots = defineSlots<ModalSlots>()
@@ -60,15 +68,14 @@ const contentProps = toRef(() => ({
     : { 'aria-describedby': undefined },
 }))
 const contentEvents = computed(() => {
-  if (props.required) {
-    return {
-      pointerDownOutside: (e: Event) => e.preventDefault(),
-      interactOutside: (e: Event) => e.preventDefault(),
-      escapeKeyDown: (e: Event) => e.preventDefault(),
-    }
-  }
+  if (props.dismissible)
+    return {}
 
-  return {}
+  return {
+    pointerDownOutside: (e: Event) => e.preventDefault(),
+    interactOutside: (e: Event) => e.preventDefault(),
+    escapeKeyDown: (e: Event) => e.preventDefault(),
+  }
 })
 
 const style = computed(() => {

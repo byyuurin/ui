@@ -5,8 +5,10 @@
       <DemoNative />
       <DemoAccordion />
       <DemoButton />
+      <DemoCard />
       <DemoLink />
       <DemoModal />
+      <DemoPopover />
       <DemoTooltip />
     </div>
   </UApp>
