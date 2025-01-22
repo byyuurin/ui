@@ -1,32 +1,29 @@
 <script lang="ts" setup>
-import {
-  Button as UButton,
-  Modal as UModal,
-} from '@byyuurin/ui'
+import { Button, Modal } from '@byyuurin/ui'
 </script>
 
 <template>
   <DemoBlock title="Modal">
     <div class="flex gap-4">
-      <UModal
+      <Modal
         title="Title"
         description="Description"
         size="sm"
         :close="false"
       >
-        <UButton>
+        <Button>
           Modal 1
-        </UButton>
-      </UModal>
-      <UModal :close="{ size: 'xl' }">
-        <UButton>
+        </Button>
+      </Modal>
+      <Modal :close="{ size: 'xl' }">
+        <Button>
           Modal 2
-        </UButton>
+        </Button>
 
         <template #close>
-          <UButton class="ui-orange" variant="link">
+          <Button class="ui-orange" variant="link">
             #close
-          </UButton>
+          </Button>
         </template>
 
         <template #title>
@@ -43,7 +40,7 @@ import {
         <template #footer>
           #footer
         </template>
-      </UModal>
+      </Modal>
     </div>
   </DemoBlock>
 </template>

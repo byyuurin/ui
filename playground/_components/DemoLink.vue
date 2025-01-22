@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import { Link as ULink } from '@byyuurin/ui'
+import { Link } from '@byyuurin/ui'
 </script>
 
 <template>
   <DemoBlock title="Link">
     <div class="flex items-start gap-4">
-      <ULink>
+      <Link>
         Link
-      </ULink>
-      <ULink active>
+      </Link>
+      <Link active>
         Link (active)
-      </ULink>
-      <ULink disabled>
+      </Link>
+      <Link disabled>
         Link (disabled)
-      </ULink>
+      </Link>
     </div>
     <div class="flex items-start gap-4">
-      <ULink
+      <Link
         :ui="{
           active: 'color-green',
           inactive: 'color-green/90 hover:color-green',
@@ -24,8 +24,8 @@ import { Link as ULink } from '@byyuurin/ui'
         }"
       >
         Custom Link
-      </ULink>
-      <ULink
+      </Link>
+      <Link
         :ui="{
           active: 'color-green',
           inactive: 'color-green/90 hover:color-green',
@@ -34,8 +34,8 @@ import { Link as ULink } from '@byyuurin/ui'
         active
       >
         Custom Link (active)
-      </ULink>
-      <ULink
+      </Link>
+      <Link
         :ui="{
           active: 'color-green',
           inactive: 'color-green/90 hover:color-green',
@@ -44,7 +44,7 @@ import { Link as ULink } from '@byyuurin/ui'
         disabled
       >
         Custom Link (disabled)
-      </ULink>
+      </Link>
     </div>
   </DemoBlock>
 </template>

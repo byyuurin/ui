@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Card as UCard } from '@byyuurin/ui'
+import { Card } from '@byyuurin/ui'
 </script>
 
 <template>
   <DemoBlock title="Card">
     <div class="max-w-screen-sm">
-      <UCard>
+      <Card>
         <template #header>
           #header
         </template>
@@ -13,7 +13,7 @@ import { Card as UCard } from '@byyuurin/ui'
         <template #footer>
           #footer
         </template>
-      </UCard>
+      </Card>
     </div>
   </DemoBlock>
 </template>

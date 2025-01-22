@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Accordion as UAccordion, type AccordionItem } from '@byyuurin/ui'
+import { Accordion, type AccordionItem } from '@byyuurin/ui'
 
 const items: AccordionItem[] = [
   {
@@ -38,6 +38,6 @@ const items: AccordionItem[] = [
 
 <template>
   <DemoBlock title="Accordion">
-    <UAccordion :items="items" />
+    <Accordion :items="items" />
   </DemoBlock>
 </template>
