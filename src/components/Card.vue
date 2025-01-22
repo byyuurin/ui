@@ -1,5 +1,4 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import { card } from '../theme'
 import type { ComponentAttrs } from '../types'

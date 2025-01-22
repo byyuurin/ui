@@ -62,7 +62,7 @@ const style = computed(() => {
   >
     <slot name="icon">
       <i
-        v-if="props.icon"
+        v-if="props.icon || props.loading"
         :class="style.icon({ class: [props.icon, props.ui?.icon] })"
       ></i>
     </slot>

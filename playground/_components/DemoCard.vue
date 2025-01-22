@@ -1,8 +1,5 @@
-<script lang="ts" setup>
-import { Card as UCard } from '@byyuurin/ui'
-</script>
-
 <script setup lang="ts">
+import { Card as UCard } from '@byyuurin/ui'
 </script>
 
 <template>
