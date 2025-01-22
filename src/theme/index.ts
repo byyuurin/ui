@@ -1,6 +1,7 @@
 export { default as accordion } from './accordion'
 export { default as button } from './button'
 export { default as card } from './card'
+export { default as drawer } from './drawer'
 export { default as link } from './link'
 export { default as modal } from './modal'
 export { default as popover } from './popover'

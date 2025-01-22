@@ -6,6 +6,7 @@
       <DemoAccordion />
       <DemoButton />
       <DemoCard />
+      <DemoDrawer />
       <DemoLink />
       <DemoModal />
       <DemoPopover />

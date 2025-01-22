@@ -8,7 +8,7 @@ export default ct({
     body: 'flex-1 overflow-y-auto p-4 sm:p-6',
     footer: 'flex items-center gap-1.5 p-4 sm:px-6',
     title: 'flex-grow color-ui-base font-size-xl font-600',
-    description: 'w-full mt-1 color-ui-base text-sm',
+    description: 'w-full mt-1 color-ui-base/80 text-sm',
     close: '',
   },
   variants: {
