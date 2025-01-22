@@ -2,8 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import { modal } from '../theme'
-import type { ComponentAttrs } from '../types'
-import type { ButtonProps } from './index'
+import type { ButtonProps, ComponentAttrs } from '../types'
 
 export interface ModalEmits extends DialogRootEmits {}
 
