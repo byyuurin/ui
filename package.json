@@ -49,7 +49,6 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub",
-    "dev:prepare": "pnpm --filter \"./playground/*\" run dev:prepare",
     "dev:vue": "pnpm --filter \"./playground/vue\" run dev",
     "dev:nuxt": "pnpm --filter \"./playground/nuxt\" run dev",
     "lint": "eslint .",
@@ -58,16 +57,16 @@
     "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks && pnpm run stub"
+    "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
   },
   "dependencies": {
     "@byyuurin/ui-kit": "^0.3.2",
-    "@unocss/core": "^65.4.2",
-    "@unocss/preset-mini": "^65.4.2",
-    "@vueuse/core": "^12.4.0",
+    "@unocss/core": "^65.4.3",
+    "@unocss/preset-mini": "^65.4.3",
+    "@vueuse/core": "^12.5.0",
     "defu": "^6.1.4",
     "reka-ui": "1.0.0-alpha.8",
     "vaul-vue": "^0.2.0"
@@ -78,7 +77,7 @@
     "@nuxt/kit": "^3.15.2",
     "@nuxt/schema": "^3.15.2",
     "@types/node": "^22.10.7",
-    "bumpp": "^9.10.1",
+    "bumpp": "^9.10.2",
     "eslint": "^9.18.0",
     "eslint-plugin-format": "1.0.1",
     "esno": "^4.8.0",
@@ -92,7 +91,6 @@
     "vue-tsc": "^2.2.0"
   },
   "resolutions": {
-    "@byyuurin/ui": "workspace:*",
     "mkdist": "^1.6.0"
   },
   "simple-git-hooks": {
