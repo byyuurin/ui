@@ -10,6 +10,7 @@ export const componentNames: ComponentName[] = [
   'Drawer',
   'Link',
   'Modal',
+  'ModalProvider',
   'Popover',
   'Toast',
   'Toaster',

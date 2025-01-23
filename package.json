@@ -69,7 +69,8 @@
     "@vueuse/core": "^12.5.0",
     "defu": "^6.1.4",
     "reka-ui": "1.0.0-alpha.8",
-    "vaul-vue": "^0.2.0"
+    "vaul-vue": "^0.2.0",
+    "vue-component-type-helpers": "^2.2.0"
   },
   "devDependencies": {
     "@antfu/ni": "^23.2.0",

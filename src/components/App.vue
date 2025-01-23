@@ -15,7 +15,10 @@ export interface AppSlots {
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
-import { toRef, useId } from 'vue'
+import { shallowRef, toRef, useId } from 'vue'
+import type { ModalState } from '../composables/useModal'
+import { provideModalState } from '../composables/useModal'
+import ModalProvider from './ModalProvider.vue'
 import Toaster from './Toaster.vue'
 
 const props = defineProps<AppProps>()
@@ -24,6 +27,13 @@ defineSlots<AppSlots>()
 const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
 const tooltipProps = toRef(() => props.tooltip)
 const toasterProps = toRef(() => props.toaster)
+
+const modalState = shallowRef<ModalState>({
+  component: 'div',
+  props: {},
+})
+
+provideModalState(modalState)
 </script>
 
 <template>
@@ -34,5 +44,7 @@ const toasterProps = toRef(() => props.toaster)
       </Toaster>
       <slot v-else></slot>
     </TooltipProvider>
+
+    <ModalProvider />
   </ConfigProvider>
 </template>
