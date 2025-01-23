@@ -96,6 +96,9 @@ export function createMergeRules(theme: Theme = {}): CRRule[] {
     // _rules/grid
     // _rules/layout
     // _rules/position
+    [/^(?:position-|pos-)?(relative|absolute|fixed|sticky)$/, () => 'position'],
+    [/^(?:position-|pos-)([-\w]+)$/, ([type]) => GlobalKeywordsRE.test(type) ? 'position' : null],
+    [/^(?:position-|pos-)?(static)$/, () => 'position'],
     // _rules/question-mark
     // _rules/ring
     // _rules/shadow
