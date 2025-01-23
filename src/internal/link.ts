@@ -1,5 +1,5 @@
 import { reactivePick } from '@vueuse/core'
-import type { LinkProps } from '../components'
+import type { LinkProps } from '../types'
 
 export function pickLinkProps(
   props: LinkProps & Partial<Pick<HTMLAnchorElement, 'ariaLabel' | 'title'>>,

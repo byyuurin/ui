@@ -3,3 +3,4 @@ import type * as theme from './theme'
 
 export type Theme = Simplify<typeof theme>
 export * from './components'
+export * from './composables'

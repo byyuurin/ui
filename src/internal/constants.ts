@@ -11,5 +11,7 @@ export const componentNames: ComponentName[] = [
   'Link',
   'Modal',
   'Popover',
+  'Toast',
+  'Toaster',
   'Tooltip',
 ]

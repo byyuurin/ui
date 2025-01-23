@@ -10,6 +10,7 @@
       <DemoLink />
       <DemoModal />
       <DemoPopover />
+      <DemoToast />
       <DemoTooltip />
     </div>
   </UApp>
