@@ -20,28 +20,28 @@ export default ct({
       },
       outline: {
         base: [
-          'bg-transparent ring ring-inset ring-ui-fill color-ui-fill',
+          'color-ui-fill bg-ui-c1 ring ring-inset ring-ui-fill',
           'hover:bg-ui-fill/10 active:bg-ui-fill/25',
-          'disabled:bg-transparent aria-disabled:bg-transparent',
+          'disabled:bg-ui-c1 aria-disabled:bg-ui-c1',
         ],
       },
       soft: {
         base: [
-          'bg-ui-fill/10 color-ui-content/75',
+          'color-ui-content/75 bg-ui-fill/10',
           'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/85',
           'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/75 aria-disabled:color-ui-content/75',
         ],
       },
       ghost: {
         base: [
-          'bg-transparent color-ui-fill/75',
+          'color-ui-fill/75 bg-transparent',
           'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/85',
           'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/75 aria-disabled:color-ui-fill/75',
         ],
       },
       link: {
         base: [
-          'bg-transparent color-ui-fill',
+          'color-ui-fill bg-transparent',
           'hover:color-ui-fill/80 active:color-ui-fill/90',
           'disabled:color-ui-fill aria-disabled:color-ui-fill',
         ],

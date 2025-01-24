@@ -96,3 +96,8 @@ export function set(object: Record<string, any>, path: (string | number)[] | str
     return acc[key]
   }, object)
 }
+
+export function looseToNumber(value: any): any {
+  const n = Number.parseFloat(value)
+  return Number.isNaN(n) ? value : n
+}

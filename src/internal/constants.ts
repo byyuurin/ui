@@ -8,6 +8,7 @@ export const componentNames: ComponentName[] = [
   'Button',
   'Card',
   'Drawer',
+  'Input',
   'Link',
   'Modal',
   'ModalProvider',

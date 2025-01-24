@@ -17,6 +17,7 @@ const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration'
       <DemoButton />
       <DemoCard />
       <DemoDrawer />
+      <DemoInput />
       <DemoLink />
       <DemoModal />
       <DemoPopover />
