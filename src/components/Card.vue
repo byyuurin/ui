@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import { card } from '../theme'
+import type { card } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface CardProps extends ComponentAttrs<typeof card> {
@@ -17,13 +17,15 @@ export interface CardSlots {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<CardProps>(), {})
 const slots = defineSlots<CardSlots>()
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(card)
+  const styler = createStyler(theme.value.card)
   return styler(props)
 })
 </script>

@@ -8,3 +8,10 @@ export { default as popover } from './popover'
 export { default as toast } from './toast'
 export { default as toaster } from './toaster'
 export { default as tooltip } from './tooltip'
+
+export const global = {
+  icons: {
+    close: 'i-carbon-close-large',
+    loading: 'i-mingcute-loading-fill',
+  },
+}

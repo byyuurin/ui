@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { ToastProviderProps } from 'reka-ui'
-import { toaster } from '../theme'
+import type { toaster } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 type ToasterVariants = VariantProps<typeof toaster>
@@ -30,7 +30,7 @@ export interface ToasterSlots {
 import { reactivePick } from '@vueuse/core'
 import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useToast } from '../composables/useToast'
+import { useTheme, useToast } from '../composables'
 import { createStyler } from '../internal'
 import { omit } from '../utils'
 import Toast from './Toast.vue'
@@ -66,8 +66,9 @@ const swipeDirection = computed(() => {
   return 'right'
 })
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(toaster)
+  const styler = createStyler(theme.value.toaster)
   return styler({
     ...props,
     swipeDirection: swipeDirection.value,

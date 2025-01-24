@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
-import { modal } from '../theme'
+import type { modal } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
 export interface ModalEmits extends DialogRootEmits {}
@@ -36,6 +36,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
    */
   dismissible?: boolean
   close?: ButtonProps | boolean
+  /** @default `global.icons.close` */
   closeIcon?: string
 }
 </script>
@@ -44,6 +45,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
 import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 import UButton from './Button.vue'
 
@@ -55,7 +57,6 @@ const props = withDefaults(defineProps<ModalProps>(), {
   transition: true,
   dismissible: true,
   close: true,
-  closeIcon: 'i-carbon-close-large',
 })
 const emit = defineEmits<ModalEmits>()
 const slots = defineSlots<ModalSlots>()
@@ -72,8 +73,9 @@ const contentEvents = computed(() => {
   }
 })
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(modal)
+  const styler = createStyler(theme.value.modal)
   return styler(props)
 })
 </script>
@@ -111,7 +113,7 @@ const style = computed(() => {
                   <UButton
                     v-if="props.close"
                     variant="ghost"
-                    :icon="props.closeIcon"
+                    :icon="props.closeIcon || theme.global.icons.close"
                     v-bind="typeof props.close === 'boolean' ? {} : props.close"
                     :class="style.close({ class: props.ui?.close })"
                   />

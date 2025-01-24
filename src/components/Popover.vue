@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { HoverCardRootProps, PopoverArrowProps, PopoverContentProps, PopoverRootEmits, PopoverRootProps } from 'reka-ui'
-import { popover } from '../theme'
+import type { popover } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
@@ -35,6 +35,7 @@ import { defu } from 'defu'
 import { useForwardPropsEmits } from 'reka-ui'
 import { HoverCard, Popover } from 'reka-ui/namespaced'
 import { computed, toRef } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<PopoverProps>(), {
@@ -69,8 +70,9 @@ const arrowProps = toRef(() => props.arrow as PopoverArrowProps)
 
 const Component = computed(() => props.mode === 'hover' ? HoverCard : Popover)
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(popover)
+  const styler = createStyler(theme.value.popover)
   return styler(props)
 })
 </script>

@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { ToasterProps } from '../types'
+import type { ThemeExtension, ToasterProps } from '../types'
 
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
+  ui?: ThemeExtension
   tooltip?: TooltipProviderProps
   toaster?: ToasterProps
 }
@@ -15,13 +16,17 @@ export interface AppSlots {
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
-import { shallowRef, toRef, useId } from 'vue'
+import { computed, shallowRef, toRef, useId } from 'vue'
 import type { ModalState } from '../composables/useModal'
 import { provideModalState } from '../composables/useModal'
+import { provideThemeExtension } from '../composables/useTheme'
 import ModalProvider from './ModalProvider.vue'
 import Toaster from './Toaster.vue'
 
-const props = defineProps<AppProps>()
+const props = withDefaults(defineProps<AppProps>(), {
+  ui: () => ({}),
+})
+
 defineSlots<AppSlots>()
 
 const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
@@ -33,7 +38,10 @@ const modalState = shallowRef<ModalState>({
   props: {},
 })
 
+const themeExtension = computed(() => props.ui)
+
 provideModalState(modalState)
+provideThemeExtension(themeExtension)
 </script>
 
 <template>

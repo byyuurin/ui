@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import { button } from '../theme'
+import type { button } from '../theme'
 import type { ComponentAttrs } from '../types'
 import type { LinkProps } from './Link.vue'
 
@@ -19,6 +19,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
   size?: ButtonVariants['size']
   round?: boolean
   loading?: boolean
+  /** @default `global.icons.loading` */
   loadingIcon?: string
   disabled?: boolean
   ui?: UIOptions
@@ -27,6 +28,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler, pickLinkProps } from '../internal'
 import { omit } from '../utils'
 import Link from './Link.vue'
@@ -40,13 +42,14 @@ const slots = defineSlots<ButtonSlots>()
 
 const linkProps = pickLinkProps(props)
 
+const theme = useTheme()
 const icon = computed(() => {
-  const { loading, loadingIcon, icon } = props
+  const { loading, loadingIcon = theme.value.global.icons.loading, icon } = props
   return loading && loadingIcon ? loadingIcon : icon
 })
 
 const style = computed(() => {
-  const styler = createStyler(button)
+  const styler = createStyler(theme.value.button)
   return styler({
     ...props,
     class: [
@@ -68,7 +71,7 @@ const style = computed(() => {
   >
     <slot name="icon">
       <i
-        v-if="props.icon || (props.loading && props.loadingIcon)"
+        v-if="props.icon || props.loading"
         :class="style.icon({ class: [icon, props.ui?.icon] })"
       ></i>
     </slot>

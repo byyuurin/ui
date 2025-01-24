@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { AccordionRootEmits, AccordionRootProps, PrimitiveProps } from 'reka-ui'
-import { accordion } from '../theme'
+import type { accordion } from '../theme'
 import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface AccordionItem {
@@ -36,6 +36,7 @@ export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pic
 import { reactivePick } from '@vueuse/core'
 import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 import { get } from '../utils'
 
@@ -50,8 +51,9 @@ const slots = defineSlots<AccordionSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'type', 'unmountOnHide'))
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(accordion)
+  const styler = createStyler(theme.value.accordion)
   return styler(props)
 })
 </script>

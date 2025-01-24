@@ -9,7 +9,6 @@ import { Button, Modal } from '@byyuurin/ui'
         title="Title"
         description="Description"
         size="sm"
-        :close="false"
       >
         <Button>
           Modal 1

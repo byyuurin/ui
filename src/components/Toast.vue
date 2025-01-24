@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
-import { toast } from '../theme'
+import type { toast } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
 export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
@@ -15,6 +15,7 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
    * @default true
    */
   close?: ButtonProps | boolean
+  /** @default `global.icons.close` */
   closeIcon?: string
 }
 
@@ -34,6 +35,7 @@ export interface ToastSlots {
 import { reactivePick, useElementBounding } from '@vueuse/core'
 import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 import Button from './Button.vue'
 
@@ -51,8 +53,9 @@ const { height } = useElementBounding(el)
 
 const multiline = computed(() => !!props.title && !!props.description)
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(toast)
+  const styler = createStyler(theme.value.toast)
   return styler({ ...props, multiline: multiline.value })
 })
 
@@ -107,7 +110,7 @@ defineExpose({
         <slot name="close" :ui="ui">
           <UButton
             v-if="props.close"
-            :icon="props.closeIcon"
+            :icon="props.closeIcon || theme.global.icons.close"
             size="md"
             variant="link"
             aria-label="close"

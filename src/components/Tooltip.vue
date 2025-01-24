@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { TooltipArrowProps, TooltipContentProps, TooltipRootEmits, TooltipRootProps } from 'reka-ui'
-import { tooltip } from '../theme'
+import type { tooltip } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRootProps {
@@ -23,7 +23,8 @@ export interface TooltipSlots {
 import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, useForwardPropsEmits } from 'reka-ui'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
+import { useTheme } from '../composables'
 import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
@@ -44,8 +45,9 @@ const contentProps = toRef(() => defu(props.content, contentDefaults) as Tooltip
 
 const arrowProps = toRef(() => props.arrow as TooltipArrowProps)
 
+const theme = useTheme()
 const style = computed(() => {
-  const styler = createStyler(tooltip)
+  const styler = createStyler(theme.value.tooltip)
   return styler(props)
 })
 </script>

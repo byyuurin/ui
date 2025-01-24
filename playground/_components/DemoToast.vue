@@ -7,8 +7,7 @@ function showToast() {
   toast.add({
     title: 'Toast title',
     description: 'description...',
-    icon: 'i-carbon-activity',
-    closeIcon: 'i-carbon-close-large',
+    icon: 'i-carbon-notification',
     actions: [
       { label: 'YES', class: 'min-w-20 ui-green justify-center' },
       { label: 'NO', class: 'min-w-20 ui-rose justify-center' },

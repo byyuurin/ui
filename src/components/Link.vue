@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
 import { createStyler } from '../internal'
-import { link } from '../theme'
+import type { link } from '../theme'
 import type { ComponentAttrs, HintString, MaybeArray } from '../types'
 
 export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
@@ -31,6 +31,7 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useTheme } from '../composables'
 
 const props = withDefaults(defineProps<LinkProps>(), {
   as: 'button',
@@ -58,9 +59,13 @@ const linkProps = computed(() => {
   return base
 })
 
+const theme = useTheme()
+
 const style = computed(() => {
   if (props.raw)
     return props.class
+
+  const { link } = theme.value
 
   const styler = createStyler({
     ...link,
