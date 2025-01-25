@@ -23,6 +23,7 @@ const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration'
       <DemoLink :class="uiColor" />
       <DemoModal :class="uiColor" />
       <DemoPopover :class="uiColor" />
+      <DemoTabs :class="uiColor" />
       <DemoToast
         v-model:duration="toasterAttrs.duration"
         v-model:position="toasterAttrs.position"

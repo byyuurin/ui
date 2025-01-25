@@ -13,6 +13,7 @@ export const componentNames: ComponentName[] = [
   'Modal',
   'ModalProvider',
   'Popover',
+  'Tabs',
   'Toast',
   'Toaster',
   'Tooltip',

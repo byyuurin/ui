@@ -20,7 +20,7 @@ const emit = defineEmits<{
   (event: 'update:expand', value: boolean): void
 }>()
 
-const toasterProps = reactive({
+const attrs = reactive({
   duration: computed({
     get: () => props.duration,
     set: (value) => emit('update:duration', value),
@@ -56,17 +56,17 @@ function showToast() {
 <template>
   <DemoBlock title="Toast">
     <div>
-      <div class="color-ui-base grid sm:grid-cols-[auto_1fr] items-center gap-2 py-4 gap-x-4 children:max-w-35">
+      <div class="grid sm:grid-cols-[auto_1fr] items-center gap-2 py-4 gap-x-4 children:max-w-35">
         <label class="opacity-80">duration:</label>
-        <Input v-model="toasterProps.duration" variant="soft" type="text" />
+        <Input v-model="attrs.duration" variant="soft" type="text" />
         <label class="opacity-80">position:</label>
-        <select v-model="toasterProps.position" class="p-1 bg-ui-base/10">
+        <select v-model="attrs.position" class="p-1 bg-ui-cb/5">
           <option v-for="option in positionOptions" :key="option" :value="option">
             {{ option }}
           </option>
         </select>
         <label class="opacity-80">expand:</label>
-        <input v-model="toasterProps.expand" type="checkbox" class="size-5" />
+        <input v-model="attrs.expand" type="checkbox" class="size-5 accent-ui-cb" />
       </div>
       <Button label="Open" @click="showToast" />
     </div>
