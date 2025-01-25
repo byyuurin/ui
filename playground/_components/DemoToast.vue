@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { ToasterProps } from '@byyuurin/ui'
-import { Button, useToast } from '@byyuurin/ui'
+import { Button, Input, useToast } from '@byyuurin/ui'
 import { computed, reactive } from 'vue'
 
 const props = withDefaults(defineProps<{
+  color?: string
   duration?: ToasterProps['duration']
   position?: ToasterProps['position']
   expand?: boolean
@@ -47,6 +48,7 @@ function showToast() {
       { label: 'YES', class: 'min-w-20 ui-green justify-center' },
       { label: 'NO', class: 'min-w-20 ui-rose justify-center' },
     ],
+    ui: { progress: props.color },
   })
 }
 </script>
@@ -54,9 +56,9 @@ function showToast() {
 <template>
   <DemoBlock title="Toast">
     <div>
-      <div class="color-ui-base ui-fill-gray-500 max-w-screen-sm grid grid-cols-[auto_1fr] items-center gap-2 py-4 gap-x-4">
+      <div class="color-ui-base grid sm:grid-cols-[auto_1fr] items-center gap-2 py-4 gap-x-4 children:max-w-35">
         <label class="opacity-80">duration:</label>
-        <input v-model="toasterProps.duration" class="p-1 bg-ui-base/10" type="text" />
+        <Input v-model="toasterProps.duration" variant="soft" type="text" />
         <label class="opacity-80">position:</label>
         <select v-model="toasterProps.position" class="p-1 bg-ui-base/10">
           <option v-for="option in positionOptions" :key="option" :value="option">

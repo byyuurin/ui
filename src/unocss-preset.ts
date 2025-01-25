@@ -65,7 +65,7 @@ export default definePreset((
     },
     borderColor: {
       [cssVarsPrefix]: {
-        base: cssColor(cssVar('fill', cssVar('c2'))),
+        base: cssColor(cssVar('fill', cssVar('cb'))),
       },
     },
     borderRadius: {
@@ -78,7 +78,7 @@ export default definePreset((
     },
     shadowColor: {
       [cssVarsPrefix]: {
-        base: cssColor(cssVar('fill', cssVar('c2'))),
+        base: cssColor(cssVar('fill', cssVar('cb'))),
       },
     },
     animation: {
@@ -207,9 +207,13 @@ function createRootCSS(kv: PresetOptions) {
       `color:${cssColor(cssVar('cb'))}`,
     ])}}`,
     `*,::before,::after{${join([
-      `--un-default-border-color:${cssColor(cssVar('c2'))}`,
-      `accent-color:${cssColor(cssVar('cb'))}`,
-      `scrollbar-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 35%,transparent) transparent`,
+      `--un-default-border-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 10%,transparent)`,
+      `accent-color:${cssColor(cssVar('fill', cssVar('cb')))}`,
+      `scrollbar-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 25%,transparent) transparent`,
+    ])}}`,
+    `*::selection{${join([
+      `color:${cssColor(cssVar('c1'))}`,
+      `background-color:${cssColor(cssVar('fill', cssVar('cb')))}`,
     ])}}`,
   ]
 

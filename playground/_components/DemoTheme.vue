@@ -1,15 +1,20 @@
 <script setup lang="ts">
+import { Button } from '@byyuurin/ui'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import type { PresetOptions } from '../../src/unocss-preset'
 import { cssVarsPrefix } from '../../src/unocss-preset'
 
-interface ThemeConfig extends PresetOptions {
-  name: string
+const emit = defineEmits<{
+  (event: 'color', color: string): void
+}>()
+
+interface ThemeConfig<T extends string = string> extends PresetOptions {
+  name: T
   colorScheme: 'light' | 'dark'
   fontFamily?: string
 }
 
-function defineThemeOptions(options: ThemeConfig[]) {
+function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
   return options.map((option) => ({
     fontFamily: undefined,
     radius: option.radius ?? '0rem',
@@ -63,6 +68,7 @@ const themeOptions = defineThemeOptions([
     colorScheme: 'light',
     fontFamily: 'Chalkboard,comic sans ms,"sans-serif"',
     radius: '0.2rem',
+    radiusBox: '0.5rem',
     cb: cssVar('#161616'),
     c1: cssVar('#ffffff'),
     c2: cssVar('#eeeeee'),
@@ -70,10 +76,12 @@ const themeOptions = defineThemeOptions([
   },
 ])
 
-const currentTheme = ref<ThemeConfig>(themeOptions[0])
+const currentTheme = ref<ThemeConfig>(themeOptions.find((i) => i.name === 'wireframe')!)
+
+const sampleColors = ['ui-red-600', 'ui-green-600', 'ui-blue-600']
 
 onMounted(() => {
-  setTheme(currentTheme.value)
+  setTheme(currentTheme.value, true)
 })
 
 function cssVar(color: string) {
@@ -93,7 +101,10 @@ function resolveThemeAttrs(theme: ThemeConfig) {
     ])
 }
 
-function setTheme(theme: ThemeConfig) {
+function setTheme(theme: ThemeConfig, force = false) {
+  if (!force && currentTheme.value.name === theme.name)
+    return
+
   const html = document.querySelector('html')!
 
   html.classList.toggle('bg-ui-c1', true)
@@ -102,6 +113,8 @@ function setTheme(theme: ThemeConfig) {
   const attrs = resolveThemeAttrs(theme)
   attrs.forEach(([k, v]) => html.style.setProperty(k, v))
   currentTheme.value = theme
+
+  emit('color', '')
 }
 </script>
 
@@ -116,7 +129,7 @@ function setTheme(theme: ThemeConfig) {
         :style="Object.fromEntries(resolveThemeAttrs(theme))"
         @click="setTheme(theme)"
       >
-        <div class="bg-ui-c1 text-ui-cb w-full">
+        <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme.name }">
           <div class="grid grid-cols-5 grid-rows-3">
             <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
             <div class="bg-ui-c3 col-start-1 row-start-3"></div>
@@ -124,26 +137,12 @@ function setTheme(theme: ThemeConfig) {
               <div class="font-bold">
                 {{ theme.name }}
               </div>
-              <div class="flex flex-wrap gap-1">
-                <div class="ui-content-light bg-ui-fill/80 flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                  <div class="color-ui-content text-sm font-bold">
-                    A
-                  </div>
+              <div class="flex flex-wrap items-start gap-1">
+                <div class="flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                  <Button class="color-light font-bold" size="xs" label="A" @click="emit('color', '')" />
                 </div>
-                <div class="ui-red-600 ui-content-light bg-ui-fill/80 flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                  <div class="color-ui-content text-sm font-bold">
-                    A
-                  </div>
-                </div>
-                <div class="ui-green-600 ui-content-light bg-ui-fill/80 flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                  <div class="color-ui-content text-sm font-bold">
-                    A
-                  </div>
-                </div>
-                <div class="ui-blue-600 ui-content-light bg-ui-fill/80 flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                  <div class="color-ui-content text-sm font-bold">
-                    A
-                  </div>
+                <div v-for="color in sampleColors" :key="color" class="flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                  <Button class="color-light font-bold" :class="color" size="xs" label="A" @click="emit('color', color)" />
                 </div>
               </div>
             </div>

@@ -9,20 +9,24 @@ import { Button, Modal } from '@byyuurin/ui'
         title="Title"
         description="Description"
         size="sm"
+        :dismissible="false"
+        :ui="{ overlay: 'z-1', content: 'z-1' }"
       >
         <Button>
           Modal 1
         </Button>
       </Modal>
-      <Modal :close="{ size: 'xl' }">
+      <Modal
+        :close="{ size: 'xl' }"
+        :ui="{ overlay: 'z-1', content: 'z-1' }"
+        blur
+      >
         <Button>
           Modal 2
         </Button>
 
         <template #close>
-          <Button class="ui-orange" variant="link">
-            #close
-          </Button>
+          #close
         </template>
 
         <template #title>

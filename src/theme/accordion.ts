@@ -3,7 +3,7 @@ import { ct } from '@byyuurin/ui-kit'
 export default ct({
   slots: {
     root: 'w-full color-ui-base',
-    item: 'border-b border-ui-base last:border-b-0',
+    item: 'border-b last:border-b-0',
     header: 'flex',
     trigger: 'group flex-1 flex items-center gap-2 font-medium text-sm py-4 focus-visible:outline-ui-fill min-w-0',
     content: [

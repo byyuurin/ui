@@ -4,7 +4,7 @@ import { Card } from '@byyuurin/ui'
 
 <template>
   <DemoBlock title="Card">
-    <div class="max-w-screen-sm">
+    <div class="max-w-xl">
       <Card>
         <template #header>
           #header

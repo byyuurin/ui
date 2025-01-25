@@ -20,6 +20,7 @@ interface InputAttrs extends ComponentAttrs<typeof input> {
   size?: InputVariants['size']
   variant?: InputVariants['variant']
   loading?: boolean
+  highlight?: boolean
   required?: boolean
   autocomplete?: InputHTMLAttributes['autocomplete']
   autofocus?: boolean

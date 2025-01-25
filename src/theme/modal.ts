@@ -2,8 +2,8 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
   slots: {
-    overlay: 'fixed inset-0 bg-ui-c3/75 backdrop-blur-sm',
-    content: 'fixed w-full h-dvh bg-ui-c1 divide-y divide-skin-base flex flex-col focus:outline-none',
+    overlay: 'fixed inset-0 bg-ui-c3/75',
+    content: 'fixed w-full h-dvh bg-ui-c1 divide-y divide-ui-base/10 flex flex-col focus:outline-none',
     header: 'flex flex-wrap items-center gap-x-4 px-4 py-5 sm:px-6',
     body: 'flex-1 overflow-y-auto p-4 sm:p-6',
     footer: 'flex items-center gap-1.5 p-4 sm:px-6',
@@ -16,6 +16,11 @@ export default ct({
       true: {
         overlay: 'data-[state=open]:animate-[fade-in_200ms_ease-out] data-[state=closed]:animate-[fade-out_200ms_ease-in]',
         content: 'data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
+      },
+    },
+    blur: {
+      true: {
+        overlay: 'backdrop-blur-sm',
       },
     },
     size: {

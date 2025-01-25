@@ -4,7 +4,7 @@ import { Button, Popover } from '@byyuurin/ui'
 
 <template>
   <DemoBlock title="Popover">
-    <div class="flex max-w-screen-sm gap-4">
+    <div class="flex flex-wrap gap-4">
       <Popover arrow>
         <Button label="Click" />
 

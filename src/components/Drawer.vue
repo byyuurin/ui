@@ -15,6 +15,8 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerR
    * @default true
    */
   overlay?: boolean
+  blur?: boolean
+  full?: boolean
   /**
    * Render a handle on the drawer.
    * @default true
