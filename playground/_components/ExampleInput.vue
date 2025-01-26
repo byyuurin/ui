@@ -5,7 +5,7 @@ import ExampleView, { type ControlItems } from './ExampleView.vue'
 const controls: ControlItems<InputProps> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'ghost', 'none'] },
-  { prop: 'placeholder', value: '' },
+  { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'disabled', value: false },
   { prop: 'highlight', value: false },
   // { prop: 'loading', value: false },
@@ -14,6 +14,6 @@ const controls: ControlItems<InputProps> = [
 
 <template>
   <ExampleView v-slot="attrs" title="Input" :controls="controls">
-    <Input v-bind="attrs" />
+    <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" />
   </ExampleView>
 </template>

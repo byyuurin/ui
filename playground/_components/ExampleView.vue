@@ -63,8 +63,8 @@ onMounted(() => {
         <template v-for="(item, y) in props.controls" :key="item?.prop || y">
           <label class="opacity-80">{{ item?.label ?? item?.prop }}:</label>
 
-          <select v-if="item?.options" v-model="attrs[item!.prop]" class="p-1 bg-ui-cb/5 rounded-ui-base">
-            <option v-for="(option, x) in item.options" :key="x" :value="(option as any)?.value ?? option">
+          <select v-if="item?.options" v-model="attrs[item!.prop]" class="px-2.5 py-1.5 bg-ui-c1 rounded-ui-base ring-1 ring-inset ring-ui-cb focus:ring-2 focus-visible:outline-none">
+            <option v-for="(option, x) in item.options" :key="x" class="color-ui-cb bg-ui-c1" :value="(option as any)?.value ?? option">
               {{ (option as any)?.label ?? option }}
             </option>
           </select>

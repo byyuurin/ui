@@ -16,6 +16,8 @@ const controls: ControlItems<ModalProps> = [
 
 const demo1 = ref(false)
 const demo2 = ref(false)
+const demo3 = ref(false)
+const demo4 = ref(false)
 </script>
 
 <template>
@@ -33,7 +35,7 @@ const demo2 = ref(false)
         <template #body>
           <Placeholder class="w-full h-full min-h-32">
             <Button
-              v-show="!attrs.dismissible && !attrs.close"
+              v-show="(!attrs.dismissible && !attrs.close) || (attrs.size === 'fullscreen' && !attrs.close)"
               class="relative z-1 px-4"
               variant="outline"
               label="Close"
@@ -49,7 +51,7 @@ const demo2 = ref(false)
         v-bind="attrs"
       >
         <Button>
-          Slots
+          Slots example 1
         </Button>
 
         <template #close>
@@ -69,7 +71,7 @@ const demo2 = ref(false)
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
               <Button
-                v-show="!attrs.dismissible"
+                v-show="(!attrs.dismissible && !attrs.close) || (attrs.size === 'fullscreen' && !attrs.close)"
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -81,6 +83,63 @@ const demo2 = ref(false)
         </template>
         <template #footer>
           <Placeholder label="#footer" class="flex-grow h-8" />
+        </template>
+      </Modal>
+      <Modal
+        v-model:open="demo3"
+        :ui="{ overlay: 'z-1', content: 'z-1' }"
+        v-bind="attrs"
+      >
+        <Button>
+          Slots example 2
+        </Button>
+
+        <template #header>
+          <Placeholder class="w-full h-8" label="#header" />
+        </template>
+
+        <template #body>
+          <Placeholder class="w-full h-full min-h-32">
+            <div class="inline-flex items-center gap-4 flex-col">
+              <span>#body</span>
+              <Button
+                v-show="!attrs.dismissible || attrs.size === 'fullscreen'"
+                class="relative z-1 px-4"
+                variant="outline"
+                label="Close"
+                round
+                @click="demo3 = false"
+              />
+            </div>
+          </Placeholder>
+        </template>
+        <template #footer>
+          <Placeholder label="#footer" class="flex-grow h-8" />
+        </template>
+      </Modal>
+      <Modal
+        v-model:open="demo4"
+        :ui="{ overlay: 'z-1', content: 'z-1' }"
+        v-bind="attrs"
+      >
+        <Button>
+          Slots example 3
+        </Button>
+
+        <template #content>
+          <Placeholder class="w-full h-full min-h-64">
+            <div class="inline-flex items-center gap-4 flex-col">
+              <span>#content</span>
+              <Button
+                v-show="!attrs.dismissible || attrs.size === 'fullscreen'"
+                class="relative z-1 px-4"
+                variant="outline"
+                label="Close"
+                round
+                @click="demo4 = false"
+              />
+            </div>
+          </Placeholder>
         </template>
       </Modal>
     </div>
