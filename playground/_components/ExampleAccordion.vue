@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { Accordion, type AccordionItem } from '@byyuurin/ui'
+import type { AccordionItem, AccordionProps } from '@byyuurin/ui'
+import { Accordion } from '@byyuurin/ui'
+import type { ControlItems } from './ExampleView.vue'
 
 const items: AccordionItem[] = [
   {
@@ -34,10 +36,17 @@ const items: AccordionItem[] = [
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.',
   },
 ]
+
+const controls: ControlItems<AccordionProps<any>> = [
+  { prop: 'type', value: 'single', options: ['single', 'multiple'] },
+  { prop: 'disabled', value: false },
+  { prop: 'unmountOnHide', value: true },
+  { prop: 'collapsible', value: false },
+]
 </script>
 
 <template>
-  <DemoBlock title="Accordion">
-    <Accordion :items="items" />
-  </DemoBlock>
+  <ExampleView v-slot="attrs" title="Accordion" :controls="controls">
+    <Accordion :items="items" v-bind="attrs" />
+  </ExampleView>
 </template>

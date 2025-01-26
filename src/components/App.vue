@@ -52,7 +52,6 @@ provideThemeExtension(themeExtension)
       </Toaster>
       <slot v-else></slot>
     </TooltipProvider>
-
     <ModalProvider />
   </ConfigProvider>
 </template>

@@ -59,6 +59,7 @@ export default ct({
       direction: ['right', 'left'],
       class: {
         content: 'inset-y-0 w-auto max-w-[calc(100%-2rem)]',
+        handle: 'h-12 w-1.5 my-auto',
       },
     },
     {

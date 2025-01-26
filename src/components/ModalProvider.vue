@@ -6,5 +6,5 @@ const { isOpen } = useModal()
 </script>
 
 <template>
-  <component :is="modalState.component" v-if="modalState" v-bind="modalState.props" v-model:open="isOpen" />
+  <component :is="modalState.component" v-if="modalState?.props.open" v-bind="modalState.props" v-model:open="isOpen" />
 </template>

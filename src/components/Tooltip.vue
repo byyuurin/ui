@@ -55,7 +55,8 @@ const style = computed(() => {
 <template>
   <TooltipRoot v-slot="{ open }" v-bind="rootProps">
     <TooltipTrigger v-if="slots.default" as-child :class="props.class">
-      <slot :open="open"></slot>
+      <slot :open="open">
+      </slot>
     </TooltipTrigger>
 
     <TooltipPortal :disabled="!props.portal">

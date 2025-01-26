@@ -7,7 +7,7 @@ import type { ComponentAttrs } from '../types'
 
 type InputVariants = VariantProps<typeof input>
 
-interface InputAttrs extends ComponentAttrs<typeof input> {
+export interface InputProps extends ComponentAttrs<typeof input> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -52,7 +52,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InputAttrs>(), {
+const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
   size: 'md',
   variant: 'outline',

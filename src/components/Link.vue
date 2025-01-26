@@ -8,6 +8,7 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
   as?: PrimitiveProps['as']
   type?: string
   onClick?: MaybeArray<(e: MouseEvent) => void | Promise<void>>
+  label?: string
   href?: string
   navigate?: (e: MouseEvent) => void
   /** A rel attribute value to apply on the link. */
@@ -109,6 +110,8 @@ function handleClick(e: MouseEvent) {
     :class="style"
     @click="handleClick"
   >
-    <slot :active="props.active"></slot>
+    <slot :active="props.active">
+      {{ props.label }}
+    </slot>
   </Primitive>
 </template>
