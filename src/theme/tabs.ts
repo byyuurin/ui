@@ -6,7 +6,7 @@ export default ct({
     list: 'relative flex p-1 group',
     indicator: 'absolute transition-all duration-200',
     trigger: [
-      'group relative inline-flex items-center shrink-0 min-w-0 font-medium rounded-ui-button transition-colors',
+      'group relative inline-flex items-center shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
       'focus:outline-hidden',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
@@ -17,27 +17,27 @@ export default ct({
   variants: {
     variant: {
       solid: {
-        list: 'bg-ui-cb/5 rounded-ui-button',
+        list: 'bg-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-c1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill/80',
-          'data-[state=inactive]:color-ui-content/70 hover:data-[state=inactive]:not-disabled:color-ui-content/80',
+          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-ui-fill/90 rounded-ui-button shadow-xs',
+        indicator: 'bg-ui-fill/90 rounded-ui-tabs shadow-xs',
       },
       soft: {
-        list: 'bg-ui-c1 rounded-ui-button',
+        list: 'bg-ui-c1 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
-          'data-[state=inactive]:color-ui-content/80 hover:data-[state=inactive]:not-disabled:color-ui-content/80',
+          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-ui-fill/10 rounded-ui-button shadow-xs',
+        indicator: 'bg-ui-fill/10 rounded-ui-tabs shadow-xs',
       },
       link: {
         list: 'border-ui-cb/10',
         indicator: 'bg-ui-fill rounded-full',
         trigger: [
           'data-[state=active]:color-ui-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-base',
-          'data-[state=inactive]:color-ui-cb/70 hover:data-[state=inactive]:not-disabled:color-ui-cb/80',
+          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
       },
     },

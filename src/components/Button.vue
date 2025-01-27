@@ -21,6 +21,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
   loading?: boolean
   /** @default `global.icons.loading` */
   loadingIcon?: string
+  active?: boolean
   disabled?: boolean
   ui?: UIOptions
 }

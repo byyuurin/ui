@@ -72,6 +72,9 @@ export default ct({
         base: 'rounded-ui-button',
       },
     },
+    active: {
+      true: '',
+    },
     loading: {
       true: {
         icon: 'animate-spin',
@@ -92,6 +95,31 @@ export default ct({
         base: 'p-1',
         label: 'px-2',
       },
+    },
+    {
+      active: true,
+      variant: 'solid',
+      class: { base: 'bg-ui-fill hover:bg-ui-fill' },
+    },
+    {
+      active: true,
+      variant: 'outline',
+      class: { base: 'bg-ui-fill/25 hover:bg-ui-fill/25' },
+    },
+    {
+      active: true,
+      variant: 'soft',
+      class: { base: 'color-ui-content/85 bg-ui-fill/20 hover:color-ui-content/85 hover:bg-ui-fill/20' },
+    },
+    {
+      active: true,
+      variant: 'ghost',
+      class: { base: 'color-ui-fill/85 bg-ui-fill/20 hover:color-ui-fill/85 hover:bg-ui-fill/20' },
+    },
+    {
+      active: true,
+      variant: 'link',
+      class: { base: 'color-ui-fill/90 hover:color-ui-fill/90' },
     },
   ],
 })

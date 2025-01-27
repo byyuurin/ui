@@ -1,14 +1,24 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
-  base: 'focus-visible:outline-ui-base',
+  base: 'border-y border-t-transparent focus-visible:outline-ui-cb',
   variants: {
+    underline: {
+      true: 'border-current',
+      false: 'border-transparent',
+    },
     active: {
-      true: 'color-ui-fill/90',
-      false: 'color-ui-cb hover:color-ui-cb/80 transition-colors',
+      true: [
+        'color-ui-fill',
+        'disabled:color-ui-fill aria-disabled:color-ui-fill',
+      ],
+      false: [
+        'color-ui-cb hover:color-ui-cb/80 transition-colors',
+        'disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb',
+      ],
     },
     disabled: {
-      true: 'cursor-not-allowed color-ui-cb opacity-50 hover:color-ui-cb',
+      true: 'cursor-not-allowed opacity-50',
     },
   },
 })

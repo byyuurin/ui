@@ -41,9 +41,9 @@ onMounted(() => {
       <ExampleTooltip :class="uiColor" />
       <ExampleNative :class="uiColor" />
 
-      <UDrawer title="Change Theme or Color" direction="right" blur>
+      <UDrawer title="Change Theme or Color" direction="right" :handle="false" :overlay="false" :ui="{ content: 'ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2' }">
         <div class="sticky bottom-0 p-2 text-center">
-          <UButton label="Theme" variant="outline" size="xl" icon="i-carbon-color-palette" round />
+          <UButton label="Theme" variant="solid" size="xl" icon="i-carbon-color-palette" round />
         </div>
         <template #body>
           <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />

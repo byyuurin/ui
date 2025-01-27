@@ -10,6 +10,8 @@ export interface PresetOptions {
   radiusButton?: string
   /** @default "[radius]" */
   radiusBox?: string
+  /** @default "[radius-button]" */
+  radiusTabs?: string
   /**
    * Base content color
    * @default "#1f2937"
@@ -72,6 +74,7 @@ export default definePreset((
       [`${cssVarsPrefix}-base`]: cssVar('radius'),
       [`${cssVarsPrefix}-button`]: cssVar('radius-button', cssVar('radius')),
       [`${cssVarsPrefix}-box`]: cssVar('radius-box', cssVar('radius')),
+      [`${cssVarsPrefix}-tabs`]: cssVar('radius-tabs', cssVar('radius-button  '), cssVar('radius')),
     },
     ringWidth: {
       DEFAULT: '1px',
@@ -169,6 +172,7 @@ function mergeOptions(options: PresetOptions): PresetOptions {
     radius: '0rem',
     radiusButton: '',
     radiusBox: '',
+    radiusTabs: '',
     cb: '#1f2937',
     c1: '#ffffff',
     c2: '#f2f2f2',

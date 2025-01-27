@@ -17,6 +17,7 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
   /** Where to display the linked URL, as the name for a browsing context. */
   target?: HintString<'_blank' | '_parent' | '_self' | '_top'> | null
   isExternal?: boolean
+  underline?: boolean
   active?: boolean
   disabled?: boolean
   /** When `true`, only styles from `class`, `ui.active`, and `ui.inactive` will be applied. */
