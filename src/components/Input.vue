@@ -2,12 +2,13 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import type { InputHTMLAttributes } from 'vue'
+import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { input } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 type InputVariants = VariantProps<typeof input>
 
-export interface InputProps extends ComponentAttrs<typeof input> {
+export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -35,16 +36,16 @@ export interface InputEmits {
 }
 
 export interface InputSlots {
-  leading?: (props?: {}) => any
+  prefix?: (props?: {}) => any
   default?: (props?: {}) => any
-  trailing?: (props?: {}) => any
+  suffix?: (props?: {}) => any
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
-import { useTheme } from '../composables'
+import { useComponentIcons, useTheme } from '../composables'
 import { createStyler } from '../internal'
 import { looseToNumber } from '../utils'
 
@@ -59,16 +60,24 @@ const props = withDefaults(defineProps<InputProps>(), {
   autocomplete: 'off',
   autofocusDelay: 0,
 })
+
 const emit = defineEmits<InputEmits>()
 const slots = defineSlots<InputSlots>()
 const [modelValue, modelModifiers] = defineModel<string | number>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
+const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
+
 const theme = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.input)
-  return styler(props)
+  // @ts-expect-error ignore type
+  return styler({
+    ...props,
+    prefix: isPrefix.value || !!slots.prefix,
+    suffix: isSuffix.value || !!slots.suffix,
+  })
 })
 
 function autoFocus() {
@@ -119,7 +128,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <Primitive :as="as" :class="style.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="as" :class="style.root({ class: [props.class, props.ui?.root] })" :aria-disabled="props.disabled ? true : undefined">
+    <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
+      <slot name="prefix">
+        <i
+          v-if="isPrefix && prefixIconName"
+          :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
+        ></i>
+      </slot>
+    </span>
+
     <input
       :id="id"
       ref="inputRef"
@@ -139,12 +157,13 @@ onMounted(() => {
 
     <slot></slot>
 
-    <span v-if="slots.leading" :class="style.leading({ class: props.ui?.leading })">
-      <slot name="leading"></slot>
-    </span>
-
-    <span v-if="slots.trailing" :class="style.trailing({ class: props.ui?.trailing })">
-      <slot name="trailing"></slot>
+    <span v-if="isSuffix || slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
+      <slot name="suffix">
+        <i
+          v-if="isSuffix && suffixIconName"
+          :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
+        ></i>
+      </slot>
     </span>
   </Primitive>
 </template>

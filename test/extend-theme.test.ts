@@ -19,16 +19,28 @@ describe('check defu result', () => {
 
     expect(result).toMatchInlineSnapshot(`
       {
-        "base": "focus-visible:outline-ui-fill el-link",
+        "base": "border-y border-t-transparent focus-visible:outline-ui-cb el-link",
         "compoundVariants": undefined,
         "slots": undefined,
         "variants": {
           "active": {
-            "false": "color-ui-fill hover:color-ui-fill/80 transition-colors",
-            "true": "color-ui-fill/90 el-link--active",
+            "false": [
+              "color-ui-cb hover:color-ui-cb/80 transition-colors",
+              "disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb",
+              " ",
+            ],
+            "true": [
+              "color-ui-fill",
+              "disabled:color-ui-fill aria-disabled:color-ui-fill",
+              "el-link--active",
+            ],
           },
           "disabled": {
-            "true": "cursor-not-allowed color-ui-fill opacity-50 hover:color-ui-fill",
+            "true": "cursor-not-allowed opacity-50",
+          },
+          "underline": {
+            "false": "border-transparent",
+            "true": "border-current",
           },
         },
       }

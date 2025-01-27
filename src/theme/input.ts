@@ -2,91 +2,123 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
   slots: {
-    root: 'relative inline-flex items-center',
+    root: 'inline-flex items-center rounded-ui-base transition-colors aria-disabled:opacity-50',
     base: [
-      'w-full rounded-ui-base border-0 transition-colors placeholder:color-ui-cb/50',
+      'w-full color-inherit bg-transparent border-0 placeholder:color-ui-cb/50',
       'focus:outline-none',
-      'disabled:cursor-not-allowed disabled:opacity-50',
+      'disabled:cursor-not-allowed',
     ],
-    leading: 'absolute inset-y-0 start-0 flex items-center',
-    trailing: 'absolute inset-y-0 end-0 flex items-center',
+    prefix: 'ms-1 flex items-center',
+    prefixIcon: 'shrink-0 size-1.5em',
+    suffix: 'me-1 flex items-center',
+    suffixIcon: 'shrink-0 size-1.5em',
   },
   variants: {
     size: {
       xs: {
-        base: 'px-2 py-1 text-xs gap-1',
-        leading: 'ps-2',
-        trailing: 'pe-2',
+        root: 'text-xs',
       },
       sm: {
-        base: 'px-2.5 py-1 text-sm gap-1',
-        leading: 'ps-2.5',
-        trailing: 'pe-2.5',
+        root: 'text-sm',
       },
       md: {
-        base: 'px-2.5 py-1.5 text-base gap-1',
-        leading: 'ps-2.5',
-        trailing: 'pe-2.5',
+        root: 'text-base',
       },
       lg: {
-        base: 'px-3 py-1.5 text-lg gap-2',
-        leading: 'ps-3',
-        trailing: 'pe-3',
+        root: 'text-lg',
       },
       xl: {
-        base: 'px-3 py-2 text-xl gap-2',
-        leading: 'ps-3',
-        trailing: 'pe-3',
+        root: 'text-xl',
       },
     },
     variant: {
       outline: {
-        base: [
+        root: [
           'color-ui-cb/80 bg-ui-c1 ring ring-inset ring-ui-cb/50',
           'focus:ring-2 focus:ring-ui-cb/50',
-          'disabled:ring-ui-fill/80',
+          'aria-disabled:ring-ui-cb/80',
         ],
       },
       soft: {
-        base: [
+        root: [
           'color-ui-cb/80 bg-ui-cb/4',
           'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus:bg-ui-cb/8 focus:color-ui-cb/85',
-          'disabled:color-ui-content/80 disabled:bg-ui-fill/5',
+          'aria-disabled:color-ui-content/80 aria-disabled:bg-ui-fill/5',
         ],
       },
       ghost: {
-        base: [
+        root: [
           'color-ui-cb/80 bg-transparent',
           'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus:bg-ui-cb/8 focus:color-ui-cb/85',
-          'disabled:color-ui-fill/80 disabled:bg-transparent',
+          'aria-disabled:color-ui-fill/80 aria-disabled:bg-transparent',
         ],
       },
       none: {
-        base: 'color-ui-cb bg-transparent',
+        root: 'color-ui-cb bg-transparent',
       },
+    },
+    prefix: {
+      true: '',
+    },
+    suffix: {
+      true: '',
     },
     loading: {
       true: '',
     },
     highlight: {
       true: {
-        base: 'placeholder:color-ui-base/50',
+        base: '',
+      },
+    },
+    type: {
+      file: {
+        base: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-c1 file:bg-ui-cb/80',
       },
     },
   },
   compoundVariants: [
     {
+      size: ['xs', 'sm', 'md'],
+      class: {
+        root: 'p-2 px-1.5',
+        base: 'px-1.5',
+      },
+    },
+    {
+      size: ['lg', 'xl'],
+      class: {
+        root: 'p-2.5 px-1.5',
+        base: 'px-2',
+      },
+    },
+    {
       variant: ['soft', 'ghost', 'none'],
       highlight: true,
       class: {
-        base: 'ring ring-inset ring-ui-fill/80',
+        root: 'ring ring-inset ring-ui-fill/80',
       },
     },
     {
       variant: ['outline'],
       highlight: true,
       class: {
-        base: 'ring-2 ring-ui-fill/80 focus:ring-ui-fill/80',
+        root: 'ring-2 ring-ui-fill/80 focus:ring-ui-fill/80',
+      },
+    },
+    {
+      loading: true,
+      prefix: true,
+      class: {
+        prefixIcon: 'animate-spin',
+      },
+    },
+    {
+      loading: true,
+      prefix: false,
+      suffix: true,
+      class: {
+        suffixIcon: 'animate-spin',
       },
     },
   ],

@@ -42,9 +42,7 @@ onMounted(() => {
       <ExampleNative :class="uiColor" />
 
       <UDrawer title="Change Theme or Color" direction="right" :handle="false" :overlay="false" :ui="{ content: 'ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2' }">
-        <div class="sticky bottom-0 p-2 text-center">
-          <UButton label="Theme" variant="solid" size="xl" icon="i-carbon-color-palette" round />
-        </div>
+        <UButton class="sticky bottom-2 inset-x-1/2 -translate-x-1/2" label="Theme" variant="solid" size="xl" icon="i-carbon-color-palette" round />
         <template #body>
           <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
         </template>

@@ -7,14 +7,15 @@ export default ct({
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
-    icon: 'size-1.5em',
+    prefixIcon: 'shrink-0 size-1.5em',
+    suffixIcon: 'shrink-0 size-1.5em',
   },
   variants: {
     variant: {
       solid: {
         base: [
           'color-ui-c1 bg-ui-fill/90',
-          'hover:bg-ui-fill/75 active:bg-ui-fill',
+          'hover:bg-ui-fill/80 active:bg-ui-fill',
           'disabled:bg-ui-fill/90 aria-disabled:bg-ui-fill/90',
         ],
       },
@@ -27,16 +28,16 @@ export default ct({
       },
       soft: {
         base: [
-          'color-ui-content/75 bg-ui-fill/10',
-          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/85',
-          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/75 aria-disabled:color-ui-content/75',
+          'color-ui-content/80 bg-ui-fill/10',
+          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/90',
+          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
       ghost: {
         base: [
-          'color-ui-fill/75 bg-transparent',
-          'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/85',
-          'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/75 aria-disabled:color-ui-fill/75',
+          'color-ui-fill/80 bg-transparent',
+          'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/90',
+          'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
         ],
       },
       link: {
@@ -75,10 +76,14 @@ export default ct({
     active: {
       true: '',
     },
+    prefix: {
+      true: '',
+    },
+    suffix: {
+      true: '',
+    },
     loading: {
-      true: {
-        icon: 'animate-spin',
-      },
+      true: '',
     },
   },
   compoundVariants: [
@@ -109,17 +114,28 @@ export default ct({
     {
       active: true,
       variant: 'soft',
-      class: { base: 'color-ui-content/85 bg-ui-fill/20 hover:color-ui-content/85 hover:bg-ui-fill/20' },
+      class: { base: 'color-ui-content/90 bg-ui-fill/20 hover:color-ui-content/90 hover:bg-ui-fill/20' },
     },
     {
       active: true,
       variant: 'ghost',
-      class: { base: 'color-ui-fill/85 bg-ui-fill/20 hover:color-ui-fill/85 hover:bg-ui-fill/20' },
+      class: { base: 'color-ui-fill/90 bg-ui-fill/20 hover:color-ui-fill/90 hover:bg-ui-fill/20' },
     },
     {
       active: true,
       variant: 'link',
       class: { base: 'color-ui-fill/90 hover:color-ui-fill/90' },
+    },
+    {
+      loading: true,
+      prefix: true,
+      class: { prefixIcon: 'animate-spin' },
+    },
+    {
+      loading: true,
+      prefix: false,
+      suffix: true,
+      class: { suffixIcon: 'animate-spin' },
     },
   ],
 })

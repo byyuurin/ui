@@ -104,6 +104,18 @@ export function createMergeRules(theme: Theme = {}): CRRule[] {
     // _rules/shadow
     // _rules/size
     // _rules/spacing
+    [/^p-?([xy])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
+    [/^p-?([rltbse])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
+    [/^p-(block|inline)(?:-(.+))?$/, ([type]) => `padding-${type}`],
+    [/^p-?([bi][se])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
+    [/^pa?()-?(.+)$/, () => 'padding'],
+    [/^p-?xy()()$/, () => 'padding'],
+    [/^m-?([xy])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
+    [/^m-?([rltbse])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
+    [/^m-(block|inline)(?:-(.+))?$/, ([type]) => `margin-${type}`],
+    [/^m-?([bi][se])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
+    [/^ma?()-?(.+)$/, () => 'margin'],
+    [/^m-?xy()()$/, () => 'margin'],
     // _rules/static
     [
       /^(?:display-(.+)|inline|block|inline-block|contents|flow-root|list-item|hidden)$/,
