@@ -22,6 +22,7 @@ export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIc
   variant?: InputVariants['variant']
   loading?: boolean
   highlight?: boolean
+  underline?: boolean
   required?: boolean
   autocomplete?: InputHTMLAttributes['autocomplete']
   autofocus?: boolean

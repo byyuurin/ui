@@ -11,6 +11,7 @@ const controls: ControlItems<InputProps> = [
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'ghost', 'none'] },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'disabled', value: false },
+  { prop: 'underline', value: false },
   { prop: 'highlight', value: false },
   { prop: 'loading', value: false },
 ]
@@ -28,10 +29,7 @@ const controls: ControlItems<InputProps> = [
       <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :prefix-icon="icon" />
       <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :suffix-icon="icon" />
       <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :icon="icon" :prefix-icon="icon" :suffix-icon="icon" />
-      <Input
-        v-bind="attrs"
-        :placeholder="attrs.placeholder || 'placeholder'"
-      >
+      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>
