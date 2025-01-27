@@ -16,7 +16,12 @@ const controls: ControlItems<DrawerProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Drawer" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Drawer"
+    description="A drawer that smoothly slides in & out of the screen."
+    :controls="controls"
+  >
     <Drawer v-bind="attrs" v-model:open="open">
       <Button label="Open Drawer" />
 

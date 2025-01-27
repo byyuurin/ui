@@ -46,7 +46,12 @@ const controls: ControlItems<AccordionProps<any>> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Accordion" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Accordion"
+    description="A stacked set of collapsible panels."
+    :controls="controls"
+  >
     <Accordion :items="items" v-bind="attrs" />
   </ExampleView>
 </template>

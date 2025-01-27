@@ -42,8 +42,8 @@ export default ct({
     variant: {
       outline: {
         base: [
-          'color-ui-cb/80 bg-ui-c1 ring ring-inset ring-ui-cb/80',
-          'focus:ring-2 focus:ring-ui-cb/80',
+          'color-ui-cb/80 bg-ui-c1 ring ring-inset ring-ui-cb/50',
+          'focus:ring-2 focus:ring-ui-cb/50',
           'disabled:ring-ui-fill/80',
         ],
       },

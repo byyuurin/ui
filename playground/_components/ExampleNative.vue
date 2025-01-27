@@ -1,5 +1,5 @@
 <template>
-  <ExampleView title="Native">
+  <ExampleView title="Native Elements">
     <div class="flex gap-4">
       <input class="size-5" type="checkbox" checked />
       <input class="size-5" type="radio" checked />

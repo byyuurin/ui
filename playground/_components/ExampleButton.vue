@@ -14,7 +14,12 @@ const controls: ControlItems<ButtonProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Button" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Button"
+    description="A button element that can act as a link or trigger an action."
+    :controls="controls"
+  >
     <div class="flex flex-wrap items-start gap-4">
       <Button v-bind="attrs" label="" icon="i-carbon-asleep-filled" />
       <Button v-bind="attrs" :label="attrs.label || 'text'" />

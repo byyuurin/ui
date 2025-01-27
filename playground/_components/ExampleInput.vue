@@ -13,7 +13,12 @@ const controls: ControlItems<InputProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Input" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Input"
+    description="An input element to enter text."
+    :controls="controls"
+  >
     <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" />
   </ExampleView>
 </template>

@@ -7,7 +7,7 @@ export default ct({
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
-    icon: 'font-size-1.25em',
+    icon: 'size-1.5em',
   },
   variants: {
     variant: {

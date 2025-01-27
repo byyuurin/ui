@@ -58,7 +58,13 @@ function handleUpdateToaster({ position, duration, expand }: ControlInfo) {
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Toast" :controls="controls" @change="handleUpdateToaster">
+  <ExampleView
+    v-slot="attrs"
+    title="Toast"
+    description="A succinct message to provide information or feedback to the user."
+    :controls="controls"
+    @change="handleUpdateToaster"
+  >
     <Button label="Add Toast" @click="addToast(attrs)" />
   </ExampleView>
 </template>

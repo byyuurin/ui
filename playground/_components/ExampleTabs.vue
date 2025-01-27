@@ -33,7 +33,12 @@ const items: TabsItem[] = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Tabs" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Tabs"
+    description="A set of tab panels that are displayed one at a time."
+    :controls="controls"
+  >
     <Tabs v-bind="attrs" :items="items" />
   </ExampleView>
 </template>

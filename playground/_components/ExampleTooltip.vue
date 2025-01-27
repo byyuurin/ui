@@ -13,16 +13,23 @@ const controls: ControlItems<TooltipProps & { label: string } & Pick<(TooltipPro
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Tooltip" :controls="controls">
-    <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
-      <Button :label="attrs.label || 'trigger'" variant="link" />
-    </Tooltip>
+  <ExampleView
+    v-slot="attrs"
+    title="Tooltip"
+    description="A popup that reveals information when hovering over an element."
+    :controls="controls"
+  >
+    <div class="flex gap-4">
+      <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
+        <Button :label="attrs.label || 'trigger'" />
+      </Tooltip>
 
-    <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
-      <Button label="slots" variant="link" />
-      <template #content>
-        <Placeholder label="#content" />
-      </template>
-    </Tooltip>
+      <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
+        <Button label="slots" />
+        <template #content>
+          <Placeholder label="#content" />
+        </template>
+      </Tooltip>
+    </div>
   </ExampleView>
 </template>

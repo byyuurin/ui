@@ -5,11 +5,16 @@ import type { ComponentAttrs } from '../types'
 
 export interface CardProps extends ComponentAttrs<typeof card> {
   as?: PrimitiveProps['as']
+  title?: string
+  description?: string
 }
 
 export interface CardSlots {
-  header?: (props?: {}) => any
   default?: (props?: {}) => any
+  content?: (props?: {}) => any
+  header?: (props?: {}) => any
+  title?: (props?: any) => any
+  description?: (props?: any) => any
   footer?: (props?: {}) => any
 }
 </script>
@@ -32,16 +37,29 @@ const style = computed(() => {
 
 <template>
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <div v-if="slots.header" :class="style.header({ class: props.ui?.header })">
-      <slot name="header"></slot>
-    </div>
+    <slot name="content">
+      <div v-if="slots.header || props.title || slots.description || props.description" :class="style.header({ class: props.ui?.header })">
+        <slot name="header">
+          <h2 v-if="slots.title || props.title" :class="style.title({ class: props.ui?.title })">
+            <slot name="title">
+              {{ props.title }}
+            </slot>
+          </h2>
+          <p v-if="slots.description || props.description" :class="style.description({ class: props.ui?.description })">
+            <slot name="description">
+              {{ props.description }}
+            </slot>
+          </p>
+        </slot>
+      </div>
 
-    <div v-if="slots.default" :class="style.body({ class: props.ui?.body })">
-      <slot></slot>
-    </div>
+      <div v-if="slots.default" :class="style.body({ class: props.ui?.body })">
+        <slot></slot>
+      </div>
 
-    <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })">
-      <slot name="footer"></slot>
-    </div>
+      <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })">
+        <slot name="footer"></slot>
+      </div>
+    </slot>
   </Primitive>
 </template>

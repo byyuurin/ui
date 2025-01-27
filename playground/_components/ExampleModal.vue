@@ -21,7 +21,12 @@ const demo4 = ref(false)
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Modal" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Modal"
+    description="A dialog window that can be used to display a message or request user input."
+    :controls="controls"
+  >
     <div class="flex gap-4">
       <Modal
         v-model:open="demo1"
@@ -95,7 +100,7 @@ const demo4 = ref(false)
         </Button>
 
         <template #header>
-          <Placeholder class="w-full h-8" label="#header" />
+          <Placeholder class="h-8" label="#header" />
         </template>
 
         <template #body>
@@ -114,7 +119,7 @@ const demo4 = ref(false)
           </Placeholder>
         </template>
         <template #footer>
-          <Placeholder label="#footer" class="flex-grow h-8" />
+          <Placeholder label="#footer" class="h-8" />
         </template>
       </Modal>
       <Modal

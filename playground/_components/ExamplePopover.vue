@@ -12,7 +12,12 @@ const controls: ControlItems<PopoverProps & { side: (PopoverProps['content'] & o
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Popover" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Popover"
+    description="A non-modal dialog that floats around a trigger element."
+    :controls="controls"
+  >
     <Popover v-bind="attrs" :content="{ side: attrs.side }">
       <Button label="Trigger" />
 

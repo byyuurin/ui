@@ -1,28 +1,33 @@
 <script lang="ts" setup>
 import type { AppProps } from '@byyuurin/ui'
-import ThemeSelector from '../../_components/ThemeSelector.vue'
-
-const toggleTheme = ref(true)
+import ThemeSelector, { setTheme, themeOptions } from '../../_components/ThemeSelector.vue'
 
 const uiColor = ref('')
+const uiTheme = ref<typeof themeOptions[number]['name']>('wireframe')
 
 const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration' | 'position' | 'expand'>>({
   duration: 10000,
   position: 'bottom-right',
   expand: true,
 })
+
+onMounted(() => {
+  const theme = themeOptions.find((i) => i.name === uiTheme.value)
+
+  if (theme)
+    setTheme(theme)
+})
 </script>
 
 <template>
   <UApp :toaster="toasterAttrs" :ui="{ toast: { slots: { icon: 'animate-head-shake animate-count-infinite' } } }">
     <div class="h-screen overflow-auto">
-      <ExampleNative :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleLink :class="uiColor" />
-      <ExampleCard :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExampleAccordion :class="uiColor" />
       <ExampleTabs :class="uiColor" />
+      <ExampleCard :class="uiColor" />
       <ExampleModal :class="uiColor" />
       <ExampleDrawer :class="uiColor" />
       <ExampleToast
@@ -34,21 +39,16 @@ const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration'
       />
       <ExamplePopover :class="uiColor" />
       <ExampleTooltip :class="uiColor" />
-      <div
-        class="sticky bottom-0 bg-ui-c1 border-t border-ui-cb/25 transition"
-        :class="{ 'translate-y-[calc(100%-2.5rem)]': toggleTheme }"
-      >
-        <a
-          class="font-600 text-xl leading-loose bg-ui-cb/10 px-4 flex items-center justify-between gap-4 bg-ui-cb/5 active:bg-ui-cb/10"
-          href="#"
-          @click.prevent="toggleTheme = !toggleTheme"
-        >
-          Theme
-        </a>
-        <div class="p-8 px-4 flex flex-col gap-4">
-          <ThemeSelector @color="uiColor = $event" />
+      <ExampleNative :class="uiColor" />
+
+      <UDrawer title="Change Theme or Color" direction="right" blur>
+        <div class="sticky bottom-0 p-2 text-center">
+          <UButton label="Theme" variant="outline" size="xl" icon="i-carbon-color-palette" round />
         </div>
-      </div>
+        <template #body>
+          <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
+        </template>
+      </UDrawer>
     </div>
   </UApp>
 </template>
