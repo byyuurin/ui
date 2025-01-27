@@ -138,3 +138,41 @@ function getOffset(index: number) {
     </ToastPortal>
   </ToastProvider>
 </template>
+
+<style>
+@keyframes toast-collapsed-closed {
+  from {
+    transform: var(--transform);
+  }
+  to {
+    transform: translateY(calc((var(--before) - var(--height)) * var(--gap)))
+      scale(var(--scale));
+  }
+}
+@keyframes toast-closed {
+  from {
+    transform: var(--transform);
+  }
+  to {
+    transform: translateY(
+      calc((var(--offset) - var(--height)) * var(--translate-factor))
+    );
+  }
+}
+@keyframes toast-slide-left {
+  from {
+    transform: translateX(0) translateY(var(--translate));
+  }
+  to {
+    transform: translateX(-100%) translateY(var(--translate));
+  }
+}
+@keyframes toast-slide-right {
+  from {
+    transform: translateX(0) translateY(var(--translate));
+  }
+  to {
+    transform: translateX(100%) translateY(var(--translate));
+  }
+}
+</style>

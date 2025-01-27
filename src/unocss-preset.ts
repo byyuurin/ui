@@ -86,7 +86,6 @@ export default definePreset((
     },
     animation: {
       keyframes: {
-        // general
         'fade-in': '{from {opacity: 0;}to {opacity: 1;}}',
         'fade-out': '{from {opacity: 1;}to {opacity: 0;}}',
         'scale-in': '{from {opacity: 0;scale: 0.95;}to {opacity: 1;scale: 1;}}',
@@ -107,13 +106,6 @@ export default definePreset((
         'slide-out-to-bottom-and-fade': '{from {opacity: 1;transform: translateY(0);}to {opacity: 0;transform: translateY(4px);}}',
         'slide-in-from-left-and-fade': '{from {opacity: 0;transform: translateX(-4px);}to {opacity: 1;transform: translateX(0);}}',
         'slide-out-to-left-and-fade': '{from {opacity: 1;transform: translateX(0);}to {opacity: 0;transform: translateX(-4px);}}',
-        // component only
-        'accordion-up': '{from {height: var(--reka-accordion-content-height);}to {height: 0;}}',
-        'accordion-down': '{from {height: 0;}to {height: var(--reka-accordion-content-height);}}',
-        'toast-collapsed-closed': '{from {transform: var(--transform);}to {transform: translateY(calc((var(--before) - var(--height)) * var(--gap))) scale(var(--scale));}}',
-        'toast-closed': '{from {transform: var(--transform);}to {transform: translateY(calc((var(--offset) - var(--height)) * var(--translate-factor)));}}',
-        'toast-slide-left': '{from {transform: translateX(0) translateY(var(--translate));}to {transform: translateX(-100%) translateY(var(--translate));}}',
-        'toast-slide-right': '{from {transform: translateX(0) translateY(var(--translate));}to {transform: translateX(100%) translateY(var(--translate));}}',
       },
     },
   }

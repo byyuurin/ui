@@ -99,3 +99,23 @@ const style = computed(() => {
     </AccordionItem>
   </AccordionRoot>
 </template>
+
+<style>
+@keyframes accordion-up {
+  from {
+    height: var(--reka-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--reka-accordion-content-height);
+  }
+}
+</style>
