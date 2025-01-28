@@ -2,6 +2,7 @@
 import type { AppProps } from '@byyuurin/ui'
 import { setTheme, themeOptions } from './ThemeSelector.vue'
 
+const showDrawer = ref(false)
 const uiColor = ref('')
 const uiTheme = ref<typeof themeOptions[number]['name']>('wireframe')
 
@@ -42,10 +43,15 @@ onMounted(() => {
       <ExampleNative :class="uiColor" />
 
       <div class="text-center sticky bottom-0 p-4">
-        <UDrawer title="Change Theme or Color" direction="right" :handle="false" :overlay="false" :ui="{ content: 'ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2' }">
+        <UDrawer v-model:open="showDrawer" title="Change Theme or Color" direction="right" :handle="false" :overlay="false" :ui="{ content: 'ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2' }">
           <UButton label="Theme" variant="solid" size="xl" icon="i-carbon-color-palette" round />
           <template #body>
-            <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
+            <div class="relative h-full flex flex-col justify-between">
+              <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
+              <div class="sticky bottom-0 p-4 text-center sm:hidden">
+                <UButton label="Close" variant="solid" size="xl" icon="i-carbon-close" @click="showDrawer = false" />
+              </div>
+            </div>
           </template>
         </UDrawer>
       </div>
