@@ -22,7 +22,7 @@ export interface UseComponentIconsProps {
 }
 
 export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentIconsProps>) {
-  const theme = useTheme()
+  const { theme } = useTheme()
 
   const props = computed(() => toValue(componentProps))
 
