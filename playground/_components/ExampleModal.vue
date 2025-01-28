@@ -40,7 +40,6 @@ const demo4 = ref(false)
         <template #body>
           <Placeholder class="w-full h-full min-h-32">
             <Button
-              v-show="(!attrs.dismissible && !attrs.close) || (attrs.size === 'fullscreen' && !attrs.close)"
               class="relative z-1 px-4"
               variant="outline"
               label="Close"
@@ -76,7 +75,6 @@ const demo4 = ref(false)
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
               <Button
-                v-show="(!attrs.dismissible && !attrs.close) || (attrs.size === 'fullscreen' && !attrs.close)"
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -108,7 +106,6 @@ const demo4 = ref(false)
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
               <Button
-                v-show="!attrs.dismissible || attrs.size === 'fullscreen'"
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -136,7 +133,6 @@ const demo4 = ref(false)
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#content</span>
               <Button
-                v-show="!attrs.dismissible || attrs.size === 'fullscreen'"
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
