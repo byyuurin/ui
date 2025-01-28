@@ -25,7 +25,6 @@ import { defu } from 'defu'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useTheme } from '../composables'
-import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   portal: true,
@@ -45,7 +44,7 @@ const contentProps = toRef(() => defu(props.content, contentDefaults) as Tooltip
 
 const arrowProps = toRef(() => props.arrow as TooltipArrowProps)
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.tooltip)
   return styler(props)

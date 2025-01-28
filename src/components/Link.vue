@@ -1,6 +1,5 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import { createStyler } from '../internal'
 import type { link } from '../theme'
 import type { ComponentAttrs, HintString, MaybeArray } from '../types'
 
@@ -61,7 +60,7 @@ const linkProps = computed(() => {
   return base
 })
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 
 const style = computed(() => {
   if (props.raw)

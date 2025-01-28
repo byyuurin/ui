@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, TabsRootEmits, TabsRootProps } from 'reka-ui'
-import { tabs } from '../theme'
+import type { tabs } from '../theme'
 import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface TabsItem {
@@ -52,7 +52,7 @@ export type TabsSlots<T extends { slot?: string }> = {
 import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { createStyler } from '../internal'
+import { useTheme } from '../composables'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
@@ -70,8 +70,9 @@ const slots = defineSlots<TabsSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'activationMode', 'unmountOnHide'), emits)
 
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
-  const styler = createStyler(tabs)
+  const styler = createStyler(theme.value.tabs)
   return styler(props)
 })
 </script>

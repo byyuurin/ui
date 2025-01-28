@@ -37,7 +37,6 @@ import { reactivePick } from '@vueuse/core'
 import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
 import { useTheme } from '../composables'
-import { createStyler } from '../internal'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<AccordionProps<T>>(), {
@@ -51,7 +50,7 @@ const slots = defineSlots<AccordionSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'type', 'unmountOnHide'))
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.accordion)
   return styler(props)

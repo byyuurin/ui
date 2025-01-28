@@ -31,7 +31,6 @@ import { reactivePick } from '@vueuse/core'
 import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
 import { computed, ref } from 'vue'
 import { useTheme, useToast } from '../composables'
-import { createStyler } from '../internal'
 import { omit } from '../utils'
 import Toast from './Toast.vue'
 
@@ -66,7 +65,7 @@ const swipeDirection = computed(() => {
   return 'right'
 })
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.toaster)
   return styler({

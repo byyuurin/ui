@@ -30,7 +30,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useComponentIcons, useTheme } from '../composables'
-import { createStyler, pickLinkProps } from '../internal'
+import { pickLinkProps } from '../internal'
 import { omit } from '../utils'
 import Link from './Link.vue'
 
@@ -47,7 +47,7 @@ const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons
 
 const linkProps = pickLinkProps(props)
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 
 const style = computed(() => {
   const styler = createStyler(theme.value.button)

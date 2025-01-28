@@ -47,7 +47,6 @@ export interface InputSlots {
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useComponentIcons, useTheme } from '../composables'
-import { createStyler } from '../internal'
 import { looseToNumber } from '../utils'
 
 defineOptions({
@@ -70,7 +69,7 @@ const inputRef = ref<HTMLInputElement | null>(null)
 
 const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.input)
   // @ts-expect-error ignore type

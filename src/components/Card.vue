@@ -23,12 +23,11 @@ export interface CardSlots {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useTheme } from '../composables'
-import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<CardProps>(), {})
 const slots = defineSlots<CardSlots>()
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.card)
   return styler(props)

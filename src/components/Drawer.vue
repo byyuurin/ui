@@ -54,7 +54,6 @@ import { useForwardPropsEmits } from 'reka-ui'
 import { DrawerContent, DrawerDescription, DrawerOverlay, DrawerPortal, DrawerRoot, DrawerTitle, DrawerTrigger } from 'vaul-vue'
 import { computed, toRef } from 'vue'
 import { useTheme } from '../composables'
-import { createStyler } from '../internal'
 
 const props = withDefaults(defineProps<DrawerProps>(), {
   direction: 'bottom',
@@ -68,7 +67,7 @@ const slots = defineSlots<DrawerSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'activeSnapPoint', 'closeThreshold', 'defaultOpen', 'dismissible', 'fadeFromIndex', 'fixed', 'modal', 'nested', 'direction', 'open', 'scrollLockTimeout', 'shouldScaleBackground', 'snapPoints'), emit)
 const contentProps = toRef(() => props.content)
 
-const theme = useTheme()
+const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.drawer)
   return styler(props)

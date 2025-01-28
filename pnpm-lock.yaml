@@ -20,6 +20,9 @@ importers:
       '@unocss/preset-mini':
         specifier: ^65.4.3
         version: 65.4.3
+      '@unocss/preset-uno':
+        specifier: ^65.4.3
+        version: 65.4.3
       '@vueuse/core':
         specifier: ^12.5.0
         version: 12.5.0(typescript@5.7.3)

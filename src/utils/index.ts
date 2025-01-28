@@ -1,6 +1,8 @@
 import type { InjectionKey } from 'vue'
 import { inject as vueInject, provide as vueProvide } from 'vue'
 
+export * from './unocss'
+
 export function createInjection<T>(name: string): {
   injectionKey: InjectionKey<T>
   provide: (value: T) => void
