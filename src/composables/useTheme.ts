@@ -1,25 +1,17 @@
-import { mergeConfigs } from '@unocss/core'
-import { presetUno } from '@unocss/preset-uno'
 import { createSharedComposable } from '@vueuse/core'
 import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
-import { extendTheme, prepareStyler } from '../internal'
+import { createMergeRules, extendTheme, prepareStyler } from '../internal'
 import * as theme from '../theme'
 import type { ThemeExtension } from '../types'
-import presetUI from '../unocss-preset'
-import { createInjection, transformUnoRules } from '../utils'
+import { createInjection } from '../utils'
 
 export const {
   provide: provideThemeExtension,
   inject: injectThemeExtension,
 } = createInjection<MaybeRefOrGetter<ThemeExtension>>('ui.themeExtension', {})
 
-const config = mergeConfigs([
-  presetUno(),
-  presetUI(),
-])
-
-export const mergeRules = transformUnoRules(config)
+export const mergeRules = createMergeRules()
 
 export const useTheme = createSharedComposable(() => {
   const _theme = injectThemeExtension()

@@ -8,6 +8,6 @@ describe('check style merge', () => {
   it('should...', () => {
     const result = merge('grid gap-10 grid-cols-10 scale-1 translate-y-full')
 
-    expect(result).toMatchInlineSnapshot(`"[display] [gap] grid-[grid-template-columns] [--un-scale-x,--un-scale-y,transform] [--un-translate-y,transform]"`)
+    expect(result).toMatchInlineSnapshot(`"grid gap grid-cols-10 scale translate-y"`)
   })
 })
