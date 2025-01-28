@@ -37,9 +37,9 @@ export function transformUnoRules<Theme extends object = object>(
       continue
     }
 
-    const matcher: CRRuleMatcher = (matches) => {
+    const matcher: CRRuleMatcher = (matches, ctx) => {
       try {
-        const result = maybeResult(['', ...matches], {
+        const result = maybeResult([ctx.input, ...matches], {
           theme,
           // @ts-expect-error pass
           generator: { config: {} },
