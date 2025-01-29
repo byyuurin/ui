@@ -37,18 +37,30 @@ const style = computed(() => {
 <template>
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
     <slot name="content">
-      <div v-if="slots.header || props.title || slots.description || props.description" :class="style.header({ class: props.ui?.header })">
+      <div
+        v-if="slots.header || slots.title || props.title || slots.description || props.description"
+        :class="style.header({ class: props.ui?.header })"
+      >
         <slot name="header">
-          <h2 v-if="slots.title || props.title" :class="style.title({ class: props.ui?.title })">
+          <Primitive
+            v-if="slots.title || props.title"
+            :as="slots.title ? undefined : 'h2'"
+            :class="style.title({ class: props.ui?.title })"
+          >
             <slot name="title">
               {{ props.title }}
             </slot>
-          </h2>
-          <p v-if="slots.description || props.description" :class="style.description({ class: props.ui?.description })">
+          </Primitive>
+          <Primitive
+            v-if="slots.description || props.description"
+            :as="slots.description ? undefined : 'p'"
+            :as-child="!!slots.description"
+            :class="style.description({ class: props.ui?.description })"
+          >
             <slot name="description">
               {{ props.description }}
             </slot>
-          </p>
+          </Primitive>
         </slot>
       </div>
 
