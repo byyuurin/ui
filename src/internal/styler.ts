@@ -35,7 +35,7 @@ export function createMergeRules(): CRRule[] {
     // _rules/behaviors
     // _rules/border
     [/^(?:border-|b-)(.+)$/, ([type]) => {
-      let result = type
+      let result = 'border'
 
       ;[
         /^([xyrltbse]|block|inline|[bi][se])(?:-(.+))?$/,
@@ -44,6 +44,24 @@ export function createMergeRules(): CRRule[] {
 
         if (matched) {
           result = `border-${matched[1]}`
+          return true
+        }
+
+        return false
+      })
+
+      return result
+    }],
+    [/^(?:border-|b-)?(?:rounded|rd)(.+)$/, ([type]) => {
+      let result = 'border-radius'
+
+      ;[
+        /^([xyrltbse]|block|inline|[bi][se])(?:-(.+))?$/,
+      ].some((r) => {
+        const matched = type.match(r)
+
+        if (matched) {
+          result = `border-radius-${matched[1]}`
           return true
         }
 

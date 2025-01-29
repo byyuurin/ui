@@ -10,7 +10,7 @@ export interface PresetOptions {
   radiusButton?: string
   /** @default "[radius]" */
   radiusBox?: string
-  /** @default "[radius-button]" */
+  /** @default "[radius]" */
   radiusTabs?: string
   /**
    * Base content color
@@ -74,7 +74,7 @@ export default definePreset((
       [`${cssVarsPrefix}-base`]: cssVar('radius'),
       [`${cssVarsPrefix}-button`]: cssVar('radius-button', cssVar('radius')),
       [`${cssVarsPrefix}-box`]: cssVar('radius-box', cssVar('radius')),
-      [`${cssVarsPrefix}-tabs`]: cssVar('radius-tabs', cssVar('radius-button  '), cssVar('radius')),
+      [`${cssVarsPrefix}-tabs`]: cssVar('radius-tabs', cssVar('radius')),
     },
     ringWidth: {
       DEFAULT: '1px',

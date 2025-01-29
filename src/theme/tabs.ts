@@ -103,7 +103,7 @@ export default ct({
       variant: ['solid', 'soft'],
       class: {
         indicator: 'inset-x-1',
-        list: 'items-center',
+        list: 'items-center rounded-[calc(var(--ui-radius-tabs)*0.66)]',
       },
     },
     {
