@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Card, Input } from '@byyuurin/ui'
+import { Card, Checkbox, Input } from '@byyuurin/ui'
 
 export type ControlItem<T> = {
   [Prop in keyof T]?: {
@@ -68,11 +68,9 @@ onMounted(() => {
                 {{ (option as any)?.label ?? option }}
               </option>
             </select>
-            <input
+            <Checkbox
               v-else-if="typeof item?.value === 'boolean'"
               v-model="attrs[item.prop]"
-              type="checkbox"
-              class="size-5 accent-ui-cb"
             />
             <Input
               v-else

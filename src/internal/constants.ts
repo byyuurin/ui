@@ -7,6 +7,7 @@ export const componentNames: ComponentName[] = [
   'App',
   'Button',
   'Card',
+  'Checkbox',
   'Drawer',
   'Input',
   'Link',

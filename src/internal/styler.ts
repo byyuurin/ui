@@ -138,6 +138,7 @@ export function createMergeRules(): CRRule[] {
         return null
       },
     ],
+    [/^content-(.+)$/, () => 'content'],
     // _rules/svg
     // _rules/transform
     [

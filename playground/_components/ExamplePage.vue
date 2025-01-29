@@ -31,6 +31,7 @@ onMounted(() => {
       <ExampleButton :class="uiColor" />
       <ExampleLink :class="uiColor" />
       <ExampleInput :class="uiColor" />
+      <ExampleCheckbox :class="uiColor" />
       <ExampleAccordion :class="uiColor" />
       <ExampleTabs :class="uiColor" />
       <ExampleCard :class="uiColor" />
@@ -47,7 +48,7 @@ onMounted(() => {
       <ExampleTooltip :class="uiColor" />
       <ExampleNative :class="uiColor" />
 
-      <div class="text-center sticky bottom-0 p-4">
+      <div class="py-6">
         <UDrawer
           v-model:open="showDrawer"
           title="Change Theme or Color"
@@ -61,13 +62,13 @@ onMounted(() => {
             footer: 'sticky bottom-0 bg-ui-c1',
           }"
         >
-          <UButton label="Theme" variant="solid" size="xl" icon="i-carbon-color-palette" round />
+          <UButton class="fixed bottom-4 left-1/2 -translate-x-1/2" label="Theme" variant="solid" size="xl" icon="i-mdi-palette-outline" round />
           <template #body>
             <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
           </template>
           <template #footer>
             <div class="text-center pt-4">
-              <UButton label="Close" variant="solid" size="xl" icon="i-carbon-close" round @click="showDrawer = false" />
+              <UButton label="Close" variant="solid" size="xl" icon="i-mdi-close-thick" round @click="showDrawer = false" />
             </div>
           </template>
         </UDrawer>
