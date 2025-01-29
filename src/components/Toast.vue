@@ -47,8 +47,8 @@ const slots = defineSlots<ToastSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'duration', 'type'), emit)
 
-const el = ref()
-const { height } = useElementBounding(el)
+const el = ref<InstanceType<typeof ToastRoot>>()
+const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
 
 const multiline = computed(() => !!props.title && !!props.description)
 
