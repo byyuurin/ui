@@ -1,4 +1,5 @@
 export { default as accordion } from './accordion'
+export { default as app } from './app'
 export { default as button } from './button'
 export { default as card } from './card'
 export { default as checkbox } from './checkbox'
@@ -11,12 +12,3 @@ export { default as tabs } from './tabs'
 export { default as toast } from './toast'
 export { default as toaster } from './toaster'
 export { default as tooltip } from './tooltip'
-
-export const global = {
-  icons: {
-    close: 'i-mdi-close-thick',
-    loading: 'i-mdi-loading',
-    check: 'i-mdi-check-bold',
-    indeterminate: 'i-mdi-minus-thick',
-  },
-}

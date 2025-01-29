@@ -37,7 +37,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
    */
   dismissible?: boolean
   close?: ButtonProps | boolean
-  /** @default `global.icons.close` */
+  /** @default `app.icons.close` */
   closeIcon?: string
 }
 </script>
@@ -113,7 +113,7 @@ const style = computed(() => {
                   <UButton
                     v-if="props.close"
                     variant="ghost"
-                    :icon="props.closeIcon || theme.global.icons.close"
+                    :icon="props.closeIcon || theme.app.icons.close"
                     v-bind="typeof props.close === 'boolean' ? {} : props.close"
                     :class="style.close({ class: props.ui?.close })"
                   />

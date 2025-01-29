@@ -15,7 +15,7 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
    * @default true
    */
   close?: ButtonProps | boolean
-  /** @default `global.icons.close` */
+  /** @default `app.icons.close` */
   closeIcon?: string
 }
 
@@ -109,7 +109,7 @@ defineExpose({
         <slot name="close" :ui="ui">
           <UButton
             v-if="props.close"
-            :icon="props.closeIcon || theme.global.icons.close"
+            :icon="props.closeIcon || theme.app.icons.close"
             size="md"
             variant="link"
             aria-label="close"

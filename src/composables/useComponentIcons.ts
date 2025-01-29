@@ -16,7 +16,7 @@ export interface UseComponentIconsProps {
   loading?: boolean
   /**
    * The icon when the `loading` prop is `true`.
-   * @default global.icons.loading
+   * @default app.icons.loading
    */
   loadingIcon?: string
 }
@@ -31,13 +31,13 @@ export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentI
 
   const prefixIconName = computed(() => {
     if (props.value.loading)
-      return props.value.loadingIcon || theme.value.global.icons.loading
+      return props.value.loadingIcon || theme.value.app.icons.loading
 
     return props.value.prefixIcon || props.value.icon
   })
   const suffixIconName = computed(() => {
     if (props.value.loading && !isPrefix.value)
-      return props.value.loadingIcon || theme.value.global.icons.loading
+      return props.value.loadingIcon || theme.value.app.icons.loading
 
     return props.value.suffixIcon || props.value.icon
   })

@@ -13,12 +13,12 @@ export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<Che
   size?: CheckboxVariants['size']
   /**
    * The icon displayed when checked.
-   * @default global.icons.check
+   * @default app.icons.check
    */
   icon?: string
   /**
    * The icon displayed when the checkbox is indeterminate.
-   * @default global.icons.indeterminate
+   * @default app.icons.indeterminate
    */
   indeterminateIcon?: string
 }
@@ -84,9 +84,9 @@ function onUpdate(value: any) {
         <CheckboxIndicator as-child>
           <i
             v-if="modelValue === 'indeterminate'"
-            :class="style.icon({ class: [props.indeterminateIcon || theme.global.icons.indeterminate, props.ui?.icon] })"
+            :class="style.icon({ class: [props.indeterminateIcon || theme.app.icons.indeterminate, props.ui?.icon] })"
           ></i>
-          <i v-else :class="style.icon({ class: [props.icon, theme.global.icons.check, props.ui?.icon] })"></i>
+          <i v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })"></i>
         </CheckboxIndicator>
       </CheckboxRoot>
     </div>
