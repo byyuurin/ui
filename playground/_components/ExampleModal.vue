@@ -38,7 +38,7 @@ const slotsExample3 = ref(false)
         </Button>
 
         <template #body>
-          <Placeholder class="w-full h-full min-h-32">
+          <Placeholder class="w-full h-100">
             <Button
               class="relative z-1 px-4"
               variant="outline"
@@ -71,7 +71,7 @@ const slotsExample3 = ref(false)
         </template>
 
         <template #body>
-          <Placeholder class="w-full h-full min-h-32">
+          <Placeholder class="w-full h-100">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
               <Button
@@ -102,7 +102,7 @@ const slotsExample3 = ref(false)
         </template>
 
         <template #body>
-          <Placeholder class="w-full h-full min-h-32">
+          <Placeholder class="w-full h-100">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
               <Button
@@ -129,7 +129,7 @@ const slotsExample3 = ref(false)
         </Button>
 
         <template #content>
-          <Placeholder class="w-full h-full min-h-64">
+          <Placeholder class="w-full h-100">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#content</span>
               <Button
