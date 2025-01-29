@@ -14,10 +14,10 @@ const controls: ControlItems<ModalProps> = [
   { prop: 'transition', value: true },
 ]
 
-const demo1 = ref(false)
-const demo2 = ref(false)
-const demo3 = ref(false)
-const demo4 = ref(false)
+const open = ref(false)
+const slotsExample1 = ref(false)
+const slotsExample2 = ref(false)
+const slotsExample3 = ref(false)
 </script>
 
 <template>
@@ -27,14 +27,14 @@ const demo4 = ref(false)
     description="A dialog window that can be used to display a message or request user input."
     :controls="controls"
   >
-    <div class="flex gap-4">
+    <div class="flex flex-wrap gap-4">
       <Modal
-        v-model:open="demo1"
+        v-model:open="open"
         v-bind="attrs"
         :ui="{ overlay: 'z-1', content: 'z-1' }"
       >
         <Button>
-          Open
+          Open Modal
         </Button>
 
         <template #body>
@@ -44,13 +44,13 @@ const demo4 = ref(false)
               variant="outline"
               label="Close"
               round
-              @click="demo1 = false"
+              @click="open = false"
             />
           </Placeholder>
         </template>
       </Modal>
       <Modal
-        v-model:open="demo2"
+        v-model:open="slotsExample1"
         :ui="{ overlay: 'z-1', content: 'z-1' }"
         v-bind="attrs"
       >
@@ -79,7 +79,7 @@ const demo4 = ref(false)
                 variant="outline"
                 label="Close"
                 round
-                @click="demo2 = false"
+                @click="slotsExample1 = false"
               />
             </div>
           </Placeholder>
@@ -89,7 +89,7 @@ const demo4 = ref(false)
         </template>
       </Modal>
       <Modal
-        v-model:open="demo3"
+        v-model:open="slotsExample2"
         :ui="{ overlay: 'z-1', content: 'z-1' }"
         v-bind="attrs"
       >
@@ -110,7 +110,7 @@ const demo4 = ref(false)
                 variant="outline"
                 label="Close"
                 round
-                @click="demo3 = false"
+                @click="slotsExample2 = false"
               />
             </div>
           </Placeholder>
@@ -120,7 +120,7 @@ const demo4 = ref(false)
         </template>
       </Modal>
       <Modal
-        v-model:open="demo4"
+        v-model:open="slotsExample3"
         :ui="{ overlay: 'z-1', content: 'z-1' }"
         v-bind="attrs"
       >
@@ -137,7 +137,7 @@ const demo4 = ref(false)
                 variant="outline"
                 label="Close"
                 round
-                @click="demo4 = false"
+                @click="slotsExample3 = false"
               />
             </div>
           </Placeholder>

@@ -29,5 +29,20 @@ const controls: ControlItems<ButtonProps> = [
       <Button v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
       <Button v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
     </div>
+    <div class="py-4">
+      <Button v-bind="attrs" :label="attrs.label || 'Text'">
+        <template #prefix>
+          <Placeholder label="#prefix" />
+        </template>
+
+        <template #default>
+          <Placeholder label="#default" />
+        </template>
+
+        <template #suffix>
+          <Placeholder label="#suffix" />
+        </template>
+      </Button>
+    </div>
   </ExampleView>
 </template>

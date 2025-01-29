@@ -80,39 +80,39 @@ const style = computed(() => {
       <slot></slot>
     </DrawerTrigger>
 
-    <DrawerPortal :disabled="!portal">
-      <DrawerOverlay v-if="overlay" :class="style.overlay({ class: props.ui?.overlay })" />
+    <DrawerPortal :disabled="!props.portal">
+      <DrawerOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
 
       <DrawerContent
         :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
         v-bind="contentProps"
       >
         <slot name="handle">
-          <div v-if="handle" :class="style.handle({ class: props.ui?.handle })"></div>
+          <div v-if="props.handle" :class="style.handle({ class: props.ui?.handle })"></div>
         </slot>
 
         <slot name="content">
           <div :class="style.container({ class: props.ui?.container })">
             <div
-              v-if="slots.header || (title || slots.title) || (description || slots.description)"
+              v-if="slots.header || (props.title || slots.title) || (props.description || slots.description)"
               :class="style.header({ class: props.ui?.header })"
             >
               <slot name="header">
                 <DrawerTitle
-                  v-if="title || slots.title"
+                  v-if="props.title || slots.title"
                   :class="style.title({ class: props.ui?.title })"
                 >
                   <slot name="title">
-                    {{ title }}
+                    {{ props.title }}
                   </slot>
                 </DrawerTitle>
 
                 <DrawerDescription
-                  v-if="description || slots.description"
+                  v-if="props.description || slots.description"
                   :class="style.description({ class: props.ui?.description })"
                 >
                   <slot name="description">
-                    {{ description }}
+                    {{ props.description }}
                   </slot>
                 </DrawerDescription>
               </slot>

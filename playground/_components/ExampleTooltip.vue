@@ -19,7 +19,7 @@ const controls: ControlItems<TooltipProps & { label: string } & Pick<(TooltipPro
     description="A popup that reveals information when hovering over an element."
     :controls="controls"
   >
-    <div class="flex gap-4">
+    <div class="flex flex-wrap gap-4">
       <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
         <Button :label="attrs.label || 'trigger'" />
       </Tooltip>

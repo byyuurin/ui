@@ -6,7 +6,7 @@ export default ct({
     header: 'flex flex-wrap items-center gap-1 px-4 py-5 sm:px-6',
     body: 'flex-1 overflow-y-auto p-4 sm:p-6 empty:hidden',
     footer: 'flex items-center gap-1.5 p-4 sm:px-6',
-    title: 'flex-grow color-ui-cb font-size-xl font-600',
-    description: 'w-full color-ui-cb/80 text-sm',
+    title: 'flex-grow color-ui-cb text-xl font-semibold',
+    description: 'w-full color-ui-cb/80',
   },
 })

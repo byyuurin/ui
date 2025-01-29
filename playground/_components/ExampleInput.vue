@@ -3,7 +3,8 @@ import type { InputProps } from '@byyuurin/ui'
 import { Input } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const icon = 'i-carbon-unlocked'
+const prefixIcon = 'i-carbon-unlocked'
+const suffixIcon = 'i-carbon-share'
 
 const controls: ControlItems<InputProps> = [
   { prop: 'type', value: 'text', options: ['text', 'number', 'password', 'search', 'file'] },
@@ -26,9 +27,9 @@ const controls: ControlItems<InputProps> = [
   >
     <div class="flex flex-col gap-4">
       <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :prefix-icon="icon" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :suffix-icon="icon" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :icon="icon" :prefix-icon="icon" :suffix-icon="icon" />
+      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :prefix-icon="prefixIcon" />
+      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :suffix-icon="suffixIcon" />
+      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
       <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'">
         <template #prefix>
           <Placeholder label="#prefix" />
