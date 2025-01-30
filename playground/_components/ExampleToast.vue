@@ -36,7 +36,7 @@ function addToast({ title, description }: ControlInfo) {
   toast.add({
     title: title || 'Title',
     description: description || 'Description',
-    icon: 'i-carbon-notification',
+    icon: 'animate-head-shake animate-count-infinite i-carbon-notification',
     actions: [
       { label: 'YES', class: 'min-w-20 ui-green justify-center' },
       { label: 'NO', class: 'min-w-20 ui-rose justify-center' },

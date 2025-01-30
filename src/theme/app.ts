@@ -4,5 +4,6 @@ export default {
     loading: 'i-mdi-loading',
     check: 'i-mdi-check-bold',
     indeterminate: 'i-mdi-minus-thick',
+    down: 'i-mdi-chevron-down',
   },
 }

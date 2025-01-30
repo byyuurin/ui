@@ -50,10 +50,8 @@ export const themeOptions = defineThemeOptions([
   {
     name: 'valentine',
     colorScheme: 'light',
-    radius: '1rem',
+    radius: '1.9rem',
     radiusBox: '1rem',
-    radiusButton: '1.9rem',
-    radiusTabs: '1.9rem',
     cb: cssVar('#632c3b'),
     c1: cssVar('#fae7f4'),
     c2: cssVar('#e3d2de'),

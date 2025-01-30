@@ -21,16 +21,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <UApp
-    :toaster="toasterAttrs"
-    :ui="{
-      toast: { slots: { icon: 'animate-head-shake animate-count-infinite' } },
-    }"
-  >
+  <UApp :toaster="toasterAttrs">
     <div>
       <ExampleButton :class="uiColor" />
       <ExampleLink :class="uiColor" />
       <ExampleInput :class="uiColor" />
+      <ExampleSelect :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />
       <ExampleAccordion :class="uiColor" />
       <ExampleTabs :class="uiColor" />

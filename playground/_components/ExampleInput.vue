@@ -26,11 +26,11 @@ const controls: ControlItems<InputProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :prefix-icon="prefixIcon" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :suffix-icon="suffixIcon" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
-      <Input v-bind="attrs" :placeholder="attrs.placeholder || 'placeholder'">
+      <Input v-bind="attrs" />
+      <Input v-bind="attrs" :prefix-icon="prefixIcon" />
+      <Input v-bind="attrs" :suffix-icon="suffixIcon" />
+      <Input v-bind="attrs" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
+      <Input v-bind="attrs">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>

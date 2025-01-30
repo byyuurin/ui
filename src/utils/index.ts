@@ -1,3 +1,4 @@
+import { isEqual } from 'ohash'
 import type { InjectionKey } from 'vue'
 import { inject as vueInject, provide as vueProvide } from 'vue'
 
@@ -102,4 +103,24 @@ export function set(object: Record<string, any>, path: (string | number)[] | str
 export function looseToNumber(value: any): any {
   const n = Number.parseFloat(value)
   return Number.isNaN(n) ? value : n
+}
+
+export function compare<T>(
+  value?: T,
+  currentValue?: T,
+  comparator?: string | ((a: T, b: T) => boolean),
+) {
+  if (value === undefined || currentValue === undefined)
+    return false
+
+  if (typeof value === 'string')
+    return value === currentValue
+
+  if (typeof comparator === 'function')
+    return comparator(value, currentValue)
+
+  if (typeof comparator === 'string')
+    return get(value!, comparator) === get(currentValue!, comparator)
+
+  return isEqual(value, currentValue)
 }
