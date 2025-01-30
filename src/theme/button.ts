@@ -50,19 +50,19 @@ export default ct({
     },
     size: {
       xs: {
-        base: 'font-size-xs',
+        base: 'text-xs',
       },
       sm: {
-        base: 'font-size-sm',
+        base: 'text-sm',
       },
       md: {
-        base: 'font-size-base',
+        base: 'text-base',
       },
       lg: {
-        base: 'font-size-lg',
+        base: 'text-lg',
       },
       xl: {
-        base: 'font-size-xl',
+        base: 'text-xl',
       },
     },
     round: {
@@ -90,14 +90,14 @@ export default ct({
     {
       size: ['xs', 'sm', 'md'],
       class: {
-        base: 'p-1',
+        base: 'p-1.5',
         label: 'px-1',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
-        base: 'p-1',
+        base: 'p-2.5',
         label: 'px-2',
       },
     },

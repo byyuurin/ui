@@ -2,15 +2,15 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
   slots: {
-    root: 'inline-flex items-center rounded-ui-base transition-colors aria-disabled:opacity-50',
+    root: 'inline-flex items-center gap-x-2 rounded-ui-base transition-colors aria-disabled:opacity-50',
     base: [
       'w-full color-inherit bg-transparent border-0 placeholder:color-ui-cb/50',
       'focus:outline-none',
       'disabled:cursor-not-allowed',
     ],
-    prefix: 'ms-1 flex items-center',
+    prefix: 'flex items-center',
     prefixIcon: 'shrink-0 size-1.5em',
-    suffix: 'me-1 flex items-center',
+    suffix: 'flex items-center',
     suffixIcon: 'shrink-0 size-1.5em',
   },
   variants: {
@@ -92,15 +92,13 @@ export default ct({
     {
       size: ['xs', 'sm', 'md'],
       class: {
-        root: 'p-2 px-1.5',
-        base: 'px-1.5',
+        root: 'p-1.5 px-2.5',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
-        root: 'p-2.5 px-1.5',
-        base: 'px-2',
+        root: 'p-2.5 px-3.5',
       },
     },
     {

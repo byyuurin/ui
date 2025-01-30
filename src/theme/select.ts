@@ -111,15 +111,15 @@ export default ct({
     {
       size: ['xs', 'sm', 'md'],
       class: {
-        base: 'p-2 px-3',
-        item: 'p-1 px-2',
+        base: 'p-1.5 px-2.5',
+        item: 'p-1.5 px-2.5',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
         base: 'p-2.5 px-3.5',
-        item: 'p-1.5 px-2.5',
+        item: 'p-2.5 px-3.5',
       },
     },
     {
