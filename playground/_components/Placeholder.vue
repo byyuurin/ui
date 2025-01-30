@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="group relative overflow-hidden rounded-ui-base border border-dashed border-ui-c1 px-4 flex items-center justify-center">
+  <span class="group relative overflow-hidden rounded-ui-base border border-dashed border-ui-c1 px-4 flex items-center justify-center">
     <svg class="absolute inset-0 h-full w-full stroke-ui-base/10" fill="none">
       <defs>
         <pattern
@@ -35,5 +35,5 @@ const props = withDefaults(defineProps<{
         }"
       >{{ props.label }}</span>
     </slot>
-  </div>
+  </span>
 </template>

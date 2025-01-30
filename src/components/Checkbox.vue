@@ -62,7 +62,7 @@ const style = computed(() => {
 })
 
 function onUpdate(value: any) {
-  // @ts-expect-error 'target' does not exist in type 'EventInit'
+  // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: value })
   emit('change', event)
 }
