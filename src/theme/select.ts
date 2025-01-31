@@ -30,9 +30,9 @@ export default ct({
     itemSuffixIcon: 'shrink-0',
     itemLabel: 'truncate',
     prefix: 'flex items-center',
-    prefixIcon: 'shrink-0 size-1.5em',
+    prefixIcon: 'shrink-0 size-1.25em',
     suffix: 'flex items-center',
-    suffixIcon: 'shrink-0 size-1.5em',
+    suffixIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     variant: {

@@ -43,14 +43,19 @@ export function createMergeRules(): CRRule[] {
         const matched = type.match(r)
 
         if (matched) {
-          result = `border-${matched[1]}`
+          const [_, type, color = ''] = matched
+          const parsed = parseColor(color, theme)
+
+          result = parsed?.color ? `border-${type}-color` : `border-${type}`
           return true
         }
 
         return false
       })
 
-      return result
+      const parsed = parseColor(type, theme)
+
+      return parsed?.color ? 'border-color' : result
     }],
     [/^(?:border-|b-)?(?:rounded|rd)(.+)$/, ([type]) => {
       let result = 'border-radius'

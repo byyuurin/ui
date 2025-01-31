@@ -9,9 +9,9 @@ export default ct({
       'disabled:cursor-not-allowed',
     ],
     prefix: 'flex items-center',
-    prefixIcon: 'shrink-0 size-1.5em',
+    prefixIcon: 'shrink-0 size-1.25em',
     suffix: 'flex items-center',
-    suffixIcon: 'shrink-0 size-1.5em',
+    suffixIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     size: {

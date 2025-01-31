@@ -242,7 +242,7 @@ function onUpdateOpen(value: boolean) {
                     <slot name="itemSuffix" :item="typedItem(item)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
-                      <i :class="style.suffixIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemSuffixIcon] })"></i>
+                      <i :class="style.itemSuffixIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemSuffixIcon] })"></i>
                     </SelectItemIndicator>
                   </span>
                 </slot>

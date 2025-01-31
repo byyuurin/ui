@@ -27,6 +27,7 @@ onMounted(() => {
       <ExampleLink :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExampleSelect :class="uiColor" />
+      <ExampleSwitch :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />
       <ExampleAccordion :class="uiColor" />
       <ExampleTabs :class="uiColor" />

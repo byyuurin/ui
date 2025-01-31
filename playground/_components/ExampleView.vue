@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { SelectOption } from '@byyuurin/ui'
-import { Card, Checkbox, Input, Select } from '@byyuurin/ui'
+import { Card, Input, Select, Switch } from '@byyuurin/ui'
 
 export type ControlItem<T> = {
   [Prop in keyof T]?: {
@@ -69,7 +69,7 @@ function typedSelectOptions(item: ControlItem<T>) {
             <label class="opacity-80">{{ item?.label ?? item?.prop }}:</label>
 
             <Select v-if="item?.options" v-model="attrs[item!.prop]" :options="typedSelectOptions(item)" />
-            <Checkbox
+            <Switch
               v-else-if="typeof item?.value === 'boolean'"
               v-model="attrs[item.prop]"
             />
