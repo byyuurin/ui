@@ -58,12 +58,12 @@ export interface SelectProps<
    */
   portal?: boolean
   /**
-   * When `items` is an array of objects, select the field to use as the value.
+   * When `options` is an array of objects, select the field to use as the value.
    * @default 'value'
    */
   valueKey?: V
   /**
-   * When `items` is an array of objects, select the field to use as the label.
+   * When `options` is an array of objects, select the field to use as the label.
    * @default "label"
    */
   labelKey?: V

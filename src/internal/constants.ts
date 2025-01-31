@@ -14,6 +14,7 @@ export const componentNames: ComponentName[] = [
   'Modal',
   'ModalProvider',
   'Popover',
+  'RadioGroup',
   'Select',
   'Switch',
   'Tabs',

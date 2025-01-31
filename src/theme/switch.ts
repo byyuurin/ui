@@ -64,7 +64,7 @@ export default ct({
     },
     required: {
       true: {
-        label: 'after:content-[\'*\'] after:ms-0.5',
+        label: `after:content-['*'] after:ms-0.5`,
       },
     },
     disabled: {

@@ -29,6 +29,7 @@ onMounted(() => {
       <ExampleSelect :class="uiColor" />
       <ExampleSwitch :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />
+      <ExampleRadioGroup :class="uiColor" />
       <ExampleAccordion :class="uiColor" />
       <ExampleTabs :class="uiColor" />
       <ExampleCard :class="uiColor" />
