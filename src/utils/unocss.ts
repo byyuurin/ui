@@ -1,5 +1,5 @@
 import type { CRRule, CRRuleMatcher } from '@byyuurin/ui-kit'
-import type { ConfigBase, CSSEntries, CSSObject } from '@unocss/core'
+import type { ConfigBase, CSSEntries, CSSObject } from 'unocss'
 
 export function transformUnoRules<Theme extends object = object>(
   config: ConfigBase<Theme> = {},

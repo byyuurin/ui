@@ -8,11 +8,45 @@ A collection of Vue.js components for my projects.
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-## Setup
+## Preview
+
+https://byyuurin-ui.netlify.app/
+
+## Installation
 
 ```ssh
 pnpm i @byyuurin/ui
 ```
+
+## UnoCSS
+
+```ts
+// uno.config.ts
+import ui from '@byyuurin/ui/unocss-preset'
+import { defineConfig, presetIcons, presetUno } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetUno(),
+    presetIcons(),
+    ui(),
+  ],
+  content: {
+    pipeline: {
+      include: [
+        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
+        /\/(?:theme).*\.(ts|m?js)($|\?)/,
+      ],
+    },
+  },
+})
+```
+
+## Credits
+
+- [UnoCSS](https://github.com/unocss/unocss)
+- [daisyui](https://github.com/saadeghi/daisyui)
+- [@nuxt/ui](https://github.com/nuxt/ui)
 
 ## License
 

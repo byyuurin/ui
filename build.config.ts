@@ -9,5 +9,6 @@ export default defineBuildConfig({
     '@byyuurin/ui-kit',
     '@nuxt/kit',
     'vue',
+    'unocss',
   ],
 })
