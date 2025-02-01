@@ -1,18 +1,15 @@
 import type { ClassValue, CRRule, CVCompoundVariants, CVMeta, CVSlots, CVVariants } from '@byyuurin/ui-kit'
 import { cv } from '@byyuurin/ui-kit'
 import type { CSSObject } from '@unocss/core'
-import { mergeConfigs, toArray } from '@unocss/core'
+import { mergeDeep, toArray } from '@unocss/core'
+import { theme as miniTheme } from '@unocss/preset-mini'
 import { h, isCSSMathFn, parseColor, splitShorthand } from '@unocss/preset-mini/utils'
-import { presetUno } from '@unocss/preset-uno'
 import type { Styler } from '../types'
-import presetUI, { cssVarsAll, cssVarsPrefix } from '../unocss-preset'
-
-const theme = mergeConfigs([
-  presetUno(),
-  presetUI(),
-]).theme!
+import { cssVarsAll, cssVarsPrefix, theme as uiTheme } from '../unocss-preset'
 
 export function createMergeRules(): CRRule[] {
+  const theme = mergeDeep(miniTheme, uiTheme)
+
   const GlobalKeywordsRE = /^inherit|initial|revert|revert-layer|unset$/
   return [
     // _rules/align
