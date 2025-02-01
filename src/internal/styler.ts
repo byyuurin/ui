@@ -1,8 +1,9 @@
 import type { ClassValue, CRRule, CVCompoundVariants, CVMeta, CVSlots, CVVariants } from '@byyuurin/ui-kit'
 import { cv } from '@byyuurin/ui-kit'
+import type { CSSObject } from '@unocss/core'
+import { mergeConfigs, toArray } from '@unocss/core'
 import { h, isCSSMathFn, parseColor, splitShorthand } from '@unocss/preset-mini/utils'
-import type { CSSObject } from 'unocss'
-import { mergeConfigs, presetUno, toArray } from 'unocss'
+import { presetUno } from '@unocss/preset-uno'
 import type { Styler } from '../types'
 import presetUI, { cssVarsAll, cssVarsPrefix } from '../unocss-preset'
 

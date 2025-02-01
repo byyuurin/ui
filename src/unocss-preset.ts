@@ -1,7 +1,7 @@
+import { definePreset } from '@unocss/core'
 import type { Theme } from '@unocss/preset-mini'
 import type { ParsedColorValue } from '@unocss/preset-mini/utils'
 import { parseColor, parseCssColor } from '@unocss/preset-mini/utils'
-import { definePreset } from 'unocss'
 
 export interface PresetOptions {
   /** @default "0rem" */

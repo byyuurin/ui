@@ -33,4 +33,13 @@ export default defineConfig({
       '@byyuurin/ui': resolve(__dirname, '../../src/index.ts'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          '@byyuurin/ui': ['@byyuurin/ui'],
+        },
+      },
+    },
+  },
 })
