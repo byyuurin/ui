@@ -6,10 +6,6 @@ export default defineConfig({
     presetUno(),
     presetIcons({
       cdn: 'https://esm.sh/',
-      extraProperties: {
-        'display': 'inline-block',
-        'vertical-align': 'middle',
-      },
     }),
     ui({
       radius: '0.125rem',

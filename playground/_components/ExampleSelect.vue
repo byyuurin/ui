@@ -26,7 +26,12 @@ const controls: ControlItems<SelectProps<any, any, any, any>> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Select" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Select"
+    description="A select element to choose from a list of options."
+    :controls="controls"
+  >
     <div class="flex flex-col gap-4">
       <Select v-model="value" v-bind="attrs" :options="options" />
       <Select v-model="value" v-bind="attrs" :options="options" suffix-icon="i-mdi-chevron-double-down" />

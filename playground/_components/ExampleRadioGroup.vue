@@ -27,7 +27,12 @@ const ui: RadioGroupProps<any>['ui'] = {
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="RadioGroup" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="RadioGroup"
+    description="A set of radio buttons to select a single option from a list."
+    :controls="controls"
+  >
     <RadioGroup v-model="value" v-bind="attrs" :options="options" :ui="ui" />
   </ExampleView>
 </template>

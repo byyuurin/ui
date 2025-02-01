@@ -21,7 +21,12 @@ const ui: SwitchProps['ui'] = {
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Switch" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Switch"
+    description="A control that toggles between two states."
+    :controls="controls"
+  >
     <div class="flex flex-wrap gap-4">
       <Switch v-bind="attrs" v-model="value" :ui="ui" />
       <Switch v-bind="attrs" v-model="value" :ui="ui" checked-icon="i-carbon-checkmark" unchecked-icon="i-carbon-close-large" />
