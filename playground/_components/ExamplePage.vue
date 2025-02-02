@@ -62,7 +62,7 @@ onMounted(() => {
         >
           <UButton class="fixed bottom-4 left-1/2 -translate-x-1/2" label="Theme" variant="solid" size="xl" icon="i-mdi-palette-outline" round />
           <template #body>
-            <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="max-w-screen-sm" />
+            <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="w-screen max-w-full sm:max-w-screen-sm" />
           </template>
           <template #footer>
             <div class="text-center pt-4">

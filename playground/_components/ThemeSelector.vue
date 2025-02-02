@@ -237,82 +237,80 @@ function setCustomTheme() {
 </script>
 
 <template>
-  <div>
-    <Tabs
-      variant="solid"
-      :items="[
-        { label: 'Base', slot: 'base' },
-        { label: 'Customize', slot: 'customize' },
-      ]"
-      :unmount-on-hide="false"
-      :ui="{ content: 'py-4' }"
-    >
-      <template #base>
-        <div class="flex flex-col gap-8 font-sans">
-          <div class="w-full grid sm:grid-cols-3 items-start gap-4">
-            <div
-              v-for="theme in themeOptions"
-              :key="theme.name"
-              class="self-end border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
-              :class=" theme.name === currentTheme ? 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1' : 'cursor-pointer'"
-              :style="Object.fromEntries(resolveThemeAttrs(theme))"
-              @click="onOptionClick(theme)"
-            >
-              <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
-                <div class="min-w-40 grid grid-cols-4 grid-rows-3">
-                  <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
-                  <div class="bg-ui-c3 col-start-1 row-start-3"></div>
-                  <div class="bg-ui-c1 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                    <div class="text-xl font-bold">
-                      {{ theme.name }}
-                    </div>
+  <Tabs
+    variant="solid"
+    :items="[
+      { label: 'Base', slot: 'base' },
+      { label: 'Customize', slot: 'customize' },
+    ]"
+    :unmount-on-hide="false"
+    :ui="{ content: 'py-4' }"
+  >
+    <template #base>
+      <div class="flex flex-col gap-8 font-sans">
+        <div class="w-full grid sm:grid-cols-3 items-start gap-4">
+          <div
+            v-for="theme in themeOptions"
+            :key="theme.name"
+            class="self-end border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
+            :class=" theme.name === currentTheme ? 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1' : 'cursor-pointer'"
+            :style="Object.fromEntries(resolveThemeAttrs(theme))"
+            @click="onOptionClick(theme)"
+          >
+            <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
+              <div class="min-w-40 grid grid-cols-4 grid-rows-3">
+                <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
+                <div class="bg-ui-c3 col-start-1 row-start-3"></div>
+                <div class="bg-ui-c1 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                  <div class="text-xl font-bold">
+                    {{ theme.name }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="w-full flex flex-wrap items-start gap-2">
-            <div v-for="option in colorOptions" :key="option" class="flex aspect-square items-center justify-center rounded">
-              <Link
-                class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-                :class="[option, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': option === props.color }]"
-                size="xl"
-                label="A"
-                raw
-                @click="setColor(option)"
-              />
-            </div>
+        </div>
+        <div class="w-full flex flex-wrap items-start gap-2">
+          <div v-for="option in colorOptions" :key="option" class="flex aspect-square items-center justify-center rounded">
+            <Link
+              class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
+              :class="[option, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': option === props.color }]"
+              size="xl"
+              label="A"
+              raw
+              @click="setColor(option)"
+            />
           </div>
         </div>
-      </template>
-      <template #customize>
-        <div class="w-screen-sm grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
-          <label class="opacity-80">colorScheme</label>
-          <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" />
-          <label class="opacity-80">fontFamily</label>
-          <Input v-model="themeCustomize.fontFamily" />
-          <label class="opacity-80">radius</label>
-          <Input v-model="themeCustomize.radius" />
-          <label class="opacity-80">radiusBox</label>
-          <Input v-model="themeCustomize.radiusBox" />
-          <label class="opacity-80">radiusButton</label>
-          <Input v-model="themeCustomize.radiusButton" />
-          <label class="opacity-80">radiusTabs</label>
-          <Input v-model="themeCustomize.radiusTabs" />
-          <label class="opacity-80">cb</label>
-          <Input v-model="themeCustomize.cb" type="color" />
-          <label class="opacity-80">c1</label>
-          <Input v-model="themeCustomize.c1" type="color" />
-          <label class="opacity-80">c2</label>
-          <Input v-model="themeCustomize.c2" type="color" />
-          <label class="opacity-80">c3</label>
-          <Input v-model="themeCustomize.c3" type="color" />
-        </div>
-        <div class="py-4 grid grid-cols-2 gap-4">
-          <Button class="justify-center" label="Reset" variant="outline" @click="sync" />
-          <Button class="justify-center" label="Apply" @click="setCustomTheme" />
-        </div>
-      </template>
-    </Tabs>
-  </div>
+      </div>
+    </template>
+    <template #customize>
+      <div class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
+        <label class="opacity-80">colorScheme</label>
+        <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" />
+        <label class="opacity-80">fontFamily</label>
+        <Input v-model="themeCustomize.fontFamily" />
+        <label class="opacity-80">radius</label>
+        <Input v-model="themeCustomize.radius" />
+        <label class="opacity-80">radiusBox</label>
+        <Input v-model="themeCustomize.radiusBox" />
+        <label class="opacity-80">radiusButton</label>
+        <Input v-model="themeCustomize.radiusButton" />
+        <label class="opacity-80">radiusTabs</label>
+        <Input v-model="themeCustomize.radiusTabs" />
+        <label class="opacity-80">cb</label>
+        <Input v-model="themeCustomize.cb" type="color" />
+        <label class="opacity-80">c1</label>
+        <Input v-model="themeCustomize.c1" type="color" />
+        <label class="opacity-80">c2</label>
+        <Input v-model="themeCustomize.c2" type="color" />
+        <label class="opacity-80">c3</label>
+        <Input v-model="themeCustomize.c3" type="color" />
+      </div>
+      <div class="py-4 grid grid-cols-2 gap-4">
+        <Button class="justify-center" label="Reset" variant="outline" @click="sync" />
+        <Button class="justify-center" label="Apply" @click="setCustomTheme" />
+      </div>
+    </template>
+  </Tabs>
 </template>
