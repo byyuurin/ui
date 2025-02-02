@@ -1,5 +1,7 @@
 <script lang="ts">
+import { Button, Input, Link, Select, Tabs } from '@byyuurin/ui'
 import { parseCssColor } from '@unocss/preset-mini/utils'
+import { useCloned } from '@vueuse/core'
 import { cssVarsPrefix } from '../../src/unocss-preset'
 
 interface ThemeConfig<T extends string = string> extends PresetOptions {
@@ -165,7 +167,6 @@ function resolveThemeAttrs(theme: ThemeConfig) {
 </script>
 
 <script setup lang="ts">
-import { Link } from '@byyuurin/ui'
 import type { PresetOptions } from '../../src/unocss-preset'
 
 const props = withDefaults(defineProps<{
@@ -178,9 +179,23 @@ const emit = defineEmits<{
   (event: 'update:color', color: string): void
 }>()
 
-const currentTheme = defineModel<typeof themeOptions[number]['name']>({
+const currentTheme = defineModel<typeof themeOptions[number]['name'] | 'customize'>({
   default: 'wireframe',
 })
+
+const { cloned: themeCustomize, sync } = useCloned<ThemeConfig>(() => ({
+  name: 'customize',
+  colorScheme: 'light',
+  fontFamily: '',
+  radius: '0rem',
+  radiusBox: '0rem',
+  radiusButton: '0rem',
+  radiusTabs: '0rem',
+  cb: '#1f2937',
+  c1: '#ffffff',
+  c2: '#f2f2f2',
+  c3: '#e5e6e6',
+}))
 
 const colorOptions = ['', 'ui-rose', 'ui-pink', 'ui-fuchsia', 'ui-purple', 'ui-violet', 'ui-indigo', 'ui-blue', 'ui-sky', 'ui-cyan', 'ui-teal', 'ui-emerald', 'ui-green', 'ui-lime', 'ui-yellow', 'ui-amber', 'ui-orange', 'ui-red', 'ui-gray', 'ui-slate', 'ui-zinc', 'ui-neutral', 'ui-stone']
 
@@ -194,44 +209,110 @@ function onOptionClick(theme: ThemeConfig) {
 
   setTheme(theme)
   currentTheme.value = theme.name as any
+
+  const hex = (rgb = '') => rgb ? `#${rgb.split(' ').map((v) => Number(v).toString(16)).join('')}` : ''
+
+  themeCustomize.value = {
+    ...theme,
+    cb: hex(theme.cb),
+    c1: hex(theme.c1),
+    c2: hex(theme.c2),
+    c3: hex(theme.c3),
+  }
+}
+
+function setCustomTheme() {
+  const { cb, c1, c2, c3 } = themeCustomize.value
+
+  setTheme({
+    ...themeCustomize.value,
+    cb: cb && cssVar(cb),
+    c1: c1 && cssVar(c1),
+    c2: c2 && cssVar(c2),
+    c3: c3 && cssVar(c3),
+  })
+
+  currentTheme.value = 'customize'
 }
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 font-sans">
-    <div class="w-full grid sm:grid-cols-3 items-start gap-4">
-      <div
-        v-for="theme in themeOptions"
-        :key="theme.name"
-        class="self-end border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
-        :class=" theme.name === currentTheme ? 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1' : 'cursor-pointer'"
-        :style="Object.fromEntries(resolveThemeAttrs(theme))"
-        @click="onOptionClick(theme)"
-      >
-        <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
-          <div class="min-w-40 grid grid-cols-4 grid-rows-3">
-            <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
-            <div class="bg-ui-c3 col-start-1 row-start-3"></div>
-            <div class="bg-ui-c1 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-              <div class="text-xl font-bold">
-                {{ theme.name }}
+  <div>
+    <Tabs
+      variant="solid"
+      :items="[
+        { label: 'Base', slot: 'base' },
+        { label: 'Customize', slot: 'customize' },
+      ]"
+      :unmount-on-hide="false"
+      :ui="{ content: 'py-4' }"
+    >
+      <template #base>
+        <div class="flex flex-col gap-8 font-sans">
+          <div class="w-full grid sm:grid-cols-3 items-start gap-4">
+            <div
+              v-for="theme in themeOptions"
+              :key="theme.name"
+              class="self-end border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
+              :class=" theme.name === currentTheme ? 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1' : 'cursor-pointer'"
+              :style="Object.fromEntries(resolveThemeAttrs(theme))"
+              @click="onOptionClick(theme)"
+            >
+              <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
+                <div class="min-w-40 grid grid-cols-4 grid-rows-3">
+                  <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
+                  <div class="bg-ui-c3 col-start-1 row-start-3"></div>
+                  <div class="bg-ui-c1 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                    <div class="text-xl font-bold">
+                      {{ theme.name }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="w-full flex flex-wrap items-start gap-2">
+            <div v-for="option in colorOptions" :key="option" class="flex aspect-square items-center justify-center rounded">
+              <Link
+                class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
+                :class="[option, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': option === props.color }]"
+                size="xl"
+                label="A"
+                raw
+                @click="setColor(option)"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="w-full flex flex-wrap items-start gap-2">
-      <div v-for="option in colorOptions" :key="option" class="flex aspect-square items-center justify-center rounded">
-        <Link
-          class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-          :class="[option, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': option === props.color }]"
-          size="xl"
-          label="A"
-          raw
-          @click="setColor(option)"
-        />
-      </div>
-    </div>
+      </template>
+      <template #customize>
+        <div class="w-screen-sm grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
+          <label class="opacity-80">colorScheme</label>
+          <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" />
+          <label class="opacity-80">fontFamily</label>
+          <Input v-model="themeCustomize.fontFamily" />
+          <label class="opacity-80">radius</label>
+          <Input v-model="themeCustomize.radius" />
+          <label class="opacity-80">radiusBox</label>
+          <Input v-model="themeCustomize.radiusBox" />
+          <label class="opacity-80">radiusButton</label>
+          <Input v-model="themeCustomize.radiusButton" />
+          <label class="opacity-80">radiusTabs</label>
+          <Input v-model="themeCustomize.radiusTabs" />
+          <label class="opacity-80">cb</label>
+          <Input v-model="themeCustomize.cb" type="color" />
+          <label class="opacity-80">c1</label>
+          <Input v-model="themeCustomize.c1" type="color" />
+          <label class="opacity-80">c2</label>
+          <Input v-model="themeCustomize.c2" type="color" />
+          <label class="opacity-80">c3</label>
+          <Input v-model="themeCustomize.c3" type="color" />
+        </div>
+        <div class="py-4 grid grid-cols-2 gap-4">
+          <Button class="justify-center" label="Reset" variant="outline" @click="sync" />
+          <Button class="justify-center" label="Apply" @click="setCustomTheme" />
+        </div>
+      </template>
+    </Tabs>
   </div>
 </template>

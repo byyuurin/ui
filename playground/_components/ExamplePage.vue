@@ -54,7 +54,7 @@ onMounted(() => {
           :handle="false"
           :overlay="false"
           :ui="{
-            header: 'sticky top-0 bg-ui-c1',
+            header: 'sticky z-1 top-0 bg-ui-c1',
             title: 'text-2xl',
             content: 'overflow-x-hidden ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2',
             footer: 'sticky bottom-0 bg-ui-c1',
