@@ -17,33 +17,36 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
-      "import": "./dist/resolver.mjs"
+      "import": "./dist/resolver.js",
+      "require": "./dist/resolver.cjs"
     },
     "./nuxt": {
       "types": "./dist/nuxt.d.ts",
-      "import": "./dist/nuxt.mjs"
+      "import": "./dist/nuxt.js",
+      "require": "./dist/nuxt.cjs"
     },
     "./unocss-preset": {
       "types": "./dist/unocss-preset.d.ts",
-      "import": "./dist/unocss-preset.mjs"
-    }
+      "import": "./dist/unocss-preset.js",
+      "require": "./dist/unocss-preset.cjs"
+    },
+    "./unocss-merge": {
+      "types": "./dist/unocss-merge.d.ts",
+      "import": "./dist/unocss-merge.js",
+      "require": "./dist/unocss-merge.cjs"
+    },
+    "./*": "./*"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
+    "*.d.ts",
     "dist"
   ],
   "scripts": {
@@ -60,6 +63,8 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
+    "@unocss/core": "^65.4.3",
+    "@unocss/preset-mini": "^65.4.3",
     "nuxt": "^3.13.1",
     "unocss": "^65.4.3",
     "vue": "^3.5.13"
@@ -72,9 +77,6 @@
   "dependencies": {
     "@byyuurin/ui-kit": "^0.3.3",
     "@nuxt/kit": "^3.15.4",
-    "@unocss/core": "^65.4.3",
-    "@unocss/preset-mini": "^65.4.3",
-    "@unocss/preset-uno": "^65.4.3",
     "@vueuse/core": "^12.5.0",
     "defu": "^6.1.4",
     "ohash": "^1.1.4",

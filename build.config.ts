@@ -1,14 +1,17 @@
 import { defineBuildConfig } from 'unbuild'
 
+// https://github.com/wobsoriano/vue-sfc-unbuild/blob/main/build.config.ts
 export default defineBuildConfig({
   entries: [
-    './src/',
+    { builder: 'mkdist', input: './src', pattern: ['**/*.vue'], loaders: ['vue'] },
+    { builder: 'mkdist', input: './src', pattern: ['**/*.ts'], format: 'cjs', loaders: ['js'], ext: 'cjs' },
+    { builder: 'mkdist', input: './src', pattern: ['**/*.ts'], format: 'esm', loaders: ['js'], ext: 'js' },
   ],
   declaration: true,
   externals: [
-    '@byyuurin/ui-kit',
     '@nuxt/kit',
-    'vue',
+    '@nuxt/schema',
     'unocss',
+    'vue',
   ],
 })

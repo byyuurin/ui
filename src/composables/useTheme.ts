@@ -1,9 +1,10 @@
 import { createSharedComposable } from '@vueuse/core'
 import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
-import { createMergeRules, extendTheme, prepareStyler } from '../internal'
+import { extendTheme, prepareStyler } from '../internal'
 import * as theme from '../theme'
 import type { ThemeExtension } from '../types'
+import { createMergeRules } from '../unocss-merge'
 import { createInjection } from '../utils'
 
 export const {
@@ -11,10 +12,9 @@ export const {
   inject: injectThemeExtension,
 } = createInjection<MaybeRefOrGetter<ThemeExtension>>('ui.themeExtension', {})
 
-export const mergeRules = createMergeRules()
-
 export const useTheme = createSharedComposable(() => {
   const _theme = injectThemeExtension()
+  const mergeRules = createMergeRules()
   const { createStyler } = prepareStyler(mergeRules)
 
   return {
