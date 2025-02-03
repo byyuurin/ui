@@ -1,4 +1,6 @@
+import { resolve } from 'node:path'
 import vueComponents from 'unplugin-vue-components/vite'
+import uiModule from '../../src/nuxt'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -9,7 +11,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@unocss/nuxt',
-    '@byyuurin/ui/nuxt',
+    uiModule,
   ],
   css: [
     '@unocss/reset/tailwind.css',
@@ -24,5 +26,10 @@ export default defineNuxtConfig({
         dts: '../.nuxt/typed-components.d.ts',
       }),
     ],
+    resolve: {
+      alias: {
+        '@byyuurin/ui': resolve(__dirname, '../../src'),
+      },
+    },
   },
 })
