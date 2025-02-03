@@ -7,9 +7,7 @@ export default defineConfig({
     presetIcons({
       cdn: 'https://esm.sh/',
     }),
-    ui({
-      radius: '0.125rem',
-    }),
+    ui(),
   ],
   transformers: [
     transformerDirectives(),

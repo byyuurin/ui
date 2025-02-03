@@ -15,10 +15,18 @@ https://byyuurin-ui.netlify.app/
 ## Installation
 
 ```ssh
-pnpm i @byyuurin/ui
+pnpm i -D unocss @unocss/reset @byyuurin/ui
 ```
 
-## UnoCSS
+icons
+
+```ssh
+pnpm i -D @iconify-json/[the-collection-you-want]
+```
+
+## Setup
+
+### UnoCSS
 
 ```ts
 // uno.config.ts
@@ -28,8 +36,19 @@ import { defineConfig, presetIcons, presetUno } from 'unocss'
 export default defineConfig({
   presets: [
     presetUno(),
-    presetIcons(),
-    ui(),
+    presetIcons({
+      cdn: 'https://esm.sh/', // OR install @iconify-json/[the-collection-you-want]
+    }),
+    ui({
+      radius: '0rem', // optional
+      radiusBox: '0rem', // optional
+      radiusButton: '0rem', // optional
+      radiusTabs: '0rem', // optional
+      cb: '#1f2937', // optional
+      c1: '#ffffff', // optional
+      c2: '#f2f2f2', // optional
+      c3: '#e5e6e6', // optional
+    }),
   ],
   content: {
     pipeline: {
@@ -42,7 +61,58 @@ export default defineConfig({
 })
 ```
 
-## Credits
+### Vite
+
+```ts
+// vite.config.ts
+
+import UIResolver from '@byyuurin/ui/resolver'
+import Vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import VueComponents from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    UnoCSS(),
+    Vue(),
+    VueComponents({
+      dts: 'src/typed-components.d.ts',
+      resolvers: [
+        UIResolver({
+          prefix: 'U', // optional
+        }),
+      ],
+    }),
+    AutoImport({
+      dts: 'src/typed-imports.d.ts',
+      imports: ['vue'],
+    }),
+  ],
+})
+```
+
+### Nuxt
+
+```ts
+// nuxt.config.ts
+
+export default defineNuxtConfig({
+  modules: [
+    '@unocss/nuxt',
+    '@byyuurin/ui/nuxt',
+  ],
+  css: [
+    '@unocss/reset/tailwind.css',
+  ],
+  ui: {
+    prefix: 'U',
+  },
+})
+```
+
+## Thanks
 
 - [UnoCSS](https://github.com/unocss/unocss)
 - [daisyui](https://github.com/saadeghi/daisyui)
