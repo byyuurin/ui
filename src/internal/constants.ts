@@ -1,4 +1,4 @@
-import type { ComponentName } from '../types'
+import type { ComponentName } from '../runtime/types'
 
 export const packageName = '@byyuurin/ui'
 

@@ -18,7 +18,7 @@ export default byyuurin(
     },
   },
   {
-    files: ['src/components/Popover.vue'],
+    files: ['src/runtime/components/Popover.vue'],
     rules: {
       'vue/component-name-in-template-casing': 'off',
     },

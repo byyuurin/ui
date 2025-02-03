@@ -1,8 +1,8 @@
 import type { CRRule } from '@byyuurin/ui-kit'
-import type { CSSObject } from '@unocss/core'
 import { mergeDeep, toArray } from '@unocss/core'
 import { theme as miniTheme } from '@unocss/preset-mini'
 import { h, isCSSMathFn, parseColor, splitShorthand } from '@unocss/preset-mini/utils'
+import type { CSSObject } from 'unocss'
 import { cssVarsAll, cssVarsPrefix, theme as uiTheme } from './unocss-preset'
 
 export function createMergeRules(): CRRule[] {

@@ -1,10 +1,9 @@
-import { resolve } from 'node:path'
+import UIResolver from '@byyuurin/ui/resolver'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
-import UIResolver from '../../src/resolver'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -28,11 +27,6 @@ export default defineConfig({
       imports: ['vue'],
     }),
   ],
-  resolve: {
-    alias: {
-      '@byyuurin/ui': resolve(__dirname, '../../src/index.ts'),
-    },
-  },
   build: {
     rollupOptions: {
       output: {

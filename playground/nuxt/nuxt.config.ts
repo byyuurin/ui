@@ -26,10 +26,5 @@ export default defineNuxtConfig({
         dts: '../.nuxt/typed-components.d.ts',
       }),
     ],
-    resolve: {
-      alias: {
-        '@byyuurin/ui': resolve(__dirname, '../../src/index.ts'),
-      },
-    },
   },
 })

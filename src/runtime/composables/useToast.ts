@@ -1,6 +1,6 @@
+import type { ToastProps } from '@byyuurin/ui'
 import { createSharedComposable } from '@vueuse/core'
 import { ref } from 'vue'
-import type { ToastProps } from '../types'
 
 export interface Toast extends Omit<ToastProps, 'defaultOpen'> {
   id: string | number

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@byyuurin/ui": "link:../../src",
+    "@byyuurin/ui": "workspace:*",
     "vue": "^3.5.13"
   },
   "devDependencies": {

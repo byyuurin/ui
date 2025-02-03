@@ -3,6 +3,8 @@ import type { Theme } from '@unocss/preset-mini'
 import type { ParsedColorValue } from '@unocss/preset-mini/utils'
 import { parseColor, parseCssColor } from '@unocss/preset-mini/utils'
 
+export * from './unocss-merge'
+
 export interface PresetOptions {
   /** @default "0rem" */
   radius?: string

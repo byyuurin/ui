@@ -1,6 +1,8 @@
 import { cr } from '@byyuurin/ui-kit'
 import { describe, expect, it } from 'vitest'
-import { mergeRules } from '../src/composables/useTheme'
+import { createMergeRules } from '../src/unocss-merge'
+
+const mergeRules = createMergeRules()
 
 describe('check style merge', () => {
   const merge = cr(mergeRules, { debug: true })

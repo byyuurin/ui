@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { extendTheme } from '../src/internal/extend-theme'
-import { link } from '../src/theme'
-import type { ThemeExtension } from '../src/types'
+import { link } from '../src/runtime/theme'
+import type { ThemeExtension } from '../src/runtime/types'
+import { extendTheme } from '../src/runtime/utils/extend-theme'
 
 describe('check defu result', () => {
   it('should merge', () => {

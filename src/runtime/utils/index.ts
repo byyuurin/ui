@@ -2,7 +2,9 @@ import { isEqual } from 'ohash'
 import type { InjectionKey } from 'vue'
 import { inject as vueInject, provide as vueProvide } from 'vue'
 
-export * from '@unocss/preset-mini/utils'
+export * from './extend-theme'
+export * from './link'
+export * from './styler'
 
 export function createInjection<T>(name: string): {
   injectionKey: InjectionKey<T>

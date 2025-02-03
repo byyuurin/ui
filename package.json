@@ -2,7 +2,7 @@
   "name": "@byyuurin/ui",
   "type": "module",
   "version": "0.0.2",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@9.15.5",
   "description": "",
   "author": "Yuurin <byyuurin@gmail.com>",
   "license": "MIT",
@@ -17,39 +17,37 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/index.mjs"
     },
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js",
-      "require": "./dist/utils.cjs"
+    "./index": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
     },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
-      "import": "./dist/resolver.js",
-      "require": "./dist/resolver.cjs"
+      "default": "./dist/resolver.mjs"
     },
     "./nuxt": {
       "types": "./dist/nuxt.d.ts",
-      "import": "./dist/nuxt.js",
-      "require": "./dist/nuxt.cjs"
+      "default": "./dist/nuxt.mjs"
     },
     "./unocss-preset": {
       "types": "./dist/unocss-preset.d.ts",
-      "import": "./dist/unocss-preset.js",
-      "require": "./dist/unocss-preset.cjs"
+      "default": "./dist/unocss-preset.mjs"
     },
-    "./unocss-merge": {
-      "types": "./dist/unocss-merge.d.ts",
-      "import": "./dist/unocss-merge.js",
-      "require": "./dist/unocss-merge.cjs"
-    },
-    "./*": "./*"
+    "./*": "./dist/*"
   },
   "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "*.d.ts",
     "dist"
@@ -65,7 +63,8 @@
     "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "prepack": "unbuild"
   },
   "peerDependencies": {
     "nuxt": "^3.13.1",
@@ -109,9 +108,9 @@
   },
   "pnpm": {
     "overrides": {
-      "is-core-module": "npm:@nolyfill/is-core-module@^1",
-      "isarray": "npm:@nolyfill/isarray@^1",
-      "safe-buffer": "npm:@nolyfill/safe-buffer@^1"
+      "is-core-module": "npm:@nolyfill/is-core-module@^1.0.39",
+      "isarray": "npm:@nolyfill/isarray@^1.0.29",
+      "safe-buffer": "npm:@nolyfill/safe-buffer@^1.0.41"
     }
   },
   "resolutions": {
