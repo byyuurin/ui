@@ -1,57 +1,115 @@
 import type { CRRule } from '@byyuurin/ui-kit'
+import type { CSSObject } from '@unocss/core'
 import { mergeDeep, toArray } from '@unocss/core'
+import type { Theme } from '@unocss/preset-mini'
 import { theme as miniTheme } from '@unocss/preset-mini'
-import { h, isCSSMathFn, parseColor, splitShorthand } from '@unocss/preset-mini/utils'
-import type { CSSObject } from 'unocss'
+import { directionMap, directionSize, globalKeywords, h, isCSSMathFn, parseColor, resolveBreakpoints, splitShorthand } from '@unocss/preset-mini/utils'
 import { cssVarsAll, cssVarsPrefix } from './constants'
 import { theme as uiTheme } from './theme'
 
 export function createMergeRules(): CRRule[] {
   const theme = mergeDeep(miniTheme, uiTheme)
-  const GlobalKeywordsRE = /^inherit|initial|revert|revert-layer|unset$/
+
+  const directionSpacing = (type: 'padding' | 'margin', direction = '', size = '') => {
+    if (directionSize(type)(['', direction, size], { theme } as any))
+      return directionMap[direction]?.map((v) => `${type}${v}`).join(',')
+
+    return null
+  }
 
   return [
     // _rules/align
-    [/^(?:vertical|align|v)-([-\w]+%?)$/, ([type]) => {
-      const valid = [
-        GlobalKeywordsRE,
-        /^(mid(?:dle)?|base(?:line)?|btm|bottom|top|start|bottom|end|text-(?:top|bottom)|sub|super)$/,
-      ].some((r) => r.test(type))
-
-      return valid ? 'vertical-align' : null
-    }],
-    [/^text-?(?:align-?)?(.+)$/, ([type]) => {
-      const valid = [
-        GlobalKeywordsRE,
-        /^center|left|right|justify|start|end$/,
-      ].some((r) => r.test(type))
-
-      return valid ? 'text-align' : null
-    }],
+    [
+      /^(?:vertical|align|v)-([-\w]+%?)$/,
+      () => 'vertical-align',
+    ],
+    [
+      /^(?:text-align|text)-(.+)$/,
+      ([value]) => ['center', 'left', 'right', 'justify', 'start', 'end'].includes(value) ? 'text-align' : null,
+    ],
     // _rules/behaviors
+    [
+      /^outline-(?:width-|size-)?(.+)$/,
+      ([value]) => {
+        if (theme.lineWidth && value in theme.lineWidth)
+          return 'outline-width'
+
+        if (h.bracket.cssvar.global.px(value))
+          return 'outline-width'
+
+        return null
+      },
+    ],
+    [
+      /^outline-(?:color-)?(.+)$/,
+      ([value]) => {
+        if (isCSSMathFn(h.bracket(value)))
+          return null
+
+        const parsed = parseColor(value, theme)
+
+        return parsed?.color ? 'outline-color' : null
+      },
+    ],
+    [
+      /^outline-offset-(.+)$/,
+      ([value]) => {
+        if (theme.lineWidth && value in theme.lineWidth)
+          return 'outline-offset'
+
+        if (h.bracket.cssvar.global.px(value))
+          return 'outline-offset'
+
+        return null
+      },
+    ],
+    [
+      /^outline(?:-(.+))$/,
+      ([value]) => {
+        if (!value)
+          return 'outline-style'
+
+        if (['auto', 'dashed', 'dotted', 'double', 'hidden', 'solid', 'groove', 'ridge', 'inset', 'outset', ...globalKeywords].includes(value))
+          return 'outline-style'
+
+        if (value === 'none')
+          return 'outline,outline-offset'
+
+        return null
+      },
+    ],
     // _rules/border
-    [/^(?:border-|b-)(.+)$/, ([type]) => {
-      let result = 'border'
+    [/^(?:border|b)(?:-(.+))?$/, ([value]) => {
+      if (!value)
+        return 'border-width'
 
-      ;[
-        /^([xyrltbse]|block|inline|[bi][se])(?:-(.+))?$/,
-      ].some((r) => {
-        const matched = type.match(r)
+      const borderStyles = new Set(['solid', 'dashed', 'dotted', 'double', 'hidden', 'none', 'groove', 'ridge', 'inset', 'outset', ...globalKeywords])
 
-        if (matched) {
-          const [_, type, color = ''] = matched
-          const parsed = parseColor(color, theme)
+      if (borderStyles.has(value))
+        return 'border-style'
 
-          result = parsed?.color ? `border-${type}-color` : `border-${type}`
-          return true
-        }
+      const matched = value && value.match(/^([xyrltbse]|block|inline|[bi][se])?(?:-(.+))?$/)
 
-        return false
-      })
+      if (matched) {
+        const [_, d = '', value = '1'] = matched
+        const parsed = parseColor(value, theme)
+        const size = !!((theme.lineWidth && value in theme.lineWidth) || h.bracket.cssvar.global.px(value))
+        const base = directionMap[d]?.map((v) => `border${v}`) ?? null
 
-      const parsed = parseColor(type, theme)
+        if (!base)
+          return `null`
 
-      return parsed?.color ? 'border-color' : result
+        if (borderStyles.has(value))
+          return base.map((v) => `${v}-style`).join(',')
+
+        if (size)
+          return base.map((v) => `${v}-width`).join(',')
+
+        if (parsed?.color)
+          return base.map((v) => `${v}-color`).join(',')
+      }
+
+      return null
     }],
     [/^(?:border-|b-)?(?:rounded|rd)(.+)$/, ([type]) => {
       let result = 'border-radius'
@@ -94,23 +152,22 @@ export function createMergeRules(): CRRule[] {
 
       const parsed = parseColor(type, theme)
 
-      return parsed?.color ? 'color' : null
-    }, { scope: 'bg' }],
+      return parsed?.color ? 'background-color' : null
+    }],
     // _rules/container
     [/^@container(?:\/(\w+))?(?:-(normal))?$/, () => 'container'],
     // _rules/decoration
     // _rules/default
     // _rules/flex
-    // [/^$/, () => ''],
     // _rules/gap
     [
       /^(?:flex-|grid-)?(?:gap-?()|gap-([xy]-?|col-?|row-?))(.+)$/,
       ([direction]) => {
         if (direction === 'y' || direction === 'row')
-          return 'gap-row'
+          return 'row-gap'
 
         if (direction === 'x' || direction === 'col')
-          return 'gap-column'
+          return 'column-gap'
 
         return 'gap'
       },
@@ -119,30 +176,78 @@ export function createMergeRules(): CRRule[] {
     // _rules/layout
     // _rules/position
     [/^(?:position-|pos-)?(relative|absolute|fixed|sticky)$/, () => 'position'],
-    [/^(?:position-|pos-)([-\w]+)$/, ([type]) => GlobalKeywordsRE.test(type) ? 'position' : null],
+    [/^(?:position-|pos-)([-\w]+)$/, ([value]) => globalKeywords.includes(value) ? 'position' : null],
     [/^(?:position-|pos-)?(static)$/, () => 'position'],
     // _rules/question-mark
     // _rules/ring
     // _rules/shadow
     // _rules/size
+    [
+      /^size-(min-|max-)?(.+)$/,
+      ([m, s]) => {
+        return getSizeValue(m, 'w', theme, s)
+          ? [getSizePropName(m, 'w'), getSizePropName(m, 'h')].join(',')
+          : null
+      },
+    ],
+    [
+      /^(?:size-)?(min-|max-)?([wh])-?(.+)$/,
+      ([m, w, s]) => {
+        return getSizeValue(m, w, theme, s)
+          ? getSizePropName(m, w)
+          : null
+      },
+    ],
+    [
+      /^(?:size-)?(min-|max-)?(block|inline)-(.+)$/,
+      ([m, w, s]) => {
+        return getSizeValue(m, w, theme, s)
+          ? getSizePropName(m, w)
+          : null
+      },
+    ],
+    [
+      /^(?:size-)?(min-|max-)?(h)-screen-(.+)$/,
+      ([m, h, p]) => getSizeBreakpointValue(theme, p, 'verticalBreakpoints') ? getSizePropName(m, h) : null,
+    ],
+    [
+      /^(?:size-)?(min-|max-)?(w)-screen-(.+)$/,
+      ([m, w, p]) => getSizeBreakpointValue(theme, p) ? getSizePropName(m, w) : null,
+    ],
+    [
+      /^(?:size-)?aspect-(?:ratio-)?(?:\d+\/\d+|square|video)$/,
+      () => 'aspect-ratio',
+    ],
     // _rules/spacing
-    [/^p-?([xy])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
-    [/^p-?([rltbse])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
-    [/^p-(block|inline)(?:-(.+))?$/, ([type]) => `padding-${type}`],
-    [/^p-?([bi][se])(?:-?(.+))?$/, ([type]) => `padding-${type}`],
-    // [/^pa?()-?(.+)$/, () => 'padding'],
-    // [/^p-?xy()()$/, () => 'padding'],
-    [/^m-?([xy])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
-    [/^m-?([rltbse])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
-    [/^m-(block|inline)(?:-(.+))?$/, ([type]) => `margin-${type}`],
-    [/^m-?([bi][se])(?:-?(.+))?$/, ([type]) => `margin-${type}`],
-    // [/^ma?()-?(.+)$/, () => 'margin'],
-    // [/^m-?xy()()$/, () => 'margin'],
+    [
+      /^p-?([xyrltbse])?(?:-?(.+))?$/,
+      ([direction, size]) => directionSpacing('padding', direction, size),
+    ],
+    [
+      /^p-(block|inline)(?:-(.+))?$/,
+      ([direction, size]) => directionSpacing('padding', direction, size),
+    ],
+    [
+      /^p-?([bi][se])(?:-?(.+))?$/,
+      ([direction, size]) => directionSpacing('padding', direction, size),
+    ],
+    [
+      /^m-?([xyrltbse])?(?:-?(.+))?$/,
+      ([direction, size]) => directionSpacing('margin', direction, size),
+    ],
+    [
+      /^m-(block|inline)(?:-(.+))?$/,
+      ([direction, size]) => directionSpacing('margin', direction, size),
+    ],
+    [
+      /^m-?([bi][se])(?:-?(.+))?$/,
+      ([direction, size]) => directionSpacing('margin', direction, size),
+    ],
     // _rules/static
     [
       /^(?:display-(.+)|inline|block|inline-block|contents|flow-root|list-item|hidden)$/,
-      ([type]) => {
-        if (!type || GlobalKeywordsRE.test(type))
+      ([value]) => {
+        if (!value || globalKeywords.includes(value))
           return 'display'
 
         return null
@@ -150,12 +255,7 @@ export function createMergeRules(): CRRule[] {
     ],
     [
       /^(?:visible|invisible|backface-(.+))$/,
-      ([type]) => {
-        if (!type || GlobalKeywordsRE.test(type) || /^(?:visible|hidden)$/.test(type))
-          return 'visibility'
-
-        return null
-      },
+      ([value]) => value ? 'backface-visibility' : 'visibility',
     ],
     [/^content-(.+)$/, () => 'content'],
     // _rules/svg
@@ -166,28 +266,45 @@ export function createMergeRules(): CRRule[] {
     ],
     [
       /^(?:transform-)?preserve-(?:3d|flat)$/,
-      () => 'preserve',
+      () => 'transform-style',
     ],
     [
       /^(?:transform)(?:-(.+))?$/,
-      ([type]) => {
-        if (!type || type === 'none' || GlobalKeywordsRE.test(type))
+      ([value]) => {
+        if (!value || value === 'none' || globalKeywords.includes(value))
           return 'transform'
 
         return null
       },
     ],
     // _rules/transition
-    [/^(?:transition-)?(?:(duration|delay|ease|property)-)(.+)$/, ([type]) => type],
-    [/^transition(?:-(.+))$/, ([type]) => {
-      if (!type || type === 'none' || GlobalKeywordsRE.test(type))
-        return 'transition'
+    [
+      /^(?:transition-)?(?:(duration|delay|ease|property)-)(.+)$/,
+      ([value]) => {
+        const mapping: Record<string, string | null> = {
+          duration: 'transition-duration',
+          delay: 'transition-delay',
+          ease: 'transition-timing-function',
+          property: 'transition-property',
+        }
+        return mapping[value]
+      },
+    ],
+    [
+      /^transition(?:-(.+))$/,
+      ([value]) => {
+        if (!value)
+          return 'transition-property,transition-timing-function,transition-duration'
 
-      if (/^discrete|normal$/.test(type))
-        return 'transition-behavior'
+        if (value === 'none' || globalKeywords.includes(value))
+          return 'transition'
 
-      return null
-    }],
+        if (/^discrete|normal$/.test(value))
+          return 'transition-behavior'
+
+        return null
+      },
+    ],
     // _rules/typography
     [
       /^text-(.+)$/,
@@ -244,19 +361,56 @@ export function createMergeRules(): CRRule[] {
         if (!body.includes(':'))
           return null
 
-        const [prop] = body.split(':')
-        return prop
+        return body.split(':')[0]
       },
-      { scope: 'variables' },
     ],
     // others
     [
       new RegExp(`^${cssVarsPrefix}-((?:${cssVarsAll.join('|')})-)?(.+)$`),
-      ([type = 'base', color]) => {
+      ([prop, color]) => {
         const parsed = parseColor(color, theme)
-        return parsed?.color ? type : null
+
+        if (!parsed?.color)
+          return null
+
+        return prop ? `--ui-${prop}` : '--ui-fill,--ui-content'
       },
-      { scope: cssVarsPrefix },
     ],
   ]
+}
+
+function getSizePropName(minmax: string, hw: string) {
+  const sizeMapping: Record<string, string> = {
+    h: 'height',
+    w: 'width',
+    inline: 'inline-size',
+    block: 'block-size',
+  }
+  return `${minmax || ''}${sizeMapping[hw]}`
+}
+
+type SizeProps = 'width' | 'height' | 'maxWidth' | 'maxHeight' | 'minWidth' | 'minHeight' | 'inlineSize' | 'blockSize' | 'maxInlineSize' | 'maxBlockSize' | 'minInlineSize' | 'minBlockSize'
+
+function getSizeValue(minmax: string, hw: string, theme: Theme, prop: string) {
+  const str = getSizePropName(minmax, hw).replace(/-(\w)/g, (_, p) => p.toUpperCase()) as SizeProps
+  const v = theme[str]?.[prop]
+
+  if (v != null)
+    return v
+
+  switch (prop) {
+    case 'fit':
+    case 'max':
+    case 'min':
+      return `${prop}-content`
+  }
+
+  return h.bracket.cssvar.global.auto.fraction.rem(prop)
+}
+
+function getSizeBreakpointValue(theme: Theme, point: string, key: 'breakpoints' | 'verticalBreakpoints' = 'breakpoints') {
+  const bp = resolveBreakpoints({ theme } as any, key)
+
+  if (bp)
+    return bp.find((i) => i.point === point)?.size
 }
