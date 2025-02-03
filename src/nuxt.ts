@@ -1,6 +1,6 @@
 import { addComponent, defineNuxtModule, useLogger } from '@nuxt/kit'
 import type {} from '@nuxt/schema' // Mandatory to avoid a bug when building
-import { componentNames, packageName } from './internal'
+import { componentNames, packageName } from './internal/constants'
 
 export interface ModuleOptions {
   /**

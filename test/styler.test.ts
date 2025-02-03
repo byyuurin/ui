@@ -1,6 +1,6 @@
 import { cr } from '@byyuurin/ui-kit'
 import { describe, expect, it } from 'vitest'
-import { createMergeRules } from '../src/unocss-merge'
+import { createMergeRules } from '../src/unocss/merger'
 
 const mergeRules = createMergeRules()
 
