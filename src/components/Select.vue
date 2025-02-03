@@ -148,6 +148,10 @@ function typedValue<V extends MaybeArray<AcceptableValue>>(value?: V) {
   return value as unknown as M extends true ? AcceptableValue[] : AcceptableValue
 }
 
+function typedModelValue(value: any) {
+  return value as MaybeArray<AcceptableValue> | undefined
+}
+
 function displayValue(value?: MaybeArray<AcceptableValue>): string | undefined {
   if (props.multiple && Array.isArray(value))
     return value.map((v) => displayValue(v)).filter(Boolean).join(', ')
@@ -181,8 +185,8 @@ function onUpdateOpen(value: boolean) {
     v-bind="rootProps"
     :autocomplete="props.autocomplete"
     :disabled="props.disabled"
-    :default-value="(props.defaultValue as MaybeArray<AcceptableValue> | undefined)"
-    :model-value="(props.modelValue as MaybeArray<AcceptableValue> | undefined)"
+    :default-value="typedModelValue(props.defaultValue)"
+    :model-value="typedModelValue(props.modelValue)"
     @update:model-value="onUpdate"
     @update:open="onUpdateOpen"
   >

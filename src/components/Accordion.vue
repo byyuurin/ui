@@ -73,8 +73,8 @@ const style = computed(() => {
             <i v-if="item.icon" :class="style.icon({ class: [item.icon, props.ui?.icon] })"></i>
           </slot>
 
-          <span v-if="get(item, props.labelKey as string) || slots.default" :class="style.label({ class: props.ui?.label })">
-            <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey as string) }}</slot>
+          <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
+            <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey) }}</slot>
           </span>
 
           <slot name="trailing-icon" v-bind="{ item, index, open }">

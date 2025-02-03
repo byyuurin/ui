@@ -20,6 +20,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
       "import": "./dist/resolver.js",
@@ -63,8 +68,6 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "@unocss/core": "^65.4.3",
-    "@unocss/preset-mini": "^65.4.3",
     "nuxt": "^3.13.1",
     "unocss": "^65.4.3",
     "vue": "^3.5.13"
@@ -77,6 +80,8 @@
   "dependencies": {
     "@byyuurin/ui-kit": "^0.3.3",
     "@nuxt/kit": "^3.15.4",
+    "@unocss/core": "^65.4.3",
+    "@unocss/preset-mini": "^65.4.3",
     "@vueuse/core": "^12.5.0",
     "defu": "^6.1.4",
     "ohash": "^1.1.4",
@@ -101,6 +106,13 @@
     "vitest": "^3.0.4",
     "vue": "^3.5.13",
     "vue-tsc": "^2.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "is-core-module": "npm:@nolyfill/is-core-module@^1",
+      "isarray": "npm:@nolyfill/isarray@^1",
+      "safe-buffer": "npm:@nolyfill/safe-buffer@^1"
+    }
   },
   "resolutions": {
     "mkdist": "^1.6.0"

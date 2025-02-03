@@ -109,9 +109,9 @@ function normalizeItem(item: any): NormalizeItem<T> {
     } as any
   }
 
-  const value = get(item, props.valueKey as string)
-  const label = get(item, props.labelKey as string)
-  const description = get(item, props.descriptionKey as string)
+  const value = get(item, props.valueKey)
+  const label = get(item, props.labelKey)
+  const description = get(item, props.descriptionKey)
 
   return {
     ...item,

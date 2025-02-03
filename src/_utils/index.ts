@@ -2,6 +2,8 @@ import { isEqual } from 'ohash'
 import type { InjectionKey } from 'vue'
 import { inject as vueInject, provide as vueProvide } from 'vue'
 
+export * from '@unocss/preset-mini/utils'
+
 export function createInjection<T>(name: string): {
   injectionKey: InjectionKey<T>
   provide: (value: T) => void
