@@ -44,6 +44,7 @@ onMounted(() => {
       />
       <ExamplePopover :class="uiColor" />
       <ExampleTooltip :class="uiColor" />
+      <ExampleScrollArea :class="uiColor" />
       <ExampleNative :class="uiColor" />
 
       <div class="py-6">
