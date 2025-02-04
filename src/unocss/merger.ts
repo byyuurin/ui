@@ -161,7 +161,7 @@ export function createMergeRules(): CRRule[] {
     // _rules/flex
     // _rules/gap
     [
-      /^(?:flex-|grid-)?(?:gap-?()|gap-([xy]-?|col-?|row-?))(.+)$/,
+      /^(?:flex-|grid-)?gap(?:-([xy]|col|row))?(.+)$/,
       ([direction]) => {
         if (direction === 'y' || direction === 'row')
           return 'row-gap'
