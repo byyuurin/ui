@@ -58,7 +58,7 @@ function typedSelectOptions(item: ControlItem<T>) {
 
 <template>
   <div>
-    <div class="p-4 grid md:grid-cols-2 items-start xl:grid-cols-3 gap-4">
+    <div class="p-4 grid grid-cols-1 md:grid-cols-2 items-start xl:grid-cols-3 gap-4">
       <Card
         :title="props.title"
         :description="props.description"
