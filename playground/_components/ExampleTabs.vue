@@ -39,6 +39,19 @@ const items: TabsItem[] = [
     description="A set of tab panels that are displayed one at a time."
     :controls="controls"
   >
-    <Tabs v-bind="attrs" :items="items" />
+    <div class="flex flex-col gap-4">
+      <Tabs v-bind="attrs" :items="items" />
+      <Tabs v-bind="attrs" :items="items">
+        <template #prefix>
+          <Placeholder label="#prefix" />
+        </template>
+        <template #suffix>
+          <Placeholder label="#suffix" />
+        </template>
+        <template #content>
+          <Placeholder label="#content" class="h-40" />
+        </template>
+      </Tabs>
+    </div>
   </ExampleView>
 </template>

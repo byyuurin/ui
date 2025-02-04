@@ -6,12 +6,12 @@ export default ct({
     list: 'relative flex p-1 group',
     indicator: 'absolute transition-all duration-200',
     trigger: [
-      'group relative inline-flex items-center shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
+      'group relative inline-flex items-center gap-0.25em shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
       'focus:outline-hidden',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     content: 'w-full focus:outline-none',
-    leadingIcon: 'shrink-0',
+    prefixIcon: 'shrink-0 size-1.5em',
     label: 'truncate',
   },
   variants: {
@@ -56,24 +56,19 @@ export default ct({
     },
     size: {
       xs: {
-        trigger: 'px-2 py-1 text-xs gap-1',
-        leadingIcon: 'size-4',
+        root: 'text-sm',
       },
       sm: {
-        trigger: 'px-2.5 py-1.5 text-xs gap-1.5',
-        leadingIcon: 'size-4',
+        root: 'tex-tsm',
       },
       md: {
-        trigger: 'px-3 py-1.5 text-sm gap-1.5',
-        leadingIcon: 'size-5',
+        root: 'text-base',
       },
       lg: {
-        trigger: 'px-3 py-2 text-sm gap-2',
-        leadingIcon: 'size-5',
+        root: 'text-lg',
       },
       xl: {
-        trigger: 'px-3 py-2 text-base gap-2',
-        leadingIcon: 'size-6',
+        root: 'text-xl',
       },
     },
     full: {
@@ -83,6 +78,18 @@ export default ct({
     },
   },
   compoundVariants: [
+    {
+      size: ['xs', 'sm', 'md'],
+      class: {
+        trigger: 'p-1.5 px-2.5',
+      },
+    },
+    {
+      size: ['lg', 'xl'],
+      class: {
+        trigger: 'p-2.5 px-4.5',
+      },
+    },
     {
       orientation: 'horizontal',
       variant: ['solid', 'soft'],

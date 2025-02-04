@@ -41,9 +41,9 @@ export interface TabsEmits extends TabsRootEmits<string | number> {}
 type SlotProps<T> = (props: { item: T, index: number }) => any
 
 export type TabsSlots<T extends { slot?: string }> = {
-  leading?: SlotProps<T>
+  prefix?: SlotProps<T>
   default?: SlotProps<T>
-  trailing?: SlotProps<T>
+  suffix?: SlotProps<T>
   content?: SlotProps<T>
 } & DynamicSlots<T, SlotProps<T>>
 </script>
@@ -89,15 +89,15 @@ const style = computed(() => {
         :disabled="item.disabled"
         :class="style.trigger({ class: props.ui?.trigger })"
       >
-        <slot name="leading" :item="item" :index="index">
-          <i v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })"></i>
+        <slot name="prefix" :item="item" :index="index">
+          <i v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></i>
         </slot>
 
         <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
           <slot :item="item" :index="index">{{ get(item, props.labelKey) }}</slot>
         </span>
 
-        <slot name="trailing" :item="item" :index="index"></slot>
+        <slot name="suffix" :item="item" :index="index"></slot>
       </TabsTrigger>
     </TabsList>
 
