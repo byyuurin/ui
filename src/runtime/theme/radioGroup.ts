@@ -6,8 +6,8 @@ export default ct({
     fieldset: 'flex flex-wrap gap-2 gap-x-4',
     legend: 'mb-2 color-ui-cb',
     item: 'flex items-start',
-    base: 'size-1.25em rounded-ui-base ring ring-inset ring-ui-cb focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb',
-    indicator: 'flex items-center justify-center size-full rounded-ui-base bg-ui-fill',
+    base: 'relative size-1.25em rounded-ui-base ring ring-inset ring-ui-cb focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb transition data-[state=checked]:ring-ui-base',
+    indicator: 'absolute inset-0 scale-0 rounded-ui-base bg-ui-fill transition data-[state=checked]:scale-66',
     container: 'h-1.5em flex items-center',
     wrapper: '',
     label: 'block ps-2 color-ui-cb',
@@ -37,17 +37,6 @@ export default ct({
       },
       xl: {
         root: 'text-xl',
-      },
-    },
-    dot: {
-      true: {
-        indicator: 'after:content-empty after:size-0.75em after:bg-ui-c1 after:rounded-ui-base',
-      },
-    },
-    round: {
-      true: {
-        base: 'rounded-full',
-        indicator: 'rounded-full after:rounded-full',
       },
     },
     disabled: {

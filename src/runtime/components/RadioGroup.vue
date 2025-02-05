@@ -38,10 +38,6 @@ export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, P
    * @default 'vertical'
    */
   orientation?: RadioGroupRootProps['orientation']
-  /** @default true */
-  round?: boolean
-  /** @default true */
-  dot?: boolean
 }
 
 export interface RadioGroupEmits {
@@ -83,8 +79,6 @@ const props = withDefaults(defineProps<RadioGroupProps<T>>(), {
   labelKey: 'label',
   descriptionKey: 'description',
   orientation: 'vertical',
-  dot: true,
-  round: true,
 })
 
 const emit = defineEmits<RadioGroupEmits>()
@@ -160,7 +154,7 @@ function onUpdate(value: any) {
             :disabled="item.disabled"
             :class="style.base({ class: props.ui?.base })"
           >
-            <RadioGroupIndicator :class="style.indicator({ class: props.ui?.indicator })" />
+            <RadioGroupIndicator :class="style.indicator({ class: props.ui?.indicator })" force-mount />
           </RadioGroupItem>
         </div>
 

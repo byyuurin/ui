@@ -15,8 +15,6 @@ const controls: ControlItems<RadioGroupProps<any>> = [
   { prop: 'legend', value: 'Text' },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'round', value: true },
-  { prop: 'dot', value: true },
   { prop: 'disabled', value: false },
   { prop: 'required', value: false },
 ]
