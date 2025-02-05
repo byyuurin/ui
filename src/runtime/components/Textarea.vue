@@ -1,14 +1,12 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { InputHTMLAttributes } from 'vue'
-import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { input } from '../theme'
+import type { textarea } from '../theme'
 import type { ComponentAttrs } from '../types'
 
-type InputVariants = VariantProps<typeof input>
+type TextareaVariants = VariantProps<typeof textarea>
 
-export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIconsProps {
+export interface TextareaProps extends ComponentAttrs<typeof textarea> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -16,86 +14,76 @@ export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIc
   as?: PrimitiveProps['as']
   id?: string
   name?: string
-  type?: InputHTMLAttributes['type']
   placeholder?: string
-  size?: InputVariants['size']
-  variant?: InputVariants['variant']
-  loading?: boolean
+  size?: TextareaVariants['size']
+  variant?: TextareaVariants['variant']
   highlight?: boolean
   underline?: boolean
   required?: boolean
-  autocomplete?: InputHTMLAttributes['autocomplete']
   autofocus?: boolean
   autofocusDelay?: number
   disabled?: boolean
+  rows?: number
+  maxRows?: number
+  autoResize?: boolean
 }
 
-export interface InputEmits {
-  (e: 'update:modelValue', payload: string | number): void
+export interface TextareaEmits {
+  (e: 'update:modelValue', payload: string): void
   (e: 'blur', event: FocusEvent): void
   (e: 'change', event: Event): void
 }
 
-export interface InputSlots {
-  prefix?: (props?: {}) => any
+export interface TextareaSlots {
   default?: (props?: {}) => any
-  suffix?: (props?: {}) => any
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
-import { computed, onMounted, ref } from 'vue'
-import { useComponentIcons, useTheme } from '../composables'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { useTheme } from '../composables'
 import { looseToNumber } from '../utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InputProps>(), {
-  type: 'text',
+const props = withDefaults(defineProps<TextareaProps>(), {
   size: 'md',
   variant: 'outline',
-  autocomplete: 'off',
+  rows: 3,
+  maxRows: 0,
   autofocusDelay: 0,
 })
 
-const emit = defineEmits<InputEmits>()
-const slots = defineSlots<InputSlots>()
+const emit = defineEmits<TextareaEmits>()
+defineSlots<TextareaSlots>()
 const [modelValue, modelModifiers] = defineModel<string | number>()
 
-const inputRef = ref<HTMLInputElement | null>(null)
-
-const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
-  const styler = createStyler(theme.value.input)
-  // @ts-expect-error ignore type
-  return styler({
-    ...props,
-    prefix: isPrefix.value || !!slots.prefix,
-    suffix: isSuffix.value || !!slots.suffix,
-  })
+  const styler = createStyler(theme.value.textarea)
+  return styler(props)
 })
 
 function autoFocus() {
   if (props.autofocus)
-    inputRef.value?.focus()
+    textareaRef.value?.focus()
 }
 
 function updateInput(value: string) {
   if (modelModifiers.trim)
     value = value.trim()
 
-  if (modelModifiers.number || props.type === 'number')
-    value = looseToNumber(value)
-
   modelValue.value = value
 }
 
 function onInput(event: Event) {
+  autoResize()
+
   if (!modelModifiers.lazy)
     updateInput((event.target as HTMLInputElement).value)
 }
@@ -116,8 +104,38 @@ function onBlur(event: FocusEvent) {
   emit('blur', event)
 }
 
+function autoResize() {
+  if (!props.autoResize)
+    return
+
+  if (!textareaRef.value)
+    return
+
+  textareaRef.value.rows = props.rows
+
+  const overflow = textareaRef.value.style.overflow
+  textareaRef.value.style.overflow = 'hidden'
+
+  const styles = window.getComputedStyle(textareaRef.value)
+  const paddingTop = Number.parseInt(styles.paddingTop)
+  const paddingBottom = Number.parseInt(styles.paddingBottom)
+  const padding = paddingTop + paddingBottom
+  const lineHeight = Number.parseInt(styles.lineHeight)
+  const { scrollHeight } = textareaRef.value
+  const newRows = Math.ceil((scrollHeight - padding) / lineHeight)
+
+  if (newRows > props.rows)
+    textareaRef.value.rows = props.maxRows ? Math.min(newRows, props.maxRows) : newRows
+
+  textareaRef.value.style.overflow = overflow
+}
+
+watch(modelValue, () => {
+  nextTick(autoResize)
+})
+
 defineExpose({
-  inputRef,
+  textareaRef,
 })
 
 onMounted(() => {
@@ -129,45 +147,28 @@ onMounted(() => {
 
 <template>
   <Primitive
-    :as="as"
+    :as="props.as"
     :class="style.root({ class: [props.class, props.ui?.root] })"
     :aria-disabled="props.disabled ? true : undefined"
   >
-    <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
-      <slot name="prefix">
-        <i
-          v-if="isPrefix && prefixIconName"
-          :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
-        ></i>
-      </slot>
-    </span>
-
-    <input
-      :id="id"
-      ref="inputRef"
-      :type="props.type"
+    <textarea
+      :id="props.id"
+      ref="textareaRef"
       :value="modelValue"
       :name="props.name"
+      :rows="props.rows"
       :placeholder="props.placeholder"
       :class="style.base({ class: props.ui?.base })"
       :disabled="props.disabled"
       :required="props.required"
-      :autocomplete="props.autocomplete"
       v-bind="$attrs"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
-    />
+      @focus="autoResize"
+    >
+    </textarea>
 
     <slot></slot>
-
-    <span v-if="isSuffix || slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
-      <slot name="suffix">
-        <i
-          v-if="isSuffix && suffixIconName"
-          :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
-        ></i>
-      </slot>
-    </span>
   </Primitive>
 </template>

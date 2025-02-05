@@ -19,6 +19,7 @@ export const componentNames: ComponentName[] = [
   'Select',
   'Switch',
   'Tabs',
+  'Textarea',
   'Toast',
   'Toaster',
   'Tooltip',
