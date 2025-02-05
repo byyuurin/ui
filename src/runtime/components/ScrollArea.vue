@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { ScrollAreaRootProps } from 'reka-ui'
 import type { scrollArea } from '../theme'
+import { transitionProps } from '../theme/scrollArea'
 import type { ComponentAttrs } from '../types'
 
 export interface ScrollAreaProps extends ComponentAttrs<typeof scrollArea>, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {}
@@ -46,18 +47,26 @@ function scrollTopLeft() {
     <ScrollAreaViewport :class="style.viewport({ class: props.ui?.viewport })">
       <slot></slot>
     </ScrollAreaViewport>
-    <ScrollAreaScrollbar
-      :class="style.scrollbar({ class: props.ui?.scrollbar })"
-      orientation="horizontal"
-    >
-      <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
-    </ScrollAreaScrollbar>
-    <ScrollAreaScrollbar
-      :class="style.scrollbar({ class: props.ui?.scrollbar })"
-      orientation="vertical"
-    >
-      <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
-    </ScrollAreaScrollbar>
-    <ScrollAreaCorner :class="style.corner({ class: props.ui?.corner })" />
+
+    <TransitionGroup v-bind="transitionProps">
+      <ScrollAreaScrollbar
+        key="scrollbar-horizontal"
+        :class="style.scrollbar({ class: props.ui?.scrollbar })"
+        orientation="horizontal"
+      >
+        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
+      </ScrollAreaScrollbar>
+      <ScrollAreaScrollbar
+        key="scrollbar-vertical"
+        :class="style.scrollbar({ class: props.ui?.scrollbar })"
+        orientation="vertical"
+      >
+        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
+      </ScrollAreaScrollbar>
+      <ScrollAreaCorner
+        key="corner"
+        :class="style.corner({ class: props.ui?.corner })"
+      />
+    </TransitionGroup>
   </ScrollAreaRoot>
 </template>

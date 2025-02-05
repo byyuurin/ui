@@ -17,13 +17,26 @@ const controls: ControlItems<ScrollAreaProps> = [
     description="Augments native scroll functionality for custom, cross-browser styling."
     :controls="controls"
   >
-    <ScrollArea v-bind="attrs" class="w-full h-225px">
-      <div class="grid grid-cols-2 gap-1 w-100vw">
+    <div class="flex flex-col gap-4">
+      <ScrollArea v-bind="attrs" class="h-55">
+        <div class="grid grid-cols-2 gap-1 w-screen">
+          <Placeholder class="bg-ui-cb/10 h-50" />
+          <Placeholder class="bg-red/10 h-50" />
+          <Placeholder class="bg-green/10 h-50" />
+          <Placeholder class="bg-blue/10 h-50" />
+        </div>
+      </ScrollArea>
+
+      <ScrollArea v-bind="attrs" class="h-55">
+        <Placeholder class="h-50 w-screen" />
+      </ScrollArea>
+
+      <ScrollArea v-bind="attrs" class="h-55">
         <Placeholder class="bg-ui-cb/10 h-50" />
         <Placeholder class="bg-red/10 h-50" />
         <Placeholder class="bg-green/10 h-50" />
         <Placeholder class="bg-blue/10 h-50" />
-      </div>
-    </ScrollArea>
+      </ScrollArea>
+    </div>
   </ExampleView>
 </template>

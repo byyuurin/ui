@@ -1,4 +1,13 @@
 import { ct } from '@byyuurin/ui-kit'
+import type { TransitionGroupProps } from 'vue'
+
+export const transitionProps: TransitionGroupProps = {
+  enterFromClass: 'opacity-0',
+  enterActiveClass: 'transition',
+  leaveToClass: 'opacity-0',
+  leaveActiveClass: 'transition',
+  moveClass: 'transition',
+}
 
 export default ct({
   slots: {
