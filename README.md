@@ -107,16 +107,18 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
   ],
   ui: {
-    prefix: 'U',
+    prefix: 'U', // optional
   },
 })
 ```
 
-## Thanks
+## Credits
 
 - [UnoCSS](https://github.com/unocss/unocss)
 - [daisyui](https://github.com/saadeghi/daisyui)
 - [@nuxt/ui](https://github.com/nuxt/ui)
+- [Reka UI](https://github.com/unovue/radix-vue)
+- [VueUse](https://github.com/vueuse/vueuse)
 
 ## License
 
