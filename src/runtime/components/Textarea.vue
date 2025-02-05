@@ -43,7 +43,6 @@ export interface TextareaSlots {
 import { Primitive } from 'reka-ui'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useTheme } from '../composables'
-import { looseToNumber } from '../utils'
 
 defineOptions({
   inheritAttrs: false,

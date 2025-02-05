@@ -1,8 +1,10 @@
 <script lang="ts">
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
+import type { UserConfig } from 'unocss'
 import type { ThemeExtension, ToasterProps } from '../types'
 
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
+  unoConfig?: UserConfig
   ui?: ThemeExtension
   tooltip?: TooltipProviderProps
   toaster?: ToasterProps
@@ -19,11 +21,12 @@ import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
 import { computed, shallowRef, toRef, useId } from 'vue'
 import type { ModalState } from '../composables/useModal'
 import { provideModalState } from '../composables/useModal'
-import { provideThemeExtension } from '../composables/useTheme'
+import { provideThemeExtension, provideUnoConfig } from '../composables/useTheme'
 import ModalProvider from './ModalProvider.vue'
 import Toaster from './Toaster.vue'
 
 const props = withDefaults(defineProps<AppProps>(), {
+  unoConfig: () => ({}),
   ui: () => ({}),
 })
 
@@ -41,6 +44,7 @@ const modalState = shallowRef<ModalState>({
 const themeExtension = computed(() => props.ui)
 
 provideModalState(modalState)
+provideUnoConfig(props.unoConfig)
 provideThemeExtension(themeExtension)
 </script>
 
