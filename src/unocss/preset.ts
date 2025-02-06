@@ -8,9 +8,15 @@ export interface PresetOptions {
   /** @default "0rem" */
   radius?: string
   /** @default "[radius]" */
+  radiusBox?: string
+  /** @default "[radius]" */
   radiusButton?: string
   /** @default "[radius]" */
-  radiusBox?: string
+  radiusCheckbox?: string
+  /** @default "[radius]" */
+  radiusRadio?: string
+  /** @default "[radius]" */
+  radiusSwitch?: string
   /** @default "[radius]" */
   radiusTabs?: string
   /**
@@ -54,8 +60,11 @@ export default preset
 function mergeOptions(options: PresetOptions): PresetOptions {
   const defaults: Required<PresetOptions> = {
     radius: '0rem',
-    radiusButton: '',
     radiusBox: '',
+    radiusButton: '',
+    radiusCheckbox: '',
+    radiusRadio: '',
+    radiusSwitch: '',
     radiusTabs: '',
     cb: '#1f2937',
     c1: '#ffffff',

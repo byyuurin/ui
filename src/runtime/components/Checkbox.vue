@@ -55,10 +55,7 @@ const id = props.id ?? useId()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.checkbox)
-  return styler({
-    ...props,
-    checked: Boolean(innerValue.value ?? props.defaultValue),
-  })
+  return styler(props)
 })
 
 function onUpdate(value: any) {
@@ -81,7 +78,7 @@ function onUpdate(value: any) {
         :class="style.base({ class: props.ui?.base })"
         @update:model-value="onUpdate"
       >
-        <CheckboxIndicator as-child>
+        <CheckboxIndicator as-child force-mount>
           <i
             v-if="modelValue === 'indeterminate'"
             :class="style.icon({ class: [props.indeterminateIcon || theme.app.icons.indeterminate, props.ui?.icon] })"

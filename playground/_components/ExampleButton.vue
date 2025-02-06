@@ -11,7 +11,6 @@ const controls: ControlItems<ButtonProps> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'active', value: false },
   { prop: 'disabled', value: false },
-  { prop: 'round', value: false },
   { prop: 'loading', value: false },
 ]
 </script>

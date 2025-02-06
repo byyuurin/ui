@@ -127,8 +127,11 @@ function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
   return options.map((option) => ({
     fontFamily: undefined,
     radius: option.radius ?? '0rem',
-    radiusButton: option.radius ?? '0rem',
     radiusBox: option.radius ?? '0rem',
+    radiusButton: option.radius ?? '0rem',
+    radiusCheckbox: option.radius ?? '0rem',
+    radiusRadio: option.radius ?? '0rem',
+    radiusSwitch: option.radius ?? '0rem',
     radiusTabs: option.radius ?? '0rem',
     cb: '#1f2937',
     c1: '#ffffff',
@@ -188,9 +191,12 @@ const { cloned: themeCustomize, sync } = useCloned<ThemeConfig>(() => ({
   colorScheme: 'light',
   fontFamily: '',
   radius: '0rem',
-  radiusBox: '0rem',
-  radiusButton: '0rem',
-  radiusTabs: '0rem',
+  radiusBox: '',
+  radiusButton: '',
+  radiusCheckbox: '',
+  radiusRadio: '',
+  radiusSwitch: '',
+  radiusTabs: '',
   cb: '#1f2937',
   c1: '#ffffff',
   c2: '#f2f2f2',
@@ -240,13 +246,13 @@ function setCustomTheme() {
   <Tabs
     variant="solid"
     :items="[
-      { label: 'Base', slot: 'base' },
+      { label: 'Samples', slot: 'samples' },
       { label: 'Customize', slot: 'customize' },
     ]"
     :unmount-on-hide="false"
     :ui="{ content: 'py-4' }"
   >
-    <template #base>
+    <template #samples>
       <div class="flex flex-col gap-8 font-sans">
         <div class="w-full grid sm:grid-cols-3 items-start gap-4">
           <div
@@ -289,15 +295,21 @@ function setCustomTheme() {
         <label class="opacity-80">colorScheme</label>
         <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" />
         <label class="opacity-80">fontFamily</label>
-        <Input v-model="themeCustomize.fontFamily" />
+        <Input v-model="themeCustomize.fontFamily" placeholder="inherit" />
         <label class="opacity-80">radius</label>
-        <Input v-model="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" />
         <label class="opacity-80">radiusBox</label>
-        <Input v-model="themeCustomize.radiusBox" />
+        <Input v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" />
         <label class="opacity-80">radiusButton</label>
-        <Input v-model="themeCustomize.radiusButton" />
+        <Input v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" />
+        <label class="opacity-80">radiusCheckbox</label>
+        <Input v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" />
+        <label class="opacity-80">radiusRadio</label>
+        <Input v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" />
+        <label class="opacity-80">radiusSwitch</label>
+        <Input v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" />
         <label class="opacity-80">radiusTabs</label>
-        <Input v-model="themeCustomize.radiusTabs" />
+        <Input v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" />
         <label class="opacity-80">cb</label>
         <Input v-model="themeCustomize.cb" type="color" />
         <label class="opacity-80">c1</label>

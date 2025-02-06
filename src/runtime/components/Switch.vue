@@ -22,7 +22,6 @@ export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<Switch
   uncheckedIcon?: string
   label?: string
   description?: string
-  round?: boolean
 }
 
 export interface SwitchEmits {

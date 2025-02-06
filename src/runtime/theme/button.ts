@@ -3,7 +3,7 @@ import { ct } from '@byyuurin/ui-kit'
 export default ct({
   slots: {
     base: [
-      'inline-flex items-center leading-normal transition-colors',
+      'inline-flex items-center rounded-ui-button leading-normal transition-colors',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
@@ -63,14 +63,6 @@ export default ct({
       },
       xl: {
         base: 'text-xl',
-      },
-    },
-    round: {
-      true: {
-        base: 'rounded-full',
-      },
-      false: {
-        base: 'rounded-ui-button',
       },
     },
     active: {

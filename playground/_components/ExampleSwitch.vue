@@ -9,7 +9,6 @@ const controls: ControlItems<SwitchProps> = [
   { prop: 'label', value: 'Label' },
   { prop: 'description', value: 'Description' },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'round', value: false },
   { prop: 'loading', value: false },
   { prop: 'required', value: false },
   { prop: 'disabled', value: false },

@@ -30,10 +30,10 @@ export const theme: Theme = {
     },
   },
   borderRadius: {
-    [`${cssVarsPrefix}-base`]: cssVar('radius'),
-    [`${cssVarsPrefix}-button`]: cssVar('radius-button', cssVar('radius')),
-    [`${cssVarsPrefix}-box`]: cssVar('radius-box', cssVar('radius')),
-    [`${cssVarsPrefix}-tabs`]: cssVar('radius-tabs', cssVar('radius')),
+    ...Object.fromEntries(['base', 'box', 'button', 'checkbox', 'radio', 'switch', 'tabs']
+      .map((name) => [`${cssVarsPrefix}-${name}`, name === 'base'
+        ? cssVar('radius')
+        : cssVar(`radius-${name}`, cssVar('radius'))])),
   },
   ringWidth: {
     DEFAULT: '1px',

@@ -4,14 +4,14 @@ export default ct({
   slots: {
     root: 'relative flex items-start',
     base: [
-      'inline-flex items-center shrink-0 rounded-ui-base border-2 border-transparent transition-colors duration-200',
+      'inline-flex items-center shrink-0 rounded-ui-switch border-2 border-transparent transition-colors duration-200',
       'focus-visible:outline-2 focus-visible:outline-offset-2',
       'data-[state=unchecked]:bg-ui-cb/10 data-[state=checked]:bg-ui-fill/80 focus-visible:outline-ui-base',
       'w-2.7em',
     ],
     container: 'flex items-center h-1.5em',
     thumb: [
-      'group pointer-events-none rounded-ui-base size-1.25em bg-ui-c1 shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
+      'group pointer-events-none rounded-ui-switch size-1.25em bg-ui-c1 shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
       'data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:translate-x-0 data-[state=checked]:translate-x-1.25em data-[state=checked]:rtl:-translate-x-1.25em',
     ],
     icon: [
@@ -38,12 +38,6 @@ export default ct({
       },
       xl: {
         root: 'text-xl',
-      },
-    },
-    round: {
-      true: {
-        base: 'rounded-full',
-        thumb: 'rounded-full',
       },
     },
     checked: {

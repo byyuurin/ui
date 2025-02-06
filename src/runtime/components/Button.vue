@@ -19,7 +19,6 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
   label?: string
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
-  round?: boolean
   loading?: boolean
   active?: boolean
   disabled?: boolean
