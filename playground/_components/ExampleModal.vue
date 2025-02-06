@@ -21,11 +21,8 @@ const slotsExample1 = ref(false)
 const slotsExample2 = ref(false)
 const slotsExample3 = ref(false)
 
-function openModal() {
-  modal.open(Modal, {
-    title: 'Modal Title',
-    description: 'Modal Description',
-  })
+function openModal(props: ModalProps) {
+  modal.open(Modal, props)
 }
 </script>
 
@@ -155,7 +152,7 @@ function openModal() {
         </Modal>
       </div>
       <div class="flex flex-wrap gap-4">
-        <Button label="Use `useModal`" @click="openModal" />
+        <Button label="Use `useModal`" @click="openModal(attrs)" />
       </div>
     </div>
   </ExampleView>
