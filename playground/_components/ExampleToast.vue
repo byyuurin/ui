@@ -38,8 +38,8 @@ function addToast({ title, description }: ControlInfo) {
     description: description || 'Description',
     icon: 'animate-head-shake animate-count-infinite i-carbon-notification',
     actions: [
-      { label: 'YES', class: 'min-w-20 ui-green justify-center' },
-      { label: 'NO', class: 'min-w-20 ui-rose justify-center' },
+      { class: 'min-w-20 justify-center', label: 'YES' },
+      { class: 'min-w-20 justify-center', label: 'NO', variant: 'outline' },
     ],
     ui: { progress: props.color },
   })

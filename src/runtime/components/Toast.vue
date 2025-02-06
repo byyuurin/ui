@@ -121,6 +121,6 @@ defineExpose({
       </ToastClose>
     </div>
 
-    <div v-if="remaining > 0 && duration" :class="style.progress({ class: props.ui?.progress })" :style="{ width: `${remaining / duration * 100}%` }"></div>
+    <div v-if="remaining >= 0 && duration" :class="style.progress({ class: props.ui?.progress })" :style="{ width: `${remaining / duration * 100}%` }"></div>
   </ToastRoot>
 </template>
