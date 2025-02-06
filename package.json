@@ -1,7 +1,7 @@
 {
   "name": "@byyuurin/ui",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "packageManager": "pnpm@9.15.4",
   "description": "",
   "author": "Yuurin <byyuurin@gmail.com>",
@@ -37,7 +37,7 @@
     },
     "./*": "./dist/*"
   },
-  "main": "dist/index.cjs",
+  "main": "dist/index.mjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "typesVersions": {
