@@ -1,37 +1,8 @@
 import { isEqual } from 'ohash'
-import type { InjectionKey } from 'vue'
-import { inject as vueInject, provide as vueProvide } from 'vue'
 
 export * from './extend-theme'
 export * from './link'
 export * from './styler'
-
-export function createInjection<T>(name: string): {
-  injectionKey: InjectionKey<T>
-  provide: (value: T) => void
-  inject: () => T | undefined
-}
-
-export function createInjection<T>(name: string, defaultValue: T,): {
-  injectionKey: InjectionKey<T>
-  provide: (value: T) => void
-  inject: () => T
-}
-
-export function createInjection<T>(
-  name: string,
-  defaultValue?: T,
-) {
-  const injectionKey: InjectionKey<T> = Symbol(name)
-  const provide = (value: T) => vueProvide(injectionKey, value)
-  const inject = () => vueInject(injectionKey, defaultValue)
-
-  return {
-    injectionKey,
-    provide,
-    inject,
-  }
-}
 
 export function pick<
   Data extends object,

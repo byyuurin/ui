@@ -5,17 +5,20 @@ import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
 import * as theme from '../theme'
 import type { ThemeExtension } from '../types'
-import { createInjection, extendTheme, prepareStyler } from '../utils'
+import { extendTheme, prepareStyler } from '../utils'
+import { defineInjection } from './defineInjection'
 
 export const {
+  InjectionKey: InjectionKeyThemeExtension,
   provide: provideThemeExtension,
   inject: injectThemeExtension,
-} = createInjection<MaybeRefOrGetter<ThemeExtension>>('ui.themeExtension', {})
+} = defineInjection<MaybeRefOrGetter<ThemeExtension>>('ui.themeExtension', {})
 
 export const {
+  InjectionKey: InjectionKeyUnoConfig,
   provide: provideUnoConfig,
   inject: injectUnoConfig,
-} = createInjection<UserConfig>('ui.unoConfig', {})
+} = defineInjection<UserConfig>('ui.unoConfig', {})
 
 export const useTheme = createSharedComposable(() => {
   const themeExtension = injectThemeExtension()
