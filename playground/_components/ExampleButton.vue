@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { ButtonProps } from '@byyuurin/ui'
-import { Button } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const icon = 'i-carbon-asleep-filled'
@@ -23,13 +22,13 @@ const controls: ControlItems<ButtonProps> = [
     :controls="controls"
   >
     <div class="flex flex-wrap items-start gap-4">
-      <Button v-bind="attrs" label="" :icon="icon" />
-      <Button v-bind="attrs" :label="attrs.label || 'Text'" />
-      <Button v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
-      <Button v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
+      <UButton v-bind="attrs" label="" :icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
     </div>
     <div class="py-4">
-      <Button v-bind="attrs" :label="attrs.label || 'Text'">
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>
@@ -41,7 +40,7 @@ const controls: ControlItems<ButtonProps> = [
         <template #suffix>
           <Placeholder label="#suffix" />
         </template>
-      </Button>
+      </UButton>
     </div>
   </ExampleView>
 </template>

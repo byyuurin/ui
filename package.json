@@ -19,10 +19,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
     },
-    "./index": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.mjs"
-    },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
       "default": "./dist/resolver.mjs"
@@ -34,8 +30,7 @@
     "./unocss-preset": {
       "types": "./dist/unocss-preset.d.ts",
       "default": "./dist/unocss-preset.mjs"
-    },
-    "./*": "./dist/*"
+    }
   },
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",

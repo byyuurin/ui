@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { InputProps } from '@byyuurin/ui'
-import { Input } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const prefixIcon = 'i-carbon-unlocked'
@@ -26,18 +25,18 @@ const controls: ControlItems<InputProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <Input v-bind="attrs" />
-      <Input v-bind="attrs" :prefix-icon="prefixIcon" />
-      <Input v-bind="attrs" :suffix-icon="suffixIcon" />
-      <Input v-bind="attrs" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
-      <Input v-bind="attrs">
+      <UInput v-bind="attrs" />
+      <UInput v-bind="attrs" :prefix-icon="prefixIcon" />
+      <UInput v-bind="attrs" :suffix-icon="suffixIcon" />
+      <UInput v-bind="attrs" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
+      <UInput v-bind="attrs">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>
         <template #suffix>
           <Placeholder label="#suffix" />
         </template>
-      </Input>
+      </UInput>
     </div>
   </ExampleView>
 </template>

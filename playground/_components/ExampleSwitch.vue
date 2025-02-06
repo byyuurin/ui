@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { SwitchProps } from '@byyuurin/ui'
-import { Switch } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const value = ref(false)
@@ -27,16 +26,16 @@ const ui: SwitchProps['ui'] = {
     :controls="controls"
   >
     <div class="flex flex-wrap gap-4">
-      <Switch v-bind="attrs" v-model="value" :ui="ui" />
-      <Switch v-bind="attrs" v-model="value" :ui="ui" checked-icon="i-carbon-checkmark" unchecked-icon="i-carbon-close-large" />
-      <Switch v-bind="attrs" v-model="value" :ui="ui">
+      <USwitch v-bind="attrs" v-model="value" :ui="ui" />
+      <USwitch v-bind="attrs" v-model="value" :ui="ui" checked-icon="i-carbon-checkmark" unchecked-icon="i-carbon-close-large" />
+      <USwitch v-bind="attrs" v-model="value" :ui="ui">
         <template #label>
           <Placeholder label="#label" label-position="left" />
         </template>
         <template #description>
           <Placeholder label="#description" label-position="left" />
         </template>
-      </Switch>
+      </USwitch>
     </div>
   </ExampleView>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ToasterProps, ToastProps } from '@byyuurin/ui'
-import { Button, useToast } from '@byyuurin/ui'
+import { useToast } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 interface Props extends Pick<ToasterProps, 'duration' | 'position' | 'expand'> {
@@ -65,6 +65,6 @@ function handleUpdateToaster({ position, duration, expand }: ControlInfo) {
     :controls="controls"
     @change="handleUpdateToaster"
   >
-    <Button label="Add Toast" @click="addToast(attrs)" />
+    <UButton label="Add Toast" @click="addToast(attrs)" />
   </ExampleView>
 </template>

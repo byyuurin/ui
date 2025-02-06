@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { LinkProps } from '@byyuurin/ui'
-import { Link } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<LinkProps> = [
@@ -16,6 +15,6 @@ const controls: ControlItems<LinkProps> = [
 
 <template>
   <ExampleView v-slot="attrs" title="Link" :controls="controls">
-    <Link v-bind="attrs" :label="attrs.label || 'text'" />
+    <ULink v-bind="attrs" :label="attrs.label || 'text'" />
   </ExampleView>
 </template>

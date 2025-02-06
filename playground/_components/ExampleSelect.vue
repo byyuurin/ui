@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { SelectProps } from '@byyuurin/ui'
-import { Select } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const value = ref('')
@@ -33,10 +32,10 @@ const controls: ControlItems<SelectProps<any, any, any, any>> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <Select v-model="value" v-bind="attrs" :options="options" />
-      <Select v-model="value" v-bind="attrs" :options="options" suffix-icon="i-mdi-chevron-double-down" />
-      <Select v-model="value" v-bind="attrs" prefix-icon="i-carbon-search" :options="options" />
-      <Select v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :options="options" />
+      <USelect v-model="value" v-bind="attrs" :options="options" />
+      <USelect v-model="value" v-bind="attrs" :options="options" suffix-icon="i-mdi-chevron-double-down" />
+      <USelect v-model="value" v-bind="attrs" prefix-icon="i-carbon-search" :options="options" />
+      <USelect v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :options="options" />
     </div>
   </ExampleView>
 </template>

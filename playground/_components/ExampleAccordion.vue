@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { AccordionItem, AccordionProps } from '@byyuurin/ui'
-import { Accordion } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const items: AccordionItem[] = [
@@ -52,6 +51,6 @@ const controls: ControlItems<AccordionProps<any>> = [
     description="A stacked set of collapsible panels."
     :controls="controls"
   >
-    <Accordion :items="items" v-bind="attrs" />
+    <UAccordion :items="items" v-bind="attrs" />
   </ExampleView>
 </template>

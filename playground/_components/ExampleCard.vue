@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card, type CardProps } from '@byyuurin/ui'
+import type { CardProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<CardProps> = [
@@ -16,11 +16,11 @@ const controls: ControlItems<CardProps> = [
     :controls="controls"
   >
     <div class="grid md:grid-cols-2 items-start gap-4">
-      <Card v-bind="props">
+      <UCard v-bind="props">
         <Placeholder class="h-44" />
-      </Card>
+      </UCard>
 
-      <Card v-bind="props">
+      <UCard v-bind="props">
         <template #title>
           <Placeholder label="#title" label-position="left" />
         </template>
@@ -28,9 +28,9 @@ const controls: ControlItems<CardProps> = [
           <Placeholder label="#description" label-position="left" />
         </template>
         <Placeholder class="h-43" />
-      </Card>
+      </UCard>
 
-      <Card v-bind="props">
+      <UCard v-bind="props">
         <template #header>
           <Placeholder label="#header" />
         </template>
@@ -38,13 +38,13 @@ const controls: ControlItems<CardProps> = [
         <template #footer>
           <Placeholder label="#footer" />
         </template>
-      </Card>
+      </UCard>
 
-      <Card v-bind="props">
+      <UCard v-bind="props">
         <template #content>
           <Placeholder class="h-79" label="#content" />
         </template>
-      </Card>
+      </UCard>
     </div>
   </ExampleView>
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ScrollAreaProps } from '@byyuurin/ui'
-import { ScrollArea } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<ScrollAreaProps> = [
@@ -18,25 +17,25 @@ const controls: ControlItems<ScrollAreaProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <ScrollArea v-bind="attrs" class="h-55">
+      <UScrollArea v-bind="attrs" class="h-55">
         <div class="grid grid-cols-2 gap-1 w-screen">
           <Placeholder class="bg-ui-cb/10 h-50" />
           <Placeholder class="bg-red/10 h-50" />
           <Placeholder class="bg-green/10 h-50" />
           <Placeholder class="bg-blue/10 h-50" />
         </div>
-      </ScrollArea>
+      </UScrollArea>
 
-      <ScrollArea v-bind="attrs" class="h-55">
+      <UScrollArea v-bind="attrs" class="h-55">
         <Placeholder class="h-50 w-screen" />
-      </ScrollArea>
+      </UScrollArea>
 
-      <ScrollArea v-bind="attrs" class="h-55">
+      <UScrollArea v-bind="attrs" class="h-55">
         <Placeholder class="bg-ui-cb/10 h-50" />
         <Placeholder class="bg-red/10 h-50" />
         <Placeholder class="bg-green/10 h-50" />
         <Placeholder class="bg-blue/10 h-50" />
-      </ScrollArea>
+      </UScrollArea>
     </div>
   </ExampleView>
 </template>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { TooltipProps } from '@byyuurin/ui'
-import { Button, Tooltip } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<TooltipProps & { label: string } & Pick<(TooltipProps['content'] & object), 'side'>> = [
@@ -20,16 +19,16 @@ const controls: ControlItems<TooltipProps & { label: string } & Pick<(TooltipPro
     :controls="controls"
   >
     <div class="flex flex-wrap gap-4">
-      <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
-        <Button :label="attrs.label || 'trigger'" />
-      </Tooltip>
+      <UTooltip v-bind="attrs" :content="{ side: attrs.side }">
+        <UButton :label="attrs.label || 'trigger'" />
+      </UTooltip>
 
-      <Tooltip v-bind="attrs" :content="{ side: attrs.side }">
-        <Button label="slots" />
+      <UTooltip v-bind="attrs" :content="{ side: attrs.side }">
+        <UButton label="slots" />
         <template #content>
           <Placeholder label="#content" />
         </template>
-      </Tooltip>
+      </UTooltip>
     </div>
   </ExampleView>
 </template>

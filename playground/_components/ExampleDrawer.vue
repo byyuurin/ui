@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { DrawerProps } from '@byyuurin/ui'
-import { Button, Drawer } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
-import Placeholder from './Placeholder.vue'
 
 const open = ref(false)
 const slotsExample1 = ref(false)
@@ -28,14 +26,14 @@ const controls: ControlItems<DrawerProps> = [
     :controls="controls"
   >
     <div class="flex flex-wrap gap-4">
-      <Drawer v-bind="attrs" v-model:open="open">
-        <Button label="Open Drawer" />
+      <UDrawer v-bind="attrs" v-model:open="open">
+        <UButton label="Open Drawer" />
 
         <template #body>
           <Placeholder class="h-full" :class="['top', 'bottom'].includes(attrs.direction!) ? 'min-h-sm' : 'min-w-sm'">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
-              <Button
+              <UButton
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -49,10 +47,10 @@ const controls: ControlItems<DrawerProps> = [
         <template #footer>
           <Placeholder label="#footer" />
         </template>
-      </Drawer>
+      </UDrawer>
 
-      <Drawer v-bind="attrs" v-model:open="slotsExample1">
-        <Button label="Slots example 1" />
+      <UDrawer v-bind="attrs" v-model:open="slotsExample1">
+        <UButton label="Slots example 1" />
 
         <template #title>
           <Placeholder label="#title" label-position="left" />
@@ -66,7 +64,7 @@ const controls: ControlItems<DrawerProps> = [
           <Placeholder class="h-full" :class="['top', 'bottom'].includes(attrs.direction!) ? 'min-h-sm' : 'min-w-sm'" label="#body">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
-              <Button
+              <UButton
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -84,10 +82,10 @@ const controls: ControlItems<DrawerProps> = [
         <template #handle>
           <Placeholder label="#handle" />
         </template>
-      </Drawer>
+      </UDrawer>
 
-      <Drawer v-bind="attrs" v-model:open="slotsExample2">
-        <Button label="Slots example 2" />
+      <UDrawer v-bind="attrs" v-model:open="slotsExample2">
+        <UButton label="Slots example 2" />
 
         <template #header>
           <Placeholder label="#header" />
@@ -97,7 +95,7 @@ const controls: ControlItems<DrawerProps> = [
           <Placeholder class="h-full" :class="['top', 'bottom'].includes(attrs.direction!) ? 'min-h-sm' : 'min-w-sm'">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#body</span>
-              <Button
+              <UButton
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -115,16 +113,16 @@ const controls: ControlItems<DrawerProps> = [
         <template #handle>
           <Placeholder label="#handle" />
         </template>
-      </Drawer>
+      </UDrawer>
 
-      <Drawer v-bind="attrs" v-model:open="slotsExample3">
-        <Button label="Slots example 3" />
+      <UDrawer v-bind="attrs" v-model:open="slotsExample3">
+        <UButton label="Slots example 3" />
 
         <template #content>
           <Placeholder class="min-w-sm min-h-sm">
             <div class="inline-flex items-center gap-4 flex-col">
               <span>#content</span>
-              <Button
+              <UButton
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -138,7 +136,7 @@ const controls: ControlItems<DrawerProps> = [
         <template #handle>
           <Placeholder label="#handle" />
         </template>
-      </Drawer>
+      </UDrawer>
     </div>
   </ExampleView>
 </template>

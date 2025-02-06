@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { TextareaProps } from '@byyuurin/ui'
-import { Textarea } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const value = ref('')
@@ -25,7 +24,7 @@ const controls: ControlItems<TextareaProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <Textarea v-model="value" v-bind="props" />
+      <UTextarea v-model="value" v-bind="props" />
     </div>
   </ExampleView>
 </template>

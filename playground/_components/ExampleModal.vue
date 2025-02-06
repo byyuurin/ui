@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ModalProps } from '@byyuurin/ui'
-import { Button, Modal, useModal } from '@byyuurin/ui'
+import { Modal, useModal } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<ModalProps> = [
@@ -35,18 +35,18 @@ function openModal(props: ModalProps) {
   >
     <div class="flex flex-col gap-4">
       <div class="flex flex-wrap gap-4">
-        <Modal
+        <UModal
           v-model:open="open"
           v-bind="attrs"
           :ui="{ overlay: 'z-1', content: 'z-1' }"
         >
-          <Button>
+          <UButton>
             Open Modal
-          </Button>
+          </UButton>
 
           <template #body>
             <Placeholder class="w-full h-100">
-              <Button
+              <UButton
                 class="relative z-1 px-4"
                 variant="outline"
                 label="Close"
@@ -55,15 +55,15 @@ function openModal(props: ModalProps) {
               />
             </Placeholder>
           </template>
-        </Modal>
-        <Modal
+        </UModal>
+        <UModal
           v-model:open="slotsExample1"
           :ui="{ overlay: 'z-1', content: 'z-1' }"
           v-bind="attrs"
         >
-          <Button>
+          <UButton>
             Slots example 1
-          </Button>
+          </UButton>
 
           <template #close>
             <Placeholder label="#close" />
@@ -81,7 +81,7 @@ function openModal(props: ModalProps) {
             <Placeholder class="w-full h-100">
               <div class="inline-flex items-center gap-4 flex-col">
                 <span>#body</span>
-                <Button
+                <UButton
                   class="relative z-1 px-4"
                   variant="outline"
                   label="Close"
@@ -94,15 +94,15 @@ function openModal(props: ModalProps) {
           <template #footer>
             <Placeholder label="#footer" class="flex-grow h-8" />
           </template>
-        </Modal>
-        <Modal
+        </UModal>
+        <UModal
           v-model:open="slotsExample2"
           :ui="{ overlay: 'z-1', content: 'z-1' }"
           v-bind="attrs"
         >
-          <Button>
+          <UButton>
             Slots example 2
-          </Button>
+          </UButton>
 
           <template #header>
             <Placeholder class="h-8" label="#header" />
@@ -112,7 +112,7 @@ function openModal(props: ModalProps) {
             <Placeholder class="w-full h-100">
               <div class="inline-flex items-center gap-4 flex-col">
                 <span>#body</span>
-                <Button
+                <UButton
                   class="relative z-1 px-4"
                   variant="outline"
                   label="Close"
@@ -125,21 +125,21 @@ function openModal(props: ModalProps) {
           <template #footer>
             <Placeholder label="#footer" class="h-8" />
           </template>
-        </Modal>
-        <Modal
+        </UModal>
+        <UModal
           v-model:open="slotsExample3"
           :ui="{ overlay: 'z-1', content: 'z-1' }"
           v-bind="attrs"
         >
-          <Button>
+          <UButton>
             Slots example 3
-          </Button>
+          </UButton>
 
           <template #content>
             <Placeholder class="w-full h-100">
               <div class="inline-flex items-center gap-4 flex-col">
                 <span>#content</span>
-                <Button
+                <UButton
                   class="relative z-1 px-4"
                   variant="outline"
                   label="Close"
@@ -149,10 +149,10 @@ function openModal(props: ModalProps) {
               </div>
             </Placeholder>
           </template>
-        </Modal>
+        </UModal>
       </div>
       <div class="flex flex-wrap gap-4">
-        <Button label="Use `useModal`" @click="openModal(attrs)" />
+        <UButton label="Use `useModal`" @click="openModal(attrs)" />
       </div>
     </div>
   </ExampleView>

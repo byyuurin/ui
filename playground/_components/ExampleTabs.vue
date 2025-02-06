@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { TabsItem, TabsProps } from '@byyuurin/ui'
-import { Tabs } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<TabsProps<any>> = [
@@ -40,8 +39,8 @@ const items: TabsItem[] = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <Tabs v-bind="attrs" :items="items" />
-      <Tabs v-bind="attrs" :items="items">
+      <UTabs v-bind="attrs" :items="items" />
+      <UTabs v-bind="attrs" :items="items">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>
@@ -51,7 +50,7 @@ const items: TabsItem[] = [
         <template #content>
           <Placeholder label="#content" class="h-40" />
         </template>
-      </Tabs>
+      </UTabs>
     </div>
   </ExampleView>
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PopoverProps } from '@byyuurin/ui'
-import { Button, Popover } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<PopoverProps & { side: (PopoverProps['content'] & object)['side'] }> = [
@@ -18,12 +17,12 @@ const controls: ControlItems<PopoverProps & { side: (PopoverProps['content'] & o
     description="A non-modal dialog that floats around a trigger element."
     :controls="controls"
   >
-    <Popover v-bind="attrs" :content="{ side: attrs.side }">
-      <Button label="Trigger" />
+    <UPopover v-bind="attrs" :content="{ side: attrs.side }">
+      <UButton label="Trigger" />
 
       <template #content>
         <Placeholder class="size-80" label="#content" />
       </template>
-    </Popover>
+    </UPopover>
   </ExampleView>
 </template>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { RadioGroupProps } from '@byyuurin/ui'
-import { RadioGroup } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const options = ['System', 'Light', 'Dark'].map((s) => ({
@@ -31,6 +30,6 @@ const ui: RadioGroupProps<any>['ui'] = {
     description="A set of radio buttons to select a single option from a list."
     :controls="controls"
   >
-    <RadioGroup v-model="value" v-bind="attrs" :options="options" :ui="ui" />
+    <URadioGroup v-model="value" v-bind="attrs" :options="options" :ui="ui" />
   </ExampleView>
 </template>
