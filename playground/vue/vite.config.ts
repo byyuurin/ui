@@ -15,7 +15,7 @@ export default defineConfig({
       dts: 'src/typed-components.d.ts',
       dirs: [
         'src/components',
-        '../_components',
+        '../nuxt/app/components',
       ],
       resolvers: [
         UIResolver({
