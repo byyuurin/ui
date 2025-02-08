@@ -42,7 +42,7 @@ export interface TextareaSlots {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 defineOptions({
   inheritAttrs: false,

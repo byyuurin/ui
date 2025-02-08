@@ -38,7 +38,7 @@ export interface SwitchSlots {
 import { reactivePick } from '@vueuse/core'
 import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<SwitchProps>(), {
   size: 'md',

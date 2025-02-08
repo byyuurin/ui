@@ -32,7 +32,7 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'> {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<LinkProps>(), {
   as: 'button',

@@ -28,7 +28,8 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useComponentIcons, useTheme } from '../composables'
+import { useComponentIcons } from '../composables/useComponentIcons'
+import { useTheme } from '../composables/useTheme'
 import { omit, pickLinkProps } from '../utils'
 import Link from './Link.vue'
 

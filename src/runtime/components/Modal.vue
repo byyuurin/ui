@@ -46,7 +46,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
 import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 import UButton from './Button.vue'
 
 const props = withDefaults(defineProps<ModalProps>(), {

@@ -37,7 +37,7 @@ export interface CheckboxSlots {
 import { reactivePick } from '@vueuse/core'
 import { CheckboxIndicator, CheckboxRoot, Label, Primitive, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   size: 'md',

@@ -70,7 +70,7 @@ type NormalizeItem<T> = { id: string } & (
 import { reactivePick } from '@vueuse/core'
 import { Label, RadioGroupIndicator, RadioGroupItem, RadioGroupRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, useId } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<RadioGroupProps<T>>(), {

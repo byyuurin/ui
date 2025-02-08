@@ -36,7 +36,7 @@ export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pic
 import { reactivePick } from '@vueuse/core'
 import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<AccordionProps<T>>(), {

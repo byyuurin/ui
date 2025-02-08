@@ -105,7 +105,8 @@ import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectSeparator, SelectTrigger, SelectViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useComponentIcons, useTheme } from '../composables'
+import { useComponentIcons } from '../composables/useComponentIcons'
+import { useTheme } from '../composables/useTheme'
 import { compare, get } from '../utils'
 
 const props = withDefaults(defineProps<SelectProps<T, I, V, M>>(), {

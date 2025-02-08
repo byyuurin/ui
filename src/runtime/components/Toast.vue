@@ -35,7 +35,7 @@ export interface ToastSlots {
 import { reactivePick, useElementBounding } from '@vueuse/core'
 import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ToastProps>(), {

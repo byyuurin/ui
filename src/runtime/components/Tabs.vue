@@ -52,7 +52,7 @@ export type TabsSlots<T extends { slot?: string }> = {
 import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {

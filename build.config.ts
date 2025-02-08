@@ -15,6 +15,7 @@ export default defineBuildConfig({
     '@nuxt/schema',
     '@unocss/core',
     '@unocss/preset-mini',
+    '@unocss/preset-uno',
     'unocss',
     '@vueuse/core',
     'vue',

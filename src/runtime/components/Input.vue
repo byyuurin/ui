@@ -46,7 +46,8 @@ export interface InputSlots {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
-import { useComponentIcons, useTheme } from '../composables'
+import { useComponentIcons } from '../composables/useComponentIcons'
+import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
 
 defineOptions({

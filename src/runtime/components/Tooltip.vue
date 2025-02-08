@@ -24,7 +24,7 @@ import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   portal: true,

@@ -30,7 +30,8 @@ export interface ToasterSlots {
 import { reactivePick } from '@vueuse/core'
 import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme, useToast } from '../composables'
+import { useTheme } from '../composables/useTheme'
+import { useToast } from '../composables/useToast'
 import { omit } from '../utils'
 import Toast from './Toast.vue'
 

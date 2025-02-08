@@ -35,7 +35,7 @@ import { defu } from 'defu'
 import { useForwardPropsEmits } from 'reka-ui'
 import { HoverCard, Popover } from 'reka-ui/namespaced'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<PopoverProps>(), {
   mode: 'click',

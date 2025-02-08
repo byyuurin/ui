@@ -53,7 +53,7 @@ import { reactivePick } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
 import { DrawerContent, DrawerDescription, DrawerOverlay, DrawerPortal, DrawerRoot, DrawerTitle, DrawerTrigger } from 'vaul-vue'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<DrawerProps>(), {
   direction: 'bottom',

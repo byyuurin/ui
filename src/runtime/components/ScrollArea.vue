@@ -11,7 +11,7 @@ export interface ScrollAreaProps extends ComponentAttrs<typeof scrollArea>, Pick
 import { reactivePick } from '@vueuse/core'
 import { ScrollAreaCorner, ScrollAreaRoot, ScrollAreaScrollbar, ScrollAreaThumb, ScrollAreaViewport } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme } from '../composables'
+import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<ScrollAreaProps>(), {})
 const rootRef = ref<InstanceType<typeof ScrollAreaRoot>>()
