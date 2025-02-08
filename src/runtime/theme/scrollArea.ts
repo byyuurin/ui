@@ -12,7 +12,7 @@ export const transitionProps: TransitionGroupProps = {
 export default ct({
   slots: {
     /** Contains all the parts of a scroll area. */
-    root: 'relative overflow-hidden shadow-sm shadow-ui-cb/10 bg-ui-c1 border border-ui-cb/10 rounded-ui-base',
+    root: 'relative overflow-hidden',
     /** The viewport area of the scroll area. */
     viewport: 'size-full rounded-ui-base',
     /** The vertical and horizontal scrollbar. */
