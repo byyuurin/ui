@@ -2,18 +2,18 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { badge } from '../theme'
+import type { chip } from '../theme'
 import type { ComponentAttrs } from '../types'
 
-type BadgeVariants = VariantProps<typeof badge>
+type ChipVariants = VariantProps<typeof chip>
 
-export interface BadgeProps extends ComponentAttrs<typeof badge>, Pick<PrimitiveProps, 'as'>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
-  variant?: BadgeVariants['variant']
-  size?: BadgeVariants['size']
+export interface ChipProps extends ComponentAttrs<typeof chip>, Pick<PrimitiveProps, 'as'>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+  variant?: ChipVariants['variant']
+  size?: ChipVariants['size']
   label?: string
 }
 
-export interface BadgeSlots {
+export interface ChipSlots {
   prefix?: (props?: {}) => any
   default?: (props?: {}) => any
   suffix?: (props?: {}) => any
@@ -26,18 +26,18 @@ import { computed } from 'vue'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useTheme } from '../composables/useTheme'
 
-const props = withDefaults(defineProps<BadgeProps>(), {
+const props = withDefaults(defineProps<ChipProps>(), {
   variant: 'solid',
   size: 'md',
 })
 
-defineSlots<BadgeSlots>()
+defineSlots<ChipSlots>()
 
 const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
-  const styler = createStyler(theme.value.badge)
+  const styler = createStyler(theme.value.chip)
   return styler(props)
 })
 </script>

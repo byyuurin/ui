@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { BadgeProps } from '@byyuurin/ui'
+import type { ChipProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const icon = 'i-carbon-logo-youtube'
 
-const controls: ControlItems<BadgeProps> = [
+const controls: ControlItems<ChipProps> = [
   { prop: 'label', value: '', placeholder: 'Text' },
   { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
@@ -14,18 +14,18 @@ const controls: ControlItems<BadgeProps> = [
 <template>
   <ExampleView
     v-slot="attrs"
-    title="Badge"
+    title="Chip"
     description="A short text to represent a status or a category."
     :controls="controls"
   >
     <div class="flex flex-wrap items-start gap-4">
-      <UBadge v-bind="attrs" label="" :icon="icon" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
+      <UChip v-bind="attrs" label="" :icon="icon" />
+      <UChip v-bind="attrs" :label="attrs.label || 'Text'" />
+      <UChip v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
+      <UChip v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
     </div>
     <div class="py-4">
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'">
+      <UChip v-bind="attrs" :label="attrs.label || 'Text'">
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>
@@ -37,7 +37,7 @@ const controls: ControlItems<BadgeProps> = [
         <template #suffix>
           <Placeholder label="#suffix" />
         </template>
-      </UBadge>
+      </UChip>
     </div>
   </ExampleView>
 </template>

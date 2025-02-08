@@ -5,10 +5,10 @@ export const packageName = '@byyuurin/ui'
 export const componentNames: ComponentName[] = [
   'Accordion',
   'App',
-  'Badge',
   'Button',
   'Card',
   'Checkbox',
+  'Chip',
   'Drawer',
   'Input',
   'Link',
