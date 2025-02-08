@@ -9,7 +9,9 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@byyuurin/ui": ["../../src/index.ts"]
+      "@byyuurin/ui": ["../../src/index.ts"],
+      "@byyuurin/ui/unocss-preset": ["../../src/unocss-preset.ts"],
+      "@byyuurin/ui/resolver": ["../../src/resolver.ts"]
     },
     "allowImportingTsExtensions": true,
     "strict": true,

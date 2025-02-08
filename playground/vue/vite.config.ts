@@ -31,13 +31,15 @@ export default defineConfig({
   resolve: {
     alias: {
       '@byyuurin/ui': resolve(__dirname, '../../src'),
+      '@byyuurin/unocss-preset': resolve(__dirname, '../../src/unocss-preset.ts'),
     },
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          '@byyuurin/ui': ['@byyuurin/ui'],
+          ui: ['@byyuurin/ui'],
+          unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-uno'],
         },
       },
     },
