@@ -165,8 +165,7 @@ onMounted(() => {
       @blur="onBlur"
       @change="onChange"
       @focus="autoResize"
-    >
-    </textarea>
+    ></textarea>
 
     <slot></slot>
   </Primitive>
