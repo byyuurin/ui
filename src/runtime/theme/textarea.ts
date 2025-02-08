@@ -68,7 +68,10 @@ export default ct({
       highlight: false,
       underline: true,
       class: {
-        root: 'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-ui-cb/40',
+        root: [
+          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-ui-cb/40',
+          'focus-within:after:h-2px focus-within:after:bg-ui-fill/60',
+        ],
       },
     },
     {

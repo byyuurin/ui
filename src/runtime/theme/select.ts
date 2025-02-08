@@ -105,7 +105,10 @@ export default ct({
       highlight: false,
       underline: true,
       class: {
-        base: 'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-ui-cb/40',
+        base: [
+          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-ui-cb/40',
+          'data-[state=open]:after:h-2px data-[state=open]:after:bg-ui-fill/60',
+        ],
       },
     },
     {

@@ -13,6 +13,7 @@ export const componentNames: ComponentName[] = [
   'Link',
   'Modal',
   'ModalProvider',
+  'PinInput',
   'Popover',
   'RadioGroup',
   'ScrollArea',
