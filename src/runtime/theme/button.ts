@@ -7,8 +7,8 @@ export default ct({
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
-    prefixIcon: 'shrink-0 size-1.5em',
-    suffixIcon: 'shrink-0 size-1.5em',
+    prefixIcon: 'shrink-0 size-1.5em not-only-child:ml-0.5',
+    suffixIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
   },
   variants: {
     variant: {

@@ -2,7 +2,7 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
   slots: {
-    root: 'inline-flex items-center gap-x-2 rounded-ui-base transition-colors aria-disabled:opacity-50',
+    root: 'inline-flex items-center rounded-ui-base transition-colors aria-disabled:opacity-50',
     base: [
       'w-full color-inherit bg-transparent border-0 placeholder:color-ui-cb/50',
       'focus:outline-none',
@@ -93,13 +93,15 @@ export default ct({
     {
       size: ['xs', 'sm', 'md'],
       class: {
-        root: 'p-1.5 px-2.5',
+        root: 'p-1.5',
+        base: 'px-1',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
-        root: 'p-2.5 px-3.5',
+        root: 'p-2.5',
+        base: 'px-1.5',
       },
     },
     {

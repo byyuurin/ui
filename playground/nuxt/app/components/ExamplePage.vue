@@ -23,6 +23,7 @@ onMounted(() => {
 <template>
   <UApp :toaster="toasterAttrs">
     <div>
+      <ExampleBadge :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleLink :class="uiColor" />
       <ExampleInput :class="uiColor" />

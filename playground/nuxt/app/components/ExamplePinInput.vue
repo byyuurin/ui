@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PinInputProps } from '@byyuurin/ui'
-import { PinInput } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const value = ref<string[]>([])
@@ -23,6 +22,6 @@ const controls: ControlItems<PinInputProps> = [
     description="An input element to enter a pin."
     :controls="controls"
   >
-    <PinInput v-model="value" v-bind="attrs" />
+    <UPinInput v-model="value" v-bind="attrs" />
   </ExampleView>
 </template>
