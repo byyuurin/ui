@@ -38,8 +38,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          ui: ['@byyuurin/ui'],
           unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-uno'],
+          libs: ['reka-ui', 'vaul-vue'],
+          ui: ['@byyuurin/ui'],
         },
       },
     },
