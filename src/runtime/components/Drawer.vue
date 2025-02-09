@@ -94,7 +94,7 @@ const style = computed(() => {
         <slot name="content">
           <div :class="style.container({ class: props.ui?.container })">
             <div
-              v-if="slots.header || (props.title || slots.title) || (props.description || slots.description)"
+              v-if="slots.header || props.title || slots.title || props.description || slots.description"
               :class="style.header({ class: props.ui?.header })"
             >
               <slot name="header">

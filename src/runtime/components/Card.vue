@@ -38,12 +38,12 @@ const style = computed(() => {
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
     <slot name="content">
       <div
-        v-if="slots.header || slots.title || props.title || slots.description || props.description"
+        v-if="slots.header || props.title || slots.title || props.description || slots.description "
         :class="style.header({ class: props.ui?.header })"
       >
         <slot name="header">
           <Primitive
-            v-if="slots.title || props.title"
+            v-if="props.title || slots.title"
             :as="slots.title ? undefined : 'h2'"
             :class="style.title({ class: props.ui?.title })"
           >
@@ -52,7 +52,7 @@ const style = computed(() => {
             </slot>
           </Primitive>
           <Primitive
-            v-if="slots.description || props.description"
+            v-if="props.description || slots.description"
             :as="slots.description ? undefined : 'p'"
             :as-child="!!slots.description"
             :class="style.description({ class: props.ui?.description })"

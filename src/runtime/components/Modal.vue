@@ -95,7 +95,7 @@ const style = computed(() => {
       <DialogContent :class="style.content({ class: props.ui?.content })" v-bind="contentProps" v-on="contentEvents">
         <slot name="content">
           <div
-            v-if="slots.header || (props.title || slots.title) || (props.description || slots.description) || (props.close || slots.close)"
+            v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
             :class="style.header({ class: props.ui?.header })"
           >
             <slot name="header">

@@ -78,7 +78,7 @@ const style = computed(() => {
       ></i>
     </slot>
     <span
-      v-if="slots.default || props.label"
+      v-if="props.label || slots.default"
       :class="style.label({ class: props.ui?.label })"
     >
       <slot>{{ label }}</slot>
