@@ -5,9 +5,10 @@ export default defineBuildConfig({
   entries: [
     { builder: 'mkdist', input: './src', pattern: ['**/*.vue'], loaders: ['vue'] },
     { builder: 'mkdist', input: './src', pattern: ['index.ts', 'runtime/**/*.ts'], format: 'esm', loaders: ['js'], ext: 'mjs' },
-    'src/nuxt.ts',
-    'src/resolver.ts',
-    'src/unocss-preset.ts',
+    'src/unplugin',
+    'src/vite',
+    'src/nuxt',
+    'src/unocss-preset',
   ],
   declaration: true,
   externals: [
@@ -19,6 +20,6 @@ export default defineBuildConfig({
     'unocss',
     '@vueuse/core',
     'vue',
-    'unplugin-vue-components',
+    'vite',
   ],
 })

@@ -15,9 +15,6 @@ export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind.css',
   ],
-  ui: {
-    prefix: 'U',
-  },
   vite: {
     resolve: {
       alias: {

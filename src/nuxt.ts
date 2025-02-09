@@ -1,12 +1,12 @@
-import { addComponent, defineNuxtModule, useLogger } from '@nuxt/kit'
+import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
 import type {} from '@nuxt/schema' // Mandatory to avoid a bug when building
-import { componentNames, packageName } from './internal/constants'
+import { packageName } from './internal/shared'
 
 export interface ModuleOptions {
   /**
    * prefix for components used in templates
    *
-   * @default ""
+   * @default "U"
    */
   prefix?: string
 }
@@ -20,10 +20,11 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
-    prefix: '',
+    prefix: 'U',
   },
   setup(options, nuxt) {
     const logger = useLogger(packageName)
+    const { resolve } = createResolver(import.meta.url)
 
     // Make sure the UnoCSS Nuxt module is installed
     if (!nuxt.options.modules.includes('@unocss/nuxt')) {
@@ -31,12 +32,14 @@ export default defineNuxtModule<ModuleOptions>({
       return
     }
 
-    for (const component of componentNames) {
-      addComponent({
-        name: `${options.prefix}${component}`,
-        export: component,
-        filePath: packageName,
-      })
-    }
+    nuxt.options.alias['#ui'] = resolve('./runtime')
+
+    addComponentsDir({
+      path: resolve('./runtime/components'),
+      prefix: options.prefix,
+      pathPrefix: false,
+    })
+
+    addImportsDir(resolve('./runtime/composables'))
   },
 })
