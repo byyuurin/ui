@@ -1,7 +1,7 @@
 import { createDefu } from 'defu'
 
 export const extendTheme = createDefu((obj: any, key, value) => {
-  if (key === 'global') {
+  if (key === 'app') {
     obj[key] = { ...obj[key], ...value }
     return true
   }
