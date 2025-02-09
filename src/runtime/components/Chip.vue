@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
   size: 'md',
 })
 
-defineSlots<ChipSlots>()
+const slots = defineSlots<ChipSlots>()
 
 const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
 
@@ -48,11 +48,9 @@ const style = computed(() => {
       <i v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></i>
     </slot>
 
-    <slot>
-      <span v-if="props.label" :class="style.label({ class: props.ui?.label })">
-        {{ props.label }}
-      </span>
-    </slot>
+    <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })">
+      <slot>{{ props.label }}</slot>
+    </span>
 
     <slot name="suffix">
       <i v-if="isSuffix && suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></i>

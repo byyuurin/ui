@@ -44,14 +44,14 @@ export default ct({
       size: ['xs', 'sm', 'md'],
       class: {
         base: 'p-0.5',
-        label: 'px-2',
+        label: 'px-1',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
         base: 'p-1',
-        label: 'px-2.5',
+        label: 'px-2',
       },
     },
   ],
