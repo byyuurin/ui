@@ -20,7 +20,7 @@ const controls: ControlItems<BadgeProps> = [
   >
     <div class="flex flex-wrap gap-4 items-start">
       <UBadge v-bind="attrs">
-        <UButton icon="i-lucide-mail" :ui="{ base: 'ui-ui-cb' }" />
+        <UButton icon="i-lucide-mail" :ui="{ base: 'ui-base' }" />
       </UBadge>
     </div>
   </ExampleView>

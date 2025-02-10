@@ -2,11 +2,15 @@ import type { Rule } from '@unocss/core'
 import type { ParsedColorValue } from '@unocss/preset-mini/utils'
 import { parseColor } from '@unocss/preset-mini/utils'
 import { cssVarsAll, cssVarsDynamic, cssVarsPrefix } from './constants'
+import { cssVar } from './theme'
 
 export const rules: Rule[] = [
   [
     new RegExp(`^${cssVarsPrefix}-([^/]+)$`),
     ([_, color], ctx) => {
+      if (color === 'base')
+        return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cb')]))
+
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
 
@@ -18,6 +22,9 @@ export const rules: Rule[] = [
   [
     new RegExp(`^${cssVarsPrefix}-(?:(${cssVarsAll.join('|')})-)([^/]+)$`),
     ([_, prop, color], ctx) => {
+      if (color === 'base')
+        return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cb') }
+
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
 
