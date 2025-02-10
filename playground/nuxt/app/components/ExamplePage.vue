@@ -45,6 +45,7 @@ onMounted(() => {
         :class="uiColor"
         :color="uiColor"
       />
+      <ExampleBadge :class="uiColor" />
       <ExamplePopover :class="uiColor" />
       <ExampleTooltip :class="uiColor" />
       <ExampleScrollArea :class="uiColor" />

@@ -1,6 +1,7 @@
 export type * from '../components/Accordion.vue'
 export type * from '../components/App.vue'
 export type * from '../components/App.vue'
+export type * from '../components/Badge.vue'
 export type * from '../components/Button.vue'
 export type * from '../components/Card.vue'
 export type * from '../components/Checkbox.vue'

@@ -1,5 +1,6 @@
 export { default as accordion } from './accordion'
 export { default as app } from './app'
+export { default as badge } from './badge'
 export { default as button } from './button'
 export { default as card } from './card'
 export { default as checkbox } from './checkbox'
