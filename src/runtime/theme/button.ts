@@ -12,38 +12,45 @@ export default ct({
   },
   variants: {
     variant: {
-      solid: {
+      'solid': {
         base: [
           'color-ui-c1 bg-ui-fill/90',
           'hover:bg-ui-fill/80 active:bg-ui-fill',
           'disabled:bg-ui-fill/90 aria-disabled:bg-ui-fill/90',
         ],
       },
-      outline: {
+      'outline': {
         base: [
           'color-ui-fill bg-ui-c1 ring ring-inset ring-ui-fill',
-          'hover:bg-ui-fill/10 active:bg-ui-fill/25',
+          'hover:bg-ui-fill/5 active:bg-ui-fill/10',
           'disabled:bg-ui-c1 aria-disabled:bg-ui-c1',
         ],
       },
-      soft: {
+      'soft': {
         base: [
           'color-ui-content/80 bg-ui-fill/10',
           'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/90',
           'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
-      ghost: {
+      'soft-outline': {
+        base: [
+          'color-ui-content/80 bg-ui-fill/10 ring ring-inset ring-ui-fill/40',
+          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/90',
+          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
+        ],
+      },
+      'ghost': {
         base: [
           'color-ui-fill/80 bg-transparent',
           'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/90',
           'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
         ],
       },
-      link: {
+      'link': {
         base: [
-          'color-ui-fill bg-transparent',
-          'hover:color-ui-fill/80 active:color-ui-fill/90',
+          'color-ui-fill/80 bg-transparent',
+          'hover:color-ui-fill/60 active:color-ui-fill',
           'disabled:color-ui-fill aria-disabled:color-ui-fill',
         ],
       },
@@ -101,11 +108,11 @@ export default ct({
     {
       active: true,
       variant: 'outline',
-      class: { base: 'bg-ui-fill/25 hover:bg-ui-fill/25' },
+      class: { base: 'bg-ui-fill/10 hover:bg-ui-fill/10' },
     },
     {
       active: true,
-      variant: 'soft',
+      variant: ['soft', 'soft-outline'],
       class: { base: 'color-ui-content/90 bg-ui-fill/20 hover:color-ui-content/90 hover:bg-ui-fill/20' },
     },
     {

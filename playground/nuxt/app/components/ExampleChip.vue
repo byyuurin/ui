@@ -6,7 +6,7 @@ const icon = 'i-carbon-logo-youtube'
 
 const controls: ControlItems<ChipProps> = [
   { prop: 'label', value: '', placeholder: 'Text' },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
 ]
 </script>

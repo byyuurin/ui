@@ -70,8 +70,8 @@ onMounted(() => {
             <ThemeSelector v-model="uiTheme" v-model:color="uiColor" class="w-screen max-w-full sm:max-w-screen-sm" />
           </template>
           <template #footer>
-            <div class="text-center pt-4">
-              <UButton label="Close" variant="solid" size="xl" icon="i-mdi-close-thick" round @click="showDrawer = false" />
+            <div class="pt-4">
+              <UButton class="w-full justify-center" label="Close" variant="solid" icon="i-mdi-close-thick" round @click="showDrawer = false" />
             </div>
           </template>
         </UDrawer>

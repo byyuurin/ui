@@ -6,7 +6,7 @@ const icon = 'i-carbon-asleep-filled'
 
 const controls: ControlItems<ButtonProps> = [
   { prop: 'label', value: '', placeholder: 'Text' },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'ghost', 'link'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline', 'ghost', 'link'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'active', value: false },
   { prop: 'disabled', value: false },

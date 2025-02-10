@@ -186,7 +186,7 @@ const currentTheme = defineModel<typeof themeOptions[number]['name'] | 'customiz
   default: 'wireframe',
 })
 
-const { cloned: themeCustomize, sync } = useCloned<ThemeConfig>(() => ({
+const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => ({
   name: 'customize',
   colorScheme: 'light',
   fontFamily: '',
@@ -203,7 +203,7 @@ const { cloned: themeCustomize, sync } = useCloned<ThemeConfig>(() => ({
   c3: '#e5e6e6',
 }))
 
-const colorOptions = ['', 'ui-rose', 'ui-pink', 'ui-fuchsia', 'ui-purple', 'ui-violet', 'ui-indigo', 'ui-blue', 'ui-sky', 'ui-cyan', 'ui-teal', 'ui-emerald', 'ui-green', 'ui-lime', 'ui-yellow', 'ui-amber', 'ui-orange', 'ui-red', 'ui-gray', 'ui-slate', 'ui-zinc', 'ui-neutral', 'ui-stone']
+const colorOptions = ['', 'ui-rose-500', 'ui-pink-500', 'ui-fuchsia-500', 'ui-purple-500', 'ui-violet-500', 'ui-indigo-500', 'ui-blue-500', 'ui-sky-500', 'ui-cyan-500', 'ui-teal-500', 'ui-emerald-500', 'ui-green-500', 'ui-lime-500', 'ui-yellow-500', 'ui-amber-500', 'ui-orange-500', 'ui-red-500', 'ui-gray-500', 'ui-slate-500', 'ui-zinc-500', 'ui-neutral-500', 'ui-stone-500']
 
 function setColor(value = '') {
   emit('update:color', value)
@@ -293,35 +293,31 @@ function setCustomTheme() {
     <template #customize>
       <div class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
         <label class="opacity-80">colorScheme</label>
-        <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" />
+        <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" @update:model-value="setCustomTheme" />
         <label class="opacity-80">fontFamily</label>
-        <Input v-model="themeCustomize.fontFamily" placeholder="inherit" />
+        <Input v-model="themeCustomize.fontFamily" placeholder="inherit" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radius</label>
-        <Input v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusBox</label>
-        <Input v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusButton</label>
-        <Input v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusCheckbox</label>
-        <Input v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusRadio</label>
-        <Input v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusSwitch</label>
-        <Input v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusTabs</label>
-        <Input v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" />
+        <Input v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">cb</label>
-        <Input v-model="themeCustomize.cb" type="color" />
+        <Input v-model="themeCustomize.cb" type="color" @update:model-value="setCustomTheme" />
         <label class="opacity-80">c1</label>
-        <Input v-model="themeCustomize.c1" type="color" />
+        <Input v-model="themeCustomize.c1" type="color" @update:model-value="setCustomTheme" />
         <label class="opacity-80">c2</label>
-        <Input v-model="themeCustomize.c2" type="color" />
+        <Input v-model="themeCustomize.c2" type="color" @update:model-value="setCustomTheme" />
         <label class="opacity-80">c3</label>
-        <Input v-model="themeCustomize.c3" type="color" />
-      </div>
-      <div class="py-4 grid grid-cols-2 gap-4">
-        <Button class="justify-center" label="Reset" variant="outline" @click="sync" />
-        <Button class="justify-center" label="Apply" @click="setCustomTheme" />
+        <Input v-model="themeCustomize.c3" type="color" @update:model-value="setCustomTheme" />
       </div>
     </template>
   </Tabs>

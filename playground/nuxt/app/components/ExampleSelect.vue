@@ -13,7 +13,7 @@ const options = [
 
 const controls: ControlItems<SelectProps<any, any, any, any>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
   { prop: 'placeholder', value: 'placeholder', placeholder: 'placeholder' },
   { prop: 'multiple', value: false },
   { prop: 'arrow', value: false },

@@ -8,7 +8,7 @@ const suffixIcon = 'i-carbon-share'
 const controls: ControlItems<InputProps> = [
   { prop: 'type', value: 'text', options: ['text', 'number', 'password', 'search', 'file'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'disabled', value: false },
   { prop: 'underline', value: false },

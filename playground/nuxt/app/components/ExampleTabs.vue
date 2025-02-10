@@ -4,7 +4,7 @@ import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<TabsProps<any>> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
-  { prop: 'variant', value: 'solid', options: ['solid', 'soft', 'link'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline', 'link'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'full', value: true },
   { prop: 'content', value: true },
@@ -40,7 +40,9 @@ const items: TabsItem[] = [
   >
     <div class="flex flex-col gap-4">
       <UTabs v-bind="attrs" :items="items" />
-      <UTabs v-bind="attrs" :items="items">
+      <UTabs v-bind="attrs" :items="[{}]">
+        <Placeholder label="#default" />
+
         <template #prefix>
           <Placeholder label="#prefix" />
         </template>

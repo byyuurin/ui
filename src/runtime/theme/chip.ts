@@ -9,16 +9,19 @@ export default ct({
   },
   variants: {
     variant: {
-      solid: {
+      'solid': {
         base: [
           'color-ui-c1 bg-ui-fill/90',
         ],
       },
-      outline: {
+      'outline': {
         base: 'color-ui-fill bg-ui-c1 ring ring-inset ring-ui-fill',
       },
-      soft: {
+      'soft': {
         base: 'color-ui-content/80 bg-ui-fill/10',
+      },
+      'soft-outline': {
+        base: 'color-ui-content/80 bg-ui-fill/10 ring ring-inset ring-ui-fill/40',
       },
     },
     size: {

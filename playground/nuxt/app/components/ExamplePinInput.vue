@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref<string[]>([])
 const controls: ControlItems<PinInputProps> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
   { prop: 'length', value: 5 },
   { prop: 'placeholder', value: '?' },
   { prop: 'mask', value: false },

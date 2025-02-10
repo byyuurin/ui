@@ -36,28 +36,35 @@ export default ct({
   },
   variants: {
     variant: {
-      outline: {
+      'outline': {
         base: [
           'color-ui-cb/80 bg-ui-c1 ring ring-inset ring-ui-cb/50',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'disabled:ring-ui-cb/80 hover:disabled:ring-ui-cb/80',
         ],
       },
-      soft: {
+      'soft': {
         base: [
           'color-ui-cb/80 bg-ui-cb/4',
           'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-content/80 disabled:bg-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-ui-fill/5',
         ],
       },
-      ghost: {
+      'soft-outline': {
+        base: [
+          'color-ui-cb/80 bg-ui-cb/4 ring ring-inset ring-ui-cb/10',
+          'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
+          'disabled:color-ui-content/80 disabled:bg-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-ui-fill/5',
+        ],
+      },
+      'ghost': {
         base: [
           'color-ui-cb/80 bg-transparent',
           'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-fill/80 disabled:bg-transparent hover:disabled:color-ui-fill/80 hover:disabled:bg-transparent',
         ],
       },
-      none: {
+      'none': {
         base: 'color-ui-cb bg-transparent',
       },
     },
@@ -126,7 +133,7 @@ export default ct({
       },
     },
     {
-      variant: ['soft', 'ghost', 'none'],
+      variant: ['soft', 'soft-outline', 'ghost', 'none'],
       highlight: true,
       class: {
         base: 'ring ring-inset ring-ui-fill/80',
