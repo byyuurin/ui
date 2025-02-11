@@ -118,6 +118,7 @@
     }
   },
   "resolutions": {
+    "@byyuurin/ui": "workspace:*",
     "mkdist": "^1.6.0"
   },
   "simple-git-hooks": {

@@ -14,6 +14,7 @@ export const themeOptions = defineThemeOptions([
   {
     name: 'light',
     colorScheme: 'light',
+    radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#1f2937'),
@@ -24,6 +25,7 @@ export const themeOptions = defineThemeOptions([
   {
     name: 'dark',
     colorScheme: 'dark',
+    radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#a6adbb'),
@@ -72,6 +74,7 @@ export const themeOptions = defineThemeOptions([
   {
     name: 'coffee',
     colorScheme: 'dark',
+    radius: '0.2rem',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#c59f60'),
@@ -107,6 +110,7 @@ export const themeOptions = defineThemeOptions([
     name: 'Antfu light',
     colorScheme: 'light',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
+    radius: '0.2rem',
     cb: cssVar('#374151'),
     c1: cssVar('#ffffff'),
     c2: cssVar('#eeeeee'),
@@ -116,6 +120,7 @@ export const themeOptions = defineThemeOptions([
     name: 'Antfu dark',
     colorScheme: 'dark',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
+    radius: '0.2rem',
     cb: cssVar('#e5e7eb'),
     c1: cssVar('#050505'),
     c2: cssVar('#111111'),
