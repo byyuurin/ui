@@ -27,6 +27,7 @@ onMounted(() => {
 <template>
   <UApp :toaster="toasterAttrs">
     <div>
+      <ExampleAlert :class="uiColor" />
       <ExampleChip :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleLink :class="uiColor" />

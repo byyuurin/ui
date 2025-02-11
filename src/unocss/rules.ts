@@ -11,6 +11,9 @@ export const rules: Rule[] = [
       if (color === 'base')
         return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cb')]))
 
+      if (color === 'base-inverted')
+        return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('c1')]))
+
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
 
@@ -24,6 +27,9 @@ export const rules: Rule[] = [
     ([_, prop, color], ctx) => {
       if (color === 'base')
         return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cb') }
+
+      if (color === 'base-inverted')
+        return { [`--${cssVarsPrefix}-${prop}`]: cssVar('c1') }
 
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
