@@ -1,10 +1,10 @@
 <script lang="ts">
-import { Button, Input, Link, Select, Tabs } from '@byyuurin/ui'
+import { Input, Link, Select, Tabs } from '@byyuurin/ui'
 import { cssVarsPrefix } from '@byyuurin/ui/unocss-preset'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import { useCloned } from '@vueuse/core'
 
-interface ThemeConfig<T extends string = string> extends PresetOptions {
+export interface ThemeConfig<T extends string = string> extends PresetOptions {
   name: T
   colorScheme: 'light' | 'dark'
   fontFamily?: string
@@ -173,21 +173,18 @@ function resolveThemeAttrs(theme: ThemeConfig) {
 import type { PresetOptions } from '@byyuurin/ui/unocss-preset'
 
 const props = withDefaults(defineProps<{
+  config: ThemeConfig | null
   color?: string
 }>(), {
   color: '',
 })
 
 const emit = defineEmits<{
+  (event: 'update:config', config: ThemeConfig): void
   (event: 'update:color', color: string): void
 }>()
 
-const currentTheme = defineModel<typeof themeOptions[number]['name'] | 'customize'>({
-  default: 'wireframe',
-})
-
 const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => ({
-  name: 'customize',
   colorScheme: 'light',
   fontFamily: '',
   radius: '0rem',
@@ -201,7 +198,24 @@ const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => ({
   c1: '#ffffff',
   c2: '#f2f2f2',
   c3: '#e5e6e6',
+  ...props.config,
+  name: 'customize',
 }))
+
+const currentTheme = defineModel<typeof themeOptions[number]['name'] | 'customize'>({
+  default: 'wireframe',
+})
+
+const themeItems = computed(() => [
+  ...themeOptions,
+  {
+    ...themeCustomize.value,
+    cb: cssVar(themeCustomize.value.cb!),
+    c1: cssVar(themeCustomize.value.c1!),
+    c2: cssVar(themeCustomize.value.c2!),
+    c3: cssVar(themeCustomize.value.c3!),
+  },
+])
 
 const colorOptions = ['', 'ui-rose-500', 'ui-pink-500', 'ui-fuchsia-500', 'ui-purple-500', 'ui-violet-500', 'ui-indigo-500', 'ui-blue-500', 'ui-sky-500', 'ui-cyan-500', 'ui-teal-500', 'ui-emerald-500', 'ui-green-500', 'ui-lime-500', 'ui-yellow-500', 'ui-amber-500', 'ui-orange-500', 'ui-red-500', 'ui-gray-500', 'ui-slate-500', 'ui-zinc-500', 'ui-neutral-500', 'ui-stone-500']
 
@@ -210,21 +224,27 @@ function setColor(value = '') {
 }
 
 function onOptionClick(theme: ThemeConfig) {
+  if (theme.name === 'customize')
+    return
+
   if (currentTheme.value === theme.name)
     return
 
   setTheme(theme)
   currentTheme.value = theme.name as any
 
-  const hex = (rgb = '') => rgb ? `#${rgb.split(' ').map((v) => Number(v).toString(16)).join('')}` : ''
+  const hex = (rgb = '') => rgb ? `#${rgb.split(' ').map((v) => Number(v).toString(16).padStart(2, '0')).join('')}` : ''
 
   themeCustomize.value = {
     ...theme,
+    name: 'customize',
     cb: hex(theme.cb),
     c1: hex(theme.c1),
     c2: hex(theme.c2),
     c3: hex(theme.c3),
   }
+
+  emit('update:config', themeCustomize.value)
 }
 
 function setCustomTheme() {
@@ -239,6 +259,7 @@ function setCustomTheme() {
   })
 
   currentTheme.value = 'customize'
+  emit('update:config', themeCustomize.value)
 }
 </script>
 
@@ -256,10 +277,13 @@ function setCustomTheme() {
       <div class="flex flex-col gap-8 font-sans">
         <div class="w-full grid sm:grid-cols-3 items-start gap-4">
           <div
-            v-for="theme in themeOptions"
+            v-for="theme in themeItems"
             :key="theme.name"
-            class="self-end border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
-            :class=" theme.name === currentTheme ? 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1' : 'cursor-pointer'"
+            class="self-end border-ui-cb/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
+            :class="{
+              'hover:border-ui-cb/40 ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': theme.name === currentTheme,
+              'cursor-pointer': theme.name !== currentTheme && theme.name !== 'customize',
+            }"
             :style="Object.fromEntries(resolveThemeAttrs(theme))"
             @click="onOptionClick(theme)"
           >
