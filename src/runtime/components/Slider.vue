@@ -1,0 +1,97 @@
+<script lang="ts">
+import type { VariantProps } from '@byyuurin/ui-kit'
+import type { SliderRootProps } from 'reka-ui'
+import type { slider } from '../theme'
+import type { ComponentAttrs } from '../types'
+
+type SliderVariants = VariantProps<typeof slider>
+
+export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderRootProps, 'as' | 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
+  modelValue?: number | number[]
+  size?: SliderVariants['size']
+  /**
+   * The orientation of the slider.
+   * @default 'horizontal'
+   */
+  orientation?: SliderVariants['orientation']
+  /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
+  defaultValue?: number | number[]
+}
+
+export interface SliderEmits {
+  (event: 'update:modelValue', payload: number | number[]): void
+  (event: 'change', payload: Event): void
+}
+</script>
+
+<script setup lang="ts">
+import { reactivePick } from '@vueuse/core'
+import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
+import { computed } from 'vue'
+import { useTheme } from '../composables/useTheme'
+
+const props = withDefaults(defineProps<SliderProps>(), {
+  size: 'md',
+  orientation: 'horizontal',
+  step: 1,
+  max: 100,
+})
+
+const emit = defineEmits<SliderEmits>()
+
+const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'orientation', 'min', 'max', 'step', 'minStepsBetweenThumbs', 'inverted'), emit)
+
+const modelValue = defineModel<number | number[]>()
+
+const defaultSliderValue = computed(() => {
+  if (typeof props.defaultValue === 'number')
+    return [props.defaultValue]
+
+  return props.defaultValue
+})
+
+const sliderValue = computed({
+  get() {
+    if (typeof modelValue.value === 'number')
+      return [modelValue.value]
+
+    return modelValue.value ?? defaultSliderValue.value
+  },
+  set(value) {
+    modelValue.value = value?.length === 1 ? value[0] : value
+  },
+})
+
+const thumbsCount = computed(() => sliderValue.value?.length ?? 1)
+
+const { theme, createStyler } = useTheme()
+const style = computed(() => {
+  const styler = createStyler(theme.value.slider)
+  return styler(props)
+})
+
+function onChange(value: any) {
+  // @ts-expect-error - 'target' does not exist in type 'EventInit'
+  const event = new Event('change', { target: { value } })
+  emit('change', event)
+}
+</script>
+
+<template>
+  <SliderRoot
+    v-bind="rootProps"
+    v-model="sliderValue"
+    :name="props.name"
+    :disabled="props.disabled"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :default-value="defaultSliderValue"
+    :data-steps="thumbsCount"
+    @value-commit="onChange"
+  >
+    <SliderTrack :class="style.track({ class: props.ui?.track })">
+      <SliderRange :class="style.range({ class: props.ui?.range })" />
+    </SliderTrack>
+
+    <SliderThumb v-for="count in thumbsCount" :key="count" :class="style.thumb({ class: props.ui?.thumb })" />
+  </SliderRoot>
+</template>

@@ -34,6 +34,7 @@ onMounted(() => {
       <ExamplePinInput :class="uiColor" />
       <ExampleTextarea :class="uiColor" />
       <ExampleSelect :class="uiColor" />
+      <ExampleSlider :class="uiColor" />
       <ExampleSwitch :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />
       <ExampleRadioGroup :class="uiColor" />
