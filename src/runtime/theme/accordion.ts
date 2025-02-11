@@ -5,7 +5,7 @@ export default ct({
     root: 'w-full color-ui-cb',
     item: 'border-b last:border-b-0',
     header: 'flex',
-    trigger: 'group flex-1 flex items-center gap-2 font-medium text-sm py-4 focus-visible:outline-ui-fill min-w-0',
+    trigger: 'group flex-1 flex items-center gap-2 font-medium text-sm py-4 outline-none focus-visible:outline-ui-cb/80 min-w-0',
     content: [
       'overflow-hidden focus:outline-none',
       'data-[state=open]:animate-[accordion-down_200ms_ease-out]',

@@ -5,7 +5,7 @@ export default ct({
     root: 'relative flex items-start',
     base: [
       'size-1.25em shrink-0 flex items-center justify-center rounded-ui-checkbox color-ui-c1 ring-2 ring-ui-content ring-inset bg-ui-content',
-      'focus-visible:outline-ui-cb focus-visible:outline-2 focus-visible:outline-offset-2',
+      'outline-none focus-visible:outline-ui-cb/80 focus-visible:outline-2 focus-visible:outline-offset-2',
       'aria-[checked=false]:ring-1 aria-[checked=false]:ring-ui-cb aria-[checked=false]:bg-ui-c1',
     ],
     container: 'flex items-center h-1.25em',

@@ -7,7 +7,7 @@ export default ct({
     indicator: 'absolute transition-all duration-200',
     trigger: [
       'group relative inline-flex items-center gap-0.25em shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
-      'focus:outline-hidden',
+      'outline-none',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     content: 'w-full focus:outline-none',
@@ -19,7 +19,7 @@ export default ct({
       'solid': {
         list: 'bg-ui-cb/5 rounded-ui-tabs',
         trigger: [
-          'data-[state=active]:color-ui-c1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill/80',
+          'data-[state=active]:color-ui-c1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
         indicator: 'bg-ui-fill/90 rounded-ui-tabs shadow-xs',

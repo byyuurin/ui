@@ -5,8 +5,8 @@ export default ct({
     root: 'relative flex items-start',
     base: [
       'inline-flex items-center shrink-0 rounded-ui-switch border-2 border-transparent transition-colors duration-200',
-      'focus-visible:outline-2 focus-visible:outline-offset-2',
-      'data-[state=unchecked]:bg-ui-cb/10 data-[state=checked]:bg-ui-fill/80 focus-visible:outline-ui-base',
+      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
+      'data-[state=unchecked]:bg-ui-cb/10 data-[state=checked]:bg-ui-fill/80',
       'w-2.7em',
     ],
     container: 'flex items-center h-1.5em',

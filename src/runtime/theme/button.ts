@@ -4,6 +4,7 @@ export default ct({
   slots: {
     base: [
       'inline-flex items-center rounded-ui-button leading-normal transition-colors',
+      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',

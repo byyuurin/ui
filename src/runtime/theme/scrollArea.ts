@@ -14,7 +14,7 @@ export default ct({
     /** Contains all the parts of a scroll area. */
     root: 'relative overflow-hidden',
     /** The viewport area of the scroll area. */
-    viewport: 'size-full rounded-ui-base',
+    viewport: 'size-full rounded-ui-base outline-none',
     /** The vertical and horizontal scrollbar. */
     scrollbar: [
       'flex select-none touch-none p-0.5 duration-160 ease-out',

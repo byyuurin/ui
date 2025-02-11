@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
-  base: 'border-y border-t-transparent focus-visible:outline-ui-cb',
+  base: 'border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80',
   variants: {
     underline: {
       true: 'border-current',
