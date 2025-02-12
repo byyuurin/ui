@@ -3,7 +3,7 @@ import type { AlertProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<AlertProps> = [
-  { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
+  { prop: 'orientation', value: 'vertical', options: ['horizontal', 'vertical'] },
   { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
   { prop: 'title', value: 'Title' },
   { prop: 'description', value: 'Description' },
@@ -36,10 +36,10 @@ const controls: ControlItems<AlertProps> = [
           <Placeholder label="#close" />
         </template>
         <template #title>
-          <Placeholder label="#title" />
+          <Placeholder label="#title" label-position="left" />
         </template>
         <template #description>
-          <Placeholder label="#description" />
+          <Placeholder label="#description" label-position="left" />
         </template>
         <template #actions>
           <Placeholder label="#actions" />
