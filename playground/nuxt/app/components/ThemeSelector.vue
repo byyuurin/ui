@@ -222,7 +222,31 @@ const themeItems = computed(() => [
   },
 ])
 
-const colorOptions = ['', 'ui-rose-500', 'ui-pink-500', 'ui-fuchsia-500', 'ui-purple-500', 'ui-violet-500', 'ui-indigo-500', 'ui-blue-500', 'ui-sky-500', 'ui-cyan-500', 'ui-teal-500', 'ui-emerald-500', 'ui-green-500', 'ui-lime-500', 'ui-yellow-500', 'ui-amber-500', 'ui-orange-500', 'ui-red-500', 'ui-gray-500', 'ui-slate-500', 'ui-zinc-500', 'ui-neutral-500', 'ui-stone-500']
+const colorGroups = [
+  [''],
+  ['ui-rose-50', 'ui-rose-100', 'ui-rose-200', 'ui-rose-300', 'ui-rose-400', 'ui-rose-500', 'ui-rose-600', 'ui-rose-700', 'ui-rose-800', 'ui-rose-900', 'ui-rose-950'],
+  ['ui-pink-50', 'ui-pink-100', 'ui-pink-200', 'ui-pink-300', 'ui-pink-400', 'ui-pink-500', 'ui-pink-600', 'ui-pink-700', 'ui-pink-800', 'ui-pink-900', 'ui-pink-950'],
+  ['ui-fuchsia-50', 'ui-fuchsia-100', 'ui-fuchsia-200', 'ui-fuchsia-300', 'ui-fuchsia-400', 'ui-fuchsia-500', 'ui-fuchsia-600', 'ui-fuchsia-700', 'ui-fuchsia-800', 'ui-fuchsia-900', 'ui-fuchsia-950'],
+  ['ui-purple-50', 'ui-purple-100', 'ui-purple-200', 'ui-purple-300', 'ui-purple-400', 'ui-purple-500', 'ui-purple-600', 'ui-purple-700', 'ui-purple-800', 'ui-purple-900', 'ui-purple-950'],
+  ['ui-violet-50', 'ui-violet-100', 'ui-violet-200', 'ui-violet-300', 'ui-violet-400', 'ui-violet-500', 'ui-violet-600', 'ui-violet-700', 'ui-violet-800', 'ui-violet-900', 'ui-violet-950'],
+  ['ui-indigo-50', 'ui-indigo-100', 'ui-indigo-200', 'ui-indigo-300', 'ui-indigo-400', 'ui-indigo-500', 'ui-indigo-600', 'ui-indigo-700', 'ui-indigo-800', 'ui-indigo-900', 'ui-indigo-950'],
+  ['ui-blue-50', 'ui-blue-100', 'ui-blue-200', 'ui-blue-300', 'ui-blue-400', 'ui-blue-500', 'ui-blue-600', 'ui-blue-700', 'ui-blue-800', 'ui-blue-900', 'ui-blue-950'],
+  ['ui-sky-50', 'ui-sky-100', 'ui-sky-200', 'ui-sky-300', 'ui-sky-400', 'ui-sky-500', 'ui-sky-600', 'ui-sky-700', 'ui-sky-800', 'ui-sky-900', 'ui-sky-950'],
+  ['ui-cyan-50', 'ui-cyan-100', 'ui-cyan-200', 'ui-cyan-300', 'ui-cyan-400', 'ui-cyan-500', 'ui-cyan-600', 'ui-cyan-700', 'ui-cyan-800', 'ui-cyan-900', 'ui-cyan-950'],
+  ['ui-teal-50', 'ui-teal-100', 'ui-teal-200', 'ui-teal-300', 'ui-teal-400', 'ui-teal-500', 'ui-teal-600', 'ui-teal-700', 'ui-teal-800', 'ui-teal-900', 'ui-teal-950'],
+  ['ui-emerald-50', 'ui-emerald-100', 'ui-emerald-200', 'ui-emerald-300', 'ui-emerald-400', 'ui-emerald-500', 'ui-emerald-600', 'ui-emerald-700', 'ui-emerald-800', 'ui-emerald-900', 'ui-emerald-950'],
+  ['ui-green-50', 'ui-green-100', 'ui-green-200', 'ui-green-300', 'ui-green-400', 'ui-green-500', 'ui-green-600', 'ui-green-700', 'ui-green-800', 'ui-green-900', 'ui-green-950'],
+  ['ui-lime-50', 'ui-lime-100', 'ui-lime-200', 'ui-lime-300', 'ui-lime-400', 'ui-lime-500', 'ui-lime-600', 'ui-lime-700', 'ui-lime-800', 'ui-lime-900', 'ui-lime-950'],
+  ['ui-yellow-50', 'ui-yellow-100', 'ui-yellow-200', 'ui-yellow-300', 'ui-yellow-400', 'ui-yellow-500', 'ui-yellow-600', 'ui-yellow-700', 'ui-yellow-800', 'ui-yellow-900', 'ui-yellow-950'],
+  ['ui-amber-50', 'ui-amber-100', 'ui-amber-200', 'ui-amber-300', 'ui-amber-400', 'ui-amber-500', 'ui-amber-600', 'ui-amber-700', 'ui-amber-800', 'ui-amber-900', 'ui-amber-950'],
+  ['ui-orange-50', 'ui-orange-100', 'ui-orange-200', 'ui-orange-300', 'ui-orange-400', 'ui-orange-500', 'ui-orange-600', 'ui-orange-700', 'ui-orange-800', 'ui-orange-900', 'ui-orange-950'],
+  ['ui-red-50', 'ui-red-100', 'ui-red-200', 'ui-red-300', 'ui-red-400', 'ui-red-500', 'ui-red-600', 'ui-red-700', 'ui-red-800', 'ui-red-900', 'ui-red-950'],
+  ['ui-gray-50', 'ui-gray-100', 'ui-gray-200', 'ui-gray-300', 'ui-gray-400', 'ui-gray-500', 'ui-gray-600', 'ui-gray-700', 'ui-gray-800', 'ui-gray-900', 'ui-gray-950'],
+  ['ui-slate-50', 'ui-slate-100', 'ui-slate-200', 'ui-slate-300', 'ui-slate-400', 'ui-slate-500', 'ui-slate-600', 'ui-slate-700', 'ui-slate-800', 'ui-slate-900', 'ui-slate-950'],
+  ['ui-zinc-50', 'ui-zinc-100', 'ui-zinc-200', 'ui-zinc-300', 'ui-zinc-400', 'ui-zinc-500', 'ui-zinc-600', 'ui-zinc-700', 'ui-zinc-800', 'ui-zinc-900', 'ui-zinc-950'],
+  ['ui-neutral-50', 'ui-neutral-100', 'ui-neutral-200', 'ui-neutral-300', 'ui-neutral-400', 'ui-neutral-500', 'ui-neutral-600', 'ui-neutral-700', 'ui-neutral-800', 'ui-neutral-900', 'ui-neutral-950'],
+  ['ui-stone-50', 'ui-stone-100', 'ui-stone-200', 'ui-stone-300', 'ui-stone-400', 'ui-stone-500', 'ui-stone-600', 'ui-stone-700', 'ui-stone-800', 'ui-stone-900', 'ui-stone-950'],
+]
 
 function setColor(value = '') {
   emit('update:color', value)
@@ -305,16 +329,19 @@ function setCustomTheme() {
             </div>
           </div>
         </div>
-        <div class="w-full flex flex-wrap items-start gap-2">
-          <div v-for="option in colorOptions" :key="option" class="flex aspect-square items-center justify-center rounded">
-            <Link
-              class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-              :class="[option, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': option === props.color }]"
-              size="xl"
-              label="A"
-              raw
-              @click="setColor(option)"
-            />
+        <div class="mx-auto flex flex-col gap-2">
+          <div v-for="(colorOptions, y) in colorGroups" :key="y" class="w-full flex flex-wrap items-start gap-2">
+            <div v-for="colorName in colorOptions" :key="colorName" class="flex aspect-square items-center justify-center rounded">
+              <Link
+                class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
+                :class="[colorName, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': colorName === props.color }]"
+                size="xl"
+                label="A"
+                :title="colorName"
+                raw
+                @click="setColor(colorName)"
+              />
+            </div>
           </div>
         </div>
       </div>
