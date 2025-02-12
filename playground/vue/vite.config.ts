@@ -2,11 +2,13 @@ import { resolve } from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
+import Inspect from 'vite-plugin-inspect'
 import uiPlugin from '../../src/unplugin'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    Inspect(),
     UnoCSS(),
     Vue(),
     uiPlugin.vite({

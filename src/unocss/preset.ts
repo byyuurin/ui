@@ -1,5 +1,6 @@
 import { definePreset } from '@unocss/core'
 import { parseCssColor } from '@unocss/preset-mini/utils'
+import { kebabCase } from 'scule'
 import { cssVarsPrefix } from './constants'
 import rules from './rules'
 import theme, { cssColor, cssVar } from './theme'
@@ -79,7 +80,6 @@ function mergeOptions(options: PresetOptions): PresetOptions {
 }
 
 function createRootCSS(kv: PresetOptions) {
-  const kebabCase = (input: string) => input.replace(/([A-Z][^A-Z]*)/g, '-$1').replace(/^-/, '').toLowerCase()
   const join = (input: string[]) => input.map((item) => item.endsWith(';') ? item : `${item};`).join('')
 
   const css = [
