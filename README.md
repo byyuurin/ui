@@ -58,28 +58,25 @@ export default defineConfig({
 ```ts
 // vite.config.ts
 
-import UIResolver from '@byyuurin/ui/resolver'
+import UI from '@byyuurin/ui/vite'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import VueComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   plugins: [
     UnoCSS(),
     Vue(),
-    VueComponents({
-      dts: 'src/typed-components.d.ts',
-      resolvers: [
-        UIResolver({
-          prefix: 'U', // optional
-        }),
-      ],
-    }),
-    AutoImport({
-      dts: 'src/typed-imports.d.ts',
-      imports: ['vue'],
+    UI({
+      prefix: 'U', // optional
+      autoImport: {
+        dts: 'src/typed-imports.d.ts',
+        imports: ['vue'],
+      },
+      components: {
+        dts: 'src/typed-components.d.ts',
+      },
     }),
   ],
 })
