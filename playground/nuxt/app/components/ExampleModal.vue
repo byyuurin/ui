@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ModalProps } from '@byyuurin/ui'
-import { Modal, useModal } from '@byyuurin/ui'
+import { Modal } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<ModalProps> = [

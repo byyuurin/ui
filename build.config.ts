@@ -10,7 +10,9 @@ export default defineBuildConfig({
     'src/nuxt',
     'src/unocss-preset',
   ],
+  clean: true,
   declaration: true,
+  sourcemap: true,
   externals: [
     '@nuxt/kit',
     '@nuxt/schema',

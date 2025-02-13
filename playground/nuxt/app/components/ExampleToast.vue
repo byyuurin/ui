@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ToasterProps, ToastProps } from '@byyuurin/ui'
-import { useToast } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 interface Props extends Pick<ToasterProps, 'duration' | 'position' | 'expand'> {

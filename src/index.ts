@@ -1,6 +1,8 @@
 // components
 export { default as Accordion } from './runtime/components/Accordion.vue'
+export { default as Alert } from './runtime/components/Alert.vue'
 export { default as App } from './runtime/components/App.vue'
+export { default as Badge } from './runtime/components/Badge.vue'
 export { default as Button } from './runtime/components/Button.vue'
 export { default as Card } from './runtime/components/Card.vue'
 export { default as Checkbox } from './runtime/components/Checkbox.vue'
@@ -15,19 +17,12 @@ export { default as Popover } from './runtime/components/Popover.vue'
 export { default as RadioGroup } from './runtime/components/RadioGroup.vue'
 export { default as ScrollArea } from './runtime/components/ScrollArea.vue'
 export { default as Select } from './runtime/components/Select.vue'
+export { default as Slider } from './runtime/components/Slider.vue'
 export { default as Switch } from './runtime/components/Switch.vue'
 export { default as Tabs } from './runtime/components/Tabs.vue'
 export { default as Textarea } from './runtime/components/Textarea.vue'
 export { default as Toast } from './runtime/components/Toast.vue'
 export { default as Toaster } from './runtime/components/Toaster.vue'
 export { default as Tooltip } from './runtime/components/Tooltip.vue'
-
-// composables
-export { defineInjection } from './runtime/composables/defineInjection'
-export { useComponentIcons } from './runtime/composables/useComponentIcons'
-export { useModal } from './runtime/composables/useModal'
-export { useTheme } from './runtime/composables/useTheme'
-export { useToast } from './runtime/composables/useToast'
-
 // types
 export * from './runtime/types'
