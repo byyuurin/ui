@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     root: 'flex items-center gap-2',
     list: 'relative flex p-1 group',

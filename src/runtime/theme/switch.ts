@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     root: 'relative flex items-start',
     base: [

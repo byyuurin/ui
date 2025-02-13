@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     viewport: [
       'fixed flex flex-col w-[calc(100%-2rem)] sm:w-96 z-[100] focus:outline-none',

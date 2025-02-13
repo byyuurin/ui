@@ -50,14 +50,6 @@ export default defineConfig({
       c3: '#e5e6e6', // optional
     }),
   ],
-  content: {
-    pipeline: {
-      include: [
-        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
-        /\/(?:theme).*\.(ts|m?js)($|\?)/,
-      ],
-    },
-  },
 })
 ```
 

@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     overlay: 'fixed inset-0 bg-ui-c3/75',
     content: 'fixed bg-ui-c1 divide-y divide-ui-cb/10 flex flex-col focus:outline-none',

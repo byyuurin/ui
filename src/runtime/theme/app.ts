@@ -1,4 +1,5 @@
 export default {
+  /* @unocss-include */
   icons: {
     close: 'i-mdi-close-thick',
     loading: 'i-mdi-loading',

@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     root: 'inline-flex items-center gap-x-2',
     container: 'rounded-ui-base border-0 transition-colors aria-disabled:opacity-50',

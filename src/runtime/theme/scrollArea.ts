@@ -9,7 +9,7 @@ export const transitionProps: TransitionGroupProps = {
   moveClass: 'transition',
 }
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     /** Contains all the parts of a scroll area. */
     root: 'relative overflow-hidden',

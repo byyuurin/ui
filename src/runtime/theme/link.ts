@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   base: 'border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80',
   variants: {
     underline: {

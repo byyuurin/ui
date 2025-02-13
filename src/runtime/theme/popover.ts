@@ -1,6 +1,6 @@
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct({
+export default ct(/* @unocss-include */{
   slots: {
     content: [
       'color-ui-base bg-ui-base shadow-lg rounded-ui-box ring ring-ui-base/10',
