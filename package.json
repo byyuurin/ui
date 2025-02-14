@@ -64,7 +64,9 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks",
-    "prepack": "unbuild"
+    "prepack": "unbuild",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "peerDependencies": {
     "nuxt": "^3.13.1",
@@ -100,16 +102,26 @@
   "devDependencies": {
     "@antfu/ni": "^23.3.1",
     "@byyuurin/eslint-config": "^1.7.0",
+    "@chromatic-com/storybook": "3.2.4",
     "@nuxt/schema": "^3.15.4",
+    "@storybook/addon-essentials": "8.5.5",
+    "@storybook/addon-interactions": "8.5.5",
+    "@storybook/addon-onboarding": "8.5.5",
+    "@storybook/blocks": "8.5.5",
+    "@storybook/test": "8.5.5",
+    "@storybook/vue3": "8.5.5",
+    "@storybook/vue3-vite": "8.5.5",
     "@types/node": "^22.13.1",
     "@unocss/reset": "^65.4.3",
     "@vitejs/plugin-vue": "^5.2.1",
     "bumpp": "^10.0.3",
     "eslint": "^9.19.0",
     "eslint-plugin-format": "1.0.1",
+    "eslint-plugin-storybook": "^0.11.2",
     "esno": "^4.8.0",
     "lint-staged": "^15.4.3",
     "simple-git-hooks": "^2.11.1",
+    "storybook": "8.5.5",
     "typescript": "^5.7.3",
     "unbuild": "^3.3.1",
     "unocss": "^65.4.3",
@@ -134,5 +146,10 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

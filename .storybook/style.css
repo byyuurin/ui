@@ -1,0 +1,15 @@
+:root {
+  font-family: Chalkboard, "comic sans ms", "sans-serif";
+  --ui-radius: 0.2rem;
+  --ui-radius-box: 0.2rem;
+  --ui-radius-button: 0.2rem;
+  --ui-radius-checkbox: 0.2rem;
+  --ui-radius-radio: 0.2rem;
+  --ui-radius-switch: 0.2rem;
+  --ui-radius-tabs: 0.2rem;
+  --ui-cb: 22 22 22;
+  --ui-c1: 255 255 255;
+  --ui-c2: 238 238 238;
+  --ui-c3: 221 221 221;
+  color-scheme: light;
+}
