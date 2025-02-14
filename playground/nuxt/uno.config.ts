@@ -1,9 +1,9 @@
 import { defineConfig } from 'unocss'
-import config from '../vue/uno.config'
+import config from '../../uno.config'
 
 export default defineConfig({
   ...config,
   configDeps: [
-    '../vue/uno.config',
+    '../../uno.config',
   ],
 })
