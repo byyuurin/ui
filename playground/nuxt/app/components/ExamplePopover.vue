@@ -21,7 +21,7 @@ const controls: ControlItems<PopoverProps & { side: (PopoverProps['content'] & o
       <UButton label="Trigger" />
 
       <template #content>
-        <Placeholder class="size-80" label="#content" />
+        <Placeholder class="bg-ui-c1 size-80" label="#content" />
       </template>
     </UPopover>
   </ExampleView>

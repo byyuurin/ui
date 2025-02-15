@@ -10,7 +10,7 @@ export default ct(/* @unocss-include */{
     avatar: 'shrink-0',
     avatarSize: '2xl',
     actions: 'flex flex-wrap gap-1.5 shrink-0',
-    progress: 'absolute inset-x-[var(--ui-radius-box)] bottom-0 h-1 z-[-1] color-ui-base/80 bg-solid-current rounded-ui-base',
+    progress: 'absolute inset-x-[var(--ui-radius-box)] bottom-0 h-1 z-[-1] color-ui-base/80 bg-current rounded-ui-base',
     close: 'p-0.5',
   },
   variants: {
