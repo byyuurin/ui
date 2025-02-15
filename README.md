@@ -42,6 +42,9 @@ export default defineConfig({
       radius: '0rem', // optional
       radiusBox: '0rem', // optional
       radiusButton: '0rem', // optional
+      radiusCheckbox: '0rem', // optional
+      radiusRadio: '0rem', // optional
+      radiusSwitch: '0rem', // optional
       radiusTabs: '0rem', // optional
       cb: '#1f2937', // optional
       c1: '#ffffff', // optional
@@ -52,6 +55,12 @@ export default defineConfig({
 })
 ```
 
+New Rules
+
+- `ui-[color]`
+- `bg-solid-[color]`
+- `bg-solid-[color]/[opacity]`
+
 ### Vite
 
 ```ts
@@ -61,7 +70,6 @@ import UI from '@byyuurin/ui/vite'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
-import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
   plugins: [
