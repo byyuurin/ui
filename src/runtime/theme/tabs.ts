@@ -17,15 +17,15 @@ export default ct(/* @unocss-include */{
   variants: {
     variant: {
       'solid': {
-        list: 'bg-ui-cb/5 rounded-ui-tabs',
+        list: 'bg-solid-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-c1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-ui-fill/90 rounded-ui-tabs shadow-xs',
+        indicator: 'bg-solid-ui-fill/90 rounded-ui-tabs shadow-xs',
       },
       'outline': {
-        list: 'bg-ui-cb/5 rounded-ui-tabs',
+        list: 'bg-solid-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-content/80',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
@@ -33,24 +33,24 @@ export default ct(/* @unocss-include */{
         indicator: 'rounded-ui-tabs ring ring-inset ring-ui-content',
       },
       'soft': {
-        list: 'bg-ui-cb/5 rounded-ui-tabs',
+        list: 'bg-solid-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-ui-fill/10 rounded-ui-tabs shadow-xs',
+        indicator: 'bg-solid-ui-fill/10 rounded-ui-tabs shadow-xs',
       },
       'soft-outline': {
-        list: 'bg-ui-cb/5 rounded-ui-tabs',
+        list: 'bg-solid-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-ui-fill/10 rounded-ui-tabs shadow-xs ring ring-inset ring-ui-content/40',
+        indicator: 'bg-solid-ui-fill/10 rounded-ui-tabs shadow-xs ring ring-inset ring-ui-content/40',
       },
       'link': {
-        list: 'bg-ui-cb/5 border-ui-cb/10',
-        indicator: 'bg-ui-fill rounded-full',
+        list: 'bg-solid-ui-cb/5 border-ui-cb/10',
+        indicator: 'bg-solid-ui-fill rounded-full',
         trigger: [
           'data-[state=active]:color-ui-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-base',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',

@@ -5,7 +5,7 @@ export default ct(/* @unocss-include */{
     root: 'relative inline-flex items-center justify-center shrink-0',
     base: [
       'inline-block rounded-full ring ring-ui-c1 flex items-center justify-center color-ui-c1 font-medium whitespace-nowrap',
-      'h-1.2em min-w-1.2em p-0.2em text-0.8em bg-ui-fill',
+      'h-1.2em min-w-1.2em p-0.2em text-0.8em bg-solid-ui-fill',
     ],
   },
   variants: {

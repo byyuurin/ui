@@ -4,13 +4,13 @@ export default ct(/* @unocss-include */{
   slots: {
     root: 'relative flex items-center select-none touch-none aria-disabled:opacity-50',
     track: [
-      'relative bg-ui-cb/10 overflow-hidden rounded-full flex-grow cursor-pointer',
+      'relative bg-solid-ui-cb/10 overflow-hidden rounded-full flex-grow cursor-pointer',
       'data-[disabled]:cursor-not-allowed',
       'data-[orientation=horizontal]:h-0.6em data-[orientation=vertical]:w-0.6em',
     ],
-    range: 'absolute rounded-full bg-ui-fill',
+    range: 'absolute rounded-full bg-solid-ui-fill',
     thumb: [
-      'size-1em rounded-full bg-ui-c1 ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
+      'size-1em rounded-full bg-solid-ui-c1 ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
       'data-[disabled]:cursor-not-allowed',
       'ring-ui-fill outline-none focus-visible:outline-ui-fill/50',
     ],

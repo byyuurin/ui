@@ -2,7 +2,7 @@ import type { Rule } from '@unocss/core'
 import type { ParsedColorValue } from '@unocss/preset-mini/utils'
 import { parseColor } from '@unocss/preset-mini/utils'
 import { cssVarsAll, cssVarsDynamic, cssVarsPrefix } from './constants'
-import { cssVar } from './theme'
+import { cssColor, cssVar } from './theme'
 
 export const rules: Rule[] = [
   [
@@ -38,6 +38,22 @@ export const rules: Rule[] = [
         return { [`--${cssVarsPrefix}-${prop}`]: value }
     },
     { autocomplete: `${cssVarsPrefix}-(${cssVarsAll.join('|')})-$colors` },
+  ],
+  [
+    /^bg-solid-(.+)$/,
+    ([_, c], { theme }) => {
+      const parsed = parseColor(c, theme)
+
+      if (!parsed || parsed.cssColor?.type !== 'rgb')
+        return
+
+      const color = `rgb(${parsed.cssColor.components.join(' ')})`
+      const opacity = parsed.opacity || '100'
+
+      return {
+        'background-color': `color-mix(in srgb, ${color} ${opacity}%, ${cssColor(cssVar('c1'))})`,
+      }
+    },
   ],
   // overrides
   [/^rotate-(\d+)$/, ([_, d]) => ({ rotate: `${d}deg` })],

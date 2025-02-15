@@ -23,8 +23,8 @@ export default ct(/* @unocss-include */{
     ],
     /** The thumb to be used in `ScrollAreaScrollbar`. */
     thumb: [
-      'relative flex-1 bg-ui-cb/20 rounded-ui-base cursor-pointer transition-colors',
-      'hover:bg-ui-cb/30 active:bg-ui-cb/40',
+      'relative flex-1 bg-solid-ui-cb/20 rounded-ui-base cursor-pointer transition-colors',
+      'hover:bg-solid-ui-cb/30 active:bg-solid-ui-cb/40',
       'before:content-empty before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-10 before:min-h-10 ',
     ],
     /** The corner where both vertical and horizontal scrollbars meet. */

@@ -15,36 +15,36 @@ export default ct(/* @unocss-include */{
     variant: {
       'solid': {
         base: [
-          'color-ui-c1 bg-ui-fill/90',
-          'hover:bg-ui-fill/80 active:bg-ui-fill',
-          'disabled:bg-ui-fill/90 aria-disabled:bg-ui-fill/90',
+          'color-ui-c1 bg-solid-ui-fill/90',
+          'hover:bg-solid-ui-fill/80 active:bg-solid-ui-fill',
+          'disabled:bg-solid-ui-fill/90 aria-disabled:bg-solid-ui-fill/90',
         ],
       },
       'outline': {
         base: [
-          'color-ui-fill bg-ui-c1 ring ring-inset ring-ui-fill',
-          'hover:bg-ui-fill/5 active:bg-ui-fill/10',
-          'disabled:bg-ui-c1 aria-disabled:bg-ui-c1',
+          'color-ui-fill bg-solid-ui-c1 ring ring-inset ring-ui-fill',
+          'hover:bg-solid-ui-fill/5 active:bg-solid-ui-fill/10',
+          'disabled:bg-solid-ui-c1 aria-disabled:bg-solid-ui-c1',
         ],
       },
       'soft': {
         base: [
-          'color-ui-content/80 bg-ui-fill/10',
-          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/90',
-          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
+          'color-ui-content/80 bg-solid-ui-fill/10',
+          'hover:bg-solid-ui-fill/15 hover:color-ui-content/80 active:bg-solid-ui-fill/20 active:color-ui-content/90',
+          'disabled:bg-solid-ui-fill/10 aria-disabled:bg-solid-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
       'soft-outline': {
         base: [
-          'color-ui-content/80 bg-ui-fill/10 ring ring-inset ring-ui-fill/40',
-          'hover:bg-ui-fill/15 hover:color-ui-content/80 active:bg-ui-fill/20 active:color-ui-content/90',
-          'disabled:bg-ui-fill/10 aria-disabled:bg-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
+          'color-ui-content/80 bg-solid-ui-fill/10 ring ring-inset ring-ui-fill/40',
+          'hover:bg-solid-ui-fill/15 hover:color-ui-content/80 active:bg-solid-ui-fill/20 active:color-ui-content/90',
+          'disabled:bg-solid-ui-fill/10 aria-disabled:bg-solid-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
       'ghost': {
         base: [
           'color-ui-fill/80 bg-transparent',
-          'hover:bg-ui-fill/10 hover:color-ui-fill/80 active:bg-ui-fill/20 active:color-ui-fill/90',
+          'hover:bg-solid-ui-fill/10 hover:color-ui-fill/80 active:bg-solid-ui-fill/20 active:color-ui-fill/90',
           'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
         ],
       },
@@ -104,22 +104,22 @@ export default ct(/* @unocss-include */{
     {
       active: true,
       variant: 'solid',
-      class: { base: 'bg-ui-fill hover:bg-ui-fill' },
+      class: { base: 'bg-solid-ui-fill hover:bg-solid-ui-fill' },
     },
     {
       active: true,
       variant: 'outline',
-      class: { base: 'bg-ui-fill/10 hover:bg-ui-fill/10' },
+      class: { base: 'bg-solid-ui-fill/10 hover:bg-solid-ui-fill/10' },
     },
     {
       active: true,
       variant: ['soft', 'soft-outline'],
-      class: { base: 'color-ui-content/90 bg-ui-fill/20 hover:color-ui-content/90 hover:bg-ui-fill/20' },
+      class: { base: 'color-ui-content/90 bg-solid-ui-fill/20 hover:color-ui-content/90 hover:bg-solid-ui-fill/20' },
     },
     {
       active: true,
       variant: 'ghost',
-      class: { base: 'color-ui-fill/90 bg-ui-fill/20 hover:color-ui-fill/90 hover:bg-ui-fill/20' },
+      class: { base: 'color-ui-fill/90 bg-solid-ui-fill/20 hover:color-ui-fill/90 hover:bg-solid-ui-fill/20' },
     },
     {
       active: true,

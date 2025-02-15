@@ -11,17 +11,17 @@ export default ct(/* @unocss-include */{
     variant: {
       'solid': {
         base: [
-          'color-ui-c1 bg-ui-fill/90',
+          'color-ui-c1 bg-solid-ui-fill/90',
         ],
       },
       'outline': {
-        base: 'color-ui-fill bg-ui-c1 ring ring-inset ring-ui-fill',
+        base: 'color-ui-fill bg-solid-ui-c1 ring ring-inset ring-ui-fill',
       },
       'soft': {
-        base: 'color-ui-content/80 bg-ui-fill/10',
+        base: 'color-ui-content/80 bg-solid-ui-fill/10',
       },
       'soft-outline': {
-        base: 'color-ui-content/80 bg-ui-fill/10 ring ring-inset ring-ui-fill/40',
+        base: 'color-ui-content/80 bg-solid-ui-fill/10 ring ring-inset ring-ui-fill/40',
       },
     },
     size: {

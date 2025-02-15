@@ -34,29 +34,29 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         root: [
-          'color-ui-cb/80 bg-ui-c1 ring ring-inset ring-ui-cb/50',
+          'color-ui-cb/80 bg-solid-ui-c1 ring ring-inset ring-ui-cb/50',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
         ],
       },
       'soft': {
         root: [
-          'color-ui-cb/80 bg-ui-cb/4',
-          'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
-          'aria-disabled:color-ui-cb/80 aria-disabled:bg-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-ui-cb/5',
+          'color-ui-cb/80 bg-solid-ui-cb/4',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'aria-disabled:color-ui-cb/80 aria-disabled:bg-solid-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-solid-ui-cb/5',
         ],
       },
       'soft-outline': {
         root: [
-          'color-ui-cb/80 bg-ui-cb/4 ring ring-inset ring-ui-cb/10',
-          'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
-          'aria-disabled:color-ui-cb/80 aria-disabled:bg-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-ui-cb/5',
+          'color-ui-cb/80 bg-solid-ui-cb/4 ring ring-inset ring-ui-cb/10',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'aria-disabled:color-ui-cb/80 aria-disabled:bg-solid-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-solid-ui-cb/5',
         ],
       },
       'ghost': {
         root: [
           'color-ui-cb/80 bg-transparent',
-          'hover:bg-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-fill/80 aria-disabled:bg-transparent hover:aria-disabled:color-ui-fill/80 hover:aria-disabled:bg-transparent',
         ],
       },
@@ -81,7 +81,7 @@ export default ct(/* @unocss-include */{
     },
     type: {
       file: {
-        base: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-c1 file:bg-ui-cb/80',
+        base: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-c1 file:bg-solid-ui-cb/80',
       },
     },
   },
@@ -92,8 +92,8 @@ export default ct(/* @unocss-include */{
       underline: true,
       class: {
         root: [
-          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-ui-cb/40',
-          'focus-within:after:h-2px focus-within:after:bg-ui-fill/60',
+          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-solid-ui-cb/40',
+          'focus-within:after:h-2px focus-within:after:bg-solid-ui-fill/60',
         ],
       },
     },
