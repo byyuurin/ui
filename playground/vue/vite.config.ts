@@ -28,7 +28,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@byyuurin/ui': resolve(__dirname, '../../src'),
-      '@byyuurin/unocss-preset': resolve(__dirname, '../../src/unocss-preset.ts'),
     },
   },
   build: {

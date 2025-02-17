@@ -20,7 +20,7 @@ describe('check defu result', () => {
 
     expect(raw).toMatchInlineSnapshot(`
       {
-        "base": "border-y border-t-transparent focus-visible:outline-ui-cb",
+        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80",
         "compoundVariants": undefined,
         "slots": undefined,
         "variants": {
@@ -49,7 +49,7 @@ describe('check defu result', () => {
 
     expect(result).toMatchInlineSnapshot(`
       {
-        "base": "border-y border-t-transparent focus-visible:outline-ui-cb el-link",
+        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80 el-link",
         "compoundVariants": undefined,
         "slots": undefined,
         "variants": {

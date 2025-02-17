@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     resolve: {
       alias: {
         '@byyuurin/ui': resolve(__dirname, '../../src'),
-        '@byyuurin/unocss-preset': resolve(__dirname, '../../src/unocss-preset.ts'),
       },
     },
   },

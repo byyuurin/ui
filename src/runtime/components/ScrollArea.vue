@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { ScrollAreaRootProps } from 'reka-ui'
 import type { scrollArea } from '../theme'
-import { transitionProps } from '../theme/scrollArea'
+import { transitionProps } from '../theme/scroll-area'
 import type { ComponentAttrs } from '../types'
 
 export interface ScrollAreaProps extends ComponentAttrs<typeof scrollArea>, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {}
