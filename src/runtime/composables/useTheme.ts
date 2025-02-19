@@ -1,6 +1,6 @@
-import { transformUnoRules } from '@byyuurin/ui/unocss-preset'
+import { transformUnoRules } from '@byyuurin/ui/unocss'
+import type { UserConfig } from '@unocss/core'
 import { createSharedComposable } from '@vueuse/core'
-import type { UserConfig } from 'unocss'
 import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
 import * as theme from '../theme'

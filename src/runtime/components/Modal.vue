@@ -47,7 +47,7 @@ import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useTheme } from '../composables/useTheme'
-import UButton from './Button.vue'
+import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ModalProps>(), {
   modal: true,
@@ -110,7 +110,7 @@ const style = computed(() => {
 
               <DialogClose as-child>
                 <slot name="close">
-                  <UButton
+                  <Button
                     v-if="props.close"
                     variant="ghost"
                     :icon="props.closeIcon || theme.app.icons.close"

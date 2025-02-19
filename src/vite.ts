@@ -1,3 +1,5 @@
-import { UIPlugin } from './unplugin'
+import { unplugin } from './unplugin'
 
-export default UIPlugin.vite
+export type * from './unplugin'
+
+export default unplugin.vite

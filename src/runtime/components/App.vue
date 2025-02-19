@@ -1,6 +1,6 @@
 <script lang="ts">
+import type { UserConfig } from '@unocss/core'
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { UserConfig } from 'unocss'
 import type { ThemeExtension, ToasterProps } from '../types'
 
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {

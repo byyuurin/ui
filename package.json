@@ -31,9 +31,9 @@
       "types": "./dist/nuxt.d.ts",
       "default": "./dist/nuxt.mjs"
     },
-    "./unocss-preset": {
-      "types": "./dist/unocss-preset.d.ts",
-      "default": "./dist/unocss-preset.mjs"
+    "./unocss": {
+      "types": "./dist/unocss.d.ts",
+      "default": "./dist/unocss.mjs"
     },
     "./runtime/*": "./dist/runtime/*"
   },

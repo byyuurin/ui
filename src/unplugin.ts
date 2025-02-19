@@ -25,7 +25,7 @@ export interface UIOptions {
   components?: Partial<ComponentsOptions>
 }
 
-export const UIPlugin = createUnplugin<UIOptions | undefined>((options: UIOptions = {}, meta) => {
+export const unplugin = createUnplugin<UIOptions | undefined>((options: UIOptions = {}, meta) => {
   return [
     ComponentImportPlugin(options, meta),
     AutoImportPlugin(options, meta),
@@ -50,5 +50,3 @@ export const UIPlugin = createUnplugin<UIOptions | undefined>((options: UIOption
     },
   ]
 })
-
-export default UIPlugin

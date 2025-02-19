@@ -1,5 +1,5 @@
 import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'unocss'
-import ui from './src/unocss-preset'
+import { preset as ui } from './src/unocss'
 
 export default defineConfig({
   presets: [

@@ -8,7 +8,7 @@ export default defineBuildConfig({
     'src/unplugin',
     'src/vite',
     'src/nuxt',
-    'src/unocss-preset',
+    'src/unocss',
   ],
   clean: true,
   declaration: true,

@@ -29,7 +29,7 @@ pnpm i -D @iconify-json/[the-collection-you-want]
 
 ```ts
 // uno.config.ts
-import ui from '@byyuurin/ui/unocss-preset'
+import { preset as ui } from '@byyuurin/ui/unocss'
 import { defineConfig, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({

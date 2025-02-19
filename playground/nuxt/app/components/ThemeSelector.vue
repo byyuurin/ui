@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Input, Link, Select, Tabs } from '@byyuurin/ui'
-import { cssVarsPrefix } from '@byyuurin/ui/unocss-preset'
+import { cssVarsPrefix } from '@byyuurin/ui/unocss'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import { useCloned } from '@vueuse/core'
 
@@ -175,7 +175,7 @@ function resolveThemeAttrs(theme: ThemeConfig) {
 </script>
 
 <script setup lang="ts">
-import type { PresetOptions } from '@byyuurin/ui/unocss-preset'
+import type { PresetOptions } from '@byyuurin/ui/unocss'
 
 const props = withDefaults(defineProps<{
   config: ThemeConfig | null

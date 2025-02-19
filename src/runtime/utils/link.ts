@@ -1,3 +1,4 @@
+import type {} from '@vue/shared'
 import { reactivePick } from '@vueuse/core'
 import type { LinkProps } from '../types'
 

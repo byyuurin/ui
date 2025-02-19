@@ -107,7 +107,7 @@ defineExpose({
 
       <ToastClose as-child>
         <slot name="close" :ui="ui">
-          <UButton
+          <Button
             v-if="props.close"
             :icon="props.closeIcon || theme.app.icons.close"
             size="md"

@@ -56,8 +56,6 @@ export const preset = definePreset((
   }
 })
 
-export default preset
-
 function mergeOptions(options: PresetOptions): PresetOptions {
   const defaults: Required<PresetOptions> = {
     radius: '0rem',
