@@ -55,6 +55,7 @@ onMounted(() => {
       <ExamplePopover :class="uiColor" />
       <ExampleTooltip :class="uiColor" />
       <ExampleScrollArea :class="uiColor" />
+      <ExampleCarousel :class="uiColor" />
       <ExampleNative :class="uiColor" />
 
       <div class="py-6">
