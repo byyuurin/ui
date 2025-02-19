@@ -1,6 +1,6 @@
 import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
 import type {} from '@nuxt/schema' // Mandatory to avoid a bug when building
-import { packageName } from './internal/shared'
+import { packageName } from './shared'
 
 export interface ModuleOptions {
   /**

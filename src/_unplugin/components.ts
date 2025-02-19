@@ -4,7 +4,7 @@ import { globSync } from 'tinyglobby'
 import type { UnpluginContextMeta, UnpluginOptions } from 'unplugin'
 import AutoImportComponents from 'unplugin-vue-components'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
-import { runtimeDir } from '../internal/shared'
+import { runtimeDir } from '../shared'
 import type { UIOptions } from '../unplugin'
 
 /** This plugin adds all the Nuxt UI components as auto-imports. */

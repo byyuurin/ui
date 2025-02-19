@@ -3,7 +3,7 @@ import { join } from 'pathe'
 import type { UnpluginContextMeta, UnpluginOptions } from 'unplugin'
 import AutoImport from 'unplugin-auto-import'
 import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
-import { runtimeDir } from '../internal/shared'
+import { runtimeDir } from '../shared'
 import type { UIOptions } from '../unplugin'
 
 /** This plugin adds all the UI composables as auto-imports. */

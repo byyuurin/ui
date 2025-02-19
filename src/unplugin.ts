@@ -4,7 +4,7 @@ import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
 import AutoImportPlugin from './_unplugin/auto-import'
 import ComponentImportPlugin from './_unplugin/components'
-import { packageName } from './internal/shared'
+import { packageName } from './shared'
 
 export interface UIOptions {
   /**
