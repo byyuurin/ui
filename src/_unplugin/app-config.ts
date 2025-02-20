@@ -10,6 +10,7 @@ interface AppConfigPluginOptions extends UIOptions {
  * This plugin injects UI configuration into the runtime build so UI components can
  * access it.
  */
+// ref: https://github.com/nuxt/ui/blob/0f99a4cdbcbca3090ef0a58f475be46de4eeb9ff/src/plugins/app-config.ts
 export default function AppConfigPlugin(options: AppConfigPluginOptions, appConfig: Record<string, any>): UnpluginOptions {
   const name = 'byyuurin:ui:app-config'
   const resolveId = '#build/app.config'

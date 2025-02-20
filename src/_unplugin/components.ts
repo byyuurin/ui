@@ -8,6 +8,7 @@ import { runtimeDir } from '../shared'
 import type { UIOptions } from '../unplugin'
 
 /** This plugin adds all the Nuxt UI components as auto-imports. */
+// ref: https://github.com/nuxt/ui/tree/6c20f8a9ea03273a795c5f88c071830decd54c1e/src/plugins/components.ts
 export default function ComponentImportPlugin(options: UIOptions, meta: UnpluginContextMeta) {
   const { prefix = 'U' } = options
   const components = globSync('**/*.vue', { cwd: join(runtimeDir, 'components') })

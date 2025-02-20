@@ -7,6 +7,7 @@ import { runtimeDir } from '../shared'
 /**
  * This plugin normalises Nuxt environment (#imports) and `import.meta.client` within the UI components.
  */
+// ref: https://github.com/nuxt/ui/blob/0f99a4cdbcbca3090ef0a58f475be46de4eeb9ff/src/plugins/nuxt-environment.ts
 export default function NuxtEnvironmentPlugin(): UnpluginOptions {
   const stubPath = resolvePathSync('../runtime/vue/stubs', { extensions: ['.ts', '.mjs', '.js'], url: import.meta.url })
   const name = 'byyuurin:ui'
