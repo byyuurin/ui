@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url'
+import { normalize } from 'pathe'
 import type { UnpluginOptions } from 'unplugin'
 import { createUnplugin } from 'unplugin'
 import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
@@ -5,6 +7,8 @@ import type { Options as ComponentsOptions } from 'unplugin-vue-components/types
 import AutoImportPlugin from './_unplugin/auto-import'
 import ComponentImportPlugin from './_unplugin/components'
 import { packageName } from './shared'
+
+export const runtimeDir = normalize(fileURLToPath(new URL('runtime', import.meta.url)))
 
 export interface UIOptions {
   /**
