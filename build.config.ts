@@ -14,13 +14,7 @@ export default defineBuildConfig({
   declaration: true,
   sourcemap: true,
   externals: [
-    '@nuxt/kit',
     '@nuxt/schema',
-    '@unocss/core',
-    '@unocss/preset-mini',
-    '@unocss/preset-uno',
-    'unocss',
-    '@vueuse/core',
     'vue',
     'vite',
   ],

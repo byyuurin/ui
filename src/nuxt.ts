@@ -32,6 +32,10 @@ export default defineNuxtModule<ModuleOptions>({
       return
     }
 
+    nuxt.options.vite.optimizeDeps ??= {}
+    nuxt.options.vite.optimizeDeps.include ??= []
+    nuxt.options.vite.optimizeDeps.include.push(`${packageName}/unocss`)
+
     nuxt.options.alias['#ui'] = resolve('./runtime')
 
     addComponentsDir({

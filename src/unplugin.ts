@@ -32,6 +32,13 @@ export const unplugin = createUnplugin<UIOptions | undefined>((options: UIOption
     <UnpluginOptions>{
       name: 'byyuurin:ui:plugins-duplication-detection',
       vite: {
+        config() {
+          return {
+            optimizeDeps: {
+              include: [`${packageName}/unocss`],
+            },
+          }
+        },
         configResolved(config) {
           const checkPluginNames = [
             'unplugin-auto-import',
