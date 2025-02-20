@@ -72,6 +72,7 @@ const style = computed(() => {
   return styler({
     ...props,
     swipeDirection: swipeDirection.value,
+    clickable: false,
   })
 })
 
@@ -114,11 +115,9 @@ function getOffset(index: number) {
         '--translate': expanded ? 'calc(var(--offset) * var(--translate-factor))' : 'calc(var(--before) * var(--gap))',
         '--transform': 'translateY(var(--translate)) scale(var(--scale))',
       }"
-      :class="[style.base(), {
-        'cursor-pointer': !!toast.click,
-      }]"
+      :class="style.base({ clickable: !!(toast.onClick) })"
       @update:open="onUpdateOpen($event, toast.id)"
-      @click="toast.click && toast.click(toast)"
+      @click="toast.onClick && toast.onClick(toast)"
     />
 
     <ToastPortal :disabled="!portal">

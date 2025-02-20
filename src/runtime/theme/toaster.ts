@@ -16,6 +16,11 @@ export default ct(/* @unocss-include */{
     ],
   },
   variants: {
+    clickable: {
+      true: {
+        base: 'cursor-pointer',
+      },
+    },
     position: {
       'top-left': {
         viewport: 'left-4',

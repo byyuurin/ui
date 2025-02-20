@@ -1,29 +1,49 @@
 import type {} from '@vue/shared'
 import { createSharedComposable } from '@vueuse/core'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import type { ToastProps } from '../types'
 
 export interface Toast extends Omit<ToastProps, 'defaultOpen'> {
   id: string | number
-  click?: (toast: Toast) => void
+  onClick?: (toast: Toast) => void
 }
 
 export const useToast = createSharedComposable(() => {
   const toasts = ref<Toast[]>([])
 
+  const running = ref(false)
+  const maxToasts = 5
+  const queue: Toast[] = []
+
+  const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+
+  async function processQueue() {
+    if (running.value || queue.length === 0)
+      return
+
+    running.value = true
+
+    while (queue.length > 0) {
+      const toast = queue.shift()!
+
+      await nextTick()
+
+      toasts.value = [...toasts.value, toast].slice(-maxToasts)
+    }
+
+    running.value = false
+  }
+
   function add(toast: Partial<Toast>): Toast {
     const body = {
-      id: Date.now().toString(),
+      id: generateId(),
       open: true,
       ...toast,
     }
 
-    const index = toasts.value.findIndex((t) => t.id === body.id)
+    queue.push(body)
 
-    if (index === -1)
-      toasts.value.push(body)
-
-    toasts.value = toasts.value.slice(-5)
+    processQueue()
 
     return body
   }

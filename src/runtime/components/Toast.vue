@@ -1,7 +1,10 @@
 <script lang="ts">
+import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import type { toast } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
+
+type ToastVariants = VariantProps<typeof toast>
 
 export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
   /** @default "li" */
@@ -9,13 +12,19 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
   title?: string
   description?: string
   icon?: string
+  orientation?: ToastVariants['orientation']
+  /**
+   * Display a list of actions:
+   * - under the title and description when orientation is `vertical`
+   * - next to the close button when orientation is `horizontal`
+   */
   actions?: ButtonProps[]
   /**
    * Display a close button to dismiss the toast.
    * @default true
    */
   close?: ButtonProps | boolean
-  /** @default `app.icons.close` */
+  /** @default app.icons.close */
   closeIcon?: string
 }
 
@@ -39,6 +48,7 @@ import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ToastProps>(), {
+  orientation: 'vertical',
   close: true,
 })
 
@@ -50,12 +60,13 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 
 const el = ref<InstanceType<typeof ToastRoot>>()
 const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
 
-const multiline = computed(() => !!props.title && !!props.description)
-
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.toast)
-  return styler({ ...props, multiline: multiline.value })
+  return styler({
+    ...props,
+    title: !!(props.title || slots.title),
+  })
 })
 
 defineExpose({
@@ -68,7 +79,7 @@ defineExpose({
     ref="el"
     v-slot="{ remaining, duration }"
     v-bind="rootProps"
-    :class="style.root({ class: [props.class, props.ui?.root], multiline })"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
     :style="{ '--height': height }"
   >
     <slot name="icon">
@@ -87,7 +98,7 @@ defineExpose({
         </slot>
       </ToastDescription>
 
-      <div v-if="multiline && actions?.length" :class="style.actions({ class: props.ui?.actions, multiline: true })">
+      <div v-if="props.orientation === 'vertical' && actions?.length" :class="style.actions({ class: props.ui?.actions })">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
             <Button size="xs" v-bind="action" />
@@ -96,8 +107,8 @@ defineExpose({
       </div>
     </div>
 
-    <div v-if="(!multiline && actions?.length) || props.close !== null" :class="style.actions({ class: props.ui?.actions, multiline: false })">
-      <template v-if="!multiline">
+    <div v-if="(props.orientation === 'horizontal' && actions?.length) || props.close !== null" :class="style.actions({ class: props.ui?.actions })">
+      <template v-if="props.orientation === 'horizontal'">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
             <Button size="xs" v-bind="action" />
