@@ -27,23 +27,25 @@ onMounted(() => {
 <template>
   <UApp :toaster="toasterAttrs">
     <div>
+      <ExampleAccordion :class="uiColor" />
       <ExampleAlert :class="uiColor" />
-      <ExampleChip :class="uiColor" />
-      <ExampleButton :class="uiColor" />
-      <ExampleLink :class="uiColor" />
+      <ExampleCarousel :class="uiColor" />
+      <ExampleTabs :class="uiColor" />
+      <ExampleScrollArea :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExamplePinInput :class="uiColor" />
       <ExampleTextarea :class="uiColor" />
       <ExampleSelect :class="uiColor" />
+      <ExampleChip :class="uiColor" />
+      <ExampleButton :class="uiColor" />
+      <ExampleButtonGroup :class="uiColor" />
       <ExampleSlider :class="uiColor" />
       <ExampleSwitch :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />
       <ExampleRadioGroup :class="uiColor" />
-      <ExampleAccordion :class="uiColor" />
-      <ExampleTabs :class="uiColor" />
       <ExampleCard :class="uiColor" />
-      <ExampleModal :class="uiColor" />
       <ExampleDrawer :class="uiColor" />
+      <ExampleModal :class="uiColor" />
       <ExampleToast
         v-model:duration="toasterAttrs.duration"
         v-model:position="toasterAttrs.position"
@@ -54,8 +56,7 @@ onMounted(() => {
       <ExampleBadge :class="uiColor" />
       <ExamplePopover :class="uiColor" />
       <ExampleTooltip :class="uiColor" />
-      <ExampleScrollArea :class="uiColor" />
-      <ExampleCarousel :class="uiColor" />
+      <ExampleLink :class="uiColor" />
       <ExampleNative :class="uiColor" />
 
       <div class="py-6">

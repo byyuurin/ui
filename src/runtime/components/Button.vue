@@ -28,6 +28,7 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useTheme } from '../composables/useTheme'
 import { omit, pickLinkProps } from '../utils'
@@ -39,6 +40,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 const slots = defineSlots<ButtonSlots>()
 
+const { size, orientation } = useButtonGroup(props)
 const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons(
   computed(() => ({ ...props, loading: props.loading })),
 )
@@ -51,6 +53,8 @@ const style = computed(() => {
   const styler = createStyler(theme.value.button)
   return styler({
     ...props,
+    size: size.value,
+    groupOrientation: orientation.value,
     prefix: isPrefix.value,
     suffix: isSuffix.value,
     class: [

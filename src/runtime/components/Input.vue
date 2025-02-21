@@ -46,6 +46,7 @@ export interface InputSlots {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
+import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
@@ -67,14 +68,18 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
+const { size, orientation } = useButtonGroup(props)
 const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.input)
-  // @ts-expect-error ignore type
   return styler({
     ...props,
+    // @ts-expect-error ignore type
+    type: props.type,
+    size: size.value,
+    groupOrientation: orientation.value,
     prefix: isPrefix.value || !!slots.prefix,
     suffix: isSuffix.value || !!slots.suffix,
   })
@@ -130,7 +135,7 @@ onMounted(() => {
 <template>
   <Primitive
     :as="as"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="style.base({ class: [props.class, props.ui?.base] })"
     :aria-disabled="props.disabled ? true : undefined"
   >
     <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
@@ -149,7 +154,7 @@ onMounted(() => {
       :value="modelValue"
       :name="props.name"
       :placeholder="props.placeholder"
-      :class="style.base({ class: props.ui?.base })"
+      :class="style.input({ class: props.ui?.input })"
       :disabled="props.disabled"
       :required="props.required"
       :autocomplete="props.autocomplete"

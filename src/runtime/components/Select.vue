@@ -105,6 +105,7 @@ import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectSeparator, SelectTrigger, SelectViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useTheme } from '../composables/useTheme'
 import { compare, get } from '../utils'
@@ -124,6 +125,8 @@ const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffse
 const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 
 const { theme, createStyler } = useTheme()
+
+const { size, orientation } = useButtonGroup(props)
 const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons(toRef(() => defu(props, {
   suffixIcon: theme.value.app.icons.down,
 })))
@@ -135,6 +138,8 @@ const style = computed(() => {
   const styler = createStyler(theme.value.select)
   return styler({
     ...props,
+    size: size.value,
+    groupOrientation: orientation.value,
     prefix: isPrefix.value,
     suffix: isSuffix.value,
   })

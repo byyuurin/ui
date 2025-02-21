@@ -23,6 +23,7 @@ export interface ChipSlots {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useTheme } from '../composables/useTheme'
 
@@ -32,12 +33,17 @@ const props = withDefaults(defineProps<ChipProps>(), {
 
 const slots = defineSlots<ChipSlots>()
 
+const { size, orientation } = useButtonGroup(props)
 const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.chip)
-  return styler(props)
+  return styler({
+    ...props,
+    size: size.value,
+    groupOrientation: orientation.value,
+  })
 })
 </script>
 

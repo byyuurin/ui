@@ -1,4 +1,5 @@
 import { ct } from '@byyuurin/ui-kit'
+import { buttonGroupVariant } from './button-group'
 
 export default ct(/* @unocss-include */{
   slots: {
@@ -35,6 +36,7 @@ export default ct(/* @unocss-include */{
     suffixIcon: 'shrink-0 size-1.25em',
   },
   variants: {
+    ...buttonGroupVariant,
     variant: {
       'outline': {
         base: [
