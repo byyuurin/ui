@@ -32,6 +32,7 @@ onMounted(() => {
       <ExampleCarousel :class="uiColor" />
       <ExampleTabs :class="uiColor" />
       <ExampleScrollArea :class="uiColor" />
+      <ExamplePagination :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExamplePinInput :class="uiColor" />
       <ExampleTextarea :class="uiColor" />

@@ -8,5 +8,8 @@ export default {
     down: 'i-mdi-chevron-down',
     arrowLeft: 'i-mdi-chevron-left',
     arrowRight: 'i-mdi-chevron-right',
+    doubleLeft: 'i-mdi-chevron-double-left',
+    doubleRight: 'i-mdi-chevron-double-right',
+    ellipsis: 'i-mdi-dots-horizontal',
   },
 }
