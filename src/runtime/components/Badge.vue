@@ -37,7 +37,6 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<BadgeProps>(), {
-  size: 'md',
   position: 'top-right',
 })
 

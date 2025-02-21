@@ -35,7 +35,6 @@ import Link from './Link.vue'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'solid',
-  size: 'md',
 })
 
 const slots = defineSlots<ButtonSlots>()

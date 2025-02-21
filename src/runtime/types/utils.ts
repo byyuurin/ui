@@ -41,7 +41,7 @@ export type StylerReturnType<T> = T extends CVReturnType<infer V, infer S, infer
 
 export type Styler<T> = T extends CVReturnType<infer V, any, any>
   ? [keyof V] extends string[]
-      ? (props: Required<VariantProps<T>> & StylerBaseProps) => StylerReturnType<T>
+      ? (props: VariantProps<T> & StylerBaseProps) => StylerReturnType<T>
       : (props?: StylerBaseProps) => StylerReturnType<T>
   : never
 

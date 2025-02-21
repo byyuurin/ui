@@ -59,7 +59,6 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: '0',
   variant: 'solid',
   orientation: 'horizontal',
-  size: 'md',
   full: true,
   content: true,
   labelKey: 'label',

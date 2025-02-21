@@ -40,7 +40,6 @@ import { computed, useId } from 'vue'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
-  size: 'md',
   required: false,
   disabled: false,
 })

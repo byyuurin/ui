@@ -111,7 +111,6 @@ import { compare, get } from '../utils'
 
 const props = withDefaults(defineProps<SelectProps<T, I, V, M>>(), {
   variant: 'outline',
-  size: 'md',
   valueKey: 'value' as never,
   labelKey: 'label' as never,
   portal: true,

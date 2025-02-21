@@ -74,7 +74,6 @@ import { useTheme } from '../composables/useTheme'
 import { get } from '../utils'
 
 const props = withDefaults(defineProps<RadioGroupProps<T>>(), {
-  size: 'md',
   valueKey: 'value',
   labelKey: 'label',
   descriptionKey: 'description',

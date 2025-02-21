@@ -31,7 +31,6 @@ import { computed } from 'vue'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<SliderProps>(), {
-  size: 'md',
   orientation: 'horizontal',
   step: 1,
   max: 100,

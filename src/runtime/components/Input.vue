@@ -56,7 +56,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
-  size: 'md',
   variant: 'outline',
   autocomplete: 'off',
   autofocusDelay: 0,

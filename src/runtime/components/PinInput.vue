@@ -31,7 +31,6 @@ import { looseToNumber } from '../utils'
 
 const props = withDefaults(defineProps<PinInputProps>(), {
   variant: 'outline',
-  size: 'md',
   length: 5,
   type: 'text',
 })

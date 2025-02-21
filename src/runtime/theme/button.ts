@@ -138,4 +138,7 @@ export default ct(/* @unocss-include */{
       class: { suffixIcon: 'animate-spin' },
     },
   ],
+  defaultVariants: {
+    size: 'md',
+  },
 })

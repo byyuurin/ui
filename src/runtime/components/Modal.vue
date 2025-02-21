@@ -51,7 +51,6 @@ import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ModalProps>(), {
   modal: true,
-  size: 'md',
   portal: true,
   overlay: true,
   transition: true,

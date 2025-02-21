@@ -53,4 +53,7 @@ export default ct(/* @unocss-include */{
       },
     },
   },
+  defaultVariants: {
+    size: 'md',
+  },
 })

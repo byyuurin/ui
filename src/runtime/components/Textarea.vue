@@ -49,7 +49,6 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TextareaProps>(), {
-  size: 'md',
   variant: 'outline',
   rows: 3,
   maxRows: 0,

@@ -40,9 +40,7 @@ import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka
 import { computed, useId } from 'vue'
 import { useTheme } from '../composables/useTheme'
 
-const props = withDefaults(defineProps<SwitchProps>(), {
-  size: 'md',
-})
+const props = withDefaults(defineProps<SwitchProps>(), {})
 const emit = defineEmits<SwitchEmits>()
 const slots = defineSlots<SwitchSlots>()
 const modelValue = defineModel<boolean>({ default: undefined })

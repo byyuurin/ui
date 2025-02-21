@@ -28,7 +28,6 @@ import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<ChipProps>(), {
   variant: 'solid',
-  size: 'md',
 })
 
 const slots = defineSlots<ChipSlots>()
