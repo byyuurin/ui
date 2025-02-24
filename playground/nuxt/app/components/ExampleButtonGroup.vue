@@ -19,24 +19,20 @@ const controls: ControlItems<ButtonGroupProps> = [
       <h2>With Button</h2>
       <UButtonGroup v-bind="attrs">
         <UButton label="Button" variant="outline" />
-        <UButton label="Button" variant="outline" />
         <UButton variant="outline" icon="i-carbon-search" />
       </UButtonGroup>
       <h2>With Chip</h2>
       <UButtonGroup v-bind="attrs">
-        <UChip label="Chip" variant="outline" />
         <UChip label="Chip" variant="outline" />
         <UButton variant="outline" icon="i-carbon-search" />
       </UButtonGroup>
       <h2>With Input</h2>
       <UButtonGroup v-bind="attrs">
         <UInput placeholder="Input" />
-        <UInput placeholder="Input" />
         <UButton variant="outline" icon="i-carbon-search" />
       </UButtonGroup>
       <h2>With Tooltip</h2>
       <UButtonGroup v-bind="attrs">
-        <UInput placeholder="Input" />
         <UInput placeholder="Input" />
         <UTooltip text="Copy to clipboard">
           <UButton variant="outline" icon="i-carbon-copy" />

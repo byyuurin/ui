@@ -2,18 +2,7 @@
 import type { CarouselProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const items = [
-  'https://picsum.photos/640/640?random=1',
-  'https://picsum.photos/640/640?random=2',
-  'https://picsum.photos/640/640?random=3',
-  'https://picsum.photos/640/640?random=4',
-  'https://picsum.photos/640/640?random=5',
-  'https://picsum.photos/640/640?random=6',
-  'https://picsum.photos/640/640?random=7',
-  'https://picsum.photos/640/640?random=8',
-  'https://picsum.photos/640/640?random=9',
-  'https://picsum.photos/640/640?random=10',
-]
+const items = Array.from({ length: 15 }, (_, i) => `https://picsum.photos/id/${i + i * 11}/640/640`)
 
 const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'dir', value: 'ltr', options: ['ltr', 'rtl'] },
@@ -22,9 +11,10 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'slidesToScroll', value: 1, options: [{ label: 'ON (auto)', value: 'auto' }, { label: 'OFF (1)', value: 1 }] },
   { prop: 'arrows', value: false },
   { prop: 'dots', value: false },
+  { prop: 'dragFree', value: false },
   { prop: 'loop', value: false },
   { prop: 'autoplay', value: false },
-  { prop: 'dragFree', value: false },
+  { prop: 'classNames', value: false },
 ]
 </script>
 
@@ -43,7 +33,7 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
         :ui="{
           root: attrs.orientation === 'vertical' ? 'w-80' : '',
           container: attrs.orientation === 'vertical' ? 'h-80' : '',
-          item: 'basis-1/3',
+          item: 'sm:basis-1/2 md:basis-1/3 xl:basis-1/4',
         }"
       >
         <img :src="item" width="320" height="320" alt="" />
@@ -51,3 +41,12 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
     </div>
   </ExampleView>
 </template>
+
+<style scoped>
+:deep(.is-in-view) {
+  --uno: "transition duration-500";
+}
+:deep(.is-in-view:not(.is-snapped)) {
+  --uno: "opacity-20 bg-ui-c1/50";
+}
+</style>
