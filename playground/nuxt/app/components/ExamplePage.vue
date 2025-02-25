@@ -28,6 +28,7 @@ onMounted(() => {
   <UApp :toaster="toasterAttrs">
     <div>
       <ExampleAccordion :class="uiColor" />
+      <ExampleCollapsible :class="uiColor" />
       <ExampleAlert :class="uiColor" />
       <ExampleCarousel :class="uiColor" />
       <ExampleTabs :class="uiColor" />
