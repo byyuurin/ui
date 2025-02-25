@@ -47,6 +47,6 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   --uno: "transition duration-500";
 }
 :deep(.is-in-view:not(.is-snapped)) {
-  --uno: "opacity-20 bg-ui-c1/50";
+  --uno: "opacity-20 bg-ui-cx/50";
 }
 </style>

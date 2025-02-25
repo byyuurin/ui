@@ -5,9 +5,11 @@ import type { ControlItems } from './ExampleView.vue'
 const icon = 'i-carbon-asleep-filled'
 
 const controls: ControlItems<ButtonProps> = [
-  { prop: 'label', value: '', placeholder: 'Text' },
   { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline', 'ghost', 'link'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'label', value: '', placeholder: 'Text' },
+  { prop: 'href', value: 'https://github.com/' },
+  { prop: 'target', value: '_blank', options: ['_blank', '_parent', '_self', '_top'] },
   { prop: 'active', value: false },
   { prop: 'disabled', value: false },
   { prop: 'loading', value: false },

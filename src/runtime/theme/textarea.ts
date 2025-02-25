@@ -30,7 +30,7 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         root: [
-          'color-ui-cb/80 bg-solid-ui-c1 ring ring-inset ring-ui-cb/50',
+          'color-ui-cb/80 bg-solid-ui-cx ring ring-inset ring-ui-cb/20',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
         ],
@@ -38,21 +38,21 @@ export default ct(/* @unocss-include */{
       'soft': {
         root: [
           'color-ui-cb/80 bg-solid-ui-cb/4',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:hover:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-content/80 aria-disabled:bg-solid-ui-fill/5 hover:aria-disabled:color-ui-content/80 hover:aria-disabled:bg-solid-ui-fill/5',
         ],
       },
       'soft-outline': {
         root: [
           'color-ui-cb/80 bg-solid-ui-cb/4 ring ring-inset ring-ui-cb/10',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:hover:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-content/80 aria-disabled:bg-solid-ui-fill/5 hover:aria-disabled:color-ui-content/80 hover:aria-disabled:bg-solid-ui-fill/5',
         ],
       },
       'ghost': {
         root: [
           'color-ui-cb/80 bg-transparent',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:hover:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-fill/80 aria-disabled:bg-transparent hover:aria-disabled:color-ui-fill/80 hover:aria-disabled:bg-transparent',
         ],
       },

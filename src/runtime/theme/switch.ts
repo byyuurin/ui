@@ -11,7 +11,7 @@ export default ct(/* @unocss-include */{
     ],
     container: 'flex items-center h-1.5em',
     thumb: [
-      'group pointer-events-none rounded-ui-switch size-1.25em bg-solid-ui-c1 shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
+      'group pointer-events-none rounded-ui-switch size-1.25em bg-solid-ui-cx shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
       'data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:translate-x-0 data-[state=checked]:translate-x-1.25em data-[state=checked]:rtl:-translate-x-1.25em',
     ],
     icon: [

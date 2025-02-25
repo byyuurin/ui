@@ -17,16 +17,16 @@ export default ct(/* @unocss-include */{
     variant: {
       'solid': {
         base: [
-          'color-ui-c1 bg-solid-ui-fill/90',
+          'color-ui-cx bg-solid-ui-fill/90',
           'hover:bg-solid-ui-fill/80 active:bg-solid-ui-fill',
           'disabled:bg-solid-ui-fill/90 aria-disabled:bg-solid-ui-fill/90',
         ],
       },
       'outline': {
         base: [
-          'color-ui-fill bg-solid-ui-c1 ring ring-inset ring-ui-fill',
+          'color-ui-fill bg-solid-ui-cx ring ring-inset ring-ui-fill',
           'hover:bg-solid-ui-fill/5 active:bg-solid-ui-fill/10',
-          'disabled:bg-solid-ui-c1 aria-disabled:bg-solid-ui-c1',
+          'disabled:bg-solid-ui-cx aria-disabled:bg-solid-ui-cx',
         ],
       },
       'soft': {
@@ -47,7 +47,7 @@ export default ct(/* @unocss-include */{
         base: [
           'color-ui-fill/80 bg-transparent',
           'hover:bg-solid-ui-fill/10 hover:color-ui-fill/80 active:bg-solid-ui-fill/20 active:color-ui-fill/90',
-          'disabled:bg-transparent aria-disabled:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
+          'disabled:bg-transparent aria-disabled:bg-transparent disabled:hover:bg-transparent aria-disabled:hover:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
         ],
       },
       'link': {

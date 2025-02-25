@@ -4,14 +4,14 @@ import { buttonGroupVariant } from './button-group'
 export default ct(/* @unocss-include */{
   slots: {
     base: [
-      'bg-solid-ui-c1 relative group rounded-ui-base inline-flex items-center gap-x-2 focus:outline-none transition-colors',
+      'bg-solid-ui-cx relative group rounded-ui-base inline-flex items-center gap-x-2 focus:outline-none transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     value: 'me-auto truncate pointer-events-none',
     placeholder: 'me-auto truncate color-ui-cb/50',
-    arrow: 'fill-ui-c1 stroke-ui-cb/10',
+    arrow: 'fill-ui-cx stroke-ui-cb/20',
     content: [
-      'max-h-60 w-[var(--reka-popper-anchor-width)] bg-solid-ui-c1 shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/10 overflow-hidden pointer-events-auto',
+      'max-h-60 w-[var(--reka-popper-anchor-width)] bg-solid-ui-cx shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/20 overflow-hidden pointer-events-auto',
       'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
     ],
     viewport: 'divide-y divide-ui-cb/10 scroll-py-1',
@@ -40,28 +40,28 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-c1 ring ring-inset ring-ui-cb/50',
+          'color-ui-cb/80 bg-solid-ui-cx ring ring-inset ring-ui-cb/20 data-[state=open]:ring-2 data-[state=open]:ring-ui-cb/50',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'disabled:ring-ui-cb/80 hover:disabled:ring-ui-cb/80',
         ],
       },
       'soft': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-cb/4',
+          'color-ui-cb/80 bg-solid-ui-cb/5 data-[state=open]:bg-solid-ui-cb/5',
           'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-content/80 disabled:bg-solid-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-solid-ui-fill/5',
         ],
       },
       'soft-outline': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-cb/4 ring ring-inset ring-ui-cb/10',
+          'color-ui-cb/80 bg-solid-ui-cb/5 ring ring-inset ring-ui-cb/10 data-[state=open]:bg-solid-ui-cb/5 data-[state=open]:ring-ui-cb/25',
           'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-content/80 disabled:bg-solid-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-solid-ui-fill/5',
         ],
       },
       'ghost': {
         base: [
-          'color-ui-cb/80 bg-transparent',
+          'color-ui-cb/80 bg-transparent data-[state=open]:bg-solid-ui-cb/8',
           'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-fill/80 disabled:bg-transparent hover:disabled:color-ui-fill/80 hover:disabled:bg-transparent',
         ],

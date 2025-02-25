@@ -5,18 +5,15 @@ export const theme: Theme = {
   colors: {
     [cssVarsPrefix]: {
       cb: cssColor(cssVar('cb')),
-      c: {
-        1: cssColor(cssVar('c1')),
-        2: cssColor(cssVar('c2')),
-        3: cssColor(cssVar('c3')),
-      },
+      cp: cssColor(cssVar('cp', cssVar('cb'))),
+      cx: cssColor(cssVar('cx')),
       fill: cssColor(cssVar('fill', cssVar('cb'))),
       content: cssColor(cssVar('content', cssVar('cb'))),
     },
   },
   backgroundColor: {
     [cssVarsPrefix]: {
-      base: cssColor(cssVar('fill', cssVar('c1'))),
+      base: cssColor(cssVar('fill', cssVar('cx'))),
     },
   },
   textColor: {

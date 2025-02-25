@@ -10,7 +10,7 @@ export default ct(/* @unocss-include */{
     ],
     range: 'absolute rounded-full bg-solid-ui-fill',
     thumb: [
-      'size-1em rounded-full bg-solid-ui-c1 ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
+      'size-1em rounded-full bg-solid-ui-cx ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
       'data-[disabled]:cursor-not-allowed',
       'ring-ui-fill outline-none focus-visible:outline-ui-fill/50',
     ],

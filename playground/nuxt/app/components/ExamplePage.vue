@@ -68,10 +68,10 @@ onMounted(() => {
           :handle="false"
           :overlay="false"
           :ui="{
-            header: 'sticky z-1 top-0 bg-ui-c1',
+            header: 'sticky z-1 top-0 bg-ui-cx',
             title: 'text-2xl',
             content: 'overflow-x-hidden ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2',
-            footer: 'sticky bottom-0 bg-ui-c1',
+            footer: 'sticky bottom-0 bg-ui-cx',
           }"
         >
           <UButton class="fixed bottom-4 left-1/2 -translate-x-1/2" label="Theme" variant="solid" size="xl" icon="i-mdi-palette-outline" round />

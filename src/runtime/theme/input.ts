@@ -36,7 +36,7 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-c1 ring ring-inset ring-ui-cb/50',
+          'color-ui-cb/80 bg-solid-ui-cx ring ring-inset ring-ui-cb/20',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
         ],
@@ -83,7 +83,7 @@ export default ct(/* @unocss-include */{
     },
     type: {
       file: {
-        input: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-c1 file:bg-solid-ui-cb/80',
+        input: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-cx file:bg-solid-ui-cb/80',
       },
     },
   },

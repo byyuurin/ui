@@ -26,20 +26,15 @@ export interface PresetOptions {
    */
   cb?: string
   /**
-   * Base color 1
+   * Primary color
+   * @default "[cb]"
+   */
+  cp?: string
+  /**
+   * Base background color
    * @default "#ffffff"
    */
-  c1?: string
-  /**
-   * Base color 2
-   * @default "#f2f2f2"
-   */
-  c2?: string
-  /**
-   * Base color 3
-   * @default "#e5e6e6"
-   */
-  c3?: string
+  cx?: string
 }
 
 export const preset = definePreset((
@@ -66,9 +61,8 @@ function mergeOptions(options: PresetOptions): PresetOptions {
     radiusSwitch: '',
     radiusTabs: '',
     cb: '#1f2937',
-    c1: '#ffffff',
-    c2: '#f2f2f2',
-    c3: '#e5e6e6',
+    cp: '',
+    cx: '#ffffff',
   }
 
   return {
@@ -99,7 +93,7 @@ function createRootCSS(kv: PresetOptions) {
       `scrollbar-color:color-mix(in srgb,${cssColor(cssVar('cb'))} 25%,transparent) transparent`,
     ])}}`,
     `*::selection{${join([
-      `color:${cssColor(cssVar('c1'))}`,
+      `color:${cssColor(cssVar('cx'))}`,
       `background-color:${cssColor(cssVar('fill', cssVar('cb')))}`,
     ])}}`,
   ]

@@ -13,11 +13,11 @@ export default ct(/* @unocss-include */{
     variant: {
       'solid': {
         base: [
-          'color-ui-c1 bg-solid-ui-fill/90',
+          'color-ui-cx bg-solid-ui-fill/90',
         ],
       },
       'outline': {
-        base: 'color-ui-fill bg-solid-ui-c1 ring ring-inset ring-ui-fill',
+        base: 'color-ui-fill bg-solid-ui-cx ring ring-inset ring-ui-fill',
       },
       'soft': {
         base: 'color-ui-content/80 bg-solid-ui-fill/10',

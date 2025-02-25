@@ -2,7 +2,7 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
   slots: {
-    root: 'group relative overflow-hidden bg-solid-ui-c1 shadow-lg rounded-ui-box ring ring-ui-c2 p-4 flex gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-c2',
+    root: 'group relative overflow-hidden bg-solid-ui-cx shadow-lg rounded-ui-box ring ring-ui-cb/5 p-4 flex gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-cb/5',
     wrapper: 'w-0 flex-1 flex flex-col gap-1',
     title: 'text-base font-medium color-ui-cb',
     description: 'text-sm color-ui-cb/80',

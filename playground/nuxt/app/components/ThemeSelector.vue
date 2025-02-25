@@ -12,44 +12,40 @@ export interface ThemeConfig<T extends string = string> extends PresetOptions {
 
 export const themeOptions = defineThemeOptions([
   {
-    name: 'light',
+    name: 'Daisy light',
     colorScheme: 'light',
     radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#1f2937'),
-    c1: cssVar('#ffffff'),
-    c2: cssVar('#f2f2f2'),
-    c3: cssVar('#e5e6e6'),
+    cp: cssVar('#4e00ff'),
+    cx: cssVar('#ffffff'),
   },
   {
-    name: 'dark',
+    name: 'Daisy dark',
     colorScheme: 'dark',
     radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#a6adbb'),
-    c1: cssVar('#1d232a'),
-    c2: cssVar('#191e24'),
-    c3: cssVar('#15191e'),
+    cp: cssVar('#777eff'),
+    cx: cssVar('#1d232a'),
   },
   {
     name: 'retro',
     colorScheme: 'light',
     radius: '0.4rem',
     cb: cssVar('#282425'),
-    c1: cssVar('#ece3ca'),
-    c2: cssVar('#e4d8b4'),
-    c3: cssVar('#dbca9a'),
+    cp: cssVar('#ec9a96'),
+    cx: cssVar('#ece3ca'),
   },
   {
     name: 'cyberpunk',
     colorScheme: 'light',
     fontFamily: 'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
     cb: cssVar('#161402'),
-    c1: cssVar('#fff248'),
-    c2: cssVar('#e9dc41'),
-    c3: cssVar('#d2c639'),
+    cp: cssVar('#ff6796'),
+    cx: cssVar('#fff248'),
   },
   {
     name: 'valentine',
@@ -57,9 +53,8 @@ export const themeOptions = defineThemeOptions([
     radius: '1.9rem',
     radiusBox: '1rem',
     cb: cssVar('#632c3b'),
-    c1: cssVar('#fae7f4'),
-    c2: cssVar('#e3d2de'),
-    c3: cssVar('#cdbdc8'),
+    cp: cssVar('#e56e7c'),
+    cx: cssVar('#fae7f4'),
   },
   {
     name: 'wireframe',
@@ -67,9 +62,8 @@ export const themeOptions = defineThemeOptions([
     fontFamily: 'Chalkboard,comic sans ms,"sans-serif"',
     radius: '0.2rem',
     cb: cssVar('#161616'),
-    c1: cssVar('#ffffff'),
-    c2: cssVar('#eeeeee'),
-    c3: cssVar('#dddddd'),
+    cp: cssVar('#b8b8b8'),
+    cx: cssVar('#ffffff'),
   },
   {
     name: 'coffee',
@@ -78,9 +72,8 @@ export const themeOptions = defineThemeOptions([
     radiusBox: '1rem',
     radiusButton: '0.5rem',
     cb: cssVar('#c59f60'),
-    c1: cssVar('#20161f'),
-    c2: cssVar('#1c131b'),
-    c3: cssVar('#181017'),
+    cp: cssVar('#d89352'),
+    cx: cssVar('#20161f'),
   },
   {
     name: 'Nuxt light',
@@ -90,9 +83,8 @@ export const themeOptions = defineThemeOptions([
     radiusButton: '0.375rem',
     radiusBox: '0.5rem',
     cb: cssVar('#314158'),
-    c1: cssVar('#ffffff'),
-    c2: cssVar('#fcf9fa'),
-    c3: cssVar('#e2e8f0'),
+    cp: cssVar('#00dc82'),
+    cx: cssVar('#ffffff'),
   },
   {
     name: 'Nuxt dark',
@@ -102,9 +94,8 @@ export const themeOptions = defineThemeOptions([
     radiusButton: '0.375rem',
     radiusBox: '0.5rem',
     cb: cssVar('#90a1b9'),
-    c1: cssVar('#0f172b'),
-    c2: cssVar('#1d293d'),
-    c3: cssVar('#314158'),
+    cp: cssVar('#00dc82'),
+    cx: cssVar('#0f172b'),
   },
   {
     name: 'Antfu light',
@@ -112,9 +103,8 @@ export const themeOptions = defineThemeOptions([
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
     cb: cssVar('#374151'),
-    c1: cssVar('#ffffff'),
-    c2: cssVar('#eeeeee'),
-    c3: cssVar('#bbbbbb'),
+    cp: cssVar('#808080'),
+    cx: cssVar('#ffffff'),
   },
   {
     name: 'Antfu dark',
@@ -122,9 +112,8 @@ export const themeOptions = defineThemeOptions([
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
     cb: cssVar('#e5e7eb'),
-    c1: cssVar('#050505'),
-    c2: cssVar('#111111'),
-    c3: cssVar('#222222'),
+    cp: cssVar('#808080'),
+    cx: cssVar('#050505'),
   },
 ])
 
@@ -138,10 +127,9 @@ function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
     radiusRadio: option.radius ?? '0rem',
     radiusSwitch: option.radius ?? '0rem',
     radiusTabs: option.radius ?? '0rem',
-    cb: '#1f2937',
-    c1: '#ffffff',
-    c2: '#f2f2f2',
-    c3: '#e5e6e6',
+    cb: cssVar('#1f2937'),
+    cp: option.cp ?? option.cb ?? cssVar('#1f2937'),
+    cx: '#ffffff',
     ...option,
   }))
 }
@@ -154,7 +142,7 @@ function cssVar(color: string) {
 export function setTheme(theme: ThemeConfig) {
   const html = document.querySelector('html')!
 
-  html.classList.toggle('bg-ui-c1', true)
+  html.classList.toggle('bg-ui-cx', true)
   html.classList.toggle('transition', true)
 
   const attrs = resolveThemeAttrs(theme)
@@ -200,9 +188,8 @@ const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => ({
   radiusSwitch: '',
   radiusTabs: '',
   cb: '#1f2937',
-  c1: '#ffffff',
-  c2: '#f2f2f2',
-  c3: '#e5e6e6',
+  cp: props.config?.cp ?? props.config?.cb ?? '#1f2937',
+  cx: '#ffffff',
   ...props.config,
   name: 'customize',
 }))
@@ -216,14 +203,13 @@ const themeItems = computed(() => [
   {
     ...themeCustomize.value,
     cb: cssVar(themeCustomize.value.cb!),
-    c1: cssVar(themeCustomize.value.c1!),
-    c2: cssVar(themeCustomize.value.c2!),
-    c3: cssVar(themeCustomize.value.c3!),
+    cp: cssVar(themeCustomize.value.cp!),
+    cx: cssVar(themeCustomize.value.cx!),
   },
 ])
 
 const colorGroups = [
-  [''],
+  ['ui-base', 'ui-base-inverted', 'ui-primary'],
   ['ui-rose-50', 'ui-rose-100', 'ui-rose-200', 'ui-rose-300', 'ui-rose-400', 'ui-rose-500', 'ui-rose-600', 'ui-rose-700', 'ui-rose-800', 'ui-rose-900', 'ui-rose-950'],
   ['ui-pink-50', 'ui-pink-100', 'ui-pink-200', 'ui-pink-300', 'ui-pink-400', 'ui-pink-500', 'ui-pink-600', 'ui-pink-700', 'ui-pink-800', 'ui-pink-900', 'ui-pink-950'],
   ['ui-fuchsia-50', 'ui-fuchsia-100', 'ui-fuchsia-200', 'ui-fuchsia-300', 'ui-fuchsia-400', 'ui-fuchsia-500', 'ui-fuchsia-600', 'ui-fuchsia-700', 'ui-fuchsia-800', 'ui-fuchsia-900', 'ui-fuchsia-950'],
@@ -268,23 +254,21 @@ function onOptionClick(theme: ThemeConfig) {
     ...theme,
     name: 'customize',
     cb: hex(theme.cb),
-    c1: hex(theme.c1),
-    c2: hex(theme.c2),
-    c3: hex(theme.c3),
+    cp: hex(theme.cp || theme.cb),
+    cx: hex(theme.cx),
   }
 
   emit('update:config', themeCustomize.value)
 }
 
 function setCustomTheme() {
-  const { cb, c1, c2, c3 } = themeCustomize.value
+  const { cb, cp, cx } = themeCustomize.value
 
   setTheme({
     ...themeCustomize.value,
     cb: cb && cssVar(cb),
-    c1: c1 && cssVar(c1),
-    c2: c2 && cssVar(c2),
-    c3: c3 && cssVar(c3),
+    cp: cp && cssVar(cp),
+    cx: cx && cssVar(cx),
   })
 
   currentTheme.value = 'customize'
@@ -308,19 +292,19 @@ function setCustomTheme() {
           <div
             v-for="theme in themeItems"
             :key="theme.name"
-            class="self-end border-ui-cb/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-c1 transition"
+            class="self-end border-ui-cb/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-cx transition"
             :class="{
-              'hover:border-ui-cb/40 ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': theme.name === currentTheme,
+              'hover:border-ui-cb/40 ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-cx': theme.name === currentTheme,
               'cursor-pointer': theme.name !== currentTheme && theme.name !== 'customize',
             }"
             :style="Object.fromEntries(resolveThemeAttrs(theme))"
             @click="onOptionClick(theme)"
           >
-            <div class="bg-ui-c1 text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
+            <div class="bg-ui-cx text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
               <div class="min-w-40 grid grid-cols-4 grid-rows-3">
-                <div class="bg-ui-c2 col-start-1 row-span-2 row-start-1"></div>
-                <div class="bg-ui-c3 col-start-1 row-start-3"></div>
-                <div class="bg-ui-c1 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                <div class="bg-solid-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
+                <div class="bg-solid-ui-cb/20 col-start-1 row-start-3"></div>
+                <div class="bg-ui-cx col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
                   <div class="text-xl font-bold">
                     {{ theme.name }}
                   </div>
@@ -334,7 +318,7 @@ function setCustomTheme() {
             <div v-for="colorName in colorOptions" :key="colorName" class="flex aspect-square items-center justify-center rounded">
               <Link
                 class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-                :class="[colorName, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-c1': colorName === props.color }]"
+                :class="[colorName, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-cx': colorName === props.color }]"
                 size="xl"
                 label="A"
                 :title="colorName"
@@ -368,12 +352,10 @@ function setCustomTheme() {
         <Input v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">cb</label>
         <Input v-model="themeCustomize.cb" type="color" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">c1</label>
-        <Input v-model="themeCustomize.c1" type="color" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">c2</label>
-        <Input v-model="themeCustomize.c2" type="color" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">c3</label>
-        <Input v-model="themeCustomize.c3" type="color" @update:model-value="setCustomTheme" />
+        <label class="opacity-80">cp</label>
+        <Input v-model="themeCustomize.cp" type="color" @update:model-value="setCustomTheme" />
+        <label class="opacity-80">cx</label>
+        <Input v-model="themeCustomize.cx" type="color" @update:model-value="setCustomTheme" />
       </div>
     </template>
   </Tabs>

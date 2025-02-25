@@ -12,7 +12,10 @@ export const rules: Rule[] = [
         return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cb')]))
 
       if (color === 'base-inverted')
-        return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('c1')]))
+        return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cx')]))
+
+      if (color === 'primary')
+        return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cp', cssVar('cb'))]))
 
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
@@ -29,7 +32,10 @@ export const rules: Rule[] = [
         return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cb') }
 
       if (color === 'base-inverted')
-        return { [`--${cssVarsPrefix}-${prop}`]: cssVar('c1') }
+        return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cx') }
+
+      if (color === 'primary')
+        return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cp', cssVar('cb')) }
 
       const data = parseColor(color, ctx.theme)
       const value = resolveRuleValue(data)
@@ -51,7 +57,7 @@ export const rules: Rule[] = [
       const opacity = parsed.opacity || '100'
 
       return {
-        'background-color': `color-mix(in srgb, ${color} ${opacity}%, ${cssColor(cssVar('c1'))})`,
+        'background-color': `color-mix(in srgb, ${color} ${opacity}%, ${cssColor(cssVar('cx'))})`,
       }
     },
   ],

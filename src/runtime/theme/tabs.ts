@@ -19,7 +19,7 @@ export default ct(/* @unocss-include */{
       'solid': {
         list: 'bg-solid-ui-cb/5 rounded-ui-tabs',
         trigger: [
-          'data-[state=active]:color-ui-c1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
+          'data-[state=active]:color-ui-cx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
         indicator: 'bg-solid-ui-fill/90 rounded-ui-tabs shadow-xs',

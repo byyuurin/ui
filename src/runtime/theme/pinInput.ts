@@ -27,7 +27,7 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         container: [
-          'color-ui-cb/80 bg-solid-ui-c1 ring ring-inset ring-ui-cb/50',
+          'color-ui-cb/80 bg-solid-ui-cx ring ring-inset ring-ui-cb/20',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
         ],

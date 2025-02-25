@@ -47,9 +47,8 @@ export default defineConfig({
       radiusSwitch: '0rem', // optional
       radiusTabs: '0rem', // optional
       cb: '#1f2937', // optional
-      c1: '#ffffff', // optional
-      c2: '#f2f2f2', // optional
-      c3: '#e5e6e6', // optional
+      cp: '#1f2937', // optional
+      cx: '#ffffff', // optional
     }),
   ],
 })
