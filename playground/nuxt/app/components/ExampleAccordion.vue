@@ -36,11 +36,11 @@ const items: AccordionItem[] = [
   },
 ]
 
-const controls: ControlItems<AccordionProps<any>> = [
+const controls: ControlItems<AccordionProps<AccordionItem>> = [
   { prop: 'type', value: 'single', options: ['single', 'multiple'] },
-  { prop: 'disabled', value: false },
   { prop: 'unmountOnHide', value: true },
-  { prop: 'collapsible', value: false },
+  { prop: 'collapsible', value: true },
+  { prop: 'disabled', value: false },
 ]
 </script>
 

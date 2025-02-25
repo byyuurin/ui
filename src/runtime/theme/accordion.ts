@@ -12,8 +12,8 @@ export default ct(/* @unocss-include */{
       'data-[state=closed]:animate-[accordion-up_200ms_ease-out]',
     ],
     body: 'text-sm pb-4 color-ui-cb/80',
-    icon: 'shrink-0 size-5',
-    trailingIcon: 'shrink-0 size-5 ms-auto group-data-[state=open]:rotate-180 transition-transform duration-200',
+    prefixIcon: 'shrink-0 size-5',
+    suffixIcon: 'shrink-0 size-5 ms-auto group-data-[state=open]:rotate-180 transition-all duration-200',
     label: 'text-start break-words',
   },
   variants: {

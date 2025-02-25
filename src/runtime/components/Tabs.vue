@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, TabsRootEmits, TabsRootProps } from 'reka-ui'
 import type { tabs } from '../theme'
-import type { ComponentAttrs, DynamicSlots } from '../types'
+import type { ComponentAttrs } from '../types'
 
 export interface TabsItem {
   label?: string
@@ -13,6 +13,17 @@ export interface TabsItem {
   value?: string | number
   disabled?: boolean
 }
+
+export interface TabsEmits extends TabsRootEmits<string | number> {}
+
+type SlotProps<T> = (props: { item: T, index: number }) => any
+
+export type TabsSlots<T extends { slot?: string }> = {
+  prefix?: SlotProps<T>
+  default?: SlotProps<T>
+  suffix?: SlotProps<T>
+  content?: SlotProps<T>
+} & Record<string, SlotProps<T>>
 
 type TabsVariants = VariantProps<typeof tabs>
 
@@ -35,17 +46,6 @@ export interface TabsProps<T> extends ComponentAttrs<typeof tabs>, Pick<TabsRoot
    */
   labelKey?: string
 }
-
-export interface TabsEmits extends TabsRootEmits<string | number> {}
-
-type SlotProps<T> = (props: { item: T, index: number }) => any
-
-export type TabsSlots<T extends { slot?: string }> = {
-  prefix?: SlotProps<T>
-  default?: SlotProps<T>
-  suffix?: SlotProps<T>
-  content?: SlotProps<T>
-} & DynamicSlots<T, SlotProps<T>>
 </script>
 
 <script lang="ts" setup generic="T extends TabsItem">
@@ -64,10 +64,10 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
   labelKey: 'label',
 })
 
-const emits = defineEmits<TabsEmits>()
+const emit = defineEmits<TabsEmits>()
 const slots = defineSlots<TabsSlots<T>>()
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'activationMode', 'unmountOnHide'), emits)
+const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'activationMode', 'unmountOnHide'), emit)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
