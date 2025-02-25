@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Input, Link, Select, Tabs } from '@byyuurin/ui'
-import { cssVarsPrefix } from '@byyuurin/ui/unocss'
+import { cssVarsBase, cssVarsPrefix } from '@byyuurin/ui/unocss'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import { useCloned } from '@vueuse/core'
 
@@ -17,9 +17,9 @@ export const themeOptions = defineThemeOptions([
     radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
-    cb: cssVar('#1f2937'),
-    cp: cssVar('#4e00ff'),
-    cx: cssVar('#ffffff'),
+    cb: '#1f2937',
+    cp: '#4e00ff',
+    cx: '#ffffff',
   },
   {
     name: 'Daisy dark',
@@ -27,43 +27,43 @@ export const themeOptions = defineThemeOptions([
     radius: '3px',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
-    cb: cssVar('#a6adbb'),
-    cp: cssVar('#777eff'),
-    cx: cssVar('#1d232a'),
+    cb: '#a6adbb',
+    cp: '#777eff',
+    cx: '#1d232a',
   },
   {
     name: 'retro',
     colorScheme: 'light',
     radius: '0.4rem',
-    cb: cssVar('#282425'),
-    cp: cssVar('#ec9a96'),
-    cx: cssVar('#ece3ca'),
+    cb: '#282425',
+    cp: '#ec9a96',
+    cx: '#ece3ca',
   },
   {
     name: 'cyberpunk',
     colorScheme: 'light',
     fontFamily: 'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
-    cb: cssVar('#161402'),
-    cp: cssVar('#ff6796'),
-    cx: cssVar('#fff248'),
+    cb: '#161402',
+    cp: '#ff6796',
+    cx: '#fff248',
   },
   {
     name: 'valentine',
     colorScheme: 'light',
     radius: '1.9rem',
     radiusBox: '1rem',
-    cb: cssVar('#632c3b'),
-    cp: cssVar('#e56e7c'),
-    cx: cssVar('#fae7f4'),
+    cb: '#632c3b',
+    cp: '#e56e7c',
+    cx: '#fae7f4',
   },
   {
     name: 'wireframe',
     colorScheme: 'light',
     fontFamily: 'Chalkboard,comic sans ms,"sans-serif"',
     radius: '0.2rem',
-    cb: cssVar('#161616'),
-    cp: cssVar('#b8b8b8'),
-    cx: cssVar('#ffffff'),
+    cb: '#161616',
+    cp: '#b8b8b8',
+    cx: '#ffffff',
   },
   {
     name: 'coffee',
@@ -71,9 +71,9 @@ export const themeOptions = defineThemeOptions([
     radius: '0.2rem',
     radiusBox: '1rem',
     radiusButton: '0.5rem',
-    cb: cssVar('#c59f60'),
-    cp: cssVar('#d89352'),
-    cx: cssVar('#20161f'),
+    cb: '#c59f60',
+    cp: '#d89352',
+    cx: '#20161f',
   },
   {
     name: 'Nuxt light',
@@ -82,9 +82,9 @@ export const themeOptions = defineThemeOptions([
     radius: '0.25rem',
     radiusButton: '0.375rem',
     radiusBox: '0.5rem',
-    cb: cssVar('#314158'),
-    cp: cssVar('#00dc82'),
-    cx: cssVar('#ffffff'),
+    cb: '#314158',
+    cp: '#00dc82',
+    cx: '#ffffff',
   },
   {
     name: 'Nuxt dark',
@@ -93,27 +93,27 @@ export const themeOptions = defineThemeOptions([
     radius: '0.25rem',
     radiusButton: '0.375rem',
     radiusBox: '0.5rem',
-    cb: cssVar('#90a1b9'),
-    cp: cssVar('#00dc82'),
-    cx: cssVar('#0f172b'),
+    cb: '#90a1b9',
+    cp: '#00dc82',
+    cx: '#0f172b',
   },
   {
     name: 'Antfu light',
     colorScheme: 'light',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
-    cb: cssVar('#374151'),
-    cp: cssVar('#808080'),
-    cx: cssVar('#ffffff'),
+    cb: '#374151',
+    cp: '#808080',
+    cx: '#ffffff',
   },
   {
     name: 'Antfu dark',
     colorScheme: 'dark',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
-    cb: cssVar('#e5e7eb'),
-    cp: cssVar('#808080'),
-    cx: cssVar('#050505'),
+    cb: '#e5e7eb',
+    cp: '#808080',
+    cx: '#050505',
   },
 ])
 
@@ -127,8 +127,8 @@ function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
     radiusRadio: option.radius ?? '0rem',
     radiusSwitch: option.radius ?? '0rem',
     radiusTabs: option.radius ?? '0rem',
-    cb: cssVar('#1f2937'),
-    cp: option.cp ?? option.cb ?? cssVar('#1f2937'),
+    cb: '#1f2937',
+    cp: option.cp ?? option.cb ?? '#1f2937',
     cx: '#ffffff',
     ...option,
   }))
@@ -157,7 +157,7 @@ function resolveThemeAttrs(theme: ThemeConfig) {
     .filter(([k]) => k !== 'name')
     .map(([k, v]) => [
       excludes.has(k) ? kebabCase(k) : `--${cssVarsPrefix}-${kebabCase(k)}`,
-      v || '',
+      cssVarsBase.includes(k) ? cssVar(v) : v,
     ])
 }
 </script>
@@ -253,23 +253,16 @@ function onOptionClick(theme: ThemeConfig) {
   themeCustomize.value = {
     ...theme,
     name: 'customize',
-    cb: hex(theme.cb),
-    cp: hex(theme.cp || theme.cb),
-    cx: hex(theme.cx),
+    cb: theme.cb,
+    cp: theme.cp || theme.cb,
+    cx: theme.cx,
   }
 
   emit('update:config', themeCustomize.value)
 }
 
 function setCustomTheme() {
-  const { cb, cp, cx } = themeCustomize.value
-
-  setTheme({
-    ...themeCustomize.value,
-    cb: cb && cssVar(cb),
-    cp: cp && cssVar(cp),
-    cx: cx && cssVar(cx),
-  })
+  setTheme(themeCustomize.value)
 
   currentTheme.value = 'customize'
   emit('update:config', themeCustomize.value)
