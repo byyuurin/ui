@@ -119,7 +119,7 @@ export const themeOptions = defineThemeOptions([
 
 function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
   return options.map((option) => ({
-    fontFamily: undefined,
+    fontFamily: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Vazirmatn,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
     radius: option.radius ?? '0rem',
     radiusBox: option.radius ?? '0rem',
     radiusButton: option.radius ?? '0rem',
