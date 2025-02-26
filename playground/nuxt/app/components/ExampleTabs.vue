@@ -6,7 +6,7 @@ const controls: ControlItems<TabsProps<any>> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline', 'link'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'full', value: true },
+  { prop: 'evenly', value: true },
   { prop: 'content', value: true },
   { prop: 'unmountOnHide', value: true },
 ]

@@ -34,7 +34,7 @@ export interface TabsProps<T> extends ComponentAttrs<typeof tabs>, Pick<TabsRoot
   orientation?: TabsVariants['orientation']
   size?: TabsVariants['size']
   /** @default true */
-  full?: boolean
+  evenly?: boolean
   /**
    * The content of the tabs, can be disabled to prevent rendering the content.
    * @default true
@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: '0',
   variant: 'solid',
   orientation: 'horizontal',
-  full: true,
+  evenly: true,
   content: true,
   labelKey: 'label',
 })

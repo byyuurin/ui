@@ -87,7 +87,7 @@ export default ct(/* @unocss-include */{
         root: 'text-xl',
       },
     },
-    full: {
+    evenly: {
       true: {
         trigger: 'w-full flex-1',
       },
