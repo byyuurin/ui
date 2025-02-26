@@ -94,7 +94,7 @@ function createRootCSS(kv: PresetOptions) {
     ])}}`,
     `*::selection{${join([
       `color:${cssColor(cssVar('cx'))}`,
-      `background-color:${cssColor(cssVar('fill', cssVar('cb')))}`,
+      `background-color:${cssColor(cssVar('cp', cssVar('cb')))}`,
     ])}}`,
   ]
 
