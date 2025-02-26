@@ -39,7 +39,6 @@ const items: AccordionItem[] = [
 const controls: ControlItems<AccordionProps<AccordionItem>> = [
   { prop: 'type', value: 'single', options: ['single', 'multiple'] },
   { prop: 'unmountOnHide', value: true },
-  { prop: 'collapsible', value: true },
   { prop: 'disabled', value: false },
 ]
 </script>
@@ -51,6 +50,6 @@ const controls: ControlItems<AccordionProps<AccordionItem>> = [
     description="A stacked set of collapsible panels."
     :controls="controls"
   >
-    <UAccordion :items="items" v-bind="attrs" />
+    <UAccordion :items="items" :collapsible="true" v-bind="attrs" />
   </ExampleView>
 </template>

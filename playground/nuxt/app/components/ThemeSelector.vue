@@ -177,25 +177,28 @@ const emit = defineEmits<{
   (event: 'update:color', color: string): void
 }>()
 
-const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => ({
-  colorScheme: 'light',
-  fontFamily: '',
-  radius: '0rem',
-  radiusBox: '',
-  radiusButton: '',
-  radiusCheckbox: '',
-  radiusRadio: '',
-  radiusSwitch: '',
-  radiusTabs: '',
-  cb: '#1f2937',
-  cp: props.config?.cp ?? props.config?.cb ?? '#1f2937',
-  cx: '#ffffff',
-  ...props.config,
-  name: 'customize',
-}))
-
 const currentTheme = defineModel<typeof themeOptions[number]['name'] | 'customize'>({
   default: 'wireframe',
+})
+
+const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => {
+  const baseColor = '#1f2937'
+  return {
+    colorScheme: 'light',
+    fontFamily: '',
+    radius: '0rem',
+    radiusBox: '',
+    radiusButton: '',
+    radiusCheckbox: '',
+    radiusRadio: '',
+    radiusSwitch: '',
+    radiusTabs: '',
+    cb: baseColor,
+    cp: props.config?.cp ?? props.config?.cb ?? baseColor,
+    cx: '#ffffff',
+    ...props.config,
+    name: 'customize',
+  }
 })
 
 const themeItems = computed(() => [
