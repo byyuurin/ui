@@ -11,7 +11,7 @@ export default ct(/* @unocss-include */{
     prev: 'rounded-full',
     next: 'rounded-full',
     dots: 'flex flex-wrap items-center justify-center gap-3',
-    dot: 'cursor-pointer size-3 bg-solid-ui-cb/10 rounded-full transition',
+    dot: 'cursor-pointer size-3 bg-soft-ui-cb/10 rounded-full transition',
   },
   variants: {
     orientation: {
@@ -34,7 +34,7 @@ export default ct(/* @unocss-include */{
     },
     active: {
       true: {
-        dot: 'bg-solid-ui-content',
+        dot: 'bg-soft-ui-content',
       },
     },
   },

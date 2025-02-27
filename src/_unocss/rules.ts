@@ -46,7 +46,7 @@ export const rules: Rule[] = [
     { autocomplete: `${cssVarsPrefix}-(${cssVarsAll.join('|')})-$colors` },
   ],
   [
-    /^bg-solid-(.+)$/,
+    /^bg-soft-(.+)$/,
     ([_, c], { theme }) => {
       const parsed = parseColor(c, theme)
 

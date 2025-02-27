@@ -57,8 +57,8 @@ export default defineConfig({
 New Rules
 
 - `ui-[color]`
-- `bg-solid-[color]`
-- `bg-solid-[color]/[opacity]`
+- `bg-soft-[color]`
+- `bg-soft-[color]/[mix-ratio]`
 
 ### Vite
 

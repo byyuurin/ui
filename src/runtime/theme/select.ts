@@ -4,26 +4,26 @@ import { buttonGroupVariant } from './button-group'
 export default ct(/* @unocss-include */{
   slots: {
     base: [
-      'bg-solid-ui-cx relative group rounded-ui-base inline-flex items-center gap-x-2 focus:outline-none transition-colors',
+      'bg-ui-cx relative group rounded-ui-base inline-flex items-center gap-x-2 focus:outline-none transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     value: 'me-auto truncate pointer-events-none',
     placeholder: 'me-auto truncate color-ui-cb/50',
     arrow: 'fill-ui-cx stroke-ui-cb/20',
     content: [
-      'max-h-60 w-[var(--reka-popper-anchor-width)] bg-solid-ui-cx shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/20 overflow-hidden pointer-events-auto',
+      'max-h-60 w-[var(--reka-popper-anchor-width)] bg-ui-cx shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/20 overflow-hidden pointer-events-auto',
       'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
     ],
     viewport: 'divide-y divide-ui-cb/10 scroll-py-1',
     group: 'p-1 isolate',
     empty: 'py-2 text-center text-sm color-ui-cb/50',
     label: 'font-semibold color-ui-cb cursor-pointer',
-    separator: '-mx-1 my-1 h-px bg-solid-ui-cb/10',
+    separator: '-mx-1 my-1 h-px bg-soft-ui-cb/10',
     item: [
       'group relative w-full flex gap-2 items-center select-none outline-none color-ui-cb/50 transition-colors cursor-pointer',
       'aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
       'before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-ui-base before:transition-colors',
-      'data-[highlighted]:color-ui-cb data-[highlighted]:before:bg-solid-ui-cb/3',
+      'data-[highlighted]:color-ui-cb data-[highlighted]:before:bg-soft-ui-cb/3',
       'data-[state=checked]:color-ui-base',
     ],
     itemPrefixIcon: 'shrink-0 color-ui-cb/80 group-data-[highlighted]:color-ui-cb/80 transition-colors',
@@ -40,29 +40,29 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-cx ring ring-inset ring-ui-cb/20 data-[state=open]:ring-2 data-[state=open]:ring-ui-cb/50',
+          'color-ui-cb/80 bg-ui-cx ring ring-inset ring-ui-cb/20 data-[state=open]:ring-2 data-[state=open]:ring-ui-cb/50',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'disabled:ring-ui-cb/80 hover:disabled:ring-ui-cb/80',
         ],
       },
       'soft': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-cb/5 data-[state=open]:bg-solid-ui-cb/5',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
-          'disabled:color-ui-content/80 disabled:bg-solid-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-solid-ui-fill/5',
+          'color-ui-cb/80 bg-soft-ui-cb/5 data-[state=open]:bg-soft-ui-cb/5',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
+          'disabled:color-ui-content/80 disabled:bg-soft-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-soft-ui-fill/5',
         ],
       },
       'soft-outline': {
         base: [
-          'color-ui-cb/80 bg-solid-ui-cb/5 ring ring-inset ring-ui-cb/10 data-[state=open]:bg-solid-ui-cb/5 data-[state=open]:ring-ui-cb/25',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
-          'disabled:color-ui-content/80 disabled:bg-solid-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-solid-ui-fill/5',
+          'color-ui-cb/80 bg-soft-ui-cb/5 ring ring-inset ring-ui-cb/10 data-[state=open]:bg-soft-ui-cb/5 data-[state=open]:ring-ui-cb/25',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
+          'disabled:color-ui-content/80 disabled:bg-soft-ui-fill/5 hover:disabled:color-ui-content/80 hover:disabled:bg-soft-ui-fill/5',
         ],
       },
       'ghost': {
         base: [
-          'color-ui-cb/80 bg-transparent data-[state=open]:bg-solid-ui-cb/8',
-          'hover:bg-solid-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-solid-ui-cb/8 focus-within:color-ui-cb/85',
+          'color-ui-cb/80 bg-transparent data-[state=open]:bg-soft-ui-cb/8',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
           'disabled:color-ui-fill/80 disabled:bg-transparent hover:disabled:color-ui-fill/80 hover:disabled:bg-transparent',
         ],
       },
@@ -115,8 +115,8 @@ export default ct(/* @unocss-include */{
       underline: true,
       class: {
         base: [
-          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-solid-ui-cb/40',
-          'data-[state=open]:after:h-2px data-[state=open]:after:bg-solid-ui-fill/60',
+          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-soft-ui-cb/40',
+          'data-[state=open]:after:h-2px data-[state=open]:after:bg-soft-ui-fill/60',
         ],
       },
     },

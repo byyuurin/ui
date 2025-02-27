@@ -21,8 +21,6 @@ describe('check defu result', () => {
     expect(raw).toMatchInlineSnapshot(`
       {
         "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80",
-        "compoundVariants": undefined,
-        "slots": undefined,
         "variants": {
           "active": {
             "false": [

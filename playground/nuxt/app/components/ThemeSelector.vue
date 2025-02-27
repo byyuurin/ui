@@ -298,8 +298,8 @@ function setCustomTheme() {
           >
             <div class="bg-ui-cx text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
               <div class="min-w-40 grid grid-cols-4 grid-rows-3">
-                <div class="bg-solid-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
-                <div class="bg-solid-ui-cb/20 col-start-1 row-start-3"></div>
+                <div class="bg-soft-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
+                <div class="bg-soft-ui-cb/20 col-start-1 row-start-3"></div>
                 <div class="bg-ui-cx col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
                   <div class="text-xl font-bold">
                     {{ theme.name }}

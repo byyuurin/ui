@@ -17,36 +17,36 @@ export default ct(/* @unocss-include */{
     variant: {
       'solid': {
         base: [
-          'color-ui-cx bg-solid-ui-fill/90',
-          'hover:bg-solid-ui-fill/80 active:bg-solid-ui-fill',
-          'disabled:bg-solid-ui-fill/90 aria-disabled:bg-solid-ui-fill/90',
+          'color-ui-cx bg-soft-ui-fill/85',
+          'hover:bg-soft-ui-fill/75 active:bg-soft-ui-fill/95',
+          'disabled:bg-soft-ui-fill/85 aria-disabled:bg-soft-ui-fill/85',
         ],
       },
       'outline': {
         base: [
-          'color-ui-fill bg-solid-ui-cx ring ring-inset ring-ui-fill',
-          'hover:bg-solid-ui-fill/5 active:bg-solid-ui-fill/10',
-          'disabled:bg-solid-ui-cx aria-disabled:bg-solid-ui-cx',
+          'color-ui-fill/85 bg-ui-cx ring ring-inset ring-ui-fill/85',
+          'hover:bg-soft-ui-fill/5 active:bg-soft-ui-fill/10',
+          'disabled:bg-ui-cx aria-disabled:bg-ui-cx',
         ],
       },
       'soft': {
         base: [
-          'color-ui-content/80 bg-solid-ui-fill/10',
-          'hover:bg-solid-ui-fill/15 hover:color-ui-content/80 active:bg-solid-ui-fill/20 active:color-ui-content/90',
-          'disabled:bg-solid-ui-fill/10 aria-disabled:bg-solid-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
+          'color-ui-content/80 bg-soft-ui-fill/15',
+          'hover:bg-soft-ui-fill/10 hover:color-ui-content/80 active:bg-soft-ui-fill/25 active:color-ui-content/90',
+          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
       'soft-outline': {
         base: [
-          'color-ui-content/80 bg-solid-ui-fill/10 ring ring-inset ring-ui-fill/40',
-          'hover:bg-solid-ui-fill/15 hover:color-ui-content/80 active:bg-solid-ui-fill/20 active:color-ui-content/90',
-          'disabled:bg-solid-ui-fill/10 aria-disabled:bg-solid-ui-fill/10 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
+          'color-ui-content/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/40',
+          'hover:bg-soft-ui-fill/10 hover:color-ui-content/80 active:bg-soft-ui-fill/25 active:color-ui-content/90',
+          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
         ],
       },
       'ghost': {
         base: [
           'color-ui-fill/80 bg-transparent',
-          'hover:bg-solid-ui-fill/10 hover:color-ui-fill/80 active:bg-solid-ui-fill/20 active:color-ui-fill/90',
+          'hover:bg-soft-ui-fill/5 hover:color-ui-fill/80 active:bg-soft-ui-fill/10 active:color-ui-fill/90',
           'disabled:bg-transparent aria-disabled:bg-transparent disabled:hover:bg-transparent aria-disabled:hover:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
         ],
       },
@@ -106,27 +106,27 @@ export default ct(/* @unocss-include */{
     {
       active: true,
       variant: 'solid',
-      class: { base: 'bg-solid-ui-fill hover:bg-solid-ui-fill' },
+      class: { base: 'bg-soft-ui-fill/95 hover:bg-soft-ui-fill/95' },
     },
     {
       active: true,
       variant: 'outline',
-      class: { base: 'bg-solid-ui-fill/10 hover:bg-solid-ui-fill/10' },
+      class: { base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/10' },
     },
     {
       active: true,
       variant: ['soft', 'soft-outline'],
-      class: { base: 'color-ui-content/90 bg-solid-ui-fill/20 hover:color-ui-content/90 hover:bg-solid-ui-fill/20' },
+      class: { base: 'color-ui-content/90 bg-soft-ui-fill/25 hover:color-ui-content/90 hover:bg-soft-ui-fill/25' },
     },
     {
       active: true,
       variant: 'ghost',
-      class: { base: 'color-ui-fill/90 bg-solid-ui-fill/20 hover:color-ui-fill/90 hover:bg-solid-ui-fill/20' },
+      class: { base: 'color-ui-fill/90 bg-soft-ui-fill/10 hover:color-ui-fill/90 hover:bg-soft-ui-fill/10' },
     },
     {
       active: true,
       variant: 'link',
-      class: { base: 'color-ui-fill/90 hover:color-ui-fill/90' },
+      class: { base: 'color-ui-fill hover:color-ui-fill' },
     },
     {
       loading: true,

@@ -13,17 +13,17 @@ export default ct(/* @unocss-include */{
   variants: {
     variant: {
       'solid': {
-        root: 'color-ui-cx bg-solid-ui-fill',
+        root: 'color-ui-cx bg-ui-fill',
         close: 'ui-base-inverted',
       },
       'outline': {
-        root: 'color-ui-content bg-solid-ui-cx ring ring-inset ring-ui-fill',
+        root: 'color-ui-content bg-ui-cx ring ring-inset ring-ui-fill',
       },
       'soft': {
-        root: 'color-ui-content bg-solid-ui-fill/10',
+        root: 'color-ui-content bg-soft-ui-fill/10',
       },
       'soft-outline': {
-        root: 'color-ui-content bg-solid-ui-fill/10 ring ring-inset ring-ui-fill/40',
+        root: 'color-ui-content bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/40',
       },
     },
     orientation: {
