@@ -10,6 +10,7 @@ const controls: ControlItems<InputNumberProps> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'min', value: undefined, type: 'number' },
   { prop: 'max', value: undefined, type: 'number' },
+  { prop: 'step', value: 1 },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'disabled', value: false },
   { prop: 'underline', value: false },
@@ -21,11 +22,19 @@ const controls: ControlItems<InputNumberProps> = [
   <ExampleView
     v-slot="attrs"
     title="InputNumber"
-    description=""
+    description="Input numerical values with a customizable range."
     :controls="controls"
   >
-    <div>
+    <div class="flex flex-col gap-4">
       <UInputNumber v-model="value" v-bind="attrs" />
+      <UInputNumber v-model="value" v-bind="attrs">
+        <template #increment>
+          <Placeholder label="#increment" />
+        </template>
+        <template #decrement>
+          <Placeholder label="#decrement" />
+        </template>
+      </UInputNumber>
     </div>
   </ExampleView>
 </template>
