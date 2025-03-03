@@ -1,14 +1,17 @@
 <script lang="ts">
 import type { SelectOption } from '@byyuurin/ui'
-import { Card, Input, Select, Switch } from '@byyuurin/ui'
+import { Card, Input, InputNumber, Select, Switch } from '@byyuurin/ui'
 
 export type ControlItem<T> = {
   [Prop in keyof T]?: {
+    type?: 'string' | 'number' | 'boolean' | 'multiple'
     prop: Prop
     value: T[Prop]
     label?: string
     options?: Array<T[Prop] | { label: string, value: T[Prop] }>
     placeholder?: string
+    min?: number
+    max?: number
   }
 }[keyof T]
 
@@ -68,15 +71,26 @@ function typedSelectOptions(item: ControlItem<T>) {
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
             <label class="opacity-80">{{ item?.label ?? item?.prop }}:</label>
 
-            <Select v-if="item?.options" v-model="attrs[item!.prop]" :options="typedSelectOptions(item)" />
+            <Select
+              v-if="item?.type === 'multiple' || item?.options"
+              v-model="attrs[item!.prop]"
+              :options="typedSelectOptions(item)"
+            />
             <Switch
-              v-else-if="typeof item?.value === 'boolean'"
+              v-else-if="item?.type === 'boolean' || typeof item?.value === 'boolean'"
               v-model="attrs[item.prop]"
+            />
+            <InputNumber
+              v-else-if="item?.type === 'number' || typeof item?.value === 'number'"
+              v-model="attrs[item!.prop]"
+              orientation="vertical"
+              :placeholder="item?.placeholder"
+              :min="item.min"
+              :max="item.max"
             />
             <Input
               v-else
               v-model="attrs[item!.prop]"
-              :type="typeof item?.value === 'number' ? 'number' : 'text'"
               :placeholder="item?.placeholder"
             />
           </template>
