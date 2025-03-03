@@ -28,12 +28,12 @@ export default ct(/* @unocss-include */{
     orientation: {
       horizontal: {
         input: 'text-center',
-        increment: 'inset-y-0 end-0 pe-1',
-        decrement: 'inset-y-0 start-0 ps-1',
+        increment: 'inset-y-0 end-0 pe-0.5',
+        decrement: 'inset-y-0 start-0 ps-0.5',
       },
       vertical: {
-        increment: 'top-0 end-0 pe-1 [&>button]:py-0 scale-80',
-        decrement: 'bottom-0 end-0 pe-1 [&>button]:py-0 scale-80',
+        increment: 'top-0 end-0 pe-0.5 [&>button]:py-0 scale-80',
+        decrement: 'bottom-0 end-0 pe-0.5 [&>button]:py-0 scale-80',
       },
     },
     highlight: {
