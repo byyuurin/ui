@@ -15,13 +15,39 @@ export function transformUnoRules(
   const { rules = [], theme = {} } = mergeConfigs([baseUnoConfig, userConfig])
   const mergeRules: CRRule[] = []
 
-  const resolveCSSEntries = (entries: CSSEntries) => () => entries.flatMap((value) => Object.keys(value)).join(',')
+  const toString = (values: string[]) => {
+    const variables = new Set<string>([])
+    const properties = new Set<string>([])
+    const propertiesIgnores = new Set<string>(['transform'])
+    let propertiesOnly = true
+
+    values.forEach((value) => {
+      if (propertiesIgnores.has(value)) {
+        properties.add(value)
+        propertiesOnly = false
+        return
+      }
+
+      if (value.startsWith('--')) {
+        variables.add(value)
+        return
+      }
+
+      properties.add(value)
+    })
+
+    const valueArray = propertiesOnly && properties.size > 0 ? Array.from(properties.values()) : values
+
+    return valueArray.join(',')
+  }
+
+  const resolveCSSEntries = (entries: CSSEntries) => () => toString(entries.flatMap((value) => Object.keys(value)))
 
   const resolveCSSObject = (object: CSSObject) => () => {
     if (JSON.stringify(object) === '{}')
       return null
 
-    return Object.keys(object).join(',')
+    return toString(Object.keys(object))
   }
 
   for (const rule of rules) {
@@ -46,12 +72,8 @@ export function transformUnoRules(
           generator: { config: {} },
         })
 
-        if (Array.isArray(result)) {
-          return result
-            .filter((i) => typeof i === 'object')
-            .map((i) => Array.isArray(i) ? i[0] : Object.keys(i).join(','))
-            .join(',')
-        }
+        if (Array.isArray(result))
+          return toString(result.filter((i) => typeof i === 'object').map((i) => Array.isArray(i) ? i[0] : Object.keys(i).join(',')) as string[])
 
         if (typeof result === 'object')
           return resolveCSSObject(result as any)()
