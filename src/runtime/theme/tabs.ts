@@ -22,7 +22,7 @@ export default ct(/* @unocss-include */{
           'data-[state=active]:color-ui-cx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-soft-ui-fill/90 rounded-ui-tabs shadow-xs',
+        indicator: 'bg-soft-ui-fill/90 rounded-ui-tabs shadow-sm',
       },
       'outline': {
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
@@ -38,7 +38,7 @@ export default ct(/* @unocss-include */{
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-xs',
+        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-sm',
       },
       'soft-outline': {
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
@@ -46,7 +46,7 @@ export default ct(/* @unocss-include */{
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
           'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
         ],
-        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-xs ring ring-inset ring-ui-content/40',
+        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-sm ring ring-inset ring-ui-content/40',
       },
       'link': {
         list: 'bg-soft-ui-cb/5 border-ui-cb/10',
