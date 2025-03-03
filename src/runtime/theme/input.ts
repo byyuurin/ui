@@ -37,28 +37,28 @@ export default ct(/* @unocss-include */{
       'outline': {
         base: [
           'color-ui-cb/80 bg-ui-cx ring ring-inset ring-ui-cb/20',
-          'focus-within:ring-2 focus-within:ring-ui-cb/50',
-          'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
+          'focus-within:ring-2 focus-within:ring-ui-cb/50 hover:focus-within:ring-ui-cb/50',
+          'aria-disabled:ring-ui-cb/20 hover:aria-disabled:ring-ui-cb/20',
         ],
       },
       'soft': {
         base: [
           'color-ui-cb/80 bg-soft-ui-cb/4',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85 hover:focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-cb/80 aria-disabled:bg-soft-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-soft-ui-cb/5',
         ],
       },
       'soft-outline': {
         base: [
           'color-ui-cb/80 bg-soft-ui-cb/4 ring ring-inset ring-ui-cb/10',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85 hover:focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-cb/80 aria-disabled:bg-soft-ui-cb/5 hover:aria-disabled:color-ui-cb/80 hover:aria-disabled:bg-soft-ui-cb/5',
         ],
       },
       'ghost': {
         base: [
           'color-ui-cb/80 bg-transparent',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
+          'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85 hover:focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-fill/80 aria-disabled:bg-transparent hover:aria-disabled:color-ui-fill/80 hover:aria-disabled:bg-transparent',
         ],
       },
