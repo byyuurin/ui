@@ -1,6 +1,5 @@
 <script lang="ts">
 import type { SelectOption } from '@byyuurin/ui'
-import { Card, Input, InputNumber, Select, Switch } from '@byyuurin/ui'
 
 export type ControlItem<T> = {
   [Prop in keyof T]?: {
@@ -62,7 +61,7 @@ function typedSelectOptions(item: ControlItem<T>) {
 <template>
   <div>
     <div class="p-4 grid grid-cols-1 md:grid-cols-2 items-start xl:grid-cols-3 gap-4">
-      <Card
+      <UCard
         :title="props.title"
         :description="props.description"
         class="top-4 bg-ui-cb/2 backdrop-blur md:sticky"
@@ -71,16 +70,16 @@ function typedSelectOptions(item: ControlItem<T>) {
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
             <label class="opacity-80">{{ item?.label ?? item?.prop }}:</label>
 
-            <Select
+            <USelect
               v-if="item?.type === 'multiple' || item?.options"
               v-model="attrs[item!.prop]"
               :options="typedSelectOptions(item)"
             />
-            <Switch
+            <USwitch
               v-else-if="item?.type === 'boolean' || typeof item?.value === 'boolean'"
               v-model="attrs[item.prop]"
             />
-            <InputNumber
+            <UInputNumber
               v-else-if="item?.type === 'number' || typeof item?.value === 'number'"
               v-model="attrs[item!.prop]"
               orientation="vertical"
@@ -88,17 +87,17 @@ function typedSelectOptions(item: ControlItem<T>) {
               :min="item.min"
               :max="item.max"
             />
-            <Input
+            <UInput
               v-else
               v-model="attrs[item!.prop]"
               :placeholder="item?.placeholder"
             />
           </template>
         </div>
-      </Card>
-      <Card class="h-full bg-ui-cb/2 xl:grid-col-span-2">
+      </UCard>
+      <UCard class="h-full bg-ui-cb/2 xl:grid-col-span-2">
         <slot v-bind="attrs"></slot>
-      </Card>
+      </UCard>
     </div>
   </div>
 </template>

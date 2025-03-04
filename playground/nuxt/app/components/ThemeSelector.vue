@@ -1,5 +1,4 @@
 <script lang="ts">
-import { Input, Link, Select, Tabs } from '@byyuurin/ui'
 import { cssVarsBase, cssVarsPrefix } from '@byyuurin/ui/unocss'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import { useCloned } from '@vueuse/core'
@@ -273,7 +272,7 @@ function setCustomTheme() {
 </script>
 
 <template>
-  <Tabs
+  <UTabs
     variant="solid"
     :items="[
       { label: 'Samples', slot: 'samples' },
@@ -312,7 +311,7 @@ function setCustomTheme() {
         <div class="mx-auto flex flex-col gap-2">
           <div v-for="(colorOptions, y) in colorGroups" :key="y" class="w-full flex flex-wrap items-start gap-2">
             <div v-for="colorName in colorOptions" :key="colorName" class="flex aspect-square items-center justify-center rounded">
-              <Link
+              <ULink
                 class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
                 :class="[colorName, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-cx': colorName === props.color }]"
                 size="xl"
@@ -329,30 +328,30 @@ function setCustomTheme() {
     <template #customize>
       <div class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
         <label class="opacity-80">colorScheme</label>
-        <Select v-model="themeCustomize.colorScheme" :options="['dark', 'light']" @update:model-value="setCustomTheme" />
+        <USelect v-model="themeCustomize.colorScheme" :options="['dark', 'light']" @update:model-value="setCustomTheme" />
         <label class="opacity-80">fontFamily</label>
-        <Input v-model="themeCustomize.fontFamily" placeholder="inherit" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.fontFamily" placeholder="inherit" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radius</label>
-        <Input v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusBox</label>
-        <Input v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusButton</label>
-        <Input v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusCheckbox</label>
-        <Input v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusRadio</label>
-        <Input v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusSwitch</label>
-        <Input v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radiusTabs</label>
-        <Input v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
         <label class="opacity-80">cb</label>
-        <Input v-model="themeCustomize.cb" type="color" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.cb" type="color" @update:model-value="setCustomTheme" />
         <label class="opacity-80">cp</label>
-        <Input v-model="themeCustomize.cp" type="color" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.cp" type="color" @update:model-value="setCustomTheme" />
         <label class="opacity-80">cx</label>
-        <Input v-model="themeCustomize.cx" type="color" @update:model-value="setCustomTheme" />
+        <UInput v-model="themeCustomize.cx" type="color" @update:model-value="setCustomTheme" />
       </div>
     </template>
-  </Tabs>
+  </UTabs>
 </template>

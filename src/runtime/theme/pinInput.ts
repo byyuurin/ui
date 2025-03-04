@@ -27,7 +27,7 @@ export default ct(/* @unocss-include */{
     variant: {
       'outline': {
         container: [
-          'color-ui-cb/80 bg-ui-cx ring ring-inset ring-ui-cb/20',
+          'color-ui-cb/80 bg-ui-cx ring ring-inset ring-ui-cb/30',
           'focus-within:ring-2 focus-within:ring-ui-cb/50',
           'aria-disabled:ring-ui-cb/80 hover:aria-disabled:ring-ui-cb/80',
         ],
@@ -41,7 +41,7 @@ export default ct(/* @unocss-include */{
       },
       'soft-outline': {
         container: [
-          'color-ui-cb/80 bg-soft-ui-cb/4 ring ring-inset ring-ui-cb/10',
+          'color-ui-cb/80 bg-soft-ui-cb/4 ring ring-inset ring-ui-cb/30',
           'hover:bg-soft-ui-cb/6 hover:color-ui-cb/80 focus-within:bg-soft-ui-cb/8 focus-within:color-ui-cb/85',
           'aria-disabled:color-ui-content/80 aria-disabled:bg-soft-ui-fill/5 hover:aria-disabled:color-ui-content/80 hover:aria-disabled:bg-soft-ui-fill/5',
         ],

@@ -4,7 +4,7 @@ import { buttonGroupVariant } from './button-group'
 export default ct(/* @unocss-include */{
   slots: {
     base: [
-      'inline-flex items-center rounded-ui-button leading-normal transition-colors',
+      'relative inline-flex items-center rounded-ui-button leading-normal transition-colors',
       'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
@@ -25,7 +25,7 @@ export default ct(/* @unocss-include */{
       },
       'outline': {
         base: [
-          'color-ui-fill/85 bg-ui-cx ring ring-inset ring-ui-fill/85',
+          'color-ui-fill/80 bg-ui-cx ring ring-inset ring-ui-fill/30',
           'hover:bg-soft-ui-fill/5 active:bg-soft-ui-fill/10',
           'disabled:bg-ui-cx aria-disabled:bg-ui-cx',
           'hover:disabled:bg-ui-cx hover:aria-disabled:bg-ui-cx',
@@ -41,7 +41,7 @@ export default ct(/* @unocss-include */{
       },
       'soft-outline': {
         base: [
-          'color-ui-content/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/40',
+          'color-ui-content/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/30',
           'hover:bg-soft-ui-fill/10 hover:color-ui-content/80 active:bg-soft-ui-fill/25 active:color-ui-content/90',
           'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
           'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-content/80 hover:aria-disabled:color-ui-content/80',
@@ -117,7 +117,7 @@ export default ct(/* @unocss-include */{
     {
       active: true,
       variant: 'outline',
-      class: { base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/10' },
+      class: { base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/30' },
     },
     {
       active: true,

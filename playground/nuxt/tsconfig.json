@@ -3,9 +3,7 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@byyuurin/ui": ["../../src/index.ts"],
-      "@byyuurin/ui/unocss-preset": ["../../src/unocss-preset.ts"],
-      "@byyuurin/ui/resolver": ["../../src/resolver.ts"]
+      "@byyuurin/ui": ["../../src"]
     }
   }
 }
