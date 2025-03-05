@@ -11,6 +11,7 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'slidesToScroll', value: 1, options: [{ label: 'ON (auto)', value: 'auto' }, { label: 'OFF (1)', value: 1 }] },
   { prop: 'arrows', value: false },
   { prop: 'dots', value: false },
+  { prop: 'skipSnaps', value: false },
   { prop: 'dragFree', value: false },
   { prop: 'loop', value: false },
   { prop: 'autoplay', value: false },

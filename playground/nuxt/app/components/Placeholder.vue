@@ -8,8 +8,17 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <span class="group relative overflow-hidden rounded-ui-base border border-dashed border-ui-cx px-4 flex items-center justify-center">
-    <svg class="absolute inset-0 size-full stroke-ui-base/10" fill="none">
+  <span
+    class="group relative overflow-hidden rounded-ui-base border border-dashed px-4 flex items-center justify-center border-[--color]"
+    :style="{
+      '--base': 'color-mix(in srgb,rgb(var(--ui-cb)),rgb(var(--ui-cx)))',
+      '--color': 'color-mix(in srgb,var(--base) 30%,transparent)',
+    }"
+  >
+    <svg
+      class="absolute inset-0 size-full stroke-[--color]"
+      fill="none"
+    >
       <defs>
         <pattern
           id="pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e"
