@@ -15,8 +15,10 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerR
    * @default true
    */
   overlay?: boolean
-  blur?: boolean
-  full?: boolean
+  /**
+   * Whether to inset the drawer from the edges.
+   */
+  inset?: boolean
   /**
    * Render a handle on the drawer.
    * @default true

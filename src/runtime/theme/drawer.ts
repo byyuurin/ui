@@ -18,26 +18,23 @@ export default ct(/* @unocss-include */{
         content: 'top-0 mb-24 flex-col-reverse rounded-b-ui-box',
         handle: 'mb-4',
       },
-      right: {
-        content: 'right-4 flex-row rounded-l-ui-box',
-        handle: 'ml-4',
-      },
       bottom: {
         content: 'bottom-0 mt-24 flex-col rounded-t-ui-box',
         handle: 'mt-4',
       },
       left: {
-        content: 'left-4 flex-row-reverse rounded-r-ui-box',
+        content: 'left-0 flex-row-reverse rounded-r-ui-box',
         handle: 'mr-4',
       },
-    },
-    blur: {
-      true: {
-        overlay: 'backdrop-blur-sm',
+      right: {
+        content: 'right-0 flex-row rounded-l-ui-box',
+        handle: 'ml-4',
       },
     },
-    full: {
-      true: '',
+    inset: {
+      true: {
+        content: 'rounded-ui-box after:hidden',
+      },
     },
   },
   compoundVariants: [
@@ -49,24 +46,38 @@ export default ct(/* @unocss-include */{
       },
     },
     {
-      direction: ['top', 'bottom'],
-      full: false,
-      class: {
-        content: 'inset-x-4 my-4 rounded-ui-box after:hidden',
-      },
-    },
-    {
-      direction: ['right', 'left'],
+      direction: ['left', 'right'],
       class: {
         content: 'inset-y-0 w-auto max-w-[calc(100%-2rem)]',
         handle: 'h-12 w-1.5 my-auto',
       },
     },
     {
-      direction: ['right', 'left'],
-      full: false,
+      direction: ['top'],
+      inset: true,
       class: {
-        content: 'inset-y-4 rounded-ui-box after:hidden',
+        content: 'inset-x-4 top-4',
+      },
+    },
+    {
+      direction: ['bottom'],
+      inset: true,
+      class: {
+        content: 'inset-x-4 bottom-4',
+      },
+    },
+    {
+      direction: ['left'],
+      inset: true,
+      class: {
+        content: 'inset-y-4 left-4',
+      },
+    },
+    {
+      direction: ['right'],
+      inset: true,
+      class: {
+        content: 'inset-y-4 right-4',
       },
     },
   ],

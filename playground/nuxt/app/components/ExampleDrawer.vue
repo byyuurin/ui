@@ -12,9 +12,8 @@ const controls: ControlItems<DrawerProps> = [
   { prop: 'description', value: 'Description', placeholder: 'No Description' },
   { prop: 'direction', value: 'bottom', options: ['top', 'bottom', 'left', 'right'] },
   { prop: 'dismissible', value: true },
+  { prop: 'inset', value: false },
   { prop: 'handle', value: true },
-  { prop: 'blur', value: false },
-  { prop: 'full', value: false },
 ]
 </script>
 
