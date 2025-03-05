@@ -74,10 +74,10 @@ function onUpdate(value: any) {
         @update:model-value="onUpdate"
       >
         <SwitchThumb :class="style.thumb({ class: props.ui?.thumb })">
-          <i v-if="props.loading" :class="style.icon({ class: [theme.app.icons.loading, props.ui?.icon], checked: true, unchecked: true })"></i>
+          <span v-if="props.loading" :class="style.icon({ class: [theme.app.icons.loading, props.ui?.icon], checked: true, unchecked: true })"></span>
           <template v-else>
-            <i v-if="props.checkedIcon" :class="style.icon({ class: [props.checkedIcon, props.ui?.icon], checked: true })"></i>
-            <i v-if="props.uncheckedIcon" :class="style.icon({ class: [props.uncheckedIcon, props.ui?.icon], unchecked: true })"></i>
+            <span v-if="props.checkedIcon" :class="style.icon({ class: [props.checkedIcon, props.ui?.icon], checked: true })"></span>
+            <span v-if="props.uncheckedIcon" :class="style.icon({ class: [props.uncheckedIcon, props.ui?.icon], unchecked: true })"></span>
           </template>
         </SwitchThumb>
       </SwitchRoot>

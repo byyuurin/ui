@@ -83,7 +83,7 @@ defineExpose({
     :style="{ '--height': height }"
   >
     <slot name="icon">
-      <i v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></i>
+      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })">

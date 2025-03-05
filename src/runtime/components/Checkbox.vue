@@ -78,11 +78,11 @@ function onUpdate(value: any) {
         @update:model-value="onUpdate"
       >
         <CheckboxIndicator as-child force-mount>
-          <i
+          <span
             v-if="modelValue === 'indeterminate'"
             :class="style.icon({ class: [props.indeterminateIcon || theme.app.icons.indeterminate, props.ui?.icon] })"
-          ></i>
-          <i v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })"></i>
+          ></span>
+          <span v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })"></span>
         </CheckboxIndicator>
       </CheckboxRoot>
     </div>

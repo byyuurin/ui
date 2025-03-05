@@ -12,9 +12,7 @@ export default ct(/* @unocss-include */{
     ...buttonGroupVariant,
     variant: {
       'solid': {
-        base: [
-          'color-ui-cx bg-soft-ui-fill/90',
-        ],
+        base: 'color-ui-cx bg-soft-ui-fill/90',
       },
       'outline': {
         base: 'color-ui-fill bg-ui-cx ring ring-inset ring-ui-fill/30',

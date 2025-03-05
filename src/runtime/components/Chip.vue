@@ -50,7 +50,7 @@ const style = computed(() => {
 <template>
   <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })">
     <slot name="prefix">
-      <i v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></i>
+      <span v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></span>
     </slot>
 
     <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })">
@@ -58,7 +58,7 @@ const style = computed(() => {
     </span>
 
     <slot name="suffix">
-      <i v-if="isSuffix && suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></i>
+      <span v-if="isSuffix && suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></span>
     </slot>
   </Primitive>
 </template>

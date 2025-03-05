@@ -140,10 +140,10 @@ onMounted(() => {
   >
     <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
       <slot name="prefix">
-        <i
+        <span
           v-if="isPrefix && prefixIconName"
           :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
-        ></i>
+        ></span>
       </slot>
     </span>
 
@@ -168,10 +168,10 @@ onMounted(() => {
 
     <span v-if="isSuffix || slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
       <slot name="suffix">
-        <i
+        <span
           v-if="isSuffix && suffixIconName"
           :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
-        ></i>
+        ></span>
       </slot>
     </span>
   </Primitive>

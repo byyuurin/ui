@@ -89,7 +89,7 @@ const style = computed(() => {
         :class="style.trigger({ class: props.ui?.trigger })"
       >
         <slot name="prefix" :item="item" :index="index">
-          <i v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></i>
+          <span v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></span>
         </slot>
 
         <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">

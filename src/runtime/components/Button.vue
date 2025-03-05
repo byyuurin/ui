@@ -75,10 +75,10 @@ const style = computed(() => {
     raw
   >
     <slot name="prefix">
-      <i
+      <span
         v-if="isPrefix && prefixIconName"
         :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
-      ></i>
+      ></span>
     </slot>
     <span
       v-if="props.label || slots.default"
@@ -87,10 +87,10 @@ const style = computed(() => {
       <slot>{{ label }}</slot>
     </span>
     <slot name="suffix">
-      <i
+      <span
         v-if="isSuffix && suffixIconName"
         :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
-      ></i>
+      ></span>
     </slot>
   </Link>
 </template>

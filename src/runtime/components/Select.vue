@@ -198,7 +198,7 @@ function onUpdateOpen(value: boolean) {
     <SelectTrigger :id="props.id" :class="style.base({ class: [props.class, props.ui?.base] })">
       <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
         <slot name="prefix" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
-          <i v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></i>
+          <span v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></span>
         </slot>
       </span>
 
@@ -215,7 +215,7 @@ function onUpdateOpen(value: boolean) {
 
       <span v-if="isSuffix || !!slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
         <slot name="suffix" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
-          <i v-if="suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></i>
+          <span v-if="suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></span>
         </slot>
       </span>
     </SelectTrigger>
@@ -238,7 +238,7 @@ function onUpdateOpen(value: boolean) {
               >
                 <slot name="item" :item="typedItem(item)" :index="index">
                   <slot name="itemPrefix" :item="typedItem(item)" :index="index">
-                    <i v-if="item.icon" :class="style.itemPrefixIcon({ class: [item.icon, props.ui?.itemPrefixIcon] })"></i>
+                    <span v-if="item.icon" :class="style.itemPrefixIcon({ class: [item.icon, props.ui?.itemPrefixIcon] })"></span>
                   </slot>
 
                   <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })">
@@ -251,7 +251,7 @@ function onUpdateOpen(value: boolean) {
                     <slot name="itemSuffix" :item="typedItem(item)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
-                      <i :class="style.itemSuffixIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemSuffixIcon] })"></i>
+                      <span :class="style.itemSuffixIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemSuffixIcon] })"></span>
                     </SelectItemIndicator>
                   </span>
                 </slot>

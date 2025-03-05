@@ -112,27 +112,37 @@ export default ct(/* @unocss-include */{
     {
       active: true,
       variant: 'solid',
-      class: { base: 'bg-soft-ui-fill/95 hover:bg-soft-ui-fill/95' },
+      class: {
+        base: 'bg-soft-ui-fill/95 hover:bg-soft-ui-fill/95',
+      },
     },
     {
       active: true,
       variant: 'outline',
-      class: { base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/30' },
+      class: {
+        base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/30',
+      },
     },
     {
       active: true,
       variant: ['soft', 'soft-outline'],
-      class: { base: 'color-ui-content/90 bg-soft-ui-fill/25 hover:color-ui-content/90 hover:bg-soft-ui-fill/25' },
+      class: {
+        base: 'color-ui-content/90 bg-soft-ui-fill/25 hover:color-ui-content/90 hover:bg-soft-ui-fill/25',
+      },
     },
     {
       active: true,
       variant: 'ghost',
-      class: { base: 'color-ui-fill/90 bg-soft-ui-fill/10 hover:color-ui-fill/90 hover:bg-soft-ui-fill/10' },
+      class: {
+        base: 'color-ui-fill/90 bg-soft-ui-fill/10 hover:color-ui-fill/90 hover:bg-soft-ui-fill/10',
+      },
     },
     {
       active: true,
       variant: 'link',
-      class: { base: 'color-ui-fill hover:color-ui-fill' },
+      class: {
+        base: 'color-ui-fill hover:color-ui-fill',
+      },
     },
     {
       loading: true,

@@ -75,7 +75,7 @@ const style = computed(() => {
       <AccordionHeader :class="style.header({ class: props.ui?.header })">
         <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })">
           <slot name="prefix" v-bind="{ item, index, open }">
-            <i v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></i>
+            <span v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></span>
           </slot>
 
           <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
@@ -83,7 +83,7 @@ const style = computed(() => {
           </span>
 
           <slot name="suffix" v-bind="{ item, index, open }">
-            <i :class="style.suffixIcon({ class: [item.suffixIcon || props.suffixIcon || theme.app.icons.down, props.ui?.suffixIcon] })"></i>
+            <span :class="style.suffixIcon({ class: [item.suffixIcon || props.suffixIcon || theme.app.icons.down, props.ui?.suffixIcon] })"></span>
           </slot>
         </AccordionTrigger>
       </AccordionHeader>

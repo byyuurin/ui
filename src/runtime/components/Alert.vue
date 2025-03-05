@@ -74,7 +74,7 @@ const style = computed(() => {
     :class="style.root({ class: [props.class, props.ui?.root] })"
   >
     <slot name="prepend">
-      <i v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></i>
+      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })">
