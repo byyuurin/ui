@@ -18,11 +18,6 @@ export default ct(/* @unocss-include */{
         content: 'data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
       },
     },
-    blur: {
-      true: {
-        overlay: 'backdrop-blur-sm',
-      },
-    },
     size: {
       fullscreen: {
         content: 'inset-0',

@@ -9,7 +9,6 @@ const controls: ControlItems<ModalProps> = [
   { prop: 'size', value: 'sm', options: ['sm', 'md', 'lg', 'xl', 'fullscreen'] },
   { prop: 'dismissible', value: true },
   { prop: 'close', value: true },
-  { prop: 'blur', value: false },
   { prop: 'overlay', value: true },
   { prop: 'transition', value: true },
 ]

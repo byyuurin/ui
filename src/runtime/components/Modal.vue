@@ -28,7 +28,6 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
   portal?: boolean
   /** @default true */
   overlay?: boolean
-  blur?: boolean
   /** @default true */
   transition?: boolean
   /**
