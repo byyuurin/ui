@@ -3,6 +3,7 @@ import type { CardProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<CardProps> = [
+  { prop: 'variant', value: 'outline', options: ['solid', 'outline', 'soft', 'soft-outline'] },
   { prop: 'title', value: 'Title' },
   { prop: 'description', value: 'Description' },
 ]

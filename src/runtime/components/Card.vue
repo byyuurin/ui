@@ -1,13 +1,8 @@
 <script lang="ts">
+import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import type { card } from '../theme'
 import type { ComponentAttrs } from '../types'
-
-export interface CardProps extends ComponentAttrs<typeof card> {
-  as?: PrimitiveProps['as']
-  title?: string
-  description?: string
-}
 
 export interface CardSlots {
   default?: (props?: {}) => any
@@ -16,6 +11,14 @@ export interface CardSlots {
   title?: (props?: any) => any
   description?: (props?: any) => any
   footer?: (props?: {}) => any
+}
+
+type CardVariants = VariantProps<typeof card>
+export interface CardProps extends ComponentAttrs<typeof card> {
+  as?: PrimitiveProps['as']
+  variant?: CardVariants['variant']
+  title?: string
+  description?: string
 }
 </script>
 
