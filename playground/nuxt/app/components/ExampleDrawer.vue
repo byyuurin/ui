@@ -12,8 +12,9 @@ const controls: ControlItems<DrawerProps> = [
   { prop: 'description', value: 'Description', placeholder: 'No Description' },
   { prop: 'direction', value: 'bottom', options: ['top', 'bottom', 'left', 'right'] },
   { prop: 'dismissible', value: true },
-  { prop: 'inset', value: false },
-  { prop: 'handle', value: true },
+  { prop: 'overlay', value: true, description: 'Render an overlay behind the drawer.' },
+  { prop: 'inset', value: false, description: 'Whether to inset the drawer from the edges.' },
+  { prop: 'handle', value: true, description: 'Render a handle on the drawer.' },
 ]
 </script>
 
