@@ -27,7 +27,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@byyuurin/ui': resolve(__dirname, '../../src'),
+      '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
+      '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
     },
   },
   build: {

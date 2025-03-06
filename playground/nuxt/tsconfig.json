@@ -3,7 +3,8 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@byyuurin/ui": ["../../src"]
+      "@byyuurin/ui": ["../../src/runtime/index.ts"],
+      "@byyuurin/ui/runtime/*": ["../../src/runtime/*"]
     }
   }
 }

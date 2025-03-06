@@ -11,7 +11,7 @@ const baseUnoConfig = mergeConfigs([
 
 export function transformUnoRules(
   userConfig: UserConfig = {},
-) {
+): CRRule[] {
   const { rules = [], theme = {} } = mergeConfigs([baseUnoConfig, userConfig])
   const mergeRules: CRRule[] = []
 
