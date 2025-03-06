@@ -48,6 +48,7 @@ onMounted(() => {
       <ExampleRadioGroup :class="uiColor" />
       <ExampleScrollArea :class="uiColor" />
       <ExampleSelect :class="uiColor" />
+      <ExampleSeparator :class="uiColor" />
       <ExampleSlider :class="uiColor" />
       <ExampleSwitch :class="uiColor" />
       <ExampleTable :class="uiColor" />
