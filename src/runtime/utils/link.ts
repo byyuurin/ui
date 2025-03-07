@@ -1,9 +1,34 @@
-import type {} from '@vue/shared'
 import { reactivePick } from '@vueuse/core'
 import type { LinkProps } from '../types'
 
 export function pickLinkProps(
-  props: LinkProps & Partial<Pick<HTMLAnchorElement, 'ariaLabel' | 'title'>>,
+  link: LinkProps & { ariaLabel?: string, title?: string },
 ) {
-  return reactivePick(props, 'ui', 'active', 'ariaLabel', 'as', 'disabled', 'href', 'rel', 'noRel', 'type', 'target', 'title', 'onClick')
+  return reactivePick(
+    link,
+    'active',
+    'activeClass',
+    'ariaCurrentValue',
+    'ariaLabel',
+    'as',
+    'disabled',
+    'disableClass',
+    'exact',
+    'exactActiveClass',
+    'exactHash',
+    'exactQuery',
+    'external',
+    'href',
+    'inactiveClass',
+    'noPrefetch',
+    'noRel',
+    'prefetch',
+    'prefetchedClass',
+    'rel',
+    'replace',
+    'target',
+    'to',
+    'type',
+    'title',
+  )
 }

@@ -8,5 +8,11 @@
     "build": "vue-tsc -b && vite build",
     "build:ci": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "unplugin-vue-router": "^0.12.0"
   }
 }

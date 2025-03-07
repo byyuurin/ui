@@ -6,6 +6,7 @@ import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
 import AutoImportPlugin from './_unplugin/auto-import'
 import ComponentImportPlugin from './_unplugin/components'
+import NuxtEnvironmentPlugin from './_unplugin/nuxt-environment'
 import { packageName } from './shared'
 
 export const runtimeDir = normalize(fileURLToPath(new URL('runtime', import.meta.url)))
@@ -31,6 +32,7 @@ export interface UIOptions {
 
 export const unplugin = createUnplugin<UIOptions | undefined>((options: UIOptions = {}, meta) => {
   return [
+    NuxtEnvironmentPlugin(),
     ComponentImportPlugin(options, meta),
     AutoImportPlugin(options, meta),
     <UnpluginOptions>{

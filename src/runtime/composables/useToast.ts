@@ -1,4 +1,3 @@
-import type {} from '@vue/shared'
 import { createSharedComposable } from '@vueuse/core'
 import { nextTick, ref } from 'vue'
 import type { ToastProps } from '../types'

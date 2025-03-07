@@ -12,9 +12,8 @@ export interface ButtonSlots {
 }
 
 type ButtonVariants = VariantProps<typeof button>
-type UIOptions = ComponentAttrs<typeof button>['ui'] & LinkProps['ui']
 
-export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, UseComponentIconsProps, Omit<LinkProps, 'ui' | 'raw'> {
+export interface ButtonProps extends ComponentAttrs<typeof button>, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom'> {
   icon?: string
   label?: string
   variant?: ButtonVariants['variant']
@@ -22,11 +21,11 @@ export interface ButtonProps extends Omit<ComponentAttrs<typeof button>, 'ui'>, 
   loading?: boolean
   active?: boolean
   disabled?: boolean
-  ui?: UIOptions
 }
 </script>
 
 <script lang="ts" setup>
+import { useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
@@ -45,7 +44,7 @@ const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons
   computed(() => ({ ...props, loading: props.loading })),
 )
 
-const linkProps = pickLinkProps(props)
+const linkProps = useForwardProps(pickLinkProps(props))
 
 const { theme, createStyler } = useTheme()
 
@@ -59,8 +58,8 @@ const style = computed(() => {
     suffix: isSuffix.value,
     class: [
       props.class,
-      props.active ? props.ui?.active : props.ui?.inactive,
-      props.disabled ? props.ui?.disabled : undefined,
+      props.active ? props.activeClass : props.inactiveClass,
+      props.disabled ? props.disableClass : undefined,
     ],
   })
 })
@@ -71,7 +70,7 @@ const style = computed(() => {
     :class="style.base({ class: [props.class, props.ui?.base] })"
     :type="props.type"
     :disabled="props.disabled || props.loading"
-    v-bind="omit(linkProps, ['type', 'disabled'])"
+    v-bind="omit(linkProps, ['type', 'disabled', 'activeClass', 'inactiveClass', 'disableClass'])"
     raw
   >
     <slot name="prefix">

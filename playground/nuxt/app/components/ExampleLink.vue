@@ -15,6 +15,9 @@ const controls: ControlItems<LinkProps> = [
 
 <template>
   <ExampleView v-slot="attrs" title="Link" :controls="controls">
-    <ULink v-bind="attrs" :label="attrs.label || 'text'" />
+    <ul class="flex flex-col gap-4">
+      <li><ULink v-bind="attrs" :label="attrs.label || 'text'" /></li>
+      <li><ULink v-bind="attrs" to="/other" :target="undefined" label="Route to other page" /></li>
+    </ul>
   </ExampleView>
 </template>

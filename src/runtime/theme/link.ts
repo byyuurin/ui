@@ -13,7 +13,7 @@ export default ct(/* @unocss-include */{
         'disabled:color-ui-fill aria-disabled:color-ui-fill',
       ],
       false: [
-        'color-ui-cb hover:color-ui-cb/80 transition-colors',
+        'color-ui-cb/80 hover:color-ui-cb/60 transition-colors',
         'disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb',
       ],
     },
