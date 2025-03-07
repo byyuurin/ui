@@ -24,7 +24,7 @@ describe('check defu result', () => {
         "variants": {
           "active": {
             "false": [
-              "color-ui-cb hover:color-ui-cb/80 transition-colors",
+              "color-ui-cb/80 hover:color-ui-cb/60 transition-colors",
               "disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb",
               " ",
             ],
@@ -48,12 +48,10 @@ describe('check defu result', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80 el-link",
-        "compoundVariants": undefined,
-        "slots": undefined,
         "variants": {
           "active": {
             "false": [
-              "color-ui-cb hover:color-ui-cb/80 transition-colors",
+              "color-ui-cb/80 hover:color-ui-cb/60 transition-colors",
               "disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb",
               " ",
             ],
