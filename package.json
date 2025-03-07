@@ -54,7 +54,6 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt",
     "dev:vue": "pnpm --filter \"./playground/vue\" run dev",
     "lint": "eslint .",
-    "prepublishOnly": "nr build",
     "release": "bumpp && pnpm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
