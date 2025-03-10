@@ -15,8 +15,8 @@ importers:
   .:
     dependencies:
       '@byyuurin/ui-kit':
-        specifier: ^0.4.2
-        version: 0.4.2
+        specifier: ^0.4.3
+        version: 0.4.3
       '@nuxt/kit':
         specifier: ^3.15.4
         version: 3.15.4(magicast@0.3.5)(rollup@3.29.5)
@@ -369,8 +369,8 @@ packages:
       eslint-plugin-format:
         optional: true
 
-  '@byyuurin/ui-kit@0.4.2':
-    resolution: {integrity: sha512-Ej9WlD1wdzWXrzcdyIp1W5vgzDn57zEU6L/P5fVEZUoMWL7GvnfGB5Gzc3yqcJreHqEznt1YHJTvTveuIwA2rA==}
+  '@byyuurin/ui-kit@0.4.3':
+    resolution: {integrity: sha512-toUkv3sgg5taaF1k+k3mby1bFe8kcoemXOdOAwYKRZYGFbHF2f0T8oO4XLzF/AuIWYeonWNiXOe50LfcLQW/bg==}
 
   '@clack/core@0.4.1':
     resolution: {integrity: sha512-Pxhij4UXg8KSr7rPek6Zowm+5M22rbd2g1nfojHJkxp5YkFqiZ2+YLEM/XGVIzvGOcM0nqjIFxrpDwWRZYWYjA==}
@@ -5806,7 +5806,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@byyuurin/ui-kit@0.4.2':
+  '@byyuurin/ui-kit@0.4.3':
     dependencies:
       clsx: 2.1.1
 
