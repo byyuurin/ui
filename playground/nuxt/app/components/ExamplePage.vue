@@ -51,6 +51,7 @@ onMounted(() => {
       <ExampleScrollArea :class="uiColor" />
       <ExampleSelect :class="uiColor" />
       <ExampleSeparator :class="uiColor" />
+      <ExampleSkeleton :class="uiColor" />
       <ExampleSlider :class="uiColor" />
       <ExampleSwitch :class="uiColor" />
       <ExampleTable :class="uiColor" />
