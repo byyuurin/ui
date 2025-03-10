@@ -1,6 +1,8 @@
 export type * from '../components/Accordion.vue'
 export type * from '../components/Alert.vue'
 export type * from '../components/App.vue'
+export type * from '../components/Avatar.vue'
+export type * from '../components/AvatarGroup.vue'
 export type * from '../components/Badge.vue'
 export type * from '../components/Button.vue'
 export type * from '../components/ButtonGroup.vue'

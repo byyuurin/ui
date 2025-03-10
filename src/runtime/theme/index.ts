@@ -1,6 +1,8 @@
 export { default as accordion } from './accordion'
 export { default as alert } from './alert'
 export { default as app } from './app'
+export { default as avatar } from './avatar'
+export { default as avatarGroup } from './avatar-group'
 export { default as badge } from './badge'
 export { default as button } from './button'
 export { default as buttonGroup } from './button-group'

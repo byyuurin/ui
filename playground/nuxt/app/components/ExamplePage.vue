@@ -29,6 +29,8 @@ onMounted(() => {
     <div>
       <ExampleAccordion :class="uiColor" />
       <ExampleAlert :class="uiColor" />
+      <ExampleAvatar :class="uiColor" />
+      <ExampleAvatarGroup :class="uiColor" />
       <ExampleBadge :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleButtonGroup :class="uiColor" />
