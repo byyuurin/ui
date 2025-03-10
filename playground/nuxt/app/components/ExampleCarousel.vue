@@ -11,7 +11,7 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'slidesToScroll', value: 1, options: [{ label: 'ON (auto)', value: 'auto' }, { label: 'OFF (1)', value: 1 }] },
   { prop: 'arrows', value: false, description: 'Display prev and next buttons to scroll the carousel.' },
   { prop: 'dots', value: false, description: 'Display dots to scroll to a specific slide.' },
-  { prop: 'skipSnaps', value: false, description: 'Allow the carousel to skip scroll snaps if it\'s dragged vigorously. Note that this option will be ignored if the `dragFree` option is set to true.' },
+  { prop: 'skipSnaps', value: false, description: 'Allow the carousel to skip scroll snaps if it\'s dragged vigorously.\nNote that this option will be ignored if the `dragFree` option is set to true.' },
   { prop: 'dragFree', value: false, description: 'Enables momentum scrolling. The duration of the continued scrolling is proportional to how vigorous the drag gesture is.' },
   { prop: 'loop', value: false },
   { prop: 'autoplay', value: false },

@@ -69,14 +69,17 @@ function typedSelectOptions(item: ControlItem<T>) {
         :description="props.description"
         class="top-4 bg-ui-cb/2 backdrop-blur md:sticky"
       >
-        <div v-if="props.controls.length > 0" class="color-ui-cb/80 grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
+        <div
+          v-if="props.controls.length > 0"
+          class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box"
+        >
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
             <label class="inline-flex justify-between items-center gap-2 opacity-80">
               {{ upperFirst((item?.label ?? item?.prop) as string) }}
               <UPopover v-if="item?.description" mode="click" arrow>
                 <UButton class="ui-primary" variant="link" size="xs" icon="i-mdi-help-circle-outline" :ui="{ base: 'p-0' }" />
                 <template #content>
-                  <p class="text-sm p-2 px-3 max-w-md">{{ item?.description }}</p>
+                  <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">{{ item?.description }}</p>
                 </template>
               </UPopover>
               <UPopover v-if="item?.warning" mode="click" arrow>

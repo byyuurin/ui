@@ -6,7 +6,7 @@ const controls: ControlItems<SeparatorProps> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'align', value: 'center', options: ['start', 'center', 'end'] },
   { prop: 'label', value: 'Label' },
-  { prop: 'decorative', value: false, description: 'Whether or not the component is purely decorative. When `true`, accessibility-related attributes are updated so that that the rendered element is removed from the accessibility tree.' },
+  { prop: 'decorative', value: false, description: 'Whether or not the component is purely decorative.\nWhen `true`, accessibility-related attributes are updated so that that the rendered element is removed from the accessibility tree.' },
 ]
 </script>
 
