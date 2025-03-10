@@ -9,8 +9,8 @@ export default ct(/* @unocss-include */{
       'focus:outline-none',
       'disabled:cursor-not-allowed',
     ],
-    increment: 'absolute flex items-center',
-    decrement: 'absolute flex items-center',
+    increment: 'absolute flex items-center ui-base',
+    decrement: 'absolute flex items-center ui-base',
   },
   variants: {
     size: {
