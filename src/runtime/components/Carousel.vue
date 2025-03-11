@@ -30,7 +30,7 @@ export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<
   prev?: ButtonProps
   /**
    * The icon displayed in the prev button.
-   * @default `app.icons.arrowLeft`
+   * @default app.icons.chevronLeft
    */
   prevIcon?: string
   /**
@@ -40,7 +40,7 @@ export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<
   next?: ButtonProps
   /**
    * The icon displayed in the next button.
-   * @default `app.icons.arrowRight`
+   * @default app.icons.chevronRight
    */
   nextIcon?: string
   /**
@@ -140,8 +140,8 @@ const style = computed(() => {
   return styler(props)
 })
 
-const prevIcon = computed(() => props.prevIcon || (props.dir === 'rtl' ? theme.value.app.icons.arrowRight : theme.value.app.icons.arrowLeft))
-const nextIcon = computed(() => props.nextIcon || (props.dir === 'rtl' ? theme.value.app.icons.arrowLeft : theme.value.app.icons.arrowRight))
+const prevIcon = computed(() => props.prevIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
+const nextIcon = computed(() => props.nextIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 
 const options = computed<EmblaOptionsType>(() => ({
   ...(props.fade ? { align: 'center', containScroll: false } : {}),

@@ -36,7 +36,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
    */
   dismissible?: boolean
   close?: ButtonProps | boolean
-  /** @default `app.icons.close` */
+  /** @default app.icons.close */
   closeIcon?: string
 }
 </script>

@@ -29,7 +29,7 @@ export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
   items?: T[]
   /**
    * The icon to use as a separator.
-   * @default app.icons.right
+   * @default app.icons.chevronRight
    */
   separatorIcon?: string
   /**
@@ -57,7 +57,7 @@ const slots = defineSlots<BreadcrumbSlots<T>>()
 
 const { theme, createStyler } = useTheme()
 
-const separatorIcon = computed(() => props.separatorIcon || (props.dir === 'rtl' ? theme.value.app.icons.left : theme.value.app.icons.right))
+const separatorIcon = computed(() => props.separatorIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 
 const style = computed(() => {
   const styler = createStyler(theme.value.breadcrumb)

@@ -54,7 +54,7 @@ export interface SelectProps<
   size?: SelectVariants['size']
   /**
    * The icon displayed to open the menu.
-   * @default app.icons.down
+   * @default app.icons.chevronDown
    */
   suffixIcon?: string
   /**
@@ -128,7 +128,7 @@ const { theme, createStyler } = useTheme()
 
 const { size, orientation } = useButtonGroup(props)
 const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons(toRef(() => defu(props, {
-  suffixIcon: theme.value.app.icons.down,
+  suffixIcon: theme.value.app.icons.chevronDown,
 })))
 
 const groups = computed(() => props.options?.length ? (Array.isArray(props.options[0]) ? props.options : [props.options]) as SelectOption[][] : [])

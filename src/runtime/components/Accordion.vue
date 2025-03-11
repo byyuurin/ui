@@ -30,7 +30,7 @@ export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pic
   items?: T[]
   /**
    * The icon displayed on the right side of the trigger.
-   * @default app.icons.down
+   * @default app.icons.chevronDown
    */
   suffixIcon?: string
   labelKey?: string
@@ -83,7 +83,7 @@ const style = computed(() => {
           </span>
 
           <slot name="suffix" v-bind="{ item, index, open }">
-            <span :class="style.suffixIcon({ class: [item.suffixIcon || props.suffixIcon || theme.app.icons.down, props.ui?.suffixIcon] })"></span>
+            <span :class="style.suffixIcon({ class: [item.suffixIcon || props.suffixIcon || theme.app.icons.chevronDown, props.ui?.suffixIcon] })"></span>
           </slot>
         </AccordionTrigger>
       </AccordionHeader>

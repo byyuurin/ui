@@ -37,12 +37,12 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
   lastIcon?: string
   /**
    * The icon to use for the previous page control.
-   * @default app.icons.arrowLeft
+   * @default app.icons.chevronLeft
    */
   prevIcon?: string
   /**
    * The icon to use for the next page control.
-   * @default app.icons.arrowRight
+   * @default app.icons.chevronRight
    */
   nextIcon?: string
   /**
@@ -97,10 +97,10 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultPage', 
 
 const { theme, createStyler } = useTheme()
 
-const firstIcon = computed(() => props.firstIcon || theme.value.app.icons.doubleLeft)
-const prevIcon = computed(() => props.prevIcon || theme.value.app.icons.arrowLeft)
-const nextIcon = computed(() => props.nextIcon || theme.value.app.icons.arrowRight)
-const lastIcon = computed(() => props.lastIcon || theme.value.app.icons.doubleRight)
+const firstIcon = computed(() => props.firstIcon || theme.value.app.icons.chevronDoubleLeft)
+const prevIcon = computed(() => props.prevIcon || theme.value.app.icons.chevronLeft)
+const nextIcon = computed(() => props.nextIcon || theme.value.app.icons.chevronRight)
+const lastIcon = computed(() => props.lastIcon || theme.value.app.icons.chevronDoubleRight)
 const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.ellipsis)
 
 const style = computed(() => {
