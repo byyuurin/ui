@@ -43,6 +43,7 @@ onMounted(() => {
       <ExampleDrawer :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExampleInputNumber :class="uiColor" />
+      <ExampleKbd :class="uiColor" />
       <ExampleLink :class="uiColor" />
       <ExampleModal :class="uiColor" />
       <ExamplePagination :class="uiColor" />
