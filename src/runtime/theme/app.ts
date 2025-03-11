@@ -7,6 +7,8 @@ export default {
     indeterminate: 'i-mdi-minus-thick',
     up: 'i-mdi-chevron-up',
     down: 'i-mdi-chevron-down',
+    right: 'i-mdi-chevron-right',
+    left: 'i-mdi-chevron-left',
     arrowLeft: 'i-mdi-chevron-left',
     arrowRight: 'i-mdi-chevron-right',
     doubleLeft: 'i-mdi-chevron-double-left',

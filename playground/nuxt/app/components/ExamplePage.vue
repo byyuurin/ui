@@ -32,6 +32,7 @@ onMounted(() => {
       <ExampleAvatar :class="uiColor" />
       <ExampleAvatarGroup :class="uiColor" />
       <ExampleBadge :class="uiColor" />
+      <ExampleBreadcrumb :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleButtonGroup :class="uiColor" />
       <ExampleCard :class="uiColor" />
