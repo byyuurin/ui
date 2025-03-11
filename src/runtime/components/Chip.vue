@@ -13,7 +13,12 @@ export interface ChipSlots {
 
 type ChipVariants = VariantProps<typeof chip>
 
-export interface ChipProps extends ComponentAttrs<typeof chip>, Pick<PrimitiveProps, 'as'>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+export interface ChipProps extends ComponentAttrs<typeof chip>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   variant?: ChipVariants['variant']
   size?: ChipVariants['size']
   label?: string

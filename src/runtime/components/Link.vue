@@ -58,12 +58,12 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
 export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, NuxtLinkProps {
   /**
    * The element or component this component should render as when not a link.
-   * @default 'button'
+   * @default "button"
    */
   as?: PrimitiveProps['as']
   /**
    * The type of the button when not a link.
-   * @default 'button'
+   * @default "button"
    */
   type?: ButtonHTMLAttributes['type']
   label?: string

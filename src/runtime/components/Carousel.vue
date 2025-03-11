@@ -17,7 +17,12 @@ export interface CarouselSlots<T> {
 
 type CarouselVariants = VariantProps<typeof carousel>
 
-export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Pick<PrimitiveProps, 'as'>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
+export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   /**
    * Configure the prev button when arrows are enabled.
    * @default { size: 'md', variant: 'link' }

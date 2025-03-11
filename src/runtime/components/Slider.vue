@@ -16,7 +16,7 @@ export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderR
   size?: SliderVariants['size']
   /**
    * The orientation of the slider.
-   * @default 'horizontal'
+   * @default "horizontal"
    */
   orientation?: SliderVariants['orientation']
   /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */

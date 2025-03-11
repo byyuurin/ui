@@ -32,7 +32,7 @@ export interface SelectOption {
   icon?: string
   /**
    * The option type.
-   * @default 'option'
+   * @default "option"
    */
   type?: 'label' | 'separator' | 'option'
   value?: string
@@ -79,7 +79,7 @@ export interface SelectProps<
   portal?: boolean
   /**
    * When `options` is an array of objects, select the field to use as the value.
-   * @default 'value'
+   * @default "value"
    */
   valueKey?: V
   /**

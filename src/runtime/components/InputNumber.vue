@@ -27,7 +27,7 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
   highlight?: boolean
   /**
    * The orientation of the input menu.
-   * @default 'horizontal'
+   * @default "horizontal"
    */
   orientation?: InputNumberVariants['orientation']
   /**

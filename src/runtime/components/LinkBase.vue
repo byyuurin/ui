@@ -4,7 +4,7 @@ import type { PrimitiveProps } from 'reka-ui'
 export interface LinkBaseProps {
   /**
    * The element or component this component should render as.
-   * @default 'button'
+   * @default "button"
    */
   as?: PrimitiveProps['as']
   type?: string

@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { PrimitiveProps, SwitchRootProps } from 'reka-ui'
+import type { SwitchRootProps } from 'reka-ui'
 import type { switch as _switch } from '../theme'
 import type { ComponentAttrs } from '../types'
 
@@ -15,8 +15,7 @@ export interface SwitchSlots {
 
 type SwitchVariants = VariantProps<typeof _switch>
 
-export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
-  as?: PrimitiveProps['as']
+export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<SwitchRootProps, 'as' | 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
   size?: SwitchVariants['size']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean

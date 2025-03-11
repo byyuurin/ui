@@ -10,7 +10,12 @@ export interface AvatarSlots {
 
 type AvatarVariants = VariantProps<typeof avatar>
 
-export interface AvatarProps extends ComponentAttrs<typeof avatar>, Pick<AvatarRootProps, 'as'> {
+export interface AvatarProps extends ComponentAttrs<typeof avatar> {
+  /**
+   * The element or component this component should render as.
+   * @default "span"
+   */
+  as?: AvatarRootProps['as']
   src?: string
   alt?: string
   icon?: string

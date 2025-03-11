@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { DialogContentProps, PrimitiveProps } from 'reka-ui'
+import type { DialogContentProps } from 'reka-ui'
 import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
 import type { drawer } from '../theme'
 import type { ComponentAttrs } from '../types'
@@ -18,7 +18,6 @@ export interface DrawerSlots {
 }
 
 export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'defaultOpen' | 'direction' | 'fadeFromIndex' | 'fixed' | 'modal' | 'nested' | 'direction' | 'open' | 'scrollLockTimeout' | 'shouldScaleBackground' | 'snapPoints'> {
-  as?: PrimitiveProps['as']
   title?: string
   description?: string
   /** The content of the drawer. */

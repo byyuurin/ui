@@ -19,7 +19,7 @@ type TextareaVariants = VariantProps<typeof textarea>
 export interface TextareaProps extends ComponentAttrs<typeof textarea> {
   /**
    * The element or component this component should render as.
-   * @defaultValue 'div'
+   * @default "div"
    */
   as?: PrimitiveProps['as']
   id?: string

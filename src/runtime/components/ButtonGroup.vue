@@ -10,7 +10,12 @@ export interface ButtonGroupSlots {
 
 type ButtonGroupVariant = VariantProps<typeof buttonGroup>
 
-export interface ButtonGroupProps extends Omit<ComponentAttrs<typeof buttonGroup>, 'ui'>, Pick<PrimitiveProps, 'as'> {
+export interface ButtonGroupProps extends Omit<ComponentAttrs<typeof buttonGroup>, 'ui'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   size?: ButtonGroupVariant['size']
   orientation?: ButtonGroupVariant['orientation']
 }

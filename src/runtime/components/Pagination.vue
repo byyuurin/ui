@@ -52,17 +52,17 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
   ellipsisIcon?: string
   /**
    * The size of the pagination controls.
-   * @default 'md'
+   * @default "md"
    */
   size?: ButtonProps['size']
   /**
    * The variant of the pagination controls.
-   * @default 'outline'
+   * @default "outline"
    */
   variant?: ButtonProps['variant']
   /**
    * The variant of the active pagination control.
-   * @default 'solid'
+   * @default "solid"
    */
   activeVariant?: ButtonProps['variant']
   /**

@@ -10,7 +10,12 @@ export interface AvatarGroupSlots {
 
 type AvatarGroupVariants = VariantProps<typeof avatarGroup>
 
-export interface AvatarGroupProps extends ComponentAttrs<typeof avatarGroup>, Pick<PrimitiveProps, 'as'> {
+export interface AvatarGroupProps extends ComponentAttrs<typeof avatarGroup> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   size?: AvatarGroupVariants['size']
   /**
    * The maximum number of avatars to display.

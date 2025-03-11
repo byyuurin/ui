@@ -18,7 +18,12 @@ export interface AlertSlots {
 
 type AlertVariants = VariantProps<typeof alert>
 
-export interface AlertProps extends ComponentAttrs<typeof alert>, Pick<PrimitiveProps, 'as'> {
+export interface AlertProps extends ComponentAttrs<typeof alert> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   title?: string
   description?: string
   icon?: string

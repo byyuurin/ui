@@ -23,7 +23,7 @@ type InputVariants = VariantProps<typeof input>
 export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
-   * @defaultValue 'div'
+   * @default "div"
    */
   as?: PrimitiveProps['as']
   id?: string

@@ -22,7 +22,7 @@ export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
 export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
   /**
    * The element or component this component should render as.
-   * @default 'nav'
+   * @default "nav"
    */
   as?: PrimitiveProps['as']
   dir?: 'rtl' | 'ltr'
@@ -34,7 +34,7 @@ export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
   separatorIcon?: string
   /**
    * The key used to get the label from the item.
-   * @default 'label'
+   * @default "label"
    */
   labelKey?: string
 }

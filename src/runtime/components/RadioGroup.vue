@@ -39,28 +39,32 @@ export interface RadioOption {
 }
 
 export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, Pick<RadioGroupRootProps, 'defaultValue' | 'disabled' | 'loop' | 'modelValue' | 'name' | 'required'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
   as?: PrimitiveProps['as']
   legend?: string
   /**
    * When `options` is an array of objects, select the field to use as the value.
-   * @default 'value'
+   * @default "value"
    */
   valueKey?: string
   /**
    * When `options` is an array of objects, select the field to use as the label.
-   * @default 'label'
+   * @default "label"
    */
   labelKey?: string
   /**
    * When `options` is an array of objects, select the field to use as the description.
-   * @default 'description'
+   * @default "description"
    */
   descriptionKey?: string
   options?: T[]
   size?: RadioGroupVariants['size']
   /**
    * The orientation the radio buttons are laid out.
-   * @default 'vertical'
+   * @default "vertical"
    */
   orientation?: RadioGroupRootProps['orientation']
 }

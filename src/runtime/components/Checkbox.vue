@@ -16,6 +16,10 @@ export interface CheckboxSlots {
 type CheckboxVariants = VariantProps<typeof checkbox>
 
 export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
   as?: PrimitiveProps['as']
   label?: string
   description?: string

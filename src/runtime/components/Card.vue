@@ -16,6 +16,10 @@ export interface CardSlots {
 type CardVariants = VariantProps<typeof card>
 
 export interface CardProps extends ComponentAttrs<typeof card> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
   as?: PrimitiveProps['as']
   variant?: CardVariants['variant']
   title?: string

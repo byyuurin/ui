@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { PrimitiveProps, TabsRootEmits, TabsRootProps } from 'reka-ui'
+import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
 import type { tabs } from '../theme'
 import type { ComponentAttrs, DynamicSlots } from '../types'
 
@@ -28,7 +28,11 @@ export interface TabsItem {
 type TabsVariants = VariantProps<typeof tabs>
 
 export interface TabsProps<T> extends ComponentAttrs<typeof tabs>, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
-  as?: PrimitiveProps['as']
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: TabsRootProps<string | number>['as']
   items?: T[]
   variant?: TabsVariants['variant']
   orientation?: TabsVariants['orientation']
@@ -42,7 +46,7 @@ export interface TabsProps<T> extends ComponentAttrs<typeof tabs>, Pick<TabsRoot
   content?: boolean
   /**
    * The key used to get the label from the item.
-   * @default 'label'
+   * @default "label"
    */
   labelKey?: string
 }

@@ -15,7 +15,12 @@ export interface BadgeSlots {
 
 type BadgeVariants = VariantProps<typeof badge>
 
-export interface BadgeProps extends ComponentAttrs<typeof badge>, Pick<PrimitiveProps, 'as'> {
+export interface BadgeProps extends ComponentAttrs<typeof badge> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   text?: string | number
   size?: BadgeVariants['size']
   position?: BadgeVariants['position']

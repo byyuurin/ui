@@ -24,7 +24,12 @@ export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 
   renderFallbackValue?: CoreOptions<T>['renderFallbackValue']
 }
 
-export interface TableProps<T extends TableData> extends ComponentAttrs<typeof table>, Pick<PrimitiveProps, 'as'>, TableOptions<T> {
+export interface TableProps<T extends TableData> extends ComponentAttrs<typeof table>, TableOptions<T> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
   data?: T[]
   columns?: TableColumn<T>[]
   caption?: string

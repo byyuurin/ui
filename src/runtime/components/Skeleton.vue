@@ -3,7 +3,13 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { skeleton } from '../theme'
 import type { ComponentAttrs } from '../types'
 
-export interface SkeletonProps extends Omit<ComponentAttrs<typeof skeleton>, 'ui'>, Pick<PrimitiveProps, 'as'> {}
+export interface SkeletonProps extends Omit<ComponentAttrs<typeof skeleton>, 'ui'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: PrimitiveProps['as']
+}
 </script>
 
 <script setup lang="ts">
