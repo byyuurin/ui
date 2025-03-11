@@ -4,6 +4,10 @@ import type { ToastProviderProps } from 'reka-ui'
 import type { toaster } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface ToasterSlots {
+  default?: (props?: {}) => any
+}
+
 type ToasterVariants = VariantProps<typeof toaster>
 
 export interface ToasterProps extends ComponentAttrs<typeof toaster>, Omit<ToastProviderProps, 'swipeDirection'> {
@@ -19,10 +23,6 @@ export interface ToasterProps extends ComponentAttrs<typeof toaster>, Omit<Toast
    * @default true
    */
   portal?: boolean
-}
-
-export interface ToasterSlots {
-  default?: (props?: {}) => any
 }
 </script>
 

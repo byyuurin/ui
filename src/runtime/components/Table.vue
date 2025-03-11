@@ -5,6 +5,16 @@ import type { Ref } from 'vue'
 import type { table } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
+
+type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
+
+export type TableSlots<T> = {
+  expanded: (props: { row: Row<T> }) => any
+  empty: (props?: {}) => any
+  caption: (props?: {}) => any
+} & DynamicHeaderSlots<T> & DynamicCellSlots<T>
+
 export type TableData = RowData
 export type TableColumn<T extends TableData, D = unknown> = ColumnDef<T, D> & { title?: string }
 
@@ -13,15 +23,6 @@ export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 
   onStateChange?: CoreOptions<T>['onStateChange']
   renderFallbackValue?: CoreOptions<T>['renderFallbackValue']
 }
-
-type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
-type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
-
-export type TableSlots<T> = {
-  expanded: (props: { row: Row<T> }) => any
-  empty: (props?: {}) => any
-  caption: (props?: {}) => any
-} & DynamicHeaderSlots<T> & DynamicCellSlots<T>
 
 export interface TableProps<T extends TableData> extends ComponentAttrs<typeof table>, Pick<PrimitiveProps, 'as'>, TableOptions<T> {
   data?: T[]

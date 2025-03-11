@@ -11,6 +11,10 @@ import type { AcceptableValue, PrimitiveProps } from 'reka-ui'
 import type { carousel } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
+export interface CarouselSlots<T> {
+  default?: (props: { item: T, index: number }) => any
+}
+
 type CarouselVariants = VariantProps<typeof carousel>
 
 export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Pick<PrimitiveProps, 'as'>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
@@ -77,10 +81,6 @@ export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Pick<
    * @link https://www.embla-carousel.com/plugins/wheel-gestures/
    */
   wheelGestures?: boolean | WheelGesturesPluginOptions
-}
-
-export interface CarouselSlots<T> {
-  default?: (props: { item: T, index: number }) => any
 }
 </script>
 

@@ -3,6 +3,13 @@ import type { HoverCardRootProps, PopoverArrowProps, PopoverContentProps, Popove
 import type { popover } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface PopoverEmits extends PopoverRootEmits {}
+
+export interface PopoverSlots {
+  default?: (props: { open: boolean }) => any
+  content?: (props?: {}) => any
+}
+
 export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
   /**
    * The display mode of the popover.
@@ -19,13 +26,6 @@ export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRoo
    * @default true
    */
   dismissible?: boolean
-}
-
-export interface PopoverEmits extends PopoverRootEmits {}
-
-export interface PopoverSlots {
-  default?: (props: { open: boolean }) => any
-  content?: (props?: {}) => any
 }
 </script>
 

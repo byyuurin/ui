@@ -3,14 +3,14 @@ import type { CollapsibleRootEmits, CollapsibleRootProps } from 'reka-ui'
 import type { collapsible } from '../theme'
 import type { ComponentAttrs } from '../types'
 
-export interface CollapsibleProps extends ComponentAttrs<typeof collapsible>, Pick<CollapsibleRootProps, 'as' | 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
-}
-
 export interface CollapsibleEmits extends CollapsibleRootEmits {}
 
 export interface CollapsibleSlots {
   default?: (props: { open: boolean }) => any
   content?: (props?: {}) => any
+}
+
+export interface CollapsibleProps extends ComponentAttrs<typeof collapsible>, Pick<CollapsibleRootProps, 'as' | 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
 }
 </script>
 

@@ -5,6 +5,26 @@ import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { select } from '../theme'
 import type { ComponentAttrs, MaybeArray, MaybeArrayOfArray, MaybeArrayOfArrayItem, SelectModelValue, SelectOptionKey } from '../types'
 
+export interface SelectEmits<T, V, M extends boolean> {
+  (event: 'update:open', value: boolean): void
+  (event: 'update:modelValue', payload: SelectModelValue<T, V, M, T extends { value: infer U } ? U : never>): void
+  (event: 'change', payload: Event): void
+  (event: 'blur', payload: FocusEvent): void
+  (event: 'focus', payload: FocusEvent): void
+}
+
+type SlotProps<T> = (props: { item: T, index: number }) => any
+
+export interface SelectSlots<T, M extends boolean> {
+  prefix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  default?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean }) => any
+  suffix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  item?: SlotProps<T>
+  itemPrefix?: SlotProps<T>
+  itemLabel?: SlotProps<T>
+  itemSuffix?: SlotProps<T>
+}
+
 type SelectVariants = VariantProps<typeof select>
 
 export interface SelectOption {
@@ -77,26 +97,6 @@ export interface SelectProps<
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
   underline?: boolean
-}
-
-export interface SelectEmits<T, V, M extends boolean> {
-  (event: 'update:open', value: boolean): void
-  (event: 'update:modelValue', payload: SelectModelValue<T, V, M, T extends { value: infer U } ? U : never>): void
-  (event: 'change', payload: Event): void
-  (event: 'blur', payload: FocusEvent): void
-  (event: 'focus', payload: FocusEvent): void
-}
-
-type SlotProps<T> = (props: { item: T, index: number }) => any
-
-export interface SelectSlots<T, M extends boolean> {
-  prefix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
-  default?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean }) => any
-  suffix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
-  item?: SlotProps<T>
-  itemPrefix?: SlotProps<T>
-  itemLabel?: SlotProps<T>
-  itemSuffix?: SlotProps<T>
 }
 </script>
 

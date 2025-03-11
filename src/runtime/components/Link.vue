@@ -5,6 +5,10 @@ import type { RouteLocationRaw, RouterLinkProps } from 'vue-router'
 import type { link } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface LinkSlots {
+  default?: (props: { active: boolean }) => any
+}
+
 interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
    * Route Location the link should navigate to when clicked on.
@@ -80,10 +84,6 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, Nuxt
   underline?: boolean
   /** When `true`, only styles from `class`, `ui.active`, and `ui.inactive` will be applied. */
   raw?: boolean
-}
-
-export interface LinkSlots {
-  default?: (props: { active: boolean }) => any
 }
 </script>
 

@@ -4,6 +4,19 @@ import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
 import type { drawer } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface DrawerEmits extends DrawerRootEmits {}
+
+export interface DrawerSlots {
+  default?: (props?: {}) => any
+  handle?: (props?: {}) => any
+  content?: (props?: {}) => any
+  header?: (props?: {}) => any
+  title?: (props?: {}) => any
+  description?: (props?: {}) => any
+  body?: (props?: {}) => any
+  footer?: (props?: {}) => any
+}
+
 export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'defaultOpen' | 'direction' | 'fadeFromIndex' | 'fixed' | 'modal' | 'nested' | 'direction' | 'open' | 'scrollLockTimeout' | 'shouldScaleBackground' | 'snapPoints'> {
   as?: PrimitiveProps['as']
   title?: string
@@ -34,19 +47,6 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerR
    * @default true
    */
   dismissible?: boolean
-}
-
-export interface DrawerEmits extends DrawerRootEmits {}
-
-export interface DrawerSlots {
-  default?: (props?: {}) => any
-  handle?: (props?: {}) => any
-  content?: (props?: {}) => any
-  header?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  body?: (props?: {}) => any
-  footer?: (props?: {}) => any
 }
 </script>
 

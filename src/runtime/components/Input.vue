@@ -6,6 +6,18 @@ import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { input } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface InputEmits {
+  (e: 'update:modelValue', payload: string | number): void
+  (e: 'blur', event: FocusEvent): void
+  (e: 'change', event: Event): void
+}
+
+export interface InputSlots {
+  prefix?: (props?: {}) => any
+  default?: (props?: {}) => any
+  suffix?: (props?: {}) => any
+}
+
 type InputVariants = VariantProps<typeof input>
 
 export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIconsProps {
@@ -28,18 +40,6 @@ export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIc
   autofocus?: boolean
   autofocusDelay?: number
   disabled?: boolean
-}
-
-export interface InputEmits {
-  (e: 'update:modelValue', payload: string | number): void
-  (e: 'blur', event: FocusEvent): void
-  (e: 'change', event: Event): void
-}
-
-export interface InputSlots {
-  prefix?: (props?: {}) => any
-  default?: (props?: {}) => any
-  suffix?: (props?: {}) => any
 }
 </script>
 

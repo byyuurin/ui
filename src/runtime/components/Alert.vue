@@ -4,6 +4,18 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { alert } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
+export interface AlertEmits {
+  (event: 'update:open', value: boolean): void
+}
+
+export interface AlertSlots {
+  prepend?: (props?: {}) => any
+  title?: (props?: {}) => any
+  description?: (props?: {}) => any
+  actions?: (props?: {}) => any
+  close?: (props: { ui: ComponentAttrs<typeof alert>['ui'] }) => any
+}
+
 type AlertVariants = VariantProps<typeof alert>
 
 export interface AlertProps extends ComponentAttrs<typeof alert>, Pick<PrimitiveProps, 'as'> {
@@ -28,18 +40,6 @@ export interface AlertProps extends ComponentAttrs<typeof alert>, Pick<Primitive
    * @default app.icons.close
    */
   closeIcon?: string
-}
-
-export interface AlertEmits {
-  (event: 'update:open', value: boolean): void
-}
-
-export interface AlertSlots {
-  prepend?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  actions?: (props?: {}) => any
-  close?: (props: { ui: ComponentAttrs<typeof alert>['ui'] }) => any
 }
 </script>
 

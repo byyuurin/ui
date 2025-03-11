@@ -36,6 +36,9 @@ export default ct(/* @unocss-include */{
         decrement: 'bottom-0 end-0 pe-0.5 [&>button]:py-0 scale-80',
       },
     },
+    underline: {
+      true: '',
+    },
     highlight: {
       true: {
         base: 'ring ring-inset ring-ui-fill',

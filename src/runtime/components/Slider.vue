@@ -4,6 +4,11 @@ import type { SliderRootProps } from 'reka-ui'
 import type { slider } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface SliderEmits {
+  (event: 'update:modelValue', payload: number | number[]): void
+  (event: 'change', payload: Event): void
+}
+
 type SliderVariants = VariantProps<typeof slider>
 
 export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderRootProps, 'as' | 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
@@ -16,11 +21,6 @@ export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderR
   orientation?: SliderVariants['orientation']
   /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
   defaultValue?: number | number[]
-}
-
-export interface SliderEmits {
-  (event: 'update:modelValue', payload: number | number[]): void
-  (event: 'change', payload: Event): void
 }
 </script>
 

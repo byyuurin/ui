@@ -4,6 +4,13 @@ import type { PinInputRootProps } from 'reka-ui'
 import type { pinInput } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface PinInputEmits {
+  (event: 'update:modelValue', value: string[]): void
+  (event: 'complete', value: string[]): void
+  (event: 'change', payload: Event): void
+  (event: 'blur', payload: Event): void
+}
+
 type PinInputVariants = VariantProps<typeof pinInput>
 
 export interface PinInputProps extends ComponentAttrs<typeof pinInput>, Pick<PinInputRootProps, 'as' | 'defaultValue' | 'disabled' | 'id' | 'mask' | 'modelValue' | 'name' | 'otp' | 'placeholder' | 'required' | 'type'> {
@@ -12,13 +19,6 @@ export interface PinInputProps extends ComponentAttrs<typeof pinInput>, Pick<Pin
   length?: number | string
   underline?: boolean
   highlight?: boolean
-}
-
-export interface PinInputEmits {
-  (event: 'update:modelValue', value: string[]): void
-  (event: 'complete', value: string[]): void
-  (event: 'change', payload: Event): void
-  (event: 'blur', payload: Event): void
 }
 </script>
 

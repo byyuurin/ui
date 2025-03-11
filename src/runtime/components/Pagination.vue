@@ -3,6 +3,27 @@ import type { PaginationRootEmits, PaginationRootProps } from 'reka-ui'
 import type { pagination } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
+export interface PaginationEmits extends PaginationRootEmits {}
+
+export interface PaginationSlots {
+  first?: (props?: {}) => any
+  prev?: (props?: {}) => any
+  next?: (props?: {}) => any
+  last?: (props?: {}) => any
+  ellipsis?: (props?: {}) => any
+  item?: (props: {
+    page: number
+    pageCount: number
+    item: {
+      type: 'ellipsis'
+    } | {
+      type: 'page'
+      value: number
+    }
+    index: number
+  }) => any
+}
+
 export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick<PaginationRootProps, 'as' | 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'> {
   /**
    * The icon to use for the first page control.
@@ -49,27 +70,6 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
    * @default true
    */
   showControls?: boolean
-}
-
-export interface PaginationEmits extends PaginationRootEmits {}
-
-export interface PaginationSlots {
-  first?: (props?: {}) => any
-  prev?: (props?: {}) => any
-  next?: (props?: {}) => any
-  last?: (props?: {}) => any
-  ellipsis?: (props?: {}) => any
-  item?: (props: {
-    page: number
-    pageCount: number
-    item: {
-      type: 'ellipsis'
-    } | {
-      type: 'page'
-      value: number
-    }
-    index: number
-  }) => any
 }
 </script>
 

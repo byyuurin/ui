@@ -8,12 +8,13 @@ export interface CardSlots {
   default?: (props?: {}) => any
   content?: (props?: {}) => any
   header?: (props?: {}) => any
-  title?: (props?: any) => any
-  description?: (props?: any) => any
+  title?: (props?: {}) => any
+  description?: (props?: {}) => any
   footer?: (props?: {}) => any
 }
 
 type CardVariants = VariantProps<typeof card>
+
 export interface CardProps extends ComponentAttrs<typeof card> {
   as?: PrimitiveProps['as']
   variant?: CardVariants['variant']

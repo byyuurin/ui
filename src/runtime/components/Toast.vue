@@ -4,6 +4,16 @@ import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import type { toast } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
+export interface ToastEmits extends ToastRootEmits {}
+
+export interface ToastSlots {
+  icon?: (props?: {}) => any
+  title?: (props?: {}) => any
+  description?: (props?: {}) => any
+  actions?: (props?: {}) => any
+  close?: (props: { ui: any }) => any
+}
+
 type ToastVariants = VariantProps<typeof toast>
 
 export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
@@ -26,17 +36,6 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
   close?: ButtonProps | boolean
   /** @default app.icons.close */
   closeIcon?: string
-}
-
-export interface ToastEmits extends ToastRootEmits {}
-
-export interface ToastSlots {
-  icon?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  actions?: (props?: {}) => any
-  close?: (props: { ui: any }) => any
-
 }
 </script>
 

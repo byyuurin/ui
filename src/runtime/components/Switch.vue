@@ -4,6 +4,15 @@ import type { PrimitiveProps, SwitchRootProps } from 'reka-ui'
 import type { switch as _switch } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface SwitchEmits {
+  (event: 'change', payload: Event): void
+}
+
+export interface SwitchSlots {
+  label?: (props: { label?: string }) => any
+  description?: (props: { description?: string }) => any
+}
+
 type SwitchVariants = VariantProps<typeof _switch>
 
 export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
@@ -22,15 +31,6 @@ export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<Switch
   uncheckedIcon?: string
   label?: string
   description?: string
-}
-
-export interface SwitchEmits {
-  (event: 'change', payload: Event): void
-}
-
-export interface SwitchSlots {
-  label?: (props: { label?: string }) => any
-  description?: (props: { description?: string }) => any
 }
 </script>
 

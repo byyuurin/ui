@@ -6,9 +6,9 @@ import type { ComponentAttrs } from '../types'
 import type { LinkProps } from './Link.vue'
 
 export interface ButtonSlots {
-  default?: (props?: any) => any
-  prefix?: (props?: any) => any
-  suffix?: (props?: any) => any
+  default?: (props?: {}) => any
+  prefix?: (props?: {}) => any
+  suffix?: (props?: {}) => any
 }
 
 type ButtonVariants = VariantProps<typeof button>

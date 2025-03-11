@@ -4,6 +4,16 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { textarea } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface TextareaEmits {
+  (e: 'update:modelValue', payload: string): void
+  (e: 'blur', event: FocusEvent): void
+  (e: 'change', event: Event): void
+}
+
+export interface TextareaSlots {
+  default?: (props?: {}) => any
+}
+
 type TextareaVariants = VariantProps<typeof textarea>
 
 export interface TextareaProps extends ComponentAttrs<typeof textarea> {
@@ -26,16 +36,6 @@ export interface TextareaProps extends ComponentAttrs<typeof textarea> {
   rows?: number
   maxRows?: number
   autoResize?: boolean
-}
-
-export interface TextareaEmits {
-  (e: 'update:modelValue', payload: string): void
-  (e: 'blur', event: FocusEvent): void
-  (e: 'change', event: Event): void
-}
-
-export interface TextareaSlots {
-  default?: (props?: {}) => any
 }
 </script>
 

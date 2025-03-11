@@ -2,17 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, TabsRootEmits, TabsRootProps } from 'reka-ui'
 import type { tabs } from '../theme'
-import type { ComponentAttrs } from '../types'
-
-export interface TabsItem {
-  label?: string
-  icon?: string
-  slot?: string
-  content?: string
-  /** A unique value for the tab item. Defaults to the index. */
-  value?: string | number
-  disabled?: boolean
-}
+import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface TabsEmits extends TabsRootEmits<string | number> {}
 
@@ -23,7 +13,17 @@ export type TabsSlots<T extends { slot?: string }> = {
   default?: SlotProps<T>
   suffix?: SlotProps<T>
   content?: SlotProps<T>
-} & Record<string, SlotProps<T>>
+} & DynamicSlots<T, SlotProps<T>>
+
+export interface TabsItem {
+  label?: string
+  icon?: string
+  slot?: string
+  content?: string
+  /** A unique value for the tab item. Defaults to the index. */
+  value?: string | number
+  disabled?: boolean
+}
 
 type TabsVariants = VariantProps<typeof tabs>
 

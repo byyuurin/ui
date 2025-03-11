@@ -3,19 +3,19 @@ import type { TooltipArrowProps, TooltipContentProps, TooltipRootEmits, TooltipR
 import type { tooltip } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface TooltipEmits extends TooltipRootEmits {}
+
+export interface TooltipSlots {
+  default?: (props: { open: boolean }) => any
+  content?: (props: {}) => any
+}
+
 export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRootProps {
   text?: string
   content?: Omit<TooltipContentProps, 'as' | 'asChild'>
   arrow?: boolean | Omit<TooltipArrowProps, 'as' | 'asChild'>
   /** @default true */
   portal?: boolean
-}
-
-export interface TooltipEmits extends TooltipRootEmits {}
-
-export interface TooltipSlots {
-  default?: (props: { open: boolean }) => any
-  content?: (props: {}) => any
 }
 </script>
 

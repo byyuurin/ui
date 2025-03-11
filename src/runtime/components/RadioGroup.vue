@@ -4,6 +4,31 @@ import type { AcceptableValue, PrimitiveProps, RadioGroupRootProps } from 'reka-
 import type { radioGroup } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface RadioGroupEmits {
+  (event: 'update:modelValue', payload: string): void
+  (event: 'change', payload: Event): void
+}
+
+type SlotProps<T> = (props: { item: NormalizeItem<T>, modelValue?: AcceptableValue }) => any
+
+export interface RadioGroupSlots<T> {
+  legend?: (props?: {}) => any
+  label?: SlotProps<T>
+  description?: SlotProps<T>
+}
+
+type NormalizeItem<T> = { id: string } & (
+  T extends RadioOption
+    ? T
+    : {
+        id: string
+        label: string
+        value: any
+        description: string
+        disabled: false
+      }
+    )
+
 type RadioGroupVariants = VariantProps<typeof radioGroup>
 
 export interface RadioOption {
@@ -39,31 +64,6 @@ export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, P
    */
   orientation?: RadioGroupRootProps['orientation']
 }
-
-export interface RadioGroupEmits {
-  (event: 'update:modelValue', payload: string): void
-  (event: 'change', payload: Event): void
-}
-
-type SlotProps<T> = (props: { item: NormalizeItem<T>, modelValue?: AcceptableValue }) => any
-
-export interface RadioGroupSlots<T> {
-  legend?: (props?: {}) => any
-  label?: SlotProps<T>
-  description?: SlotProps<T>
-}
-
-type NormalizeItem<T> = { id: string } & (
-  T extends RadioOption
-    ? T
-    : {
-        id: string
-        label: string
-        value: any
-        description: string
-        disabled: false
-      }
-    )
 </script>
 
 <script lang="ts" setup generic="T extends RadioOption | AcceptableValue">

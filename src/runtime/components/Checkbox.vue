@@ -4,6 +4,15 @@ import type { CheckboxRootProps, PrimitiveProps } from 'reka-ui'
 import type { checkbox } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface CheckboxEmits {
+  (event: 'change', payload: Event): void
+}
+
+export interface CheckboxSlots {
+  label?: (props: { label?: string }) => any
+  description?: (props: { description?: string }) => any
+}
+
 type CheckboxVariants = VariantProps<typeof checkbox>
 
 export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
@@ -21,15 +30,6 @@ export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<Che
    * @default app.icons.indeterminate
    */
   indeterminateIcon?: string
-}
-
-export interface CheckboxEmits {
-  (event: 'change', payload: Event): void
-}
-
-export interface CheckboxSlots {
-  label?: (props: { label?: string }) => any
-  description?: (props: { description?: string }) => any
 }
 </script>
 

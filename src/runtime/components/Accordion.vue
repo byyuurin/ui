@@ -1,18 +1,7 @@
 <script lang="ts">
 import type { AccordionRootEmits, AccordionRootProps } from 'reka-ui'
 import type { accordion } from '../theme'
-import type { ComponentAttrs } from '../types'
-
-export interface AccordionItem {
-  label?: string
-  icon?: string
-  suffixIcon?: string
-  slot?: string
-  content?: string
-  /** A unique value for the accordion item. Defaults to the index. */
-  value?: string
-  disabled?: boolean
-}
+import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface AccordionEmits extends AccordionRootEmits {}
 
@@ -24,7 +13,18 @@ export type AccordionSlots<T extends { slot?: string }> = {
   suffix?: SlotProps<T>
   content?: SlotProps<T>
   body?: SlotProps<T>
-} & Record<string, SlotProps<T>>
+} & DynamicSlots<T, SlotProps<T>>
+
+export interface AccordionItem {
+  label?: string
+  icon?: string
+  suffixIcon?: string
+  slot?: string
+  content?: string
+  /** A unique value for the accordion item. Defaults to the index. */
+  value?: string
+  disabled?: boolean
+}
 
 export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pick<AccordionRootProps, 'as' | 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
   items?: T[]

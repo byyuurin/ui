@@ -3,15 +3,15 @@ import type { UserConfig } from '@unocss/core'
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
 import type { ThemeExtension, ToasterProps } from '../types'
 
+export interface AppSlots {
+  default: (props?: {}) => any
+}
+
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
   unoConfig?: UserConfig
   ui?: ThemeExtension
   tooltip?: TooltipProviderProps
   toaster?: ToasterProps
-}
-
-export interface AppSlots {
-  default: (props?: Record<string, unknown>) => any
 }
 </script>
 

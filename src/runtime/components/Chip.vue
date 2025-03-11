@@ -5,18 +5,18 @@ import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { chip } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface ChipSlots {
+  prefix?: (props?: {}) => any
+  default?: (props?: {}) => any
+  suffix?: (props?: {}) => any
+}
+
 type ChipVariants = VariantProps<typeof chip>
 
 export interface ChipProps extends ComponentAttrs<typeof chip>, Pick<PrimitiveProps, 'as'>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
   variant?: ChipVariants['variant']
   size?: ChipVariants['size']
   label?: string
-}
-
-export interface ChipSlots {
-  prefix?: (props?: {}) => any
-  default?: (props?: {}) => any
-  suffix?: (props?: {}) => any
 }
 </script>
 

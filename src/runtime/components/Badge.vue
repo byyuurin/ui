@@ -4,6 +4,15 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { badge } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface BadgeEmits {
+  (e: 'update:show', payload: boolean): void
+}
+
+export interface BadgeSlots {
+  default?: (props?: {}) => any
+  content?: (props?: {}) => any
+}
+
 type BadgeVariants = VariantProps<typeof badge>
 
 export interface BadgeProps extends ComponentAttrs<typeof badge>, Pick<PrimitiveProps, 'as'> {
@@ -15,15 +24,6 @@ export interface BadgeProps extends ComponentAttrs<typeof badge>, Pick<Primitive
   inset?: boolean
   /** When `true`, render the badge relatively to the parent. */
   standalone?: boolean
-}
-
-export interface BadgeEmits {
-  (e: 'update:show', payload: boolean): void
-}
-
-export interface BadgeSlots {
-  default?: (props?: {}) => any
-  content?: (props?: {}) => any
 }
 </script>
 

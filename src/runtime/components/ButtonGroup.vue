@@ -4,15 +4,15 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { buttonGroup } from '../theme'
 import type { ComponentAttrs } from '../types'
 
+export interface ButtonGroupSlots {
+  default?: (props?: {}) => any
+}
+
 type ButtonGroupVariant = VariantProps<typeof buttonGroup>
 
 export interface ButtonGroupProps extends Omit<ComponentAttrs<typeof buttonGroup>, 'ui'>, Pick<PrimitiveProps, 'as'> {
   size?: ButtonGroupVariant['size']
   orientation?: ButtonGroupVariant['orientation']
-}
-
-export interface ButtonGroupSlots {
-  default?: (props?: any) => any
 }
 </script>
 
