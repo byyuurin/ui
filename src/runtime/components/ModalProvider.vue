@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { injectModalState, useModal } from '../composables/useModal'
+import { injectModalState } from '../app/injections'
+import { useModal } from '../composables/useModal'
 
 const modalState = injectModalState()
 const { isOpen } = useModal()

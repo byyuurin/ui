@@ -1,22 +1,8 @@
-import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
-import type { ButtonGroupProps } from '../components/ButtonGroup.vue'
-import { defineInjection } from './defineInjection'
+import { injectButtonGroup } from '../app/injections'
+import type { ButtonProps } from '../types'
 
-interface ButtonGroupInjectData {
-  size: ButtonGroupProps['size']
-  orientation: ButtonGroupProps['orientation']
-}
-
-export const {
-  InjectionKey: InjectionKeyButtonGroup,
-  inject: injectButtonGroup,
-  provide: provideButtonGroup,
-} = defineInjection<ComputedRef<ButtonGroupInjectData>>('ui.buttonGroup')
-
-type UseButtonGroupProps = Pick<ButtonGroupProps, 'size'>
-
-export function useButtonGroup(props: UseButtonGroupProps = {}) {
+export function useButtonGroup(props: Pick<ButtonProps, 'size'> = {}) {
   const buttonGroup = injectButtonGroup()
 
   return {

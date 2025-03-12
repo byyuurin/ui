@@ -27,7 +27,7 @@ export interface AvatarGroupProps extends ComponentAttrs<typeof avatarGroup> {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { provideAvatarGroup } from '../composables/useAvatarGroup'
+import { provideAvatarGroup } from '../app/injections'
 import { useTheme } from '../composables/useTheme'
 import Avatar from './Avatar.vue'
 
@@ -79,9 +79,7 @@ const style = computed(() => {
   return styler(props)
 })
 
-provideAvatarGroup(computed(() => ({
-  size: props.size,
-})))
+provideAvatarGroup(computed(() => props))
 </script>
 
 <template>

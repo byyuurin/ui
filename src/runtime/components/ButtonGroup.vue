@@ -24,7 +24,7 @@ export interface ButtonGroupProps extends Omit<ComponentAttrs<typeof buttonGroup
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { provideButtonGroup } from '../composables/useButtonGroup'
+import { provideButtonGroup } from '../app/injections'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<ButtonGroupProps>(), {
@@ -33,10 +33,7 @@ const props = withDefaults(defineProps<ButtonGroupProps>(), {
 
 defineSlots<ButtonGroupSlots>()
 
-provideButtonGroup(computed(() => ({
-  size: props.size,
-  orientation: props.orientation,
-})))
+provideButtonGroup(computed(() => props))
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {

@@ -7,7 +7,7 @@ export function defineInjection<T>(name: string): {
   inject: () => T | undefined
 }
 
-export function defineInjection<T>(name: string, defaultValue: T,): {
+export function defineInjection<T>(name: string, defaultValue: T): {
   InjectionKey: InjectionKey<T>
   provide: (value: T) => void
   inject: () => T

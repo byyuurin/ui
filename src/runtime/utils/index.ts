@@ -3,6 +3,7 @@ import { isEqual } from 'ohash'
 export * from './extend-theme'
 export * from './link'
 export * from './styler'
+export * from './vue'
 
 export function pick<
   Data extends object,

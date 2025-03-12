@@ -1,20 +1,8 @@
-import { computed, type ComputedRef } from 'vue'
-import type { AvatarGroupProps } from '../types'
-import { defineInjection } from './defineInjection'
+import { computed } from 'vue'
+import { injectAvatarGroup } from '../app/injections'
+import type { AvatarProps } from '../types'
 
-interface AvatarGroupInjectionData {
-  size: AvatarGroupProps['size']
-}
-
-export const {
-  InjectionKey: InjectionKeyAvatarGroup,
-  inject: injectAvatarGroup,
-  provide: provideAvatarGroup,
-} = defineInjection<ComputedRef<AvatarGroupInjectionData>>('ui.avatarGroup')
-
-type UseAvatarGroupProps = Pick<AvatarGroupProps, 'size'>
-
-export function useAvatarGroup(props: UseAvatarGroupProps = {}) {
+export function useAvatarGroup(props: AvatarProps = {}) {
   const avatarGroup = injectAvatarGroup()
 
   return {
