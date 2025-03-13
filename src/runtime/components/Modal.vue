@@ -45,6 +45,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
 import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -71,6 +72,7 @@ const contentEvents = computed(() => {
   }
 })
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.modal)
@@ -114,6 +116,7 @@ const style = computed(() => {
                     :icon="props.closeIcon || theme.app.icons.close"
                     v-bind="typeof props.close === 'boolean' ? {} : props.close"
                     :class="style.close({ class: props.ui?.close })"
+                    :aria-label="t('modal.close')"
                   />
                 </slot>
               </DialogClose>

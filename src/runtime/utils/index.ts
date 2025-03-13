@@ -1,9 +1,16 @@
 import { isEqual } from 'ohash'
+import type { Messages } from '../types'
+import type { Locale } from './translator'
 
 export * from './extend-theme'
 export * from './link'
 export * from './styler'
+export * from './translator'
 export * from './vue'
+
+export function defineLocale(locale: Locale<Messages>) {
+  return locale
+}
 
 export function pick<
   Data extends object,

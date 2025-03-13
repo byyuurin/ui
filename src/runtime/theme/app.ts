@@ -1,7 +1,7 @@
 export default {
   /* @unocss-include */
   icons: {
-    close: 'i-mdi-close-thick',
+    close: 'i-mdi-close',
     loading: 'i-mdi-loading',
     check: 'i-mdi-check-bold',
     indeterminate: 'i-mdi-minus-thick',

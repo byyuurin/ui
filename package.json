@@ -39,7 +39,15 @@
       "types": "./dist/runtime/index.d.ts",
       "default": "./dist/runtime/index.js"
     },
-    "./runtime/*": "./dist/runtime/*"
+    "./runtime/*": "./dist/runtime/*",
+    "./utils/*": {
+      "types": "./dist/runtime/utils/*.d.ts",
+      "default": "./dist/runtime/utils/*.js"
+    },
+    "./locale": {
+      "types": "./dist/runtime/locale/index.d.ts",
+      "default": "./dist/runtime/locale/index.js"
+    }
   },
   "main": "dist/runtime/index.js",
   "module": "dist/runtime/index.js",

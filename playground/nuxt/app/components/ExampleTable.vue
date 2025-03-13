@@ -3,6 +3,8 @@ import type { TableColumn, TableProps } from '@byyuurin/ui'
 import { Button, Chip } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
+const isEmpty = shallowRef(false)
+
 const data = ref([
   {
     id: '4600',
@@ -72,12 +74,17 @@ const controls: ControlItems<TableProps<typeof data.value[number]>> = [
     description="A responsive table element to display data in rows and columns."
     :controls="controls"
   >
-    <UCard>
-      <UTable class="max-h-100" v-bind="attrs" :columns="columns" :column-pinning="{ right: ['status'] }" :data="data">
-        <template #expanded="{ row }">
-          <pre>{{ row.original }}</pre>
-        </template>
-      </UTable>
-    </UCard>
+    <div class="flex flex-col gap-4">
+      <div>
+        <USwitch v-model="isEmpty" label="No Data" />
+      </div>
+      <UCard>
+        <UTable class="max-h-100" v-bind="attrs" :columns="columns" :column-pinning="{ right: ['status'] }" :data="isEmpty ? [] : data">
+          <template #expanded="{ row }">
+            <pre>{{ row.original }}</pre>
+          </template>
+        </UTable>
+      </UCard>
+    </div>
   </ExampleView>
 </template>

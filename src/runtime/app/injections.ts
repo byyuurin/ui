@@ -1,6 +1,7 @@
 import type { UserConfig } from '@unocss/core'
 import type { Component, ComputedRef, MaybeRefOrGetter, ShallowRef } from 'vue'
-import type { AvatarGroupProps, ButtonGroupProps, ModalProps, ThemeExtension } from '../types'
+import type { AvatarGroupProps, ButtonGroupProps, Messages, ModalProps, ThemeExtension } from '../types'
+import type { Locale } from '../utils'
 import { defineInjection } from '../utils'
 
 // AvatarGroup
@@ -18,6 +19,13 @@ export const {
   inject: injectButtonGroup,
   provide: provideButtonGroup,
 } = defineInjection<ComputedRef<ButtonGroupProvideValue>>('ui.button-group')
+
+// Locale
+export const {
+  InjectionKey: InjectionKeyLocaleContext,
+  inject: injectLocaleContext,
+  provide: provideLocaleContext,
+} = defineInjection<MaybeRefOrGetter<Locale<Messages> | undefined>>('ui.locale-context')
 
 // ModalProvider
 export interface ModalStateProvideValue {
@@ -42,4 +50,4 @@ export const {
   InjectionKey: InjectionKeyUnoConfig,
   provide: provideUnoConfig,
   inject: injectUnoConfig,
-} = defineInjection<UserConfig>('ui.uno-config', {})
+} = defineInjection<MaybeRefOrGetter<UserConfig>>('ui.uno-config', {})

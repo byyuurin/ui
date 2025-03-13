@@ -43,6 +43,7 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
 import { reactivePick, useElementBounding } from '@vueuse/core'
 import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -59,6 +60,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 
 const el = ref<InstanceType<typeof ToastRoot>>()
 const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.toast)
@@ -120,9 +122,9 @@ defineExpose({
           <Button
             v-if="props.close"
             :icon="props.closeIcon || theme.app.icons.close"
-            size="md"
+            size="sm"
             variant="link"
-            aria-label="close"
+            :aria-label="t('toast.close')"
             v-bind="typeof close === 'object' ? close : undefined"
             :class="style.close({ class: props.ui?.close })"
             @click.stop

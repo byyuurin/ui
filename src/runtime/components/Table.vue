@@ -107,6 +107,7 @@ import { reactiveOmit } from '@vueuse/core'
 import { Primitive } from 'reka-ui'
 import { upperFirst } from 'scule'
 import { computed } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 
 const props = defineProps<TableProps<T>>()
@@ -227,6 +228,7 @@ function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
   ref.value = typeof updaterOrValue === 'function' ? updaterOrValue(ref.value) : updaterOrValue
 }
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.table)
@@ -288,7 +290,7 @@ defineExpose({
         <tr v-else :class="style.tr({ class: props.ui?.tr })">
           <td :colspan="columns.length" :class="style.empty({ class: props.ui?.empty })">
             <slot name="empty">
-              Empty
+              {{ t('table.noData') }}
             </slot>
           </td>
         </tr>

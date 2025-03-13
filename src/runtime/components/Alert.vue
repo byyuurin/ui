@@ -51,6 +51,7 @@ export interface AlertProps extends ComponentAttrs<typeof alert> {
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -62,6 +63,7 @@ const props = withDefaults(defineProps<AlertProps>(), {
 const emit = defineEmits<AlertEmits>()
 const slots = defineSlots<AlertSlots>()
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.alert)
@@ -114,7 +116,7 @@ const style = computed(() => {
           :icon="props.closeIcon || theme.app.icons.close"
           size="md"
           variant="link"
-          aria-label="Close"
+          :aria-label="t('alert.close')"
           v-bind="typeof props.close === 'object' ? props.close : undefined"
           :class="style.close({ class: props.ui?.close })"
           @click="emit('update:open', false)"

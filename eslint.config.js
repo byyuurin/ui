@@ -4,7 +4,11 @@ import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 export default byyuurin(
   {
     unocss: false,
-    typescript: true,
+    typescript: {
+      overrides: {
+        'ts/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
+      },
+    },
     vue: {
       overrides: {
         'import/first': 'off',

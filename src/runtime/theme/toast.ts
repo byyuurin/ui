@@ -6,7 +6,7 @@ export default ct(/* @unocss-include */{
     wrapper: 'w-0 flex-1 flex flex-col gap-1',
     title: 'text-base font-medium color-ui-cb',
     description: 'text-sm color-ui-cb/80',
-    icon: 'shrink-0 size-6 color-ui-cb',
+    icon: 'shrink-0 size-1.25em color-ui-cb',
     avatar: 'shrink-0',
     avatarSize: '2xl',
     actions: 'flex flex-wrap gap-1.5 shrink-0',
@@ -21,7 +21,7 @@ export default ct(/* @unocss-include */{
       },
       vertical: {
         root: 'items-start',
-        actions: 'items-start mt-2.5',
+        actions: 'items-start',
       },
     },
     title: {

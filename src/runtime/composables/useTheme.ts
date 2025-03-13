@@ -8,7 +8,7 @@ import { extendTheme, prepareStyler } from '../utils'
 export const useTheme = createSharedComposable(() => {
   const themeExtension = injectThemeExtension()
   const unoConfig = injectUnoConfig()
-  const mergeRules = transformUnoRules(unoConfig)
+  const mergeRules = transformUnoRules(toValue(unoConfig))
   const { createStyler } = prepareStyler(mergeRules)
 
   return {

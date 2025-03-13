@@ -63,6 +63,7 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
 import { reactivePick } from '@vueuse/core'
 import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -81,6 +82,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', '
 
 const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.plus : theme.value.app.icons.chevronUp))
 const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.minus : theme.value.app.icons.chevronDown))
@@ -143,7 +145,7 @@ function onBlur(event: FocusEvent) {
             :icon="incrementIcon"
             :size="props.size"
             variant="link"
-            aria-label="increment"
+            :aria-label="t('inputNumber.increment')"
             v-bind="typeof props.increment === 'object' ? props.increment : undefined"
           />
         </slot>
@@ -157,7 +159,7 @@ function onBlur(event: FocusEvent) {
             :icon="decrementIcon"
             :size="props.size"
             variant="link"
-            aria-label="decrement"
+            :aria-label="t('inputNumber.decrement')"
             v-bind="typeof props.decrement === 'object' ? props.decrement : undefined"
           />
         </slot>

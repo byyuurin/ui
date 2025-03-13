@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { UserConfig } from '@unocss/core'
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { ThemeExtension, ToasterProps } from '../types'
+import type { Messages, ThemeExtension, ToasterProps } from '../types'
+import type { Locale } from '../utils'
 
 export interface AppSlots {
   default: (props?: {}) => any
@@ -10,17 +11,18 @@ export interface AppSlots {
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
   unoConfig?: UserConfig
   ui?: ThemeExtension
-  tooltip?: TooltipProviderProps
   toaster?: ToasterProps
+  tooltip?: TooltipProviderProps
+  locale?: Locale<Messages>
 }
 </script>
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
-import { computed, shallowRef, toRef, useId } from 'vue'
+import { shallowRef, toRef, useId } from 'vue'
 import type { ModalStateProvideValue } from '../app/injections'
-import { provideModalState, provideThemeExtension, provideUnoConfig } from '../app/injections'
+import { provideLocaleContext, provideModalState, provideThemeExtension, provideUnoConfig } from '../app/injections'
 import ModalProvider from './ModalProvider.vue'
 import Toaster from './Toaster.vue'
 
@@ -40,11 +42,10 @@ const modalState = shallowRef<ModalStateProvideValue>({
   props: {},
 })
 
-const themeExtension = computed(() => props.ui)
-
 provideModalState(modalState)
-provideUnoConfig(props.unoConfig)
-provideThemeExtension(themeExtension)
+provideUnoConfig(() => props.unoConfig)
+provideThemeExtension(() => props.ui)
+provideLocaleContext(() => props.locale)
 </script>
 
 <template>

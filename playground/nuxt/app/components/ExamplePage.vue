@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import type { AppProps } from '@byyuurin/ui'
+import * as locales from '@byyuurin/ui/locale'
 import type { ThemeConfig } from './ThemeSelector.vue'
 import { setTheme, themeOptions } from './ThemeSelector.vue'
+
+const lang = shallowRef<keyof typeof locales>('en')
+const locale = computed(() => lang.value ? (locales as any)[lang.value] : undefined)
 
 const showDrawer = ref(false)
 const uiColor = ref('')
@@ -25,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <UApp :toaster="toasterAttrs">
+  <UApp :locale="locale" :toaster="toasterAttrs">
     <div>
       <ExampleAccordion :class="uiColor" />
       <ExampleAlert :class="uiColor" />
@@ -82,14 +86,20 @@ onMounted(() => {
             content: 'z-1 overflow-x-hidden ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2',
             footer: 'sticky bottom-0 bg-ui-cx',
           }"
+          inset
         >
           <UButton class="fixed bottom-4 left-1/2 -translate-x-1/2" label="Theme" variant="solid" size="xl" icon="i-mdi-palette-outline" round />
           <template #body>
             <ThemeSelector v-model="uiTheme" v-model:config="uiConfig" v-model:color="uiColor" class="w-screen max-w-full sm:max-w-screen-sm" />
           </template>
           <template #footer>
-            <div class="pt-4">
-              <UButton class="w-full justify-center" label="Close" variant="solid" icon="i-mdi-close-thick" round @click="showDrawer = false" />
+            <div class="flex flex-col gap-4 pt-4">
+              <USelect
+                v-model="lang"
+                :options="Object.entries(locales).map(([value, { code, name }]) => ({ label: name, value }))"
+                :ui="{ content: 'z-1' }"
+              />
+              <UButton class="justify-center" label="Close" variant="solid" icon="i-mdi-close-thick" round @click="showDrawer = false" />
             </div>
           </template>
         </UDrawer>

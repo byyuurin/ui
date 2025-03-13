@@ -32,6 +32,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
+      '@byyuurin/ui/locale': resolve(__dirname, '../../src/runtime/locale/index.ts'),
       '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
     },
   },

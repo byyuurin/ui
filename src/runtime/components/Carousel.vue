@@ -94,6 +94,7 @@ import { computedAsync, reactivePick } from '@vueuse/core'
 import useEmblaCarousel from 'embla-carousel-vue'
 import { Primitive, useForwardProps } from 'reka-ui'
 import { computed, onMounted, ref, watch } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -134,6 +135,7 @@ defineSlots<CarouselSlots<T>>()
 
 const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakpoints', 'containScroll', 'dragFree', 'dragThreshold', 'duration', 'inViewThreshold', 'loop', 'skipSnaps', 'slidesToScroll', 'startIndex', 'watchDrag', 'watchResize', 'watchSlides', 'watchFocus'))
 
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.carousel)
@@ -284,7 +286,7 @@ defineExpose({
           :icon="prevIcon"
           size="md"
           variant="outline"
-          aria-label="prev"
+          :aria-label="t('carousel.prev')"
           v-bind="typeof props.prev === 'object' ? props.prev : undefined"
           :class="style.prev({ class: props.ui?.prev })"
           @click="scrollPrev"
@@ -294,7 +296,7 @@ defineExpose({
           :icon="nextIcon"
           size="md"
           variant="outline"
-          aria-label="next"
+          :aria-label="t('carousel.next')"
           v-bind="typeof props.next === 'object' ? props.next : undefined"
           :class="style.next({ class: props.ui?.next })"
           @click="scrollNext"
@@ -304,7 +306,7 @@ defineExpose({
       <div v-if="props.dots" :class="style.dots({ class: props.ui?.dots })">
         <template v-for="(_, index) in scrollSnaps" :key="index">
           <button
-            :aria-label="`Go to ${index + 1}`"
+            :aria-label="t('carousel.goto', { page: index + 1 })"
             :class="style.dot({ class: props.ui?.dot, active: selectedIndex === index })"
             @click="scrollTo(index)"
           ></button>
