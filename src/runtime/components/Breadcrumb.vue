@@ -7,9 +7,9 @@ type SlotProps<T> = (props: { item: T, index: number, active?: boolean }) => any
 
 export type BreadcrumbSlots<T extends { slot?: string }> = {
   'item'?: SlotProps<T>
-  'item-prefix'?: SlotProps<T>
+  'item-leading'?: SlotProps<T>
   'item-label'?: SlotProps<T>
-  'item-suffix'?: SlotProps<T>
+  'item-trailing'?: SlotProps<T>
   'separator'?: (props?: {}) => any
 } & DynamicSlots<T, SlotProps<T>>
 
@@ -78,8 +78,8 @@ const style = computed(() => {
               :class="style.link({ class: props.ui?.link, active: index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
             >
               <slot :name="item.slot || 'item'" :item="item" :index="index">
-                <slot :name="`${item.slot || 'item'}-prefix`">
-                  <span v-if="item.icon" :class="style.linkPrefixIcon({ class: [item.icon, props.ui?.linkPrefixIcon] })"></span>
+                <slot :name="`${item.slot || 'item'}-leading`">
+                  <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })"></span>
                 </slot>
 
                 <span v-if="get(item, props.labelKey) || slots[`${item.slot || 'item'}-label`]" :class="style.linkLabel({ class: props.ui?.linkLabel })">
@@ -88,7 +88,7 @@ const style = computed(() => {
                   </slot>
                 </span>
 
-                <slot :name="`${item.slot || 'item'}-suffix`" :item="item" :active="index === items!.length - 1" :index="index"></slot>
+                <slot :name="`${item.slot || 'item'}-trailing`" :item="item" :active="index === items!.length - 1" :index="index"></slot>
               </slot>
             </LinkBase>
           </Link>

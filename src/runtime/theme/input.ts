@@ -9,10 +9,10 @@ export default ct(/* @unocss-include */{
       'focus:outline-none',
       'disabled:cursor-not-allowed',
     ],
-    prefix: 'flex items-center',
-    prefixIcon: 'shrink-0 size-1.25em',
-    suffix: 'flex items-center',
-    suffixIcon: 'shrink-0 size-1.25em',
+    leading: 'flex items-center',
+    leadingIcon: 'shrink-0 size-1.25em',
+    trailing: 'flex items-center',
+    trailingIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     ...buttonGroupVariant,
@@ -66,10 +66,10 @@ export default ct(/* @unocss-include */{
         base: 'color-ui-cb bg-transparent',
       },
     },
-    prefix: {
+    leading: {
       true: '',
     },
-    suffix: {
+    trailing: {
       true: '',
     },
     loading: {
@@ -83,7 +83,7 @@ export default ct(/* @unocss-include */{
     },
     type: {
       file: {
-        input: 'prefix-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-cx file:bg-soft-ui-cb/80',
+        input: 'leading-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-cx file:bg-soft-ui-cb/80',
       },
     },
   },
@@ -129,17 +129,17 @@ export default ct(/* @unocss-include */{
     },
     {
       loading: true,
-      prefix: true,
+      leading: true,
       class: {
-        prefixIcon: 'animate-spin',
+        leadingIcon: 'animate-spin',
       },
     },
     {
       loading: true,
-      prefix: false,
-      suffix: true,
+      leading: false,
+      trailing: true,
       class: {
-        suffixIcon: 'animate-spin',
+        trailingIcon: 'animate-spin',
       },
     },
   ],

@@ -26,21 +26,21 @@ const controls: ControlItems<ButtonProps> = [
     <div class="flex flex-wrap items-start gap-4">
       <UButton v-bind="attrs" label="" :icon="icon" />
       <UButton v-bind="attrs" :label="attrs.label || 'Text'" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :prefix-icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :suffix-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
     </div>
     <div class="py-4">
       <UButton v-bind="attrs" :label="attrs.label || 'Text'">
-        <template #prefix>
-          <Placeholder label="#prefix" />
+        <template #leading>
+          <Placeholder label="#leading" />
         </template>
 
         <template #default>
           <Placeholder label="#default" />
         </template>
 
-        <template #suffix>
-          <Placeholder label="#suffix" />
+        <template #trailing>
+          <Placeholder label="#trailing" />
         </template>
       </UButton>
     </div>

@@ -26,14 +26,14 @@ export default ct(/* @unocss-include */{
       'data-[highlighted]:color-ui-cb data-[highlighted]:before:bg-soft-ui-cb/3',
       'data-[state=checked]:color-ui-base',
     ],
-    itemPrefixIcon: 'shrink-0 color-ui-cb/80 group-data-[highlighted]:color-ui-cb/80 transition-colors',
-    itemSuffix: 'ms-auto inline-flex gap-1.5 items-center',
-    itemSuffixIcon: 'shrink-0',
+    itemLeadingIcon: 'shrink-0 color-ui-cb/80 group-data-[highlighted]:color-ui-cb/80 transition-colors',
+    itemTrailing: 'ms-auto inline-flex gap-1.5 items-center',
+    itemTrailingIcon: 'shrink-0',
     itemLabel: 'truncate',
-    prefix: 'flex items-center',
-    prefixIcon: 'shrink-0 size-1.25em',
-    suffix: 'flex items-center',
-    suffixIcon: 'shrink-0 size-1.25em',
+    leading: 'flex items-center',
+    leadingIcon: 'shrink-0 size-1.25em',
+    trailing: 'flex items-center',
+    trailingIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     ...buttonGroupVariant,
@@ -92,10 +92,10 @@ export default ct(/* @unocss-include */{
         item: 'text-xl',
       },
     },
-    prefix: {
+    leading: {
       true: '',
     },
-    suffix: {
+    trailing: {
       true: '',
     },
     loading: {
@@ -150,17 +150,17 @@ export default ct(/* @unocss-include */{
     },
     {
       loading: true,
-      prefix: true,
+      leading: true,
       class: {
-        prefixIcon: 'animate-spin',
+        leadingIcon: 'animate-spin',
       },
     },
     {
       loading: true,
-      prefix: false,
-      suffix: true,
+      leading: false,
+      trailing: true,
       class: {
-        suffixIcon: 'animate-spin',
+        trailingIcon: 'animate-spin',
       },
     },
   ],

@@ -7,8 +7,8 @@ import type { LinkProps } from './Link.vue'
 
 export interface ButtonSlots {
   default?: (props?: {}) => any
-  prefix?: (props?: {}) => any
-  suffix?: (props?: {}) => any
+  leading?: (props?: {}) => any
+  trailing?: (props?: {}) => any
 }
 
 type ButtonVariants = VariantProps<typeof button>
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const slots = defineSlots<ButtonSlots>()
 
 const { size, orientation } = useButtonGroup(props)
-const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons(
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
   computed(() => ({ ...props, loading: props.loading })),
 )
 
@@ -54,8 +54,8 @@ const style = computed(() => {
     ...props,
     size: size.value,
     groupOrientation: orientation.value,
-    prefix: isPrefix.value,
-    suffix: isSuffix.value,
+    leading: isLeading.value,
+    trailing: isTrailing.value,
     class: [
       props.class,
       props.active ? props.activeClass : props.inactiveClass,
@@ -73,10 +73,10 @@ const style = computed(() => {
     v-bind="omit(linkProps, ['type', 'disabled', 'activeClass', 'inactiveClass', 'disableClass'])"
     raw
   >
-    <slot name="prefix">
+    <slot name="leading">
       <span
-        v-if="isPrefix && prefixIconName"
-        :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
+        v-if="isLeading && leadingIconName"
+        :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
       ></span>
     </slot>
     <span
@@ -85,10 +85,10 @@ const style = computed(() => {
     >
       <slot>{{ label }}</slot>
     </span>
-    <slot name="suffix">
+    <slot name="trailing">
       <span
-        v-if="isSuffix && suffixIconName"
-        :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
+        v-if="isTrailing && trailingIconName"
+        :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
       ></span>
     </slot>
   </Link>

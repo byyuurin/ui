@@ -2,8 +2,8 @@
 import type { InputProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const prefixIcon = 'i-carbon-unlocked'
-const suffixIcon = 'i-carbon-share'
+const leadingIcon = 'i-carbon-unlocked'
+const trailingIcon = 'i-carbon-share'
 
 const controls: ControlItems<InputProps> = [
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
@@ -26,15 +26,15 @@ const controls: ControlItems<InputProps> = [
   >
     <div class="flex flex-col gap-4">
       <UInput v-bind="attrs" />
-      <UInput v-bind="attrs" :prefix-icon="prefixIcon" />
-      <UInput v-bind="attrs" :suffix-icon="suffixIcon" />
-      <UInput v-bind="attrs" :icon="prefixIcon" :prefix-icon="prefixIcon" :suffix-icon="suffixIcon" />
+      <UInput v-bind="attrs" :leading-icon="leadingIcon" />
+      <UInput v-bind="attrs" :trailing-icon="trailingIcon" />
+      <UInput v-bind="attrs" :icon="leadingIcon" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" />
       <UInput v-bind="attrs">
-        <template #prefix>
-          <Placeholder label="#prefix" />
+        <template #leading>
+          <Placeholder label="#leading" />
         </template>
-        <template #suffix>
-          <Placeholder label="#suffix" />
+        <template #trailing>
+          <Placeholder label="#trailing" />
         </template>
       </UInput>
     </div>

@@ -17,7 +17,7 @@ const controls: ControlItems<CollapsibleProps> = [
   >
     <div>
       <UCollapsible class="flex flex-col gap-2" v-bind="attrs">
-        <UButton class="justify-between" label="Open" suffix-icon="i-lucide-chevron-down" />
+        <UButton class="justify-between" label="Open" trailing-icon="i-lucide-chevron-down" />
 
         <template #content>
           <Placeholder class="h-48" label="#content" />

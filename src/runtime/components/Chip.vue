@@ -6,9 +6,9 @@ import type { chip } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface ChipSlots {
-  prefix?: (props?: {}) => any
+  leading?: (props?: {}) => any
   default?: (props?: {}) => any
-  suffix?: (props?: {}) => any
+  trailing?: (props?: {}) => any
 }
 
 type ChipVariants = VariantProps<typeof chip>
@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
 const slots = defineSlots<ChipSlots>()
 
 const { size, orientation } = useButtonGroup(props)
-const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
+const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
@@ -54,16 +54,16 @@ const style = computed(() => {
 
 <template>
   <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })">
-    <slot name="prefix">
-      <span v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></span>
+    <slot name="leading">
+      <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"></span>
     </slot>
 
     <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })">
       <slot>{{ props.label }}</slot>
     </span>
 
-    <slot name="suffix">
-      <span v-if="isSuffix && suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></span>
+    <slot name="trailing">
+      <span v-if="isTrailing && trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"></span>
     </slot>
   </Primitive>
 </template>

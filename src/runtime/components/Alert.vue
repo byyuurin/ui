@@ -9,7 +9,7 @@ export interface AlertEmits {
 }
 
 export interface AlertSlots {
-  prepend?: (props?: {}) => any
+  leading?: (props?: {}) => any
   title?: (props?: {}) => any
   description?: (props?: {}) => any
   actions?: (props?: {}) => any
@@ -80,7 +80,7 @@ const style = computed(() => {
     :data-orientation="props.orientation"
     :class="style.root({ class: [props.class, props.ui?.root] })"
   >
-    <slot name="prepend">
+    <slot name="leading">
       <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
     </slot>
 

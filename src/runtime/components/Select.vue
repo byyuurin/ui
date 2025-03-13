@@ -16,13 +16,13 @@ export interface SelectEmits<T, V, M extends boolean> {
 type SlotProps<T> = (props: { item: T, index: number }) => any
 
 export interface SelectSlots<T, M extends boolean> {
-  prefix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  leading?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
   default?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean }) => any
-  suffix?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  trailing?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
   item?: SlotProps<T>
-  itemPrefix?: SlotProps<T>
+  itemLeading?: SlotProps<T>
   itemLabel?: SlotProps<T>
-  itemSuffix?: SlotProps<T>
+  itemTrailing?: SlotProps<T>
 }
 
 type SelectVariants = VariantProps<typeof select>
@@ -56,7 +56,7 @@ export interface SelectProps<
    * The icon displayed to open the menu.
    * @default app.icons.chevronDown
    */
-  suffixIcon?: string
+  trailingIcon?: string
   /**
    * The icon displayed when an item is selected.
    * @default app.icons.check
@@ -127,8 +127,8 @@ const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 const { theme, createStyler } = useTheme()
 
 const { size, orientation } = useButtonGroup(props)
-const { isPrefix, isSuffix, prefixIconName, suffixIconName } = useComponentIcons(toRef(() => defu(props, {
-  suffixIcon: theme.value.app.icons.chevronDown,
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
+  trailingIcon: theme.value.app.icons.chevronDown,
 })))
 
 const groups = computed(() => props.options?.length ? (Array.isArray(props.options[0]) ? props.options : [props.options]) as SelectOption[][] : [])
@@ -140,8 +140,8 @@ const style = computed(() => {
     ...props,
     size: size.value,
     groupOrientation: orientation.value,
-    prefix: isPrefix.value,
-    suffix: isSuffix.value,
+    leading: isLeading.value,
+    trailing: isTrailing.value,
   })
 })
 
@@ -196,9 +196,9 @@ function onUpdateOpen(value: boolean) {
     @update:open="onUpdateOpen"
   >
     <SelectTrigger :id="props.id" :class="style.base({ class: [props.class, props.ui?.base] })">
-      <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
-        <slot name="prefix" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
-          <span v-if="isPrefix && prefixIconName" :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"></span>
+      <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
+        <slot name="leading" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
+          <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"></span>
         </slot>
       </span>
 
@@ -213,9 +213,9 @@ function onUpdateOpen(value: boolean) {
         </template>
       </slot>
 
-      <span v-if="isSuffix || !!slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
-        <slot name="suffix" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
-          <span v-if="suffixIconName" :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"></span>
+      <span v-if="isTrailing || !!slots.trailing" :class="style.trailing({ class: props.ui?.trailing })">
+        <slot name="trailing" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
+          <span v-if="trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"></span>
         </slot>
       </span>
     </SelectTrigger>
@@ -237,8 +237,8 @@ function onUpdateOpen(value: boolean) {
                 :value="typeof item === 'object' ? get(item, props.valueKey as string) : item"
               >
                 <slot name="item" :item="typedItem(item)" :index="index">
-                  <slot name="itemPrefix" :item="typedItem(item)" :index="index">
-                    <span v-if="item.icon" :class="style.itemPrefixIcon({ class: [item.icon, props.ui?.itemPrefixIcon] })"></span>
+                  <slot name="itemLeading" :item="typedItem(item)" :index="index">
+                    <span v-if="item.icon" :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon] })"></span>
                   </slot>
 
                   <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })">
@@ -247,11 +247,11 @@ function onUpdateOpen(value: boolean) {
                     </slot>
                   </SelectItemText>
 
-                  <span :class="style.itemSuffix({ class: props.ui?.itemSuffix })">
-                    <slot name="itemSuffix" :item="typedItem(item)" :index="index"></slot>
+                  <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })">
+                    <slot name="itemTrailing" :item="typedItem(item)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
-                      <span :class="style.itemSuffixIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemSuffixIcon] })"></span>
+                      <span :class="style.itemTrailingIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })"></span>
                     </SelectItemIndicator>
                   </span>
                 </slot>

@@ -29,8 +29,8 @@ const controls: ControlItems<AlertProps> = [
         ]"
       />
       <UAlert v-bind="attrs" :actions="[{}]" close>
-        <template #prepend>
-          <Placeholder label="#prepend" />
+        <template #leading>
+          <Placeholder label="#leading" />
         </template>
         <template #close>
           <Placeholder label="#close" />

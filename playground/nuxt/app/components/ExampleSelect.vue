@@ -33,8 +33,8 @@ const controls: ControlItems<SelectProps<any, any, any, any>> = [
   >
     <div class="flex flex-col gap-4">
       <USelect v-model="value" v-bind="attrs" :options="options" />
-      <USelect v-model="value" v-bind="attrs" :options="options" suffix-icon="i-mdi-chevron-double-down" />
-      <USelect v-model="value" v-bind="attrs" prefix-icon="i-carbon-search" :options="options" />
+      <USelect v-model="value" v-bind="attrs" :options="options" trailing-icon="i-mdi-chevron-double-down" />
+      <USelect v-model="value" v-bind="attrs" leading-icon="i-carbon-search" :options="options" />
       <USelect v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :options="options" />
     </div>
   </ExampleView>

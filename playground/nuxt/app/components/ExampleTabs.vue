@@ -43,11 +43,11 @@ const items: TabsItem[] = [
       <UTabs v-bind="attrs" :items="[{}]">
         <Placeholder label="#default" />
 
-        <template #prefix>
-          <Placeholder label="#prefix" />
+        <template #leading>
+          <Placeholder label="#leading" />
         </template>
-        <template #suffix>
-          <Placeholder label="#suffix" />
+        <template #trailing>
+          <Placeholder label="#trailing" />
         </template>
         <template #content>
           <Placeholder label="#content" class="h-40" />

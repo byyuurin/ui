@@ -2,16 +2,16 @@ import { computed, type MaybeRefOrGetter, toValue } from 'vue'
 import { useTheme } from './useTheme'
 
 export interface UseComponentIconsProps {
-  /** Display an icon based on the `prefix` and `suffix` props. */
+  /** Display an icon based on the `leading` and `trailing` props. */
   icon?: string
   /** When `true`, the icon will be displayed on the left side. */
-  prefix?: boolean
+  leading?: boolean
   /** Display an icon on the left side. */
-  prefixIcon?: string
+  leadingIcon?: string
   /** When `true`, the icon will be displayed on the right side. */
-  suffix?: boolean
+  trailing?: boolean
   /** Display an icon on the right side. */
-  suffixIcon?: string
+  trailingIcon?: string
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
   /**
@@ -26,26 +26,26 @@ export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentI
 
   const props = computed(() => toValue(componentProps))
 
-  const isPrefix = computed(() => (props.value.icon && props.value.prefix) || (props.value.icon && !props.value.suffix) || (props.value.loading && !props.value.suffix) || !!props.value.prefixIcon)
-  const isSuffix = computed(() => (props.value.icon && props.value.suffix) || (props.value.loading && props.value.suffix) || !!props.value.suffixIcon)
+  const isLeading = computed(() => (props.value.icon && props.value.leading) || (props.value.icon && !props.value.trailing) || (props.value.loading && !props.value.trailing) || !!props.value.leadingIcon)
+  const isTrailing = computed(() => (props.value.icon && props.value.trailing) || (props.value.loading && props.value.trailing) || !!props.value.trailingIcon)
 
-  const prefixIconName = computed(() => {
+  const leadingIconName = computed(() => {
     if (props.value.loading)
       return props.value.loadingIcon || theme.value.app.icons.loading
 
-    return props.value.prefixIcon || props.value.icon
+    return props.value.leadingIcon || props.value.icon
   })
-  const suffixIconName = computed(() => {
-    if (props.value.loading && !isPrefix.value)
+  const trailingIconName = computed(() => {
+    if (props.value.loading && !isLeading.value)
       return props.value.loadingIcon || theme.value.app.icons.loading
 
-    return props.value.suffixIcon || props.value.icon
+    return props.value.trailingIcon || props.value.icon
   })
 
   return {
-    isPrefix,
-    isSuffix,
-    prefixIconName,
-    suffixIconName,
+    isLeading,
+    isTrailing,
+    leadingIconName,
+    trailingIconName,
   }
 }

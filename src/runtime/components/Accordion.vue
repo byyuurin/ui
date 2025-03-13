@@ -9,8 +9,8 @@ type SlotProps<T> = (props: { item: T, index: number, open: boolean }) => any
 
 export type AccordionSlots<T extends { slot?: string }> = {
   default?: SlotProps<T>
-  prefix?: SlotProps<T>
-  suffix?: SlotProps<T>
+  leading?: SlotProps<T>
+  trailing?: SlotProps<T>
   content?: SlotProps<T>
   body?: SlotProps<T>
 } & DynamicSlots<T, SlotProps<T>>
@@ -18,7 +18,7 @@ export type AccordionSlots<T extends { slot?: string }> = {
 export interface AccordionItem {
   label?: string
   icon?: string
-  suffixIcon?: string
+  trailingIcon?: string
   slot?: string
   content?: string
   /** A unique value for the accordion item. Defaults to the index. */
@@ -32,7 +32,7 @@ export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pic
    * The icon displayed on the right side of the trigger.
    * @default app.icons.chevronDown
    */
-  suffixIcon?: string
+  trailingIcon?: string
   labelKey?: string
 }
 </script>
@@ -74,16 +74,16 @@ const style = computed(() => {
     >
       <AccordionHeader :class="style.header({ class: props.ui?.header })">
         <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })">
-          <slot name="prefix" v-bind="{ item, index, open }">
-            <span v-if="item.icon" :class="style.prefixIcon({ class: [item.icon, props.ui?.prefixIcon] })"></span>
+          <slot name="leading" v-bind="{ item, index, open }">
+            <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })"></span>
           </slot>
 
           <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
             <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey) }}</slot>
           </span>
 
-          <slot name="suffix" v-bind="{ item, index, open }">
-            <span :class="style.suffixIcon({ class: [item.suffixIcon || props.suffixIcon || theme.app.icons.chevronDown, props.ui?.suffixIcon] })"></span>
+          <slot name="trailing" v-bind="{ item, index, open }">
+            <span :class="style.trailingIcon({ class: [item.trailingIcon || props.trailingIcon || theme.app.icons.chevronDown, props.ui?.trailingIcon] })"></span>
           </slot>
         </AccordionTrigger>
       </AccordionHeader>

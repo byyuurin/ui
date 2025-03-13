@@ -13,9 +13,9 @@ export interface InputEmits {
 }
 
 export interface InputSlots {
-  prefix?: (props?: {}) => any
+  leading?: (props?: {}) => any
   default?: (props?: {}) => any
-  suffix?: (props?: {}) => any
+  trailing?: (props?: {}) => any
 }
 
 type InputVariants = VariantProps<typeof input>
@@ -69,7 +69,7 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const { size, orientation } = useButtonGroup(props)
-const { isPrefix, prefixIconName, isSuffix, suffixIconName } = useComponentIcons(props)
+const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
@@ -80,8 +80,8 @@ const style = computed(() => {
     type: props.type,
     size: size.value,
     groupOrientation: orientation.value,
-    prefix: isPrefix.value || !!slots.prefix,
-    suffix: isSuffix.value || !!slots.suffix,
+    leading: isLeading.value || !!slots.leading,
+    trailing: isTrailing.value || !!slots.trailing,
   })
 })
 
@@ -138,11 +138,11 @@ onMounted(() => {
     :class="style.base({ class: [props.class, props.ui?.base] })"
     :aria-disabled="props.disabled ? true : undefined"
   >
-    <span v-if="isPrefix || slots.prefix" :class="style.prefix({ class: props.ui?.prefix })">
-      <slot name="prefix">
+    <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
+      <slot name="leading">
         <span
-          v-if="isPrefix && prefixIconName"
-          :class="style.prefixIcon({ class: [prefixIconName, props.ui?.prefixIcon] })"
+          v-if="isLeading && leadingIconName"
+          :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
         ></span>
       </slot>
     </span>
@@ -166,11 +166,11 @@ onMounted(() => {
 
     <slot></slot>
 
-    <span v-if="isSuffix || slots.suffix" :class="style.suffix({ class: props.ui?.suffix })">
-      <slot name="suffix">
+    <span v-if="isTrailing || slots.trailing" :class="style.trailing({ class: props.ui?.trailing })">
+      <slot name="trailing">
         <span
-          v-if="isSuffix && suffixIconName"
-          :class="style.suffixIcon({ class: [suffixIconName, props.ui?.suffixIcon] })"
+          v-if="isTrailing && trailingIconName"
+          :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
         ></span>
       </slot>
     </span>

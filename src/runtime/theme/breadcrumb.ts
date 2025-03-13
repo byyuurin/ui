@@ -6,7 +6,7 @@ export default ct(/* @unocss-include */{
     list: 'flex items-center gap-1.5',
     item: 'flex min-w-0',
     link: 'group relative flex items-center gap-1.5 text-sm min-w-0 focus-visible:outline-ui-cp',
-    linkPrefixIcon: 'shrink-0 size-5',
+    linkLeadingIcon: 'shrink-0 size-5',
     linkLabel: 'truncate',
     separator: 'flex',
     separatorIcon: 'shrink-0 size-5 color-ui-cb/60',

@@ -5,8 +5,8 @@ export default ct(/* @unocss-include */{
   slots: {
     base: 'inline-flex items-center rounded-ui-base leading-normal transition-colors',
     label: '',
-    prefixIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',
-    suffixIcon: 'shrink-0 size-1.5em not-only-child:mr-1.5',
+    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',
+    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-1.5',
   },
   variants: {
     ...buttonGroupVariant,

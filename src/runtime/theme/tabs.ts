@@ -11,7 +11,7 @@ export default ct(/* @unocss-include */{
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     content: 'w-full focus:outline-none',
-    prefixIcon: 'shrink-0 size-1.5em',
+    leadingIcon: 'shrink-0 size-1.5em',
     label: 'truncate',
   },
   variants: {

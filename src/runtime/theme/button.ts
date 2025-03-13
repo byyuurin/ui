@@ -9,8 +9,8 @@ export default ct(/* @unocss-include */{
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
-    prefixIcon: 'shrink-0 size-1.5em not-only-child:ml-0.5',
-    suffixIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
+    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-0.5',
+    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
   },
   variants: {
     ...buttonGroupVariant,
@@ -84,10 +84,10 @@ export default ct(/* @unocss-include */{
     active: {
       true: '',
     },
-    prefix: {
+    leading: {
       true: '',
     },
-    suffix: {
+    trailing: {
       true: '',
     },
     loading: {
@@ -146,14 +146,14 @@ export default ct(/* @unocss-include */{
     },
     {
       loading: true,
-      prefix: true,
-      class: { prefixIcon: 'animate-spin' },
+      leading: true,
+      class: { leadingIcon: 'animate-spin' },
     },
     {
       loading: true,
-      prefix: false,
-      suffix: true,
-      class: { suffixIcon: 'animate-spin' },
+      leading: false,
+      trailing: true,
+      class: { trailingIcon: 'animate-spin' },
     },
   ],
   defaultVariants: {
