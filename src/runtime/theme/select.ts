@@ -4,14 +4,14 @@ import { buttonGroupVariant } from './button-group'
 export default ct(/* @unocss-include */{
   slots: {
     base: [
-      'relative group rounded-ui-base inline-flex items-center gap-x-2 focus:outline-none transition-colors',
+      'group inline-flex items-center gap-x-2 rounded-ui-base focus:outline-none transition-colors',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     value: 'me-auto truncate pointer-events-none',
     placeholder: 'me-auto truncate color-ui-cb/50',
     arrow: 'fill-ui-cx stroke-ui-cb/20',
     content: [
-      'max-h-60 w-[var(--reka-popper-anchor-width)] bg-ui-cx shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/20 overflow-hidden pointer-events-auto',
+      'z-1 max-h-60 w-[var(--reka-popper-anchor-width)] bg-ui-cx shadow-lg rounded-[calc(var(--ui-radius-tabs)*0.66)] ring ring-ui-cb/20 overflow-hidden pointer-events-auto',
       'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
     ],
     viewport: 'divide-y divide-ui-cb/10 scroll-py-1',
