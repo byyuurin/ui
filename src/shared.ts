@@ -1,1 +1,1 @@
-export const packageName = '@byyuurin/ui'
+export { name as packageName } from '../package.json'

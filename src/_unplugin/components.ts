@@ -16,11 +16,6 @@ export default function ComponentImportPlugin(options: UIOptions, meta: Unplugin
 
   const pluginOptions = defu(options.components, <ComponentsOptions>{
     dts: options.dts ?? true,
-    exclude: [
-      /[\\/]node_modules[\\/](?!\.pnpm|@byyuurin\/ui)/,
-      /[\\/]\.git[\\/]/,
-      /[\\/]\.nuxt[\\/]/,
-    ],
     resolvers: [
       (componentName) => {
         if (componentNames.has(componentName))
