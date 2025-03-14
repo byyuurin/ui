@@ -78,7 +78,7 @@ const style = computed(() => {
               :class="style.link({ class: props.ui?.link, active: index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
             >
               <slot :name="item.slot || 'item'" :item="item" :index="index">
-                <slot :name="`${item.slot || 'item'}-leading`">
+                <slot :name="`${item.slot || 'item'}-leading`" :item="item" :active="index === items!.length - 1" :index="index">
                   <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })"></span>
                 </slot>
 
