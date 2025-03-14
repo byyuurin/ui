@@ -144,7 +144,13 @@ function stepVariant(index: number | string) {
       </slot>
     </div>
 
-    <ProgressRoot v-bind="rootProps" :max="max" :class="style.root({ class: props.ui?.root })" style="transform: translateZ(0)">
+    <ProgressRoot
+      v-bind="rootProps"
+      :model-value="Number.isNaN(rootProps.modelValue) ? null : rootProps.modelValue"
+      :max="max"
+      :class="style.root({ class: props.ui?.root })"
+      style="transform: translateZ(0)"
+    >
       <ProgressIndicator :class="style.indicator({ class: props.ui?.indicator })" :style="indicatorStyle" />
     </ProgressRoot>
 

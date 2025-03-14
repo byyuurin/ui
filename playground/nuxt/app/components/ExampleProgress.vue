@@ -14,11 +14,11 @@ const controls: ControlItems<ProgressProps> = [
 const TEXT_STATUS = ['Waiting...', 'Cloning...', 'Migrating...', 'Deploying...', 'Done!']
 
 function demo2Attrs(attrs: ProgressProps) {
-  const value = Math.floor((attrs.modelValue ?? 0) * TEXT_STATUS.length / ((attrs.max as number ?? 100))) - 1
+  const value = Math.floor((attrs.modelValue ?? 0) * TEXT_STATUS.length / (attrs.max as number ?? 100)) - 1
 
   return {
     ...attrs,
-    modelValue: value < 0 ? 0 : value,
+    modelValue: attrs.modelValue === null ? null : value < 0 ? 0 : value,
     max: TEXT_STATUS,
   }
 }
