@@ -317,8 +317,8 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
           as,
           type,
           disabled,
-          href: to,
-          target: isExternalLink ? '_blank' : undefined,
+          href: to || href,
+          target: isExternalLink ? '_blank' : target || undefined,
           active: false,
         }"
       >
@@ -332,8 +332,8 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
         as,
         type,
         disabled,
-        href: (to as string),
-        target: isExternalLink ? '_blank' : undefined,
+        href: ((to || href) as string),
+        target: isExternalLink ? '_blank' : target || undefined,
       }"
       :is-external="isExternalLink"
       :class="resolveLinkClass()"
