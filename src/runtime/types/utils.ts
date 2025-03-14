@@ -6,9 +6,7 @@ export type MaybeArray<T> = T | T[]
 export type MaybeArrayOfArray<T> = T[] | T[][]
 
 export type MaybeArrayOfArrayItem<T> = T extends Array<infer V1>
-  ? T extends Array<infer V2>
-    ? V2
-    : V1
+  ? V1 extends Array<infer V2> ? V2 : V1
   : never
 
 export type PartialTheme<T> = {
