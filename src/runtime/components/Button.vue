@@ -13,7 +13,7 @@ export interface ButtonSlots {
 
 type ButtonVariants = VariantProps<typeof button>
 
-export interface ButtonProps extends ComponentAttrs<typeof button>, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom'> {
+export interface ButtonProps extends ComponentAttrs<typeof button>, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
   icon?: string
   label?: string
   variant?: ButtonVariants['variant']
