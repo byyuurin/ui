@@ -14,9 +14,6 @@ export default function ComponentImportPlugin(options: UIOptions, meta: Unplugin
   const components = globSync('**/*.vue', { cwd: join(runtimeDir, 'components') })
   const componentNames = new Set(components.map((c) => `${prefix}${c.replace(/\.vue$/, '')}`))
 
-  const overrides = globSync('**/*.vue', { cwd: join(runtimeDir, 'vue/components') })
-  const overrideNames = new Set(overrides.map((c) => `${prefix}${c.replace(/\.vue$/, '')}`))
-
   const pluginOptions = defu(options.components, <ComponentsOptions>{
     dts: options.dts ?? true,
     exclude: [
@@ -26,9 +23,6 @@ export default function ComponentImportPlugin(options: UIOptions, meta: Unplugin
     ],
     resolvers: [
       (componentName) => {
-        if (overrideNames.has(componentName))
-          return { name: 'default', from: join(runtimeDir, 'vue/components', `${componentName.slice(prefix.length)}.vue`) }
-
         if (componentNames.has(componentName))
           return { name: 'default', from: join(runtimeDir, 'components', `${componentName.slice(prefix.length)}.vue`) }
       },

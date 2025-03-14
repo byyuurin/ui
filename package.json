@@ -65,7 +65,7 @@
     "release": "bumpp && pnpm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
-    "test:types": "vue-tsc --noEmit && cd playground/nuxt && vue-tsc --noEmit",
+    "test:types": "vue-tsc --noEmit && nuxi typecheck playground/nuxt",
     "prepare": "simple-git-hooks",
     "prepack": "nuxt-module-build build"
   },
@@ -86,6 +86,7 @@
     "@unocss/core": "^65.5.0",
     "@unocss/preset-mini": "^65.5.0",
     "@unocss/preset-uno": "^65.5.0",
+    "@vue/shared": "^3.5.13",
     "@vueuse/core": "^13.0.0",
     "defu": "^6.1.4",
     "embla-carousel": "^8.5.2",
@@ -143,7 +144,8 @@
     }
   },
   "resolutions": {
-    "@byyuurin/ui": "workspace:*"
+    "@byyuurin/ui": "workspace:*",
+    "vue-tsc": "2.2.0"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
