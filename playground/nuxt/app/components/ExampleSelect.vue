@@ -36,6 +36,40 @@ const controls: ControlItems<SelectProps<any, any, any, any>> = [
       <USelect v-model="value" v-bind="attrs" :options="options" trailing-icon="i-mdi-chevron-double-down" />
       <USelect v-model="value" v-bind="attrs" leading-icon="i-carbon-search" :options="options" />
       <USelect v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :options="options" />
+      <USelect v-model="value" v-bind="attrs" :options="options">
+        <template #default>
+          <Placeholder class="me-auto" label="#default" />
+        </template>
+        <template #leading>
+          <Placeholder label="#leading" />
+        </template>
+        <template #trailing>
+          <Placeholder label="#trailing" />
+        </template>
+        <template #item>
+          <Placeholder label="#item" />
+        </template>
+      </USelect>
+      <USelect v-model="value" v-bind="attrs" :options="options">
+        <template #default>
+          <Placeholder class="me-auto" label="#default" />
+        </template>
+        <template #leading>
+          <Placeholder label="#leading" />
+        </template>
+        <template #trailing>
+          <Placeholder label="#trailing" />
+        </template>
+        <template #item-label>
+          <Placeholder label="#item-label" />
+        </template>
+        <template #item-leading>
+          <Placeholder label="#item-leading" />
+        </template>
+        <template #item-trailing>
+          <Placeholder label="#item-trailing" />
+        </template>
+      </USelect>
     </div>
   </ExampleView>
 </template>

@@ -16,13 +16,13 @@ export interface SelectEmits<T, V, M extends boolean> {
 type SlotProps<T> = (props: { item: T, index: number }) => any
 
 export interface SelectSlots<T, M extends boolean> {
-  leading?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
-  default?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean }) => any
-  trailing?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
-  item?: SlotProps<T>
-  itemLeading?: SlotProps<T>
-  itemLabel?: SlotProps<T>
-  itemTrailing?: SlotProps<T>
+  'leading'?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  'default'?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean }) => any
+  'trailing'?: (props: { modelValue?: M extends true ? AcceptableValue[] : AcceptableValue, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  'item'?: SlotProps<T>
+  'item-leading'?: SlotProps<T>
+  'item-label'?: SlotProps<T>
+  'item-trailing'?: SlotProps<T>
 }
 
 type SelectVariants = VariantProps<typeof select>
@@ -237,18 +237,18 @@ function onUpdateOpen(value: boolean) {
                 :value="typeof item === 'object' ? get(item, props.valueKey as string) : item"
               >
                 <slot name="item" :item="typedItem(item)" :index="index">
-                  <slot name="itemLeading" :item="typedItem(item)" :index="index">
+                  <slot name="item-leading" :item="typedItem(item)" :index="index">
                     <span v-if="item.icon" :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon] })"></span>
                   </slot>
 
                   <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })">
-                    <slot name="itemLabel" :item="typedItem(item)" :index="index">
+                    <slot name="item-label" :item="typedItem(item)" :index="index">
                       {{ typeof item === 'object' ? get(item, props.labelKey as string) : item }}
                     </slot>
                   </SelectItemText>
 
                   <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })">
-                    <slot name="itemTrailing" :item="typedItem(item)" :index="index"></slot>
+                    <slot name="item-trailing" :item="typedItem(item)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
                       <span :class="style.itemTrailingIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })"></span>
