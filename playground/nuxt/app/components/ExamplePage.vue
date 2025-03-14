@@ -53,6 +53,7 @@ onMounted(() => {
       <ExamplePagination :class="uiColor" />
       <ExamplePinInput :class="uiColor" />
       <ExamplePopover :class="uiColor" />
+      <ExampleProgress :class="uiColor" />
       <ExampleRadioGroup :class="uiColor" />
       <ExampleScrollArea :class="uiColor" />
       <ExampleSelect :class="uiColor" />
