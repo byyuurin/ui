@@ -55,7 +55,6 @@ export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<
   dots?: boolean
   orientation?: CarouselVariants['orientation']
   items?: T[]
-  dir?: 'rtl' | 'ltr'
   /**
    * Enable Autoplay plugin
    * @link https://www.embla-carousel.com/plugins/autoplay/
@@ -103,8 +102,6 @@ const props = withDefaults(defineProps<CarouselProps<T>>(), {
   arrows: false,
   dots: false,
 
-  dir: 'ltr',
-
   // Embla Options
   active: true,
   align: 'center',
@@ -135,21 +132,21 @@ defineSlots<CarouselSlots<T>>()
 
 const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakpoints', 'containScroll', 'dragFree', 'dragThreshold', 'duration', 'inViewThreshold', 'loop', 'skipSnaps', 'slidesToScroll', 'startIndex', 'watchDrag', 'watchResize', 'watchSlides', 'watchFocus'))
 
-const { t } = useLocale()
+const { t, dir } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.carousel)
   return styler(props)
 })
 
-const prevIcon = computed(() => props.prevIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
-const nextIcon = computed(() => props.nextIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
+const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
+const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 
 const options = computed<EmblaOptionsType>(() => ({
   ...(props.fade ? { align: 'center', containScroll: false } : {}),
   ...rootProps.value,
   axis: props.orientation === 'horizontal' ? 'x' : 'y',
-  direction: props.dir === 'rtl' ? 'rtl' : 'ltr',
+  direction: dir.value === 'rtl' ? 'rtl' : 'ltr',
 }))
 
 const plugins = computedAsync<EmblaPluginType[]>(async () => {
@@ -261,7 +258,6 @@ defineExpose({
     role="region"
     aria-roledescription="carousel"
     tabindex="0"
-    :dir="props.dir"
     :class="style.root({ class: [props.class, props.ui?.root] })"
     @keydown="onKeyDown"
   >

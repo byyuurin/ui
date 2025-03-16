@@ -8,9 +8,7 @@ const items: BreadcrumbItem[] = [
   { label: 'Breadcrumb', icon: 'i-lucide-link', to: '/' },
 ]
 
-const controls: ControlItems<BreadcrumbProps<BreadcrumbItem>> = [
-  { prop: 'dir', value: 'ltr', options: ['ltr', 'rtl'] },
-]
+const controls: ControlItems<BreadcrumbProps<BreadcrumbItem>> = []
 </script>
 
 <template>

@@ -25,7 +25,6 @@ export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
    * @default "nav"
    */
   as?: PrimitiveProps['as']
-  dir?: 'rtl' | 'ltr'
   items?: T[]
   /**
    * The icon to use as a separator.
@@ -43,6 +42,7 @@ export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
 <script setup lang="ts" generic="T extends BreadcrumbItem">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import { get, pickLinkProps } from '../utils'
 import Link from './Link.vue'
@@ -55,9 +55,10 @@ const props = withDefaults(defineProps<BreadcrumbProps<T>>(), {
 
 const slots = defineSlots<BreadcrumbSlots<T>>()
 
+const { dir } = useLocale()
 const { theme, createStyler } = useTheme()
 
-const separatorIcon = computed(() => props.separatorIcon || (props.dir === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
+const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 
 const style = computed(() => {
   const styler = createStyler(theme.value.breadcrumb)

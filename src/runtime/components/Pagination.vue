@@ -77,6 +77,7 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
 import { reactivePick } from '@vueuse/core'
 import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, PaginationListItem, PaginationNext, PaginationPrev, PaginationRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
 
@@ -95,12 +96,13 @@ const slots = defineSlots<PaginationSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultPage', 'disabled', 'itemsPerPage', 'page', 'showEdges', 'siblingCount', 'total'), emit)
 
+const { dir } = useLocale()
 const { theme, createStyler } = useTheme()
 
-const firstIcon = computed(() => props.firstIcon || theme.value.app.icons.chevronDoubleLeft)
-const prevIcon = computed(() => props.prevIcon || theme.value.app.icons.chevronLeft)
-const nextIcon = computed(() => props.nextIcon || theme.value.app.icons.chevronRight)
-const lastIcon = computed(() => props.lastIcon || theme.value.app.icons.chevronDoubleRight)
+const firstIcon = computed(() => props.firstIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleRight : theme.value.app.icons.chevronDoubleLeft))
+const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
+const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
+const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleLeft : theme.value.app.icons.chevronDoubleRight))
 const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.ellipsis)
 
 const style = computed(() => {

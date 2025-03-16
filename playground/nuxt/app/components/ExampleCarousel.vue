@@ -5,7 +5,6 @@ import type { ControlItems } from './ExampleView.vue'
 const items = Array.from({ length: 15 }, (_, i) => `https://picsum.photos/id/${i + i * 11}/640/640`)
 
 const controls: ControlItems<CarouselProps<typeof items[number]>> = [
-  { prop: 'dir', value: 'ltr', options: ['ltr', 'rtl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'align', value: 'center', options: ['center', 'start', 'end'] },
   { prop: 'slidesToScroll', value: 1, options: [{ label: 'ON (auto)', value: 'auto' }, { label: 'OFF (1)', value: 1 }] },

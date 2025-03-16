@@ -45,11 +45,13 @@ const modalState = shallowRef<ModalStateProvideValue>({
 provideModalState(modalState)
 provideUnoConfig(() => props.unoConfig)
 provideThemeExtension(() => props.ui)
-provideLocaleContext(() => props.locale)
+
+const locale = toRef(() => props.locale)
+provideLocaleContext(locale)
 </script>
 
 <template>
-  <ConfigProvider :use-id="useId" v-bind="configProviderProps">
+  <ConfigProvider :use-id="useId" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
     <TooltipProvider v-bind="tooltipProps">
       <Toaster v-if="props.toaster !== null" v-bind="toasterProps">
         <slot></slot>
