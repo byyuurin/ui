@@ -114,54 +114,58 @@ const style = computed(() => {
 <template>
   <PaginationRoot v-slot="{ page, pageCount }" v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
     <PaginationList v-slot="{ items }" :class="style.list({ class: props.ui?.list })">
-      <PaginationFirst v-if="props.showControls || !!slots.first" as-child>
+      <PaginationFirst v-if="props.showControls || !!slots.first" :class="style.first({ class: props.ui?.first })" as-child>
         <slot name="first">
-          <Button :class="style.item({ class: props.ui?.item })" :variant="props.variant" :size="props.size" :icon="firstIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="firstIcon" />
         </slot>
       </PaginationFirst>
-      <PaginationPrev v-if="props.showControls || !!slots.prev" as-child>
+      <PaginationPrev v-if="props.showControls || !!slots.prev" :class="style.prev({ class: props.ui?.prev })" as-child>
         <slot name="prev">
-          <Button :class="style.item({ class: props.ui?.item })" :variant="props.variant" :size="props.size" :icon="prevIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="prevIcon" />
         </slot>
       </PaginationPrev>
 
       <template v-for="(item, index) in items">
-        <PaginationListItem v-if="item.type === 'page'" :key="index" as-child :value="item.value">
+        <PaginationListItem v-if="item.type === 'page'" :key="index" :class="style.item({ class: props.ui?.item })" :value="item.value" as-child>
           <slot name="item" v-bind="{ item, index, page, pageCount }">
             <Button
-              :class="style.item({ class: props.ui?.item })"
               :variant="props.page === item.value ? props.activeVariant : props.variant"
               :size="props.size"
               :label="String(item.value)"
-              :ui="{ label: style.label() }"
+              :ui="{ label: style.label({ class: props.ui?.label }) }"
             />
           </slot>
         </PaginationListItem>
 
-        <PaginationEllipsis v-else :key="item.type" :index="index" as-child>
+        <PaginationEllipsis
+          v-else
+          :key="item.type"
+          :class="[
+            style.item({ class: props.ui?.item }),
+            style.ellipsis({ class: props.ui?.ellipsis }),
+          ]"
+          :index="index"
+          :disabled="props.disabled"
+          as-child
+        >
           <slot name="ellipsis">
             <Button
               :variant="props.variant"
               :size="props.size"
               :icon="ellipsisIcon"
-              :disabled="props.disabled /* TODO: remove after reka-ui update */"
-              :class="[
-                style.item({ class: props.ui?.item }),
-                style.ellipsis({ class: props.ui?.ellipsis }),
-              ]"
             />
           </slot>
         </PaginationEllipsis>
       </template>
 
-      <PaginationNext v-if="props.showControls || !!slots.next" as-child>
+      <PaginationNext v-if="props.showControls || !!slots.next" :class="style.next({ class: props.ui?.next })" as-child>
         <slot name="next">
-          <Button :class="style.item({ class: props.ui?.item })" :variant="props.variant" :size="props.size" :icon="nextIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="nextIcon" />
         </slot>
       </PaginationNext>
-      <PaginationLast v-if="props.showControls || !!slots.last" as-child>
+      <PaginationLast v-if="props.showControls || !!slots.last" :class="style.last({ class: props.ui?.last })" as-child>
         <slot name="last">
-          <Button :class="style.item({ class: props.ui?.item })" :variant="props.variant" :size="props.size" :icon="lastIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="lastIcon" />
         </slot>
       </PaginationLast>
     </PaginationList>
