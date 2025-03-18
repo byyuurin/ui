@@ -2,10 +2,10 @@ import { resolve } from 'node:path'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
   modules: [
     '@unocss/nuxt',
     '../../src/module',
+    'compodium',
   ],
   devtools: { enabled: true },
   css: [
@@ -23,5 +23,18 @@ export default defineNuxtConfig({
         '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
       },
     },
+  },
+  compodium: {
+    dir: 'app/compodium',
+    exclude: [
+      'Example*.vue',
+      'Placeholder.vue',
+      'ThemeSelector.vue',
+      '*App.vue',
+      '*Toast.vue',
+      '*Toaster.vue',
+      '*Provider.vue',
+      '*Content.vue',
+    ],
   },
 })
