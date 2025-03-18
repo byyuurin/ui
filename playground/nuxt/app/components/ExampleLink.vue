@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const controls: ControlItems<LinkProps> = [
   { prop: 'label', value: 'Github' },
   { prop: 'href', value: 'https://github.com/' },
-  { prop: 'target', value: '_blank', options: ['_blank', '_parent', '_self', '_top'] },
+  { prop: 'target', value: null, options: [{ label: 'none', value: null }, '_blank', '_parent', '_self', '_top'] },
   { prop: 'underline', value: false },
   { prop: 'active', value: false },
   { prop: 'disabled', value: false },

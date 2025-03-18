@@ -163,10 +163,12 @@ function isPartiallyEqual(item1: any, item2: any) {
 }
 
 const isExternalLink = computed(() => {
-  if (!props.to)
+  const to = props.to || props.href
+
+  if (!to)
     return false
 
-  return typeof props.to === 'string' && hasProtocol(props.to, { acceptRelative: true })
+  return typeof to === 'string' && hasProtocol(to, { acceptRelative: true })
 })
 
 function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
@@ -301,6 +303,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
           href: to ? href : undefined,
           navigate,
         }"
+        :is-external="isExternalLink"
         :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
       >
         <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
@@ -318,7 +321,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
           type,
           disabled,
           href: to || href,
-          target: isExternalLink ? '_blank' : target || undefined,
+          target: target || (isExternalLink ? '_blank' : undefined),
           active: false,
         }"
       >
@@ -333,7 +336,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
         type,
         disabled,
         href: ((to || href) as string),
-        target: isExternalLink ? '_blank' : target || undefined,
+        target: target || (isExternalLink ? '_blank' : undefined),
       }"
       :is-external="isExternalLink"
       :class="resolveLinkClass()"
