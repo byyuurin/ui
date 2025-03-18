@@ -335,7 +335,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
         as,
         type,
         disabled,
-        href: ((to || href) as string),
+        href: ((typeof to === 'string' ? to : href) as string),
         target: target || (isExternalLink ? '_blank' : undefined),
       }"
       :is-external="isExternalLink"

@@ -70,6 +70,10 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
    * @default true
    */
   showControls?: boolean
+  /**
+   * A function to render page controls as links.
+   */
+  to?: (page: number) => ButtonProps['to']
 }
 </script>
 
@@ -116,12 +120,12 @@ const style = computed(() => {
     <PaginationList v-slot="{ items }" :class="style.list({ class: props.ui?.list })">
       <PaginationFirst v-if="props.showControls || !!slots.first" :class="style.first({ class: props.ui?.first })" as-child>
         <slot name="first">
-          <Button :variant="props.variant" :size="props.size" :icon="firstIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="firstIcon" :to="props.to?.(1)" />
         </slot>
       </PaginationFirst>
       <PaginationPrev v-if="props.showControls || !!slots.prev" :class="style.prev({ class: props.ui?.prev })" as-child>
         <slot name="prev">
-          <Button :variant="props.variant" :size="props.size" :icon="prevIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="prevIcon" :to="page > 1 ? props.to?.(page - 1) : undefined" />
         </slot>
       </PaginationPrev>
 
@@ -132,6 +136,7 @@ const style = computed(() => {
               :variant="props.page === item.value ? props.activeVariant : props.variant"
               :size="props.size"
               :label="String(item.value)"
+              :to="props.to?.(item.value)"
               :ui="{ label: style.label({ class: props.ui?.label }) }"
             />
           </slot>
@@ -160,12 +165,12 @@ const style = computed(() => {
 
       <PaginationNext v-if="props.showControls || !!slots.next" :class="style.next({ class: props.ui?.next })" as-child>
         <slot name="next">
-          <Button :variant="props.variant" :size="props.size" :icon="nextIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="nextIcon" :to="page < pageCount ? props.to?.(page + 1) : undefined" />
         </slot>
       </PaginationNext>
       <PaginationLast v-if="props.showControls || !!slots.last" :class="style.last({ class: props.ui?.last })" as-child>
         <slot name="last">
-          <Button :variant="props.variant" :size="props.size" :icon="lastIcon" />
+          <Button :variant="props.variant" :size="props.size" :icon="lastIcon" :to="props.to?.(pageCount)" />
         </slot>
       </PaginationLast>
     </PaginationList>

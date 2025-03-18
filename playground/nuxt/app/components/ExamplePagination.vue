@@ -25,7 +25,7 @@ const controls: ControlItems<PaginationProps> = [
     :controls="controls"
   >
     <div>
-      <UPagination v-bind="attrs" v-model:page="page" />
+      <UPagination v-bind="attrs" v-model:page="page" :to="(page) => ({ query: { page } })" />
     </div>
   </ExampleView>
 </template>
