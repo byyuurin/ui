@@ -20,12 +20,12 @@ describe('check defu result', () => {
 
     expect(raw).toMatchInlineSnapshot(`
       {
-        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80",
+        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-base/80",
         "variants": {
           "active": {
             "false": [
-              "color-ui-cb/80 hover:color-ui-cb/60 transition-colors",
-              "disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb",
+              "color-ui-base/80 hover:color-ui-base/60 transition-colors",
+              "disabled:hover:color-ui-base aria-disabled:hover:color-ui-base",
               " ",
             ],
             "true": [
@@ -47,12 +47,12 @@ describe('check defu result', () => {
 
     expect(result).toMatchInlineSnapshot(`
       {
-        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80 el-link",
+        "base": "border-y border-t-transparent outline-none focus-visible:outline-ui-base/80 el-link",
         "variants": {
           "active": {
             "false": [
-              "color-ui-cb/80 hover:color-ui-cb/60 transition-colors",
-              "disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb",
+              "color-ui-base/80 hover:color-ui-base/60 transition-colors",
+              "disabled:hover:color-ui-base aria-disabled:hover:color-ui-base",
               " ",
             ],
             "true": [

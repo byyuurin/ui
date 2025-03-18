@@ -5,25 +5,24 @@ export const theme: Theme = {
   colors: {
     [cssVarsPrefix]: {
       cb: cssColor(cssVar('cb')),
-      cp: cssColor(cssVar('cp', cssVar('cb'))),
       cx: cssColor(cssVar('cx')),
+      primary: cssColor(cssVar('cp', cssVar('content'), cssVar('cb'))),
       fill: cssColor(cssVar('fill', cssVar('cb'))),
-      content: cssColor(cssVar('content', cssVar('cb'))),
     },
   },
   backgroundColor: {
     [cssVarsPrefix]: {
-      base: cssColor(cssVar('fill', cssVar('cx'))),
+      base: cssColor(cssVar('cx')),
     },
   },
   textColor: {
     [cssVarsPrefix]: {
-      base: cssColor(cssVar('content', cssVar('cb'))),
+      base: cssColor(cssVar('cb')),
     },
   },
   borderColor: {
     [cssVarsPrefix]: {
-      base: cssColor(cssVar('fill', cssVar('cb'))),
+      base: cssColor(cssVar('cb')),
     },
   },
   borderRadius: {
@@ -37,7 +36,7 @@ export const theme: Theme = {
   },
   shadowColor: {
     [cssVarsPrefix]: {
-      base: cssColor(cssVar('fill', cssVar('cb'))),
+      base: cssColor(cssVar('cb')),
     },
   },
   animation: {

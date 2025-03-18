@@ -141,7 +141,7 @@ function cssVar(color: string) {
 export function setTheme(theme: ThemeConfig) {
   const html = document.querySelector('html')!
 
-  html.classList.toggle('bg-ui-cx', true)
+  html.classList.toggle('bg-ui-base', true)
   html.classList.toggle('transition', true)
 
   const attrs = resolveThemeAttrs(theme)
@@ -211,7 +211,7 @@ const themeItems = computed(() => [
 ])
 
 const colorGroups = [
-  ['ui-base', 'ui-base-inverted', 'ui-primary'],
+  ['', 'ui-base-reverse', 'ui-primary'],
   ['ui-rose-50', 'ui-rose-100', 'ui-rose-200', 'ui-rose-300', 'ui-rose-400', 'ui-rose-500', 'ui-rose-600', 'ui-rose-700', 'ui-rose-800', 'ui-rose-900', 'ui-rose-950'],
   ['ui-pink-50', 'ui-pink-100', 'ui-pink-200', 'ui-pink-300', 'ui-pink-400', 'ui-pink-500', 'ui-pink-600', 'ui-pink-700', 'ui-pink-800', 'ui-pink-900', 'ui-pink-950'],
   ['ui-fuchsia-50', 'ui-fuchsia-100', 'ui-fuchsia-200', 'ui-fuchsia-300', 'ui-fuchsia-400', 'ui-fuchsia-500', 'ui-fuchsia-600', 'ui-fuchsia-700', 'ui-fuchsia-800', 'ui-fuchsia-900', 'ui-fuchsia-950'],
@@ -250,8 +250,6 @@ function onOptionClick(theme: ThemeConfig) {
   setTheme(theme)
   currentTheme.value = theme.name as any
 
-  const hex = (rgb = '') => rgb ? `#${rgb.split(' ').map((v) => Number(v).toString(16).padStart(2, '0')).join('')}` : ''
-
   themeCustomize.value = {
     ...theme,
     name: 'customize',
@@ -287,19 +285,19 @@ function setCustomTheme() {
           <div
             v-for="theme in themeItems"
             :key="theme.name"
-            class="self-end border-ui-cb/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-cx transition"
+            class="self-end border-ui-base/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-base transition"
             :class="{
-              'hover:border-ui-cb/40 ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-cx': theme.name === currentTheme,
+              'hover:border-ui-base/40 ring-3 ring-ui-base/80 ring-offset-3 ring-offset-ui-cx': theme.name === currentTheme,
               'cursor-pointer': theme.name !== currentTheme && theme.name !== 'customize',
             }"
             :style="Object.fromEntries(resolveThemeAttrs(theme))"
             @click="onOptionClick(theme)"
           >
-            <div class="bg-ui-cx text-ui-cb w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
+            <div class="bg-ui-base color-ui-base w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
               <div class="min-w-40 grid grid-cols-4 grid-rows-3">
                 <div class="bg-soft-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
                 <div class="bg-soft-ui-cb/20 col-start-1 row-start-3"></div>
-                <div class="bg-ui-cx col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                <div class="bg-ui-base col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
                   <div class="text-xl font-bold">
                     {{ theme.name }}
                   </div>
@@ -312,11 +310,11 @@ function setCustomTheme() {
           <div v-for="(colorOptions, y) in colorGroups" :key="y" class="w-full flex flex-wrap items-start gap-2">
             <div v-for="colorName in colorOptions" :key="colorName" class="flex aspect-square items-center justify-center rounded">
               <ULink
-                class="size-12 bg-ui-fill color-white font-bold border-ui-cb/20 hover:border-ui-cb/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-                :class="[colorName, { 'ring-3 ring-ui-cb/80 ring-offset-3 ring-offset-ui-cx': colorName === props.color }]"
+                class="size-12 bg-ui-fill color-white font-bold border-ui-base/20 hover:border-ui-base/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
+                :class="[colorName, { 'ring-3 ring-ui-base/80 ring-offset-3 ring-offset-ui-cx': colorName === props.color }]"
                 size="xl"
                 label="A"
-                :title="colorName"
+                :title="colorName || `${cssVarsPrefix}-base`"
                 raw
                 @click="setColor(colorName)"
               />

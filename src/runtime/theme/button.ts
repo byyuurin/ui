@@ -5,7 +5,7 @@ export default ct(/* @unocss-include */{
   slots: {
     base: [
       'relative inline-flex items-center rounded-ui-button leading-normal transition-colors',
-      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
+      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
@@ -25,26 +25,26 @@ export default ct(/* @unocss-include */{
       },
       'outline': {
         base: [
-          'color-ui-fill/80 bg-ui-cx ring ring-inset ring-ui-fill/30',
+          'color-ui-fill/80 bg-ui-base ring ring-inset ring-ui-fill/30',
           'hover:bg-soft-ui-fill/5 active:bg-soft-ui-fill/10',
-          'disabled:bg-ui-cx aria-disabled:bg-ui-cx',
-          'hover:disabled:bg-ui-cx hover:aria-disabled:bg-ui-cx',
+          'disabled:bg-ui-base aria-disabled:bg-ui-base',
+          'hover:disabled:bg-ui-base hover:aria-disabled:bg-ui-base',
         ],
       },
       'soft': {
         base: [
-          'color-ui-content/80 bg-soft-ui-fill/15',
-          'hover:bg-soft-ui-fill/10 hover:color-ui-content/80 active:bg-soft-ui-fill/25 active:color-ui-content/90',
-          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
-          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-content/80 hover:aria-disabled:color-ui-content/80',
+          'color-ui-fill/80 bg-soft-ui-fill/15',
+          'hover:bg-soft-ui-fill/10 hover:color-ui-fill/80 active:bg-soft-ui-fill/25 active:color-ui-fill/90',
+          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
+          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-fill/80 hover:aria-disabled:color-ui-fill/80',
         ],
       },
       'soft-outline': {
         base: [
-          'color-ui-content/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/30',
-          'hover:bg-soft-ui-fill/10 hover:color-ui-content/80 active:bg-soft-ui-fill/25 active:color-ui-content/90',
-          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-content/80 aria-disabled:color-ui-content/80',
-          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-content/80 hover:aria-disabled:color-ui-content/80',
+          'color-ui-fill/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/30',
+          'hover:bg-soft-ui-fill/10 hover:color-ui-fill/80 active:bg-soft-ui-fill/25 active:color-ui-fill/90',
+          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
+          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-fill/80 hover:aria-disabled:color-ui-fill/80',
         ],
       },
       'ghost': {
@@ -127,7 +127,7 @@ export default ct(/* @unocss-include */{
       active: true,
       variant: ['soft', 'soft-outline'],
       class: {
-        base: 'color-ui-content/90 bg-soft-ui-fill/25 hover:color-ui-content/90 hover:bg-soft-ui-fill/25',
+        base: 'color-ui-fill/90 bg-soft-ui-fill/25 hover:color-ui-fill/90 hover:bg-soft-ui-fill/25',
       },
     },
     {

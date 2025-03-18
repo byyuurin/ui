@@ -15,13 +15,13 @@ export default ct(/* @unocss-include */{
         base: 'color-ui-cx bg-soft-ui-fill/90',
       },
       'outline': {
-        base: 'color-ui-fill bg-ui-cx ring ring-inset ring-ui-fill/30',
+        base: 'color-ui-fill bg-ui-base ring ring-inset ring-ui-fill/30',
       },
       'soft': {
-        base: 'color-ui-content/80 bg-soft-ui-fill/10',
+        base: 'color-ui-fill/80 bg-soft-ui-fill/10',
       },
       'soft-outline': {
-        base: 'color-ui-content/80 bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/30',
+        base: 'color-ui-fill/80 bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/30',
       },
     },
     size: {

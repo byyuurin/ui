@@ -34,7 +34,7 @@ export default ct(/* @unocss-include */{
     },
     active: {
       true: {
-        dot: 'bg-soft-ui-content',
+        dot: 'bg-ui-fill',
       },
     },
   },

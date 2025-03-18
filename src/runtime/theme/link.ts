@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  base: 'border-y border-t-transparent outline-none focus-visible:outline-ui-cb/80',
+  base: 'border-y border-t-transparent outline-none focus-visible:outline-ui-base/80',
   variants: {
     underline: {
       true: 'border-current',
@@ -13,8 +13,8 @@ export default ct(/* @unocss-include */{
         'disabled:color-ui-fill aria-disabled:color-ui-fill',
       ],
       false: [
-        'color-ui-cb/80 hover:color-ui-cb/60 transition-colors',
-        'disabled:hover:color-ui-cb aria-disabled:hover:color-ui-cb',
+        'color-ui-base/80 hover:color-ui-base/60 transition-colors',
+        'disabled:hover:color-ui-base aria-disabled:hover:color-ui-base',
       ],
     },
     disabled: {

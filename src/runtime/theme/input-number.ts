@@ -5,7 +5,7 @@ export default ct(/* @unocss-include */{
   slots: {
     base: 'relative inline-flex items-center rounded-ui-base transition-colors aria-disabled:opacity-50',
     input: [
-      'w-full color-inherit bg-transparent border-0 placeholder:color-ui-cb/50',
+      'w-full color-inherit bg-transparent border-0 placeholder:color-ui-base/50',
       'focus:outline-none',
       'disabled:cursor-not-allowed',
     ],

@@ -16,16 +16,16 @@ export default ct(/* @unocss-include */{
         description: 'color-ui-cx/80',
       },
       'outline': {
-        root: 'color-ui-content bg-ui-cx divide-ui-content/20 ring ring-inset ring-ui-fill/20',
-        description: 'color-ui-content/80',
+        root: 'color-ui-fill bg-ui-base divide-ui-fill/20 ring ring-inset ring-ui-fill/20',
+        description: 'color-ui-fill/80',
       },
       'soft': {
-        root: 'color-ui-content bg-soft-ui-fill/10 divide-ui-content/20',
-        description: 'color-ui-content/80',
+        root: 'color-ui-fill bg-soft-ui-fill/10 divide-ui-fill/20',
+        description: 'color-ui-fill/80',
       },
       'soft-outline': {
-        root: 'color-ui-content bg-soft-ui-fill/10 divide-ui-content/20 ring ring-inset ring-ui-fill/20',
-        description: 'color-ui-content/80',
+        root: 'color-ui-fill bg-soft-ui-fill/10 divide-ui-fill/20 ring ring-inset ring-ui-fill/20',
+        description: 'color-ui-fill/80',
       },
     },
   },

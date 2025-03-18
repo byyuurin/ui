@@ -4,14 +4,14 @@ export default ct(/* @unocss-include */{
   slots: {
     root: 'relative',
     fieldset: 'flex flex-wrap gap-2 gap-x-4',
-    legend: 'mb-2 color-ui-cb',
+    legend: 'mb-2 color-ui-base',
     item: 'flex items-start',
-    base: 'relative size-1.25em rounded-ui-radio ring ring-inset ring-ui-cb outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80 transition data-[state=checked]:ring-ui-base',
+    base: 'relative size-1.25em rounded-ui-radio ring ring-inset ring-ui-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80 transition data-[state=checked]:ring-ui-base',
     indicator: 'absolute inset-0 scale-0 rounded-ui-radio bg-ui-fill transition data-[state=checked]:scale-66',
     container: 'h-1.5em flex items-center',
     wrapper: '',
-    label: 'block ps-2 color-ui-cb',
-    description: 'ps-2 color-ui-cb/60',
+    label: 'block ps-2 color-ui-base',
+    description: 'ps-2 color-ui-base/60',
   },
   variants: {
     orientation: {

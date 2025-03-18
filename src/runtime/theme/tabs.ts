@@ -19,24 +19,24 @@ export default ct(/* @unocss-include */{
       'solid': {
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
         trigger: [
-          'data-[state=active]:color-ui-cx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-cb/80',
-          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
+          'data-[state=active]:color-ui-cx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
+          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
         ],
         indicator: 'bg-soft-ui-fill/90 rounded-ui-tabs shadow-sm',
       },
       'outline': {
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
         trigger: [
-          'data-[state=active]:color-ui-content focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-content/80',
-          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
+          'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill/80',
+          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
         ],
-        indicator: 'rounded-ui-tabs ring ring-inset ring-ui-content',
+        indicator: 'rounded-ui-tabs ring ring-inset ring-ui-fill',
       },
       'soft': {
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
-          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
+          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
         ],
         indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-sm',
       },
@@ -44,16 +44,16 @@ export default ct(/* @unocss-include */{
         list: 'bg-soft-ui-cb/5 rounded-ui-tabs',
         trigger: [
           'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
-          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
+          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
         ],
-        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-sm ring ring-inset ring-ui-content/30',
+        indicator: 'bg-soft-ui-fill/10 rounded-ui-tabs shadow-sm ring ring-inset ring-ui-fill/30',
       },
       'link': {
-        list: 'bg-soft-ui-cb/5 border-ui-cb/10',
+        list: 'bg-soft-ui-cb/5 border-ui-base/10',
         indicator: 'bg-soft-ui-fill rounded-full',
         trigger: [
           'data-[state=active]:color-ui-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-base',
-          'data-[state=inactive]:color-ui-cb/80 hover:data-[state=inactive]:not-disabled:color-ui-cb',
+          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
         ],
       },
     },

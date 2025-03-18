@@ -5,7 +5,7 @@ export default ct(/* @unocss-include */{
   variants: {
     variant: {
       'solid': 'color-ui-cx bg-soft-ui-fill/90',
-      'outline': 'color-ui-fill ring bg-ui-cx/90 ring-inset ring-ui-fill/30',
+      'outline': 'color-ui-fill ring bg-ui-base/90 ring-inset ring-ui-fill/30',
       'soft': 'color-ui-fill/80 bg-soft-ui-fill/20',
       'soft-outline': 'color-ui-fill/80 bg-soft-ui-fill/20 ring ring-inset ring-ui-fill/30',
     },

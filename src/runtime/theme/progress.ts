@@ -4,9 +4,9 @@ export default ct(/* @unocss-include */{
   slots: {
     wrapper: 'gap-2',
     root: 'relative overflow-hidden rounded-full bg-soft-ui-cb/30',
-    indicator: 'bg-ui-content rounded-full size-full transition-transform duration-200 ease-out',
-    status: 'flex justify-end color-ui-cb/50 transition-[width] duration-200',
-    steps: 'grid items-end color-ui-cb/80',
+    indicator: 'bg-ui-fill rounded-full size-full transition-transform duration-200 ease-out',
+    status: 'flex justify-end color-ui-base/50 transition-[width] duration-200',
+    steps: 'grid items-end color-ui-base/80',
     step: 'truncate text-end row-start-1 col-start-1 transition-opacity',
   },
   variants: {
@@ -32,7 +32,7 @@ export default ct(/* @unocss-include */{
         step: 'opacity-100',
       },
       first: {
-        step: 'opacity-100 color-ui-cb/60',
+        step: 'opacity-100 color-ui-base/60',
       },
       other: {
         step: 'opacity-0',

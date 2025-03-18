@@ -3,12 +3,12 @@ import { ct } from '@byyuurin/ui-kit'
 export default ct(/* @unocss-include */{
   slots: {
     overlay: 'fixed z-1 inset-0 bg-black/40',
-    content: 'fixed z-1 bg-ui-cx ring ring-ui-cb/5 flex focus:outline-none',
+    content: 'fixed z-1 bg-ui-base ring ring-ui-base/5 flex focus:outline-none',
     handle: 'shrink-0 rounded-full bg-soft-ui-cb/17.5',
     container: 'w-full flex flex-col overflow-hidden overflow-y-auto',
     header: 'p-4 sm:px-6 sibling:pt-0',
-    title: 'color-ui-cb text-xl font-semibold',
-    description: 'mt-1 color-ui-cb/80',
+    title: 'color-ui-base text-xl font-semibold',
+    description: 'mt-1 color-ui-base/80',
     body: 'p-4 sm:px-6 flex-1 sibling:pt-0',
     footer: 'p-4 sm:px-6 flex flex-col gap-1.5',
   },

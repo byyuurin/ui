@@ -4,7 +4,7 @@ export default ct(/* @unocss-include */{
   slots: {
     root: 'flex items-center justify-center text-center',
     line: 'border-solid border-ui-fill/20',
-    container: 'color-ui-cb/80 flex',
+    container: 'color-ui-base/80 flex',
     icon: 'shrink-0 size-5',
     label: '',
   },

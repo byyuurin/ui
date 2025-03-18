@@ -82,10 +82,10 @@ onMounted(() => {
           :handle="false"
           :overlay="false"
           :ui="{
-            header: 'sticky z-1 top-0 bg-ui-cx',
+            header: 'sticky z-1 top-0 bg-ui-base',
             title: 'text-2xl',
-            content: 'z-1 overflow-x-hidden ring-ui-cb/10 ring-8 ring-offset-ui-cb ring-offset-2',
-            footer: 'sticky bottom-0 bg-ui-cx',
+            content: 'z-1 overflow-x-hidden ring-ui-base/10 ring-8 ring-offset-ui-base ring-offset-2',
+            footer: 'sticky bottom-0 bg-ui-base',
           }"
           inset
         >
