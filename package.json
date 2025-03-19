@@ -108,7 +108,6 @@
     "unplugin": "^2.2.0",
     "unplugin-auto-import": "^19.1.1",
     "unplugin-vue-components": "^28.4.1",
-    "vaul-vue": "^0.3.0",
     "vue-component-type-helpers": "^2.2.8",
     "vue-router": "^4.5.0"
   },

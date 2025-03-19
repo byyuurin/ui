@@ -31,9 +31,10 @@ const controls: ControlItems<DrawerProps> = [
   { prop: 'description', value: 'Description', placeholder: 'No Description' },
   { prop: 'direction', value: 'bottom', options: ['top', 'bottom', 'left', 'right'] },
   { prop: 'dismissible', value: true },
+  { prop: 'close', value: true },
   { prop: 'overlay', value: true, description: 'Render an overlay behind the drawer.' },
   { prop: 'inset', value: false, description: 'Whether to inset the drawer from the edges.' },
-  { prop: 'handle', value: true, description: 'Render a handle on the drawer.' },
+  { prop: 'transition', value: true },
 ]
 
 function openOverlay(props: DrawerProps) {
@@ -78,6 +79,10 @@ function openOverlay(props: DrawerProps) {
 
           <template #title>
             <Placeholder label="#title" label-position="left" />
+          </template>
+
+          <template #close>
+            <Placeholder label="#close" label-position="left" />
           </template>
 
           <template #description>

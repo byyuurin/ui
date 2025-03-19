@@ -79,7 +79,6 @@ onMounted(() => {
           v-model:open="showDrawer"
           title="Change Theme or Color"
           direction="right"
-          :handle="false"
           :overlay="false"
           :ui="{
             header: 'sticky z-1 top-0 bg-ui-base',

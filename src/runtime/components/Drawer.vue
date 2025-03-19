@@ -1,25 +1,27 @@
 <script lang="ts">
-import type { DialogContentProps } from 'reka-ui'
-import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
+import type { VariantProps } from '@byyuurin/ui-kit'
+import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import type { drawer } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ButtonProps, ComponentAttrs } from '../types'
 
-export interface DrawerEmits extends DrawerRootEmits {
-  (event: 'after-leave'): void
+export interface DrawerEmits extends DialogRootEmits {
+  'after-leave': []
 }
 
 export interface DrawerSlots {
   default?: (props?: {}) => any
-  handle?: (props?: {}) => any
   content?: (props?: {}) => any
   header?: (props?: {}) => any
   title?: (props?: {}) => any
   description?: (props?: {}) => any
+  close?: (props?: {}) => any
   body?: (props?: {}) => any
   footer?: (props?: {}) => any
 }
 
-export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'defaultOpen' | 'direction' | 'fadeFromIndex' | 'fixed' | 'modal' | 'nested' | 'direction' | 'open' | 'scrollLockTimeout' | 'shouldScaleBackground' | 'snapPoints'> {
+type DrawerVariants = VariantProps<typeof drawer>
+
+export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootProps {
   title?: string
   description?: string
   /** The content of the drawer. */
@@ -29,20 +31,29 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerR
    * @default true
    */
   overlay?: boolean
+  /** @default true */
+  transition?: boolean
+  /**
+   * The direction of the drawer.
+   * @default "bottom"
+   */
+  direction?: DrawerVariants['direction']
   /**
    * Whether to inset the drawer from the edges.
    */
   inset?: boolean
   /**
-   * Render a handle on the drawer.
-   * @default true
-   */
-  handle?: boolean
-  /**
    * Render the drawer in a portal.
    * @default true
    */
   portal?: boolean
+  /**
+   * Display a close button to dismiss the drawer.
+   * @default true
+   */
+  close?: ButtonProps | boolean
+  /** @default app.icons.close */
+  closeIcon?: string
   /**
    * When `false`, the drawer will not close when clicking outside or pressing escape.
    * @default true
@@ -53,23 +64,41 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, Pick<DrawerR
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
-import { useForwardPropsEmits } from 'reka-ui'
-import { DrawerContent, DrawerDescription, DrawerOverlay, DrawerPortal, DrawerRoot, DrawerTitle, DrawerTrigger } from 'vaul-vue'
+import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits, VisuallyHidden } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
+import Button from './Button.vue'
 
 const props = withDefaults(defineProps<DrawerProps>(), {
   direction: 'bottom',
+  modal: true,
   portal: true,
   overlay: true,
-  handle: true,
+  transition: true,
+  dismissible: true,
+  close: true,
 })
 const emit = defineEmits<DrawerEmits>()
 const slots = defineSlots<DrawerSlots>()
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'activeSnapPoint', 'closeThreshold', 'defaultOpen', 'dismissible', 'fadeFromIndex', 'fixed', 'modal', 'nested', 'direction', 'open', 'scrollLockTimeout', 'shouldScaleBackground', 'snapPoints'), emit)
-const contentProps = toRef(() => props.content)
+const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emit)
+const contentProps = toRef(() => ({
+  ...props.content,
+  ...(slots.content || slots.header || (!props.description && !slots.description)) ? { 'aria-describedby': undefined } : {},
+}))
+const contentEvents = computed(() => {
+  if (props.dismissible)
+    return {}
 
+  return {
+    pointerDownOutside: (e: Event) => e.preventDefault(),
+    interactOutside: (e: Event) => e.preventDefault(),
+    escapeKeyDown: (e: Event) => e.preventDefault(),
+  }
+})
+
+const { t } = useLocale()
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
   const styler = createStyler(theme.value.drawer)
@@ -78,47 +107,62 @@ const style = computed(() => {
 </script>
 
 <template>
-  <DrawerRoot v-bind="rootProps">
-    <DrawerTrigger v-if="slots.default" as-child :class="props.class">
-      <slot></slot>
-    </DrawerTrigger>
+  <DialogRoot v-slot="{ open }" v-bind="rootProps">
+    <DialogTrigger v-if="slots.default" as-child :class="props.class">
+      <slot :open="open"></slot>
+    </DialogTrigger>
 
-    <DrawerPortal :disabled="!props.portal">
-      <DrawerOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
+    <DialogPortal :disabled="!props.portal">
+      <DialogOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
 
-      <DrawerContent
+      <DialogContent
         :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
+        :data-direction="props.direction"
         v-bind="contentProps"
+        v-on="contentEvents"
         @after-leave="emit('after-leave')"
       >
-        <slot name="handle">
-          <div v-if="props.handle" :class="style.handle({ class: props.ui?.handle })"></div>
-        </slot>
+        <VisuallyHidden v-if="slots.content || slots.header || (!props.title && !slots.title)">
+          <DialogTitle />
+        </VisuallyHidden>
 
         <slot name="content">
           <div :class="style.container({ class: props.ui?.container })">
             <div
-              v-if="slots.header || props.title || slots.title || props.description || slots.description"
+              v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
               :class="style.header({ class: props.ui?.header })"
             >
               <slot name="header">
-                <DrawerTitle
+                <DialogTitle
                   v-if="props.title || slots.title"
                   :class="style.title({ class: props.ui?.title })"
                 >
                   <slot name="title">
                     {{ props.title }}
                   </slot>
-                </DrawerTitle>
+                </DialogTitle>
 
-                <DrawerDescription
+                <DialogClose as-child>
+                  <slot name="close">
+                    <Button
+                      v-if="props.close"
+                      variant="ghost"
+                      :icon="props.closeIcon || theme.app.icons.close"
+                      v-bind="typeof props.close === 'boolean' ? {} : props.close"
+                      :class="style.close({ class: props.ui?.close })"
+                      :aria-label="t('modal.close')"
+                    />
+                  </slot>
+                </DialogClose>
+
+                <DialogDescription
                   v-if="props.description || slots.description"
                   :class="style.description({ class: props.ui?.description })"
                 >
                   <slot name="description">
                     {{ props.description }}
                   </slot>
-                </DrawerDescription>
+                </DialogDescription>
               </slot>
             </div>
 
@@ -131,7 +175,7 @@ const style = computed(() => {
             </div>
           </div>
         </slot>
-      </DrawerContent>
-    </DrawerPortal>
-  </DrawerRoot>
+      </DialogContent>
+    </DialogPortal>
+  </DialogRoot>
 </template>

@@ -41,7 +41,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-uno'],
-          libs: ['reka-ui', 'vaul-vue'],
+          libs: ['reka-ui'],
           ui: ['@byyuurin/ui'],
         },
       },
