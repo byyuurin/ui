@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Toast, ToasterProps, ToastProps } from '@byyuurin/ui'
+import type { ToastProps, ToastProviderProps, ToastState } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-interface Props extends Pick<ToasterProps, 'duration' | 'position' | 'expand'> {
+interface Props extends Pick<ToastProviderProps, 'duration' | 'position' | 'expand'> {
   color?: string
   expand?: boolean
 }
@@ -19,7 +19,7 @@ const emit = defineEmits<{
   (event: 'update:expand', value: Props['expand']): void
 }>()
 
-type ControlInfo = ToastProps & Pick<ToasterProps, 'position' | 'duration' | 'expand'> & Pick<Toast, 'onClick'>
+type ControlInfo = ToastProps & Pick<ToastProviderProps, 'position' | 'duration' | 'expand'> & Pick<ToastState, 'onClick'>
 
 const controls: ControlItems<ControlInfo> = [
   { prop: 'position', label: 'Toaster.position', value: 'bottom-right', options: ['bottom-center', 'bottom-left', 'bottom-right', 'top-center', 'top-left', 'top-right'] },

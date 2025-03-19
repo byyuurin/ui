@@ -1,16 +1,21 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { ToastProviderProps } from 'reka-ui'
-import type { toaster } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ToastProviderProps as RekaToastProviderProps } from 'reka-ui'
+import type { toastProvider } from '../theme'
+import type { ComponentAttrs, ToastProps } from '../types'
+
+export interface ToastState extends Omit<ToastProps, 'defaultOpen'> {
+  id: string | number
+  onClick?: (toast: ToastState) => void
+}
 
 export interface ToasterSlots {
   default?: (props?: {}) => any
 }
 
-type ToasterVariants = VariantProps<typeof toaster>
+type ToasterVariants = VariantProps<typeof toastProvider>
 
-export interface ToasterProps extends ComponentAttrs<typeof toaster>, Omit<ToastProviderProps, 'swipeDirection'> {
+export interface ToastProviderProps extends ComponentAttrs<typeof toastProvider>, Omit<RekaToastProviderProps, 'swipeDirection'> {
   /** @default "bottom-right" */
   position?: ToasterVariants['position']
   /**
@@ -35,7 +40,7 @@ import { useToast } from '../composables/useToast'
 import { omit } from '../utils'
 import Toast from './Toast.vue'
 
-const props = withDefaults(defineProps<ToasterProps>(), {
+const props = withDefaults(defineProps<ToastProviderProps>(), {
   position: 'bottom-right',
   expand: true,
   portal: true,
@@ -61,14 +66,14 @@ const swipeDirection = computed(() => {
       return 'left'
   }
 
-  console.warn(`[Toaster] Unknown position "${props.position}"`)
+  console.warn(`[ToastProvider] Unknown position "${props.position}"`)
 
   return 'right'
 })
 
 const { theme, createStyler } = useTheme()
 const style = computed(() => {
-  const styler = createStyler(theme.value.toaster)
+  const styler = createStyler(theme.value.toastProvider)
   return styler({
     ...props,
     swipeDirection: swipeDirection.value,

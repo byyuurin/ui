@@ -36,7 +36,7 @@ export { default as Table } from './components/Table.vue'
 export { default as Tabs } from './components/Tabs.vue'
 export { default as Textarea } from './components/Textarea.vue'
 export { default as Toast } from './components/Toast.vue'
-export { default as Toaster } from './components/Toaster.vue'
+export { default as ToastProvider } from './components/ToastProvider.vue'
 export { default as Tooltip } from './components/Tooltip.vue'
 // types
 export * from './types'

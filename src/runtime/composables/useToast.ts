@@ -1,20 +1,15 @@
 import { createSharedComposable } from '@vueuse/core'
 import { nextTick, ref } from 'vue'
-import type { ToastProps } from '../types'
-
-export interface Toast extends Omit<ToastProps, 'defaultOpen'> {
-  id: string | number
-  onClick?: (toast: Toast) => void
-}
+import { useState } from '#imports'
+import type { ToastState } from '../types'
 
 export const useToast = createSharedComposable(() => {
-  const toasts = ref<Toast[]>([])
-
+  const toasts = useState<ToastState[]>('toasts', () => [])
   const running = ref(false)
   const maxToasts = 5
-  const queue: Toast[] = []
+  const queue: ToastState[] = []
 
-  const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+  const generateId = () => `toast-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 
   async function processQueue() {
     if (running.value || queue.length === 0)
@@ -33,7 +28,7 @@ export const useToast = createSharedComposable(() => {
     running.value = false
   }
 
-  function add(toast: Partial<Toast>): Toast {
+  function add(toast: Partial<ToastState>): ToastState {
     const body = {
       id: generateId(),
       open: true,
@@ -47,8 +42,8 @@ export const useToast = createSharedComposable(() => {
     return body
   }
 
-  function update(id: string | number, toast: Partial<Omit<Toast, 'id'>>) {
-    const index = toasts.value.findIndex((t) => t.id === id)
+  function update(id: string | number, toast: Partial<Omit<ToastState, 'id'>>) {
+    const index = toasts.value.findIndex((toast: ToastState) => toast.id === id)
 
     if (index === -1)
       return

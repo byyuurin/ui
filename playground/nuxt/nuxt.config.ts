@@ -32,7 +32,6 @@ export default defineNuxtConfig({
       'ThemeSelector.vue',
       '*App.vue',
       '*Toast.vue',
-      '*Toaster.vue',
       '*Provider.vue',
       '*Content.vue',
     ],
