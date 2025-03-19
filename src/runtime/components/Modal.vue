@@ -37,6 +37,10 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
    * @default true
    */
   dismissible?: boolean
+  /**
+   * Display a close button to dismiss the modal.
+   * @default true
+   */
   close?: ButtonProps | boolean
   /** @default app.icons.close */
   closeIcon?: string
@@ -45,7 +49,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
-import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits } from 'reka-ui'
+import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits, VisuallyHidden } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
@@ -62,7 +66,10 @@ const props = withDefaults(defineProps<ModalProps>(), {
 const emit = defineEmits<ModalEmits>()
 const slots = defineSlots<ModalSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emit)
-const contentProps = toRef(() => props.content)
+const contentProps = toRef(() => ({
+  ...props.content,
+  ...(slots.content || slots.header || (!props.description && !slots.description)) ? { 'aria-describedby': undefined } : {},
+}))
 const contentEvents = computed(() => {
   if (props.dismissible)
     return {}
@@ -95,6 +102,10 @@ const style = computed(() => {
       <DialogOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
 
       <DialogContent :class="style.content({ class: props.ui?.content })" v-bind="contentProps" v-on="contentEvents" @after-leave="emit('after-leave')">
+        <VisuallyHidden v-if="slots.content || slots.header || (!props.title && !slots.title)">
+          <DialogTitle />
+        </VisuallyHidden>
+
         <slot name="content">
           <div
             v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
