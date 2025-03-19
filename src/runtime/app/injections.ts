@@ -1,6 +1,6 @@
 import type { UserConfig } from '@unocss/core'
-import type { Component, ComputedRef, MaybeRefOrGetter, ShallowRef } from 'vue'
-import type { AvatarGroupProps, ButtonGroupProps, Messages, ModalProps, ThemeExtension } from '../types'
+import type { ComputedRef, MaybeRefOrGetter } from 'vue'
+import type { AvatarGroupProps, ButtonGroupProps, Messages, ThemeExtension } from '../types'
 import type { Locale } from '../utils'
 import { defineInjection } from '../utils'
 
@@ -26,17 +26,6 @@ export const {
   inject: injectLocaleContext,
   provide: provideLocaleContext,
 } = defineInjection<MaybeRefOrGetter<Locale<Messages> | undefined>>('ui.locale-context')
-
-// ModalProvider
-export interface ModalStateProvideValue {
-  component: Component | string
-  props: ModalProps
-}
-export const {
-  InjectionKey: InjectionKeyModalState,
-  inject: injectModalState,
-  provide: provideModalState,
-} = defineInjection<ShallowRef<ModalStateProvideValue>>('ui.modal')
 
 // Theme Extension
 export const {

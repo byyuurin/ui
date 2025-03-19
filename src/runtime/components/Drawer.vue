@@ -4,7 +4,9 @@ import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
 import type { drawer } from '../theme'
 import type { ComponentAttrs } from '../types'
 
-export interface DrawerEmits extends DrawerRootEmits {}
+export interface DrawerEmits extends DrawerRootEmits {
+  (event: 'after-leave'): void
+}
 
 export interface DrawerSlots {
   default?: (props?: {}) => any
@@ -87,6 +89,7 @@ const style = computed(() => {
       <DrawerContent
         :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
         v-bind="contentProps"
+        @after-leave="emit('after-leave')"
       >
         <slot name="handle">
           <div v-if="props.handle" :class="style.handle({ class: props.ui?.handle })"></div>

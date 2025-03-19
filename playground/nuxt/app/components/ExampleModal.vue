@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import type { ModalProps } from '@byyuurin/ui'
-import { Modal } from '@byyuurin/ui'
+import { Button, Modal } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
+import Placeholder from './Placeholder.vue'
 
 const controls: ControlItems<ModalProps> = [
   { prop: 'title', value: 'Title' },
@@ -13,15 +14,30 @@ const controls: ControlItems<ModalProps> = [
   { prop: 'transition', value: true },
 ]
 
-const modal = useModal()
+const overlay = useOverlay()
+const instance = overlay.create(
+  (props) => h(
+    Modal,
+    props,
+    {
+      body: () => h(Placeholder, {
+        class: 'size-full min-h-80 min-w-80',
+        label: '#body',
+      }, {
+        default: () => h(Button, { label: 'Close', variant: 'outline', onClick: instance.close }),
+      }),
+    },
+  ),
+  { unmountOnHide: false },
+)
 
 const open = ref(false)
 const slotsExample1 = ref(false)
 const slotsExample2 = ref(false)
 const slotsExample3 = ref(false)
 
-function openModal(props: ModalProps) {
-  modal.open(Modal, props)
+function openOverlay(props: ModalProps) {
+  instance.open(props)
 }
 </script>
 
@@ -151,7 +167,7 @@ function openModal(props: ModalProps) {
         </UModal>
       </div>
       <div class="flex flex-wrap gap-4">
-        <UButton label="Use `useModal`" @click="openModal(attrs)" />
+        <UButton label="useOverlay" @click="openOverlay(attrs)" />
       </div>
     </div>
   </ExampleView>

@@ -4,7 +4,9 @@ import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-
 import type { modal } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
-export interface ModalEmits extends DialogRootEmits {}
+export interface ModalEmits extends DialogRootEmits {
+  'after-leave': []
+}
 
 export interface ModalSlots {
   default?: (props: { open: boolean }) => any
@@ -92,7 +94,7 @@ const style = computed(() => {
     <DialogPortal :disabled="!props.portal">
       <DialogOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
 
-      <DialogContent :class="style.content({ class: props.ui?.content })" v-bind="contentProps" v-on="contentEvents">
+      <DialogContent :class="style.content({ class: props.ui?.content })" v-bind="contentProps" v-on="contentEvents" @after-leave="emit('after-leave')">
         <slot name="content">
           <div
             v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"

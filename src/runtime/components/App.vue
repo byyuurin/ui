@@ -20,10 +20,9 @@ export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'l
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
-import { shallowRef, toRef, useId } from 'vue'
-import type { ModalStateProvideValue } from '../app/injections'
-import { provideLocaleContext, provideModalState, provideThemeExtension, provideUnoConfig } from '../app/injections'
-import ModalProvider from './ModalProvider.vue'
+import { toRef, useId } from 'vue'
+import { provideLocaleContext, provideThemeExtension, provideUnoConfig } from '../app/injections'
+import OverlayProvider from './OverlayProvider.vue'
 import ToastProvider from './ToastProvider.vue'
 
 const props = withDefaults(defineProps<AppProps>(), {
@@ -37,12 +36,6 @@ const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
 const tooltipProps = toRef(() => props.tooltip)
 const toastProviderProps = toRef(() => props.toaster)
 
-const modalState = shallowRef<ModalStateProvideValue>({
-  component: 'div',
-  props: {},
-})
-
-provideModalState(modalState)
 provideUnoConfig(() => props.unoConfig)
 provideThemeExtension(() => props.ui)
 
@@ -58,6 +51,6 @@ provideLocaleContext(locale)
       </ToastProvider>
       <slot v-else></slot>
     </TooltipProvider>
-    <ModalProvider />
+    <OverlayProvider />
   </ConfigProvider>
 </template>
