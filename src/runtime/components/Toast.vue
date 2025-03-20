@@ -108,7 +108,7 @@ defineExpose({
       </div>
     </div>
 
-    <div v-if="(props.orientation === 'horizontal' && actions?.length) || props.close !== null" :class="style.actions({ class: props.ui?.actions })">
+    <div v-if="(props.orientation === 'horizontal' && actions?.length) || props.close || slots.close" :class="style.actions({ class: props.ui?.actions })">
       <template v-if="props.orientation === 'horizontal'">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
@@ -117,10 +117,9 @@ defineExpose({
         </slot>
       </template>
 
-      <ToastClose as-child>
+      <ToastClose v-if="props.close || slots.close" as-child>
         <slot name="close" :ui="ui">
           <Button
-            v-if="props.close"
             :icon="props.closeIcon || theme.app.icons.close"
             size="sm"
             variant="link"

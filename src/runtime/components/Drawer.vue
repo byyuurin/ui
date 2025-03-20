@@ -142,10 +142,9 @@ const style = computed(() => {
                   </slot>
                 </DialogTitle>
 
-                <DialogClose as-child>
+                <DialogClose v-if="props.close || slots.close" as-child>
                   <slot name="close">
                     <Button
-                      v-if="props.close"
                       variant="ghost"
                       :icon="props.closeIcon || theme.app.icons.close"
                       v-bind="typeof props.close === 'boolean' ? {} : props.close"
