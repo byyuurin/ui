@@ -162,7 +162,7 @@ function displayValue(value?: MaybeArray<AcceptableValue>): string | undefined {
     return value.map((v) => displayValue(v)).filter(Boolean).join(', ')
 
   const item = items.value.find((item) => compare(typeof item === 'object' ? get(item as Record<string, any>, props.valueKey as string) : item, value))
-  return item && (typeof item === 'object' ? get(item, props.labelKey as string) : item)
+  return (item != null) && (typeof item === 'object' ? get(item, props.labelKey as string) : item.toString())
 }
 
 function onUpdate(value: any) {
