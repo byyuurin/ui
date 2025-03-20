@@ -1,5 +1,5 @@
-import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
-import { packageName } from './shared'
+import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, hasNuxtModule, useLogger } from '@nuxt/kit'
+import { packageName, packageVersion } from './shared'
 
 export interface ModuleOptions {
   /**
@@ -13,6 +13,7 @@ export interface ModuleOptions {
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: packageName,
+    version: packageVersion,
     configKey: 'ui',
     compatibility: {
       nuxt: '>=3.13.1',
@@ -26,7 +27,7 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
 
     // Make sure the UnoCSS Nuxt module is installed
-    if (!nuxt.options.modules.includes('@unocss/nuxt')) {
+    if (!hasNuxtModule('@unocss/nuxt')) {
       logger.error(`\`${packageName}\` requires the \`@unocss/nuxt\` module to be installed.`)
       return
     }

@@ -13,10 +13,15 @@ const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration'
 </script>
 
 <template>
-  <div class="w-screen h-screen flex justify-center items-center p-5">
+  <div class="w-screen h-screen flex justify-center items-center">
     <UApp :locale="locale" :toaster="toasterAttrs">
-      <div>
-        <slot></slot>
+      <div class="p-2 pt-12 size-screen flex flex-col justify-center gap-2">
+        <div class="m-auto">
+          <div class="self-center">
+            <slot></slot>
+          </div>
+        </div>
+        <USelect v-model="lang" class="mx-auto w-40" size="xs" :options="Object.entries(locales).map(([value, { code, name }]) => ({ label: name, value }))" />
       </div>
     </UApp>
   </div>

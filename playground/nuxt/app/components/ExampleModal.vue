@@ -5,8 +5,8 @@ import type { ControlItems } from './ExampleView.vue'
 import Placeholder from './Placeholder.vue'
 
 const controls: ControlItems<ModalProps> = [
-  { prop: 'title', value: 'Title' },
-  { prop: 'description', value: 'description' },
+  { prop: 'title', value: 'Title', placeholder: 'No Title' },
+  { prop: 'description', value: 'description', placeholder: 'No Description' },
   { prop: 'size', value: 'sm', options: ['sm', 'md', 'lg', 'xl', 'fullscreen'] },
   { prop: 'dismissible', value: true },
   { prop: 'close', value: true },

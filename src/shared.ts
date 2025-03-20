@@ -1,1 +1,4 @@
-export { name as packageName } from '../package.json'
+export {
+  name as packageName,
+  version as packageVersion,
+} from '../package.json'
