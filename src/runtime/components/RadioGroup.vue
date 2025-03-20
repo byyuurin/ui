@@ -25,7 +25,7 @@ type NormalizeItem<T> = { id: string } & (
         label: string
         value: any
         description: string
-        disabled: false
+        disabled: boolean
       }
     )
 
@@ -103,6 +103,7 @@ function normalizeItem(item: any): NormalizeItem<T> {
       value: item,
       label: item,
       description: '',
+      disabled: props.disabled,
     } as any
   }
 
@@ -116,6 +117,7 @@ function normalizeItem(item: any): NormalizeItem<T> {
     label,
     description,
     id: `${id}:${value}`,
+    disabled: props.disabled || item.disabled,
   }
 }
 
@@ -149,7 +151,7 @@ function onUpdate(value: any) {
           {{ props.legend }}
         </slot>
       </legend>
-      <div v-for="item in normalizedItems" :key="item.value" :class="style.item({ class: props.ui?.item })">
+      <div v-for="item in normalizedItems" :key="item.value" :class="style.item({ class: props.ui?.item, disabled: item.disabled })">
         <div :class="style.container({ class: props.ui?.container })">
           <RadioGroupItem
             :id="item.id"
