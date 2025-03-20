@@ -34,7 +34,10 @@ export default byyuurin(
     },
   }),
   {
-    files: ['src/runtime/components/Popover.vue'],
+    files: [
+      'src/runtime/components/Calendar.vue',
+      'src/runtime/components/Popover.vue',
+    ],
     rules: {
       'vue/component-name-in-template-casing': 'off',
     },

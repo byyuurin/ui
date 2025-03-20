@@ -39,6 +39,7 @@ onMounted(() => {
       <ExampleBreadcrumb :class="uiColor" />
       <ExampleButton :class="uiColor" />
       <ExampleButtonGroup :class="uiColor" />
+      <ExampleCalendar :class="uiColor" />
       <ExampleCard :class="uiColor" />
       <ExampleCarousel :class="uiColor" />
       <ExampleCheckbox :class="uiColor" />

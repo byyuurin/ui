@@ -7,6 +7,12 @@ export default defineLocale({
     alert: {
       close: 'Close',
     },
+    calendar: {
+      prevYear: 'Previous year',
+      nextYear: 'Next year',
+      prevMonth: 'Previous month',
+      nextMonth: 'Next month',
+    },
     carousel: {
       prev: 'Prev',
       next: 'Next',

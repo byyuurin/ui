@@ -2,6 +2,12 @@ export interface Messages {
   alert: {
     close: string
   }
+  calendar: {
+    prevYear: string
+    nextYear: string
+    prevMonth: string
+    nextMonth: string
+  }
   carousel: {
     prev: string
     next: string

@@ -7,6 +7,12 @@ export default defineLocale({
     alert: {
       close: '關閉',
     },
+    calendar: {
+      prevYear: '去年',
+      nextYear: '明年',
+      prevMonth: '上個月',
+      nextMonth: '下個月',
+    },
     carousel: {
       prev: '上一頁',
       next: '下一頁',

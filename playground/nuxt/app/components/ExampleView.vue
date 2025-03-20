@@ -10,7 +10,7 @@ export type ControlItem<T> = {
     warning?: string
     value: T[Prop] | null
     label?: string
-    options?: Array<T[Prop] | { label: string, value: T[Prop] | null }>
+    options?: Array<Required<T>[Prop] | { label: string, value: Required<T>[Prop] | null }>
     placeholder?: string
     min?: number
     max?: number
@@ -94,6 +94,7 @@ function typedSelectOptions(item: ControlItem<T>) {
               v-if="item?.type === 'multiple' || item?.options"
               v-model="attrs[item!.prop]"
               :options="typedSelectOptions(item)"
+              :placeholder="item.placeholder"
             />
             <USwitch
               v-else-if="item?.type === 'boolean' || typeof item?.value === 'boolean'"

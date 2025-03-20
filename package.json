@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@byyuurin/ui-kit": "^0.5.0",
+    "@internationalized/date": "^3.7.0",
     "@nuxt/kit": "^3.15.4",
     "@tanstack/vue-table": "^8.21.2",
     "@unocss/core": "^65.5.0",
