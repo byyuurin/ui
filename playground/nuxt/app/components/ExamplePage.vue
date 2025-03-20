@@ -94,8 +94,8 @@ onMounted(() => {
             <ThemeSelector v-model="uiTheme" v-model:config="uiConfig" v-model:color="uiColor" class="w-screen max-w-full sm:max-w-screen-sm" />
           </template>
           <template #footer>
-            <div class="flex flex-col gap-4 pt-4">
-              <USelect v-model="lang" :options="Object.entries(locales).map(([value, { code, name }]) => ({ label: name, value }))" />
+            <div class="w-full flex flex-col gap-4 pt-4">
+              <USelect v-model="lang" :options="Object.entries(locales).map(([value, { name }]) => ({ label: name, value }))" />
               <UButton class="justify-center" label="Close" variant="solid" icon="i-mdi-close-thick" round @click="showDrawer = false" />
             </div>
           </template>
