@@ -83,14 +83,11 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', '
 const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
 
 const { t } = useLocale()
-const { theme, createStyler } = useTheme()
+const { theme, generateStyle } = useTheme()
 const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.plus : theme.value.app.icons.chevronUp))
 const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.minus : theme.value.app.icons.chevronDown))
 
-const style = computed(() => {
-  const styler = createStyler(theme.value.inputNumber)
-  return styler(props)
-})
+const style = computed(() => generateStyle('inputNumber', props))
 
 onMounted(() => {
   setTimeout(() => {

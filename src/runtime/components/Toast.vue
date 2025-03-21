@@ -61,14 +61,11 @@ const el = ref<InstanceType<typeof ToastRoot>>()
 const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
 
 const { t } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.toast)
-  return styler({
-    ...props,
-    title: !!(props.title || slots.title),
-  })
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('toast', {
+  ...props,
+  title: !!(props.title || slots.title),
+}))
 
 defineExpose({
   height,

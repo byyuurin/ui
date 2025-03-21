@@ -35,11 +35,8 @@ import { useTheme } from '../composables/useTheme'
 const props = withDefaults(defineProps<CardProps>(), {})
 const slots = defineSlots<CardSlots>()
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.card)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('card', props))
 </script>
 
 <template>

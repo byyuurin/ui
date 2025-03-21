@@ -64,14 +64,11 @@ const emit = defineEmits<AlertEmits>()
 const slots = defineSlots<AlertSlots>()
 
 const { t } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.alert)
-  return styler({
-    ...props,
-    title: !!props.title || !!slots.title,
-  })
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('alert', {
+  ...props,
+  title: !!props.title || !!slots.title,
+}))
 </script>
 
 <template>

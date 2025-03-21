@@ -1,4 +1,4 @@
-import type { ClassValue, CVReturnType, VariantProps } from '@byyuurin/ui-kit'
+import type { ClassValue, CTReturn, CVReturnType, VariantProps } from '@byyuurin/ui-kit'
 
 export type HintString<T extends string> = T & (string & {})
 
@@ -31,9 +31,17 @@ export interface ComponentAttrs<T> {
     : never
 }
 
+export type StylerTheme<T> = T extends CTReturn<infer V, any, any, infer B, infer S>
+  ? CVReturnType<V, S, B>
+  : never
+
 export interface StylerBaseProps {
   class?: ClassValue
 }
+
+export type StylerProps<T> = T extends CTReturn<infer V, any, any, infer B, infer S>
+  ? Parameters<Styler<CVReturnType<V, S, B>>>[0]
+  : never
 
 export type StylerReturnType<T> = T extends CVReturnType<infer V, infer S, infer B>
   ? ReturnType<CVReturnType<V, S, B>>

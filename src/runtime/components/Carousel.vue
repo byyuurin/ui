@@ -133,11 +133,8 @@ defineSlots<CarouselSlots<T>>()
 const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakpoints', 'containScroll', 'dragFree', 'dragThreshold', 'duration', 'inViewThreshold', 'loop', 'skipSnaps', 'slidesToScroll', 'startIndex', 'watchDrag', 'watchResize', 'watchSlides', 'watchFocus'))
 
 const { t, dir } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.carousel)
-  return styler(props)
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('carousel', props))
 
 const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
 const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))

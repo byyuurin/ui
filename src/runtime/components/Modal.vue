@@ -82,11 +82,8 @@ const contentEvents = computed(() => {
 })
 
 const { t } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.modal)
-  return styler(props)
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('modal', props))
 </script>
 
 <template>

@@ -61,11 +61,8 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.textarea)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('textarea', props))
 
 function autoFocus() {
   if (props.autofocus)

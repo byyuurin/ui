@@ -46,11 +46,10 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 
 const linkProps = useForwardProps(pickLinkProps(props))
 
-const { theme, createStyler } = useTheme()
+const { generateStyle } = useTheme()
 
 const style = computed(() => {
-  const styler = createStyler(theme.value.button)
-  return styler({
+  return generateStyle('button', {
     ...props,
     size: size.value,
     groupOrientation: orientation.value,

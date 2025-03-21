@@ -229,11 +229,8 @@ function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
 }
 
 const { t } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.table)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('table', props))
 
 defineExpose({
   tableApi,

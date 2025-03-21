@@ -50,11 +50,8 @@ defineSlots<BadgeSlots>()
 
 const show = defineModel<boolean>('show', { default: true })
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.badge)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('badge', props))
 </script>
 
 <template>

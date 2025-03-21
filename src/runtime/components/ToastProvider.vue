@@ -71,15 +71,12 @@ const swipeDirection = computed(() => {
   return 'right'
 })
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.toastProvider)
-  return styler({
-    ...props,
-    swipeDirection: swipeDirection.value,
-    clickable: false,
-  })
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('toastProvider', {
+  ...props,
+  swipeDirection: swipeDirection.value,
+  clickable: false,
+}))
 
 function onUpdateOpen(value: boolean, id: string | number) {
   if (value)

@@ -83,11 +83,8 @@ const percent = computed(() => {
 })
 
 const { dir } = useLocale()
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.progress)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('progress', props))
 
 const indicatorStyle = computed(() => {
   if (percent.value === undefined)

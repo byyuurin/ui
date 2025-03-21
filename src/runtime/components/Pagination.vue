@@ -101,18 +101,14 @@ const slots = defineSlots<PaginationSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultPage', 'disabled', 'itemsPerPage', 'page', 'showEdges', 'siblingCount', 'total'), emit)
 
 const { dir } = useLocale()
-const { theme, createStyler } = useTheme()
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('pagination', props))
 
 const firstIcon = computed(() => props.firstIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleRight : theme.value.app.icons.chevronDoubleLeft))
 const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
 const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleLeft : theme.value.app.icons.chevronDoubleRight))
 const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.ellipsis)
-
-const style = computed(() => {
-  const styler = createStyler(theme.value.pagination)
-  return styler(props)
-})
 </script>
 
 <template>

@@ -17,12 +17,8 @@ const props = withDefaults(defineProps<ScrollAreaProps>(), {})
 const rootRef = ref<InstanceType<typeof ScrollAreaRoot>>()
 const rootProps = reactivePick(props, 'type', 'dir', 'scrollHideDelay')
 
-const { theme, createStyler } = useTheme()
-
-const style = computed(() => {
-  const styler = createStyler(theme.value.scrollArea)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('scrollArea', props))
 
 defineExpose({
   scrollTop,

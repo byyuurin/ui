@@ -41,15 +41,12 @@ const slots = defineSlots<ChipSlots>()
 const { size, orientation } = useButtonGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.chip)
-  return styler({
-    ...props,
-    size: size.value,
-    groupOrientation: orientation.value,
-  })
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('chip', {
+  ...props,
+  size: size.value,
+  groupOrientation: orientation.value,
+}))
 </script>
 
 <template>

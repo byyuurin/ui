@@ -41,11 +41,8 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'defaultValue', 'disa
 
 const completed = ref(false)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.pinInput)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('pinInput', props))
 
 function onComplete(value: string[]) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

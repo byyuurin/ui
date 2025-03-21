@@ -40,14 +40,11 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 const { size } = useAvatarGroup(props)
 const fallback = computed(() => props.text || (props.alt || '').split(' ').map((word) => word.charAt(0)).join('').slice(0, 2))
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.avatar)
-  return styler({
-    ...props,
-    size: size.value,
-  })
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('avatar', {
+  ...props,
+  size: size.value,
+}))
 
 const error = shallowRef(false)
 

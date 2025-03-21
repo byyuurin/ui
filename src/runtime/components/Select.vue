@@ -124,26 +124,23 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen'
 const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as SelectContentProps)
 const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 
-const { theme, createStyler } = useTheme()
+const { theme, generateStyle } = useTheme()
 
 const { size, orientation } = useButtonGroup(props)
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
   trailingIcon: theme.value.app.icons.chevronDown,
 })))
 
+const style = computed(() => generateStyle('select', {
+  ...props,
+  size: size.value,
+  groupOrientation: orientation.value,
+  leading: isLeading.value,
+  trailing: isTrailing.value,
+}))
+
 const groups = computed(() => props.options?.length ? (Array.isArray(props.options[0]) ? props.options : [props.options]) as SelectOption[][] : [])
 const items = computed(() => groups.value.flat() as T[])
-
-const style = computed(() => {
-  const styler = createStyler(theme.value.select)
-  return styler({
-    ...props,
-    size: size.value,
-    groupOrientation: orientation.value,
-    leading: isLeading.value,
-    trailing: isTrailing.value,
-  })
-})
 
 function typedItem(item: SelectOption) {
   return item as unknown as T

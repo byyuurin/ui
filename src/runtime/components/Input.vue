@@ -71,19 +71,16 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const { size, orientation } = useButtonGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.input)
-  return styler({
-    ...props,
-    // @ts-expect-error ignore type
-    type: props.type,
-    size: size.value,
-    groupOrientation: orientation.value,
-    leading: isLeading.value || !!slots.leading,
-    trailing: isTrailing.value || !!slots.trailing,
-  })
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('input', {
+  ...props,
+  // @ts-expect-error ignore type
+  type: props.type,
+  size: size.value,
+  groupOrientation: orientation.value,
+  leading: isLeading.value || !!slots.leading,
+  trailing: isTrailing.value || !!slots.trailing,
+}))
 
 function autoFocus() {
   if (props.autofocus)

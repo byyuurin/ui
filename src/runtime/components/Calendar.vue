@@ -79,7 +79,7 @@ defineSlots<CalendarSlots>()
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'size', 'monthControls', 'yearControls', 'class', 'ui'), emit)
 
 const { code: locale, dir, t } = useLocale()
-const { theme, createStyler } = useTheme()
+const { theme, generateStyle } = useTheme()
 
 const nextYearIcon = computed(() => props.nextYearIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleLeft : theme.value.app.icons.chevronDoubleRight))
 const nextMonthIcon = computed(() => props.nextMonthIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
@@ -95,10 +95,7 @@ function paginateYear(date: DateValue, sign: -1 | 1) {
 
 const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
 
-const style = computed(() => {
-  const styler = createStyler(theme.value.calendar)
-  return styler(props)
-})
+const style = computed(() => generateStyle('calendar', props))
 </script>
 
 <template>

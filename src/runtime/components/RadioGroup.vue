@@ -90,11 +90,8 @@ const slots = defineSlots<RadioGroupSlots<T>>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emit)
 const id = useId()
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.radioGroup)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('radioGroup', props))
 
 function normalizeItem(item: any): NormalizeItem<T> {
   if (['string', 'number', 'boolean'].includes(typeof item)) {

@@ -35,11 +35,8 @@ defineSlots<ButtonGroupSlots>()
 
 provideButtonGroup(computed(() => props))
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.buttonGroup)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('buttonGroup', props))
 </script>
 
 <template>

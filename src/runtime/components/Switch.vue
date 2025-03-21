@@ -47,11 +47,12 @@ const modelValue = defineModel<boolean>({ default: undefined })
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 const id = useId()
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.switch)
-  return styler({ ...props, checked: false, unchecked: false })
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('switch', {
+  ...props,
+  checked: false,
+  unchecked: false,
+}))
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

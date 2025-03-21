@@ -63,11 +63,8 @@ const sliderValue = computed({
 
 const thumbsCount = computed(() => sliderValue.value?.length ?? 1)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.slider)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('slider', props))
 
 function onChange(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

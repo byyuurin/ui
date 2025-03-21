@@ -61,14 +61,11 @@ const props = withDefaults(defineProps<BreadcrumbProps<T>>(), {
 const slots = defineSlots<BreadcrumbSlots<T>>()
 
 const { dir } = useLocale()
-const { theme, createStyler } = useTheme()
+const { theme, generateStyle } = useTheme()
 
 const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
 
-const style = computed(() => {
-  const styler = createStyler(theme.value.breadcrumb)
-  return styler(props)
-})
+const style = computed(() => generateStyle('breadcrumb', props))
 </script>
 
 <template>

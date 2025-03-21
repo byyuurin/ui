@@ -37,12 +37,8 @@ const slots = defineSlots<SeparatorSlots>()
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orientation'))
 
-const { theme, createStyler } = useTheme()
-
-const style = computed(() => {
-  const styler = createStyler(theme.value.separator)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('separator', props))
 </script>
 
 <template>

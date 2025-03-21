@@ -44,11 +44,8 @@ const contentProps = toRef(() => defu(props.content, contentDefaults) as Tooltip
 
 const arrowProps = toRef(() => props.arrow as TooltipArrowProps)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.tooltip)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('tooltip', props))
 </script>
 
 <template>

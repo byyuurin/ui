@@ -73,11 +73,8 @@ const hiddenCount = computed(() => {
   return children.value.length - visibleAvatars.value.length
 })
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.avatarGroup)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('avatarGroup', props))
 
 provideAvatarGroup(computed(() => props))
 </script>

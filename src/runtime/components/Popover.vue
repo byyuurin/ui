@@ -69,11 +69,8 @@ const arrowProps = toRef(() => props.arrow as PopoverArrowProps)
 
 const Component = computed(() => props.mode === 'hover' ? HoverCard : Popover)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.popover)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('popover', props))
 </script>
 
 <template>

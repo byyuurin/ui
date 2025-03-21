@@ -19,11 +19,8 @@ import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<SkeletonProps>(), {})
 
-const { theme, createStyler } = useTheme()
-const styler = computed(() => {
-  const styler = createStyler(theme.value.skeleton)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const styler = computed(() => generateStyle('skeleton', props))
 </script>
 
 <template>

@@ -36,12 +36,8 @@ const props = withDefaults(defineProps<KbdProps>(), {
 defineSlots<KbdSlots>()
 
 const { getKbdKey } = useKbd()
-
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.kbd)
-  return styler(props)
-})
+const { generateStyle } = useTheme()
+const style = computed(() => generateStyle('kbd', props))
 </script>
 
 <template>

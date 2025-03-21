@@ -60,11 +60,8 @@ const emit = defineEmits<AccordionEmits>()
 const slots = defineSlots<AccordionSlots<T>>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'type', 'unmountOnHide'), emit)
 
-const { theme, createStyler } = useTheme()
-const style = computed(() => {
-  const styler = createStyler(theme.value.accordion)
-  return styler(props)
-})
+const { theme, generateStyle } = useTheme()
+const style = computed(() => generateStyle('accordion', props))
 </script>
 
 <template>
