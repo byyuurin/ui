@@ -20,7 +20,9 @@ export type PartialTheme<T> = {
 }
 
 export type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
-  Record<string, SlotProps> & (Slot extends string ? Record<Slot, SlotProps> : Record<string, never>)
+  Slot extends string
+    ? Record<Slot, SlotProps>
+    : Record<string, never>
 
 export interface ComponentAttrs<T> {
   class?: MaybeArray<string | Record<string, boolean>>

@@ -1,11 +1,16 @@
 <script lang="ts">
 import type { AccordionRootEmits, AccordionRootProps } from 'reka-ui'
 import type { accordion } from '../theme'
-import type { ComponentAttrs, DynamicSlots } from '../types'
+import type { ComponentAttrs } from '../types'
 
 export interface AccordionEmits extends AccordionRootEmits {}
 
 type SlotProps<T> = (props: { item: T, index: number, open: boolean }) => any
+
+type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
+  Slot extends string
+    ? Record<Slot | `${Slot}-body`, SlotProps>
+    : Record<string, never>
 
 export type AccordionSlots<T extends { slot?: string }> = {
   default?: SlotProps<T>
@@ -89,12 +94,12 @@ const style = computed(() => {
       </AccordionHeader>
 
       <AccordionContent
-        v-if="item.content || slots.content || (item.slot && slots[item.slot]) || slots.body || (slots[`${item.slot}-body`])"
+        v-if="item.content || slots.content || (item.slot && slots[item.slot]) || slots.body || (item.slot && slots[`${item.slot}-body`])"
         :class="style.content({ class: props.ui?.content })"
       >
         <slot :name="item.slot || 'content'" v-bind="{ item, index, open }">
           <div :class="style.body({ class: props.ui?.body })">
-            <slot :name="item.slot ? item.slot : 'body'" v-bind="{ item, index, open }">
+            <slot :name="item.slot ? `${item.slot}-body` : 'body'" v-bind="{ item, index, open }">
               {{ item.content }}
             </slot>
           </div>

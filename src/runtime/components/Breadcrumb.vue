@@ -1,9 +1,14 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
 import type { breadcrumb } from '../theme'
-import type { ComponentAttrs, DynamicSlots, LinkProps } from '../types'
+import type { ComponentAttrs, LinkProps } from '../types'
 
 type SlotProps<T> = (props: { item: T, index: number, active?: boolean }) => any
+
+type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
+  Slot extends string
+    ? Record<Slot | `${Slot}-${'leading' | 'label' | 'trailing'}`, SlotProps>
+    : Record<string, never>
 
 export type BreadcrumbSlots<T extends { slot?: string }> = {
   'item'?: SlotProps<T>
