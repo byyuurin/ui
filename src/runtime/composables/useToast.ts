@@ -55,7 +55,7 @@ export const useToast = createSharedComposable(() => {
   }
 
   function remove(id: string | number) {
-    const index = toasts.value.findIndex((t) => t.id === id)
+    const index = toasts.value.findIndex((toast: ToastState) => toast.id === id)
 
     if (index === -1)
       return
@@ -66,7 +66,7 @@ export const useToast = createSharedComposable(() => {
     }
 
     setTimeout(() => {
-      toasts.value = toasts.value.filter((t) => t.id !== id)
+      toasts.value = toasts.value.filter((toast: ToastState) => toast.id !== id)
     }, 200)
   }
 

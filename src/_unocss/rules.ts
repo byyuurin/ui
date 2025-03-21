@@ -8,6 +8,9 @@ export const rules: Rule[] = [
   [
     new RegExp(`^${cssVarsPrefix}-([^/]+)$`),
     ([_, color], ctx) => {
+      if (!color)
+        return
+
       if (color === 'base')
         return Object.fromEntries(cssVarsDynamic.map((prop) => [`--${cssVarsPrefix}-${prop}`, cssVar('cb')]))
 
@@ -28,6 +31,9 @@ export const rules: Rule[] = [
   [
     new RegExp(`^${cssVarsPrefix}-(?:(${cssVarsAll.join('|')})-)([^/]+)$`),
     ([_, prop, color], ctx) => {
+      if (!color)
+        return
+
       if (color === 'base')
         return { [`--${cssVarsPrefix}-${prop}`]: cssVar('cb') }
 
@@ -47,17 +53,20 @@ export const rules: Rule[] = [
   ],
   [
     /^bg-soft-(.+)$/,
-    ([_, c], { theme }) => {
-      const parsed = parseColor(c, theme)
+    ([_, color], { theme }) => {
+      if (!color)
+        return
+
+      const parsed = parseColor(color, theme)
 
       if (!parsed || parsed.cssColor?.type !== 'rgb')
         return
 
-      const color = `rgb(${parsed.cssColor.components.join(' ')})`
+      const rgb = `rgb(${parsed.cssColor.components.join(' ')})`
       const opacity = parsed.opacity || '100'
 
       return {
-        'background-color': `color-mix(in srgb, ${color} ${opacity}%, ${cssColor(cssVar('cx'))})`,
+        'background-color': `color-mix(in srgb, ${rgb} ${opacity}%, ${cssColor(cssVar('cx'))})`,
       }
     },
   ],
