@@ -1,7 +1,7 @@
 {
   "name": "@byyuurin/ui",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "packageManager": "pnpm@10.6.3",
   "description": "",
   "author": "Yuurin <byyuurin@gmail.com>",
