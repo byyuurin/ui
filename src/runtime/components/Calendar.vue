@@ -156,13 +156,16 @@ const style = computed(() => generateStyle('calendar', props))
               :class="style.cell({ class: props.ui?.cell })"
             >
               <Calendar.CellTrigger
+                v-slot="{ disabled, unavailable }"
                 :day="weekDate"
                 :month="month.value"
-                :class="style.cellTrigger({ class: props.ui?.cellTrigger })"
+                as-child
               >
-                <slot name="day" :day="weekDate">
-                  {{ weekDate.day }}
-                </slot>
+                <div :class="style.cellTrigger({ class: props.ui?.cellTrigger, disabled: disabled || unavailable })">
+                  <slot name="day" :day="weekDate">
+                    {{ weekDate.day }}
+                  </slot>
+                </div>
               </Calendar.CellTrigger>
             </Calendar.Cell>
           </Calendar.GridRow>

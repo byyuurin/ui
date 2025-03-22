@@ -15,10 +15,12 @@ export default ct(/* @unocss-include */{
     cellTrigger: [
       'relative size-2.25em flex items-center justify-center rounded-ui-button whitespace-nowrap transition',
       'focus-visible:ring-2 focus-visible:ring-ui-base/90 focus:outline-none',
-      'data-[disabled]:color-ui-base/50 data-[disabled]:pointer-events-none',
-      'data-[unavailable]:line-through data-[unavailable]:color-ui-base/50 data-[unavailable]:pointer-events-none',
-      'data-[selected]:color-ui-cx data-[today]:font-semibold data-[selected]:bg-soft-ui-fill/95 data-[today]:not-[[data-selected]]:color-ui-fill/95',
+      'data-[disabled]:color-ui-base/50 data-[disabled]:cursor-not-allowed',
+      'data-[unavailable]:line-through data-[unavailable]:color-ui-base/50 data-[unavailable]:cursor-not-allowed',
+      'data-[selected]:color-ui-cx data-[selected]:bg-soft-ui-fill/95',
+      'data-[today]:font-semibold data-[today]:not-[[data-selected]]:color-ui-fill/95',
       'data-[highlighted]:bg-soft-ui-fill/20',
+      'data-[outside-view]:color-ui-base/20',
     ],
   },
   variants: {
@@ -41,12 +43,12 @@ export default ct(/* @unocss-include */{
     },
     readonly: {
       true: {
-        cellTrigger: 'cursor-default',
+        cellTrigger: 'cursor-default data-[today]:not-[[data-selected]]:color-ui-fill/60',
       },
     },
     disabled: {
       true: {
-        cellTrigger: 'cursor-default',
+        cellTrigger: 'data-[today]:not-[[data-selected]]:color-ui-fill/60 data-[selected]:bg-soft-ui-fill/50',
       },
     },
   },
@@ -55,7 +57,7 @@ export default ct(/* @unocss-include */{
       readonly: false,
       disabled: false,
       class: {
-        cellTrigger: 'hover:not-[[data-selected]]:bg-soft-ui-fill/10',
+        cellTrigger: 'hover:not-[[data-selected],[data-disabled],[data-unavailable]]:bg-soft-ui-fill/10',
       },
     },
   ],
