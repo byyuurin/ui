@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { AcceptableValue, SelectArrowProps, SelectContentProps, SelectRootProps } from 'reka-ui'
+import type { AcceptableValue, SelectArrowProps, SelectContentEmits, SelectContentProps, SelectRootProps } from 'reka-ui'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { select } from '../theme'
-import type { ComponentAttrs, MaybeArray, MaybeArrayOfArray, MaybeArrayOfArrayItem, SelectModelValue, SelectOptionKey } from '../types'
+import type { ComponentAttrs, EmitsToProps, MaybeArray, MaybeArrayOfArray, MaybeArrayOfArrayItem, SelectModelValue, SelectOptionKey } from '../types'
 
 export interface SelectEmits<T, V, M extends boolean> {
   (event: 'update:open', value: boolean): void
@@ -66,7 +66,7 @@ export interface SelectProps<
    * The content of the menu.
    * @default { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }
    */
-  content?: Omit<SelectContentProps, 'as' | 'asChild' | 'forceMount'>
+  content?: Omit<SelectContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<SelectContentEmits>>
   /**
    * Display an arrow alongside the menu.
    * @default false

@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { TooltipArrowProps, TooltipContentProps, TooltipRootEmits, TooltipRootProps } from 'reka-ui'
+import type { TooltipArrowProps, TooltipContentEmits, TooltipContentProps, TooltipRootEmits, TooltipRootProps } from 'reka-ui'
 import type { tooltip } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentAttrs, EmitsToProps } from '../types'
 
 export interface TooltipEmits extends TooltipRootEmits {}
 
@@ -12,7 +12,7 @@ export interface TooltipSlots {
 
 export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRootProps {
   text?: string
-  content?: Omit<TooltipContentProps, 'as' | 'asChild'>
+  content?: Omit<TooltipContentProps, 'as' | 'asChild'> & Partial<EmitsToProps<TooltipContentEmits>>
   arrow?: boolean | Omit<TooltipArrowProps, 'as' | 'asChild'>
   /** @default true */
   portal?: boolean

@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { HoverCardRootProps, PopoverArrowProps, PopoverContentProps, PopoverRootEmits, PopoverRootProps } from 'reka-ui'
+import type { HoverCardRootProps, PopoverArrowProps, PopoverContentEmits, PopoverContentProps, PopoverRootEmits, PopoverRootProps } from 'reka-ui'
 import type { popover } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentAttrs, EmitsToProps } from '../types'
 
 export interface PopoverEmits extends PopoverRootEmits {}
 
@@ -17,7 +17,7 @@ export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRoo
    */
   mode?: 'click' | 'hover'
   /** @default { side: 'bottom', sideOffset: 8, collisionPadding: 8 } */
-  content?: Omit<PopoverContentProps, 'as' | 'asChild' | 'forceMount'>
+  content?: Omit<PopoverContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<PopoverContentEmits>>
   arrow?: boolean | Omit<PopoverArrowProps, 'as' | 'asChild'>
   /** @default true */
   portal?: boolean

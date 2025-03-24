@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
+import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import type { drawer } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import type { ButtonProps, ComponentAttrs, EmitsToProps } from '../types'
 
 export interface DrawerEmits extends DialogRootEmits {
   'after-leave': []
@@ -25,7 +25,7 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootPr
   title?: string
   description?: string
   /** The content of the drawer. */
-  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'>
+  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DialogContentEmits>>
   /**
    * Render an overlay behind the drawer.
    * @default true

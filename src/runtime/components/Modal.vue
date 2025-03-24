@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
+import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import type { modal } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import type { ButtonProps, ComponentAttrs, EmitsToProps } from '../types'
 
 export interface ModalEmits extends DialogRootEmits {
   'after-leave': []
@@ -25,7 +25,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
   title?: string
   description?: string
   size?: ModalVariants['size']
-  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'>
+  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DialogContentEmits>>
   /** @default true */
   portal?: boolean
   /** @default true */

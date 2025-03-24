@@ -9,6 +9,12 @@ export type MaybeArrayOfArrayItem<T> = T extends Array<infer V1>
   ? V1 extends Array<infer V2> ? V2 : V1
   : never
 
+export type EmitsToProps<T> = {
+  [K in keyof T as `on${Capitalize<string & K>}`]: T[K] extends [...args: infer Args]
+    ? (...args: Args) => void
+    : never
+}
+
 export type PartialTheme<T> = {
   [P in keyof T as T[P] extends undefined ? never : P]?: T[P] extends Array<infer V>
     ? V extends string ? string : V[]
