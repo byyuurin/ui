@@ -16,7 +16,7 @@ describe('check defu result', () => {
       },
     }
 
-    const result = extendTheme(ui, raw)
+    const result = extendTheme(ui, JSON.parse(JSON.stringify(raw)))
 
     expect(raw).toMatchInlineSnapshot(`
       {
@@ -26,12 +26,10 @@ describe('check defu result', () => {
             "false": [
               "color-ui-base/80 hover:color-ui-base/60 transition-colors",
               "disabled:hover:color-ui-base aria-disabled:hover:color-ui-base",
-              " ",
             ],
             "true": [
               "color-ui-fill",
               "disabled:color-ui-fill aria-disabled:color-ui-fill",
-              "el-link--active",
             ],
           },
           "disabled": {
@@ -53,7 +51,6 @@ describe('check defu result', () => {
             "false": [
               "color-ui-base/80 hover:color-ui-base/60 transition-colors",
               "disabled:hover:color-ui-base aria-disabled:hover:color-ui-base",
-              " ",
             ],
             "true": [
               "color-ui-fill",

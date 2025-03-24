@@ -13,7 +13,8 @@ export const useTheme = createSharedComposable(() => {
   const unoConfig = injectUnoConfig()
   const mergeRules = transformUnoRules(toValue(unoConfig))
   const { createStyler } = prepareStyler(mergeRules)
-  const theme = computed(() => extendTheme(toValue(themeExtension), uiTheme) as UITheme)
+  const themeDefaults: UITheme = JSON.parse(JSON.stringify(uiTheme))
+  const theme = computed(() => extendTheme(toValue(themeExtension), themeDefaults) as UITheme)
 
   function generateStyle<T extends keyof UITheme>(name: T, props?: StylerProps<UITheme[T]>) {
     const styler = createStyler(theme.value[name] as any)
