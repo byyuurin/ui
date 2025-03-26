@@ -4,11 +4,11 @@ import { upperFirst } from 'scule'
 
 export type ControlItem<T> = {
   [Prop in keyof T]?: {
-    type?: 'string' | 'number' | 'boolean' | 'multiple'
+    type?: 'string' | 'number' | 'boolean' | 'select' | 'multiple'
     prop: Prop
     description?: string
     warning?: string
-    value: T[Prop] | null
+    value: T[Prop] | T[Prop][] | null
     label?: string
     options?: Array<Required<T>[Prop] | { label: string, value: Required<T>[Prop] | null }>
     placeholder?: string
@@ -91,10 +91,11 @@ function typedSelectOptions(item: ControlItem<T>) {
             </label>
 
             <USelect
-              v-if="item?.type === 'multiple' || item?.options"
+              v-if="item?.type === 'select' || item?.options"
               v-model="attrs[item!.prop]"
               :options="typedSelectOptions(item)"
               :placeholder="item.placeholder"
+              :multiple="item.type === 'multiple'"
             />
             <USwitch
               v-else-if="item?.type === 'boolean' || typeof item?.value === 'boolean'"

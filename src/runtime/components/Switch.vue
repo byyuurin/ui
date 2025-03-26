@@ -37,6 +37,7 @@ export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<Switch
 import { reactivePick } from '@vueuse/core'
 import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<SwitchProps>(), {})
@@ -45,11 +46,15 @@ const slots = defineSlots<SwitchSlots>()
 const modelValue = defineModel<boolean>({ default: undefined })
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
-const id = useId()
+
+const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SwitchProps>(props)
+const id = _id.value ?? useId()
 
 const { theme, generateStyle } = useTheme()
 const style = computed(() => generateStyle('switch', {
   ...props,
+  size: size.value,
+  disabled: disabled.value,
   checked: false,
   unchecked: false,
 }))
@@ -57,7 +62,10 @@ const style = computed(() => generateStyle('switch', {
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
+
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 </script>
 
@@ -65,12 +73,10 @@ function onUpdate(value: any) {
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
     <div :class="style.container({ class: props.ui?.container })">
       <SwitchRoot
-        :id="id"
-        v-bind="rootProps"
+        v-bind="{ ...rootProps, ...ariaAttrs, id, name }"
         v-model="modelValue"
-        :name="props.name"
-        :disabled="props.disabled || props.loading"
         :class="style.base({ class: props.ui?.base })"
+        :disabled="disabled || props.loading"
         @update:model-value="onUpdate"
       >
         <SwitchThumb :class="style.thumb({ class: props.ui?.thumb })">

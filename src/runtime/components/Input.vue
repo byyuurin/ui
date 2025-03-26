@@ -48,6 +48,7 @@ import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
 
@@ -68,15 +69,27 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
-const { size, orientation } = useButtonGroup(props)
+const {
+  size: formItemSize,
+  id,
+  name,
+  highlight,
+  disabled,
+  ariaAttrs,
+  emitFormBlur,
+  emitFormInput,
+  emitFormChange,
+  emitFormFocus,
+} = useFormItem<InputProps>(props, { deferInputValidation: true })
+const { size: buttonGroupSize, orientation } = useButtonGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const { generateStyle } = useTheme()
 const style = computed(() => generateStyle('input', {
   ...props,
-  // @ts-expect-error ignore type
-  type: props.type,
-  size: size.value,
+  type: props.type as InputVariants['type'],
+  size: buttonGroupSize.value || formItemSize.value,
+  highlight: highlight.value,
   groupOrientation: orientation.value,
   leading: isLeading.value || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
@@ -95,6 +108,7 @@ function updateInput(value: string) {
     value = looseToNumber(value)
 
   modelValue.value = value
+  emitFormInput()
 }
 
 function onInput(event: Event) {
@@ -112,10 +126,12 @@ function onChange(event: Event) {
     (event.target as HTMLInputElement).value = value.trim()
 
   emit('change', event)
+  emitFormChange()
 }
 
 function onBlur(event: FocusEvent) {
   emit('blur', event)
+  emitFormBlur()
 }
 
 defineExpose({
@@ -133,7 +149,7 @@ onMounted(() => {
   <Primitive
     :as="as"
     :class="style.base({ class: [props.class, props.ui?.base] })"
-    :aria-disabled="props.disabled ? true : undefined"
+    :aria-disabled="disabled ? true : undefined"
   >
     <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
       <slot name="leading">
@@ -145,20 +161,18 @@ onMounted(() => {
     </span>
 
     <input
-      :id="id"
       ref="inputRef"
+      :class="style.input({ class: props.ui?.input })"
       :type="props.type"
       :value="modelValue"
-      :name="props.name"
       :placeholder="props.placeholder"
-      :class="style.input({ class: props.ui?.input })"
-      :disabled="props.disabled"
       :required="props.required"
       :autocomplete="props.autocomplete"
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ariaAttrs, id, name, disabled }"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
+      @focus="emitFormFocus"
     />
 
     <slot></slot>

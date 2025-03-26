@@ -28,6 +28,7 @@ export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderR
 import { reactivePick } from '@vueuse/core'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<SliderProps>(), {
@@ -63,22 +64,26 @@ const sliderValue = computed({
 
 const thumbsCount = computed(() => sliderValue.value?.length ?? 1)
 
+const { id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SliderProps>(props)
 const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('slider', props))
+const style = computed(() => generateStyle('slider', {
+  ...props,
+  size: size.value,
+}))
 
 function onChange(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 </script>
 
 <template>
   <SliderRoot
-    v-bind="rootProps"
+    v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
     v-model="sliderValue"
-    :name="props.name"
-    :disabled="props.disabled"
     :class="style.root({ class: [props.class, props.ui?.root] })"
     :default-value="defaultSliderValue"
     :data-steps="thumbsCount"

@@ -41,7 +41,8 @@ export interface TextareaProps extends ComponentAttrs<typeof textarea> {
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, useTemplateRef, watch } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 
 defineOptions({
@@ -59,10 +60,15 @@ const emit = defineEmits<TextareaEmits>()
 defineSlots<TextareaSlots>()
 const [modelValue, modelModifiers] = defineModel<string | number>()
 
-const textareaRef = ref<HTMLTextAreaElement | null>(null)
+const textareaRef = useTemplateRef('textareaRef')
 
+const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormItem<TextareaProps>(props)
 const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('textarea', props))
+const style = computed(() => generateStyle('textarea', {
+  ...props,
+  size: size.value,
+  highlight: highlight.value,
+}))
 
 function autoFocus() {
   if (props.autofocus)
@@ -74,6 +80,7 @@ function updateInput(value: string) {
     value = value.trim()
 
   modelValue.value = value
+  emitFormInput()
 }
 
 function onInput(event: Event) {
@@ -93,10 +100,12 @@ function onChange(event: Event) {
     (event.target as HTMLInputElement).value = value.trim()
 
   emit('change', event)
+  emitFormChange()
 }
 
 function onBlur(event: FocusEvent) {
   emit('blur', event)
+  emitFormBlur()
 }
 
 function autoResize() {
@@ -144,23 +153,20 @@ onMounted(() => {
   <Primitive
     :as="props.as"
     :class="style.root({ class: [props.class, props.ui?.root] })"
-    :aria-disabled="props.disabled ? true : undefined"
+    :aria-disabled="disabled ? true : undefined"
   >
     <textarea
-      :id="props.id"
       ref="textareaRef"
+      :class="style.base({ class: props.ui?.base })"
       :value="modelValue"
-      :name="props.name"
       :rows="props.rows"
       :placeholder="props.placeholder"
-      :class="style.base({ class: props.ui?.base })"
-      :disabled="props.disabled"
       :required="props.required"
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ariaAttrs, id, name, disabled }"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
-      @focus="autoResize"
+      @focus="emitFormFocus"
     ></textarea>
 
     <slot></slot>

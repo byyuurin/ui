@@ -76,3 +76,7 @@ export type SelectModelValue<T, V, M extends boolean = false, DV = T> = (
   : never
 
 export type SelectOptionKey<T> = T extends Record<string, any> ? keyof T : string
+
+export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>
+  ? MaybeObject[Key]
+  : never

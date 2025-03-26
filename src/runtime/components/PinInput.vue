@@ -26,6 +26,7 @@ export interface PinInputProps extends ComponentAttrs<typeof pinInput>, Pick<Pin
 import { reactivePick } from '@vueuse/core'
 import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
 
@@ -41,41 +42,49 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'defaultValue', 'disa
 
 const completed = ref(false)
 
+const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormFocus, emitFormBlur } = useFormItem<PinInputProps>(props)
 const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('pinInput', props))
+const style = computed(() => generateStyle('pinInput', {
+  ...props,
+  size: size.value,
+  highlight: highlight.value,
+}))
 
 function onComplete(value: string[]) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
+  emitFormChange()
 }
 
 function onBlur(event: FocusEvent) {
-  if (!event.relatedTarget || completed.value)
+  if (!event.relatedTarget || completed.value) {
     emit('blur', event)
+    emitFormBlur()
+  }
 }
 </script>
 
 <template>
   <PinInputRoot
-    v-bind="rootProps"
-    :id="props.id"
-    :name="props.name"
+    v-bind="{ ...rootProps, ...ariaAttrs, id, name }"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    @update:model-value="emitFormInput"
     @complete="onComplete"
   >
     <span
       v-for="(ids, index) in looseToNumber(props.length)"
       :key="ids"
       :class="style.container({ class: props.ui?.container })"
-      :aria-disabled="props.disabled ? true : undefined"
+      :aria-disabled="disabled ? true : undefined"
     >
       <PinInputInput
-        :index="index"
-        :class="style.base({ class: props.ui?.base })"
         v-bind="$attrs"
-        :disabled="props.disabled"
+        :class="style.base({ class: props.ui?.base })"
+        :index="index"
+        :disabled="disabled"
         @blur="onBlur"
+        @focus="emitFormFocus"
       />
     </span>
   </PinInputRoot>

@@ -41,6 +41,7 @@ export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<Che
 import { reactivePick } from '@vueuse/core'
 import { CheckboxIndicator, CheckboxRoot, Label, Primitive, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -53,15 +54,22 @@ const slots = defineSlots<CheckboxSlots>()
 const innerValue = defineModel<boolean | 'indeterminate'>({ default: undefined })
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const id = props.id ?? useId()
+const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<CheckboxProps>(props)
+const id = _id.value ?? useId()
 
 const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('checkbox', props))
+const style = computed(() => generateStyle('checkbox', {
+  ...props,
+  size: size.value,
+  disabled: disabled.value,
+}))
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: value })
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 </script>
 
@@ -69,12 +77,9 @@ function onUpdate(value: any) {
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
     <div :class="style.container({ class: props.ui?.container })">
       <CheckboxRoot
-        :id="id"
-        v-bind="rootProps"
         v-slot="{ modelValue }"
+        v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
         v-model="innerValue"
-        :name="props.name"
-        :disabled="props.disabled"
         :class="style.base({ class: props.ui?.base })"
         @update:model-value="onUpdate"
       >

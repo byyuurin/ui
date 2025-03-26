@@ -107,6 +107,7 @@ import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicato
 import { computed, toRef } from 'vue'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 import { compare, get } from '../utils'
 
@@ -126,14 +127,16 @@ const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 
 const { theme, generateStyle } = useTheme()
 
-const { size, orientation } = useButtonGroup(props)
+const { id, name, size: formItemSize, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormItem<SelectProps<T, I, V, M>>(props)
+const { size: buttonGroupSize, orientation } = useButtonGroup(props)
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
   trailingIcon: theme.value.app.icons.chevronDown,
 })))
 
 const style = computed(() => generateStyle('select', {
   ...props,
-  size: size.value,
+  size: buttonGroupSize.value || formItemSize.value,
+  highlight: highlight.value,
   groupOrientation: orientation.value,
   leading: isLeading.value,
   trailing: isTrailing.value,
@@ -166,16 +169,20 @@ function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 
 function onUpdateOpen(value: boolean) {
   if (value) {
     const event = new FocusEvent('focus')
     emit('focus', event)
+    emitFormFocus()
   }
   else {
     const event = new FocusEvent('blur')
     emit('blur', event)
+    emitFormBlur()
   }
 }
 </script>
@@ -183,16 +190,16 @@ function onUpdateOpen(value: boolean) {
 <template>
   <SelectRoot
     v-slot="{ modelValue: innerValue, open }"
-    :name="props.name"
     v-bind="rootProps"
+    :name="name"
     :autocomplete="props.autocomplete"
-    :disabled="props.disabled"
+    :disabled="disabled"
     :default-value="typedModelValue(props.defaultValue)"
     :model-value="typedModelValue(props.modelValue)"
     @update:model-value="onUpdate"
     @update:open="onUpdateOpen"
   >
-    <SelectTrigger :id="props.id" :class="style.base({ class: [props.class, props.ui?.base] })">
+    <SelectTrigger v-bind="{ ...$attrs, ...ariaAttrs, id }" :class="style.base({ class: [props.class, props.ui?.base] })">
       <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
         <slot name="leading" :model-value="typedValue(innerValue)" :open="open" :ui="props.ui">
           <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"></span>

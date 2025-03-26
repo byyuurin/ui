@@ -63,6 +63,7 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
 import { reactivePick } from '@vueuse/core'
 import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 import Button from './Button.vue'
@@ -82,12 +83,18 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', '
 
 const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
 
-const { t } = useLocale()
+const { t, code: codeLocale } = useLocale()
+const locale = computed(() => props.locale || codeLocale.value)
+const { id, name, size, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormItem<InputNumberProps>(props)
 const { theme, generateStyle } = useTheme()
 const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.plus : theme.value.app.icons.chevronUp))
 const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.minus : theme.value.app.icons.chevronDown))
 
-const style = computed(() => generateStyle('inputNumber', props))
+const style = computed(() => generateStyle('inputNumber', {
+  ...props,
+  size: size.value,
+  highlight: highlight.value,
+}))
 
 onMounted(() => {
   setTimeout(() => {
@@ -108,35 +115,36 @@ function onUpdate(value: number) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 
 function onBlur(event: FocusEvent) {
   emit('blur', event)
+  emitFormBlur()
 }
 </script>
 
 <template>
   <NumberFieldRoot
-    v-bind="rootProps"
-    :id="props.id"
-    :name="props.name"
-    :disabled="props.disabled"
-    :locale="props.locale"
+    v-bind="{ ...rootProps, id, name, disabled }"
     :class="style.base({ class: [props.class, props.ui?.base] })"
-    :aria-disabled="props.disabled ? true : undefined"
+    :locale="locale"
+    :aria-disabled="disabled ? true : undefined"
     @update:model-value="onUpdate"
   >
     <NumberFieldInput
-      v-bind="$attrs"
+      v-bind="{ ...$attrs, ...ariaAttrs }"
       ref="inputRef"
       :placeholder="props.placeholder"
       :required="props.required"
       :class="style.input({ class: props.ui?.input })"
       @blur="onBlur"
+      @focus="emitFormFocus"
     />
 
     <div :class="style.increment({ class: props.ui?.increment })">
-      <NumberFieldIncrement as-child :disabled="props.disabled">
+      <NumberFieldIncrement as-child :disabled="disabled">
         <slot name="increment">
           <Button
             :icon="incrementIcon"
@@ -150,7 +158,7 @@ function onBlur(event: FocusEvent) {
     </div>
 
     <div :class="style.decrement({ class: props.ui?.decrement })">
-      <NumberFieldDecrement as-child :disabled="props.disabled">
+      <NumberFieldDecrement as-child :disabled="disabled">
         <slot name="decrement">
           <Button
             :icon="decrementIcon"

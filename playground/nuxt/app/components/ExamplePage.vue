@@ -29,7 +29,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <UApp :locale="locale" :toaster="toasterAttrs">
+  <UApp
+    :locale="locale"
+    :toaster="toasterAttrs"
+    :ui="{
+      formItem: {
+        slots: {
+          root: 'leading-normal ui-red-500',
+          help: 'min-h-1.5em',
+        },
+      },
+    }"
+  >
     <div>
       <ExampleAccordion :class="uiColor" />
       <ExampleAlert :class="uiColor" />
@@ -46,6 +57,8 @@ onMounted(() => {
       <ExampleChip :class="uiColor" />
       <ExampleCollapsible :class="uiColor" />
       <ExampleDrawer :class="uiColor" />
+      <ExampleForm :class="uiColor" />
+      <ExampleFormItem :class="uiColor" />
       <ExampleInput :class="uiColor" />
       <ExampleInputNumber :class="uiColor" />
       <ExampleKbd :class="uiColor" />

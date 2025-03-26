@@ -3,6 +3,7 @@ import type { Messages } from '../types'
 import type { Locale } from './translator'
 
 export * from './extend-theme'
+export * from './form'
 export * from './link'
 export * from './styler'
 export * from './translator'

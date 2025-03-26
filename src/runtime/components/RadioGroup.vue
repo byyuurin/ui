@@ -74,6 +74,7 @@ export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, P
 import { reactivePick } from '@vueuse/core'
 import { Label, RadioGroupIndicator, RadioGroupItem, RadioGroupRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, useId } from 'vue'
+import { useFormItem } from '../composables/useFormItem'
 import { useTheme } from '../composables/useTheme'
 import { get } from '../utils'
 
@@ -88,10 +89,16 @@ const emit = defineEmits<RadioGroupEmits>()
 const slots = defineSlots<RadioGroupSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emit)
-const id = useId()
+
+const { id: _id, name, size, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<RadioGroupProps<T>>(props)
+const id = _id.value ?? useId()
 
 const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('radioGroup', props))
+const style = computed(() => generateStyle('radioGroup', {
+  ...props,
+  size: size.value,
+  disabled: disabled.value,
+}))
 
 function normalizeItem(item: any): NormalizeItem<T> {
   if (['string', 'number', 'boolean'].includes(typeof item)) {
@@ -100,7 +107,7 @@ function normalizeItem(item: any): NormalizeItem<T> {
       value: item,
       label: item,
       description: '',
-      disabled: props.disabled,
+      disabled: disabled.value,
     } as any
   }
 
@@ -114,7 +121,7 @@ function normalizeItem(item: any): NormalizeItem<T> {
     label,
     description,
     id: `${id}:${value}`,
-    disabled: props.disabled || item.disabled,
+    disabled: disabled.value || item.disabled,
   }
 }
 
@@ -129,20 +136,19 @@ function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
+  emitFormChange()
+  emitFormInput()
 }
 </script>
 
 <template>
   <RadioGroupRoot
-    :id="id"
     v-slot="{ modelValue }"
-    v-bind="rootProps"
-    :name="props.name"
-    :disabled="props.disabled"
+    v-bind="{ ...rootProps, id, name, disabled }"
     :class="style.root({ class: [props.class, props.ui?.root] })"
     @update:model-value="onUpdate"
   >
-    <fieldset :class="style.fieldset({ class: props.ui?.fieldset })">
+    <fieldset v-bind="ariaAttrs" :class="style.fieldset({ class: props.ui?.fieldset })">
       <legend v-if="props.legend || slots.legend" :class="style.legend({ class: props.ui?.legend })">
         <slot name="legend">
           {{ props.legend }}
