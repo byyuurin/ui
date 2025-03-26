@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormProps, FormSubmitEvent, SelectOption } from '@byyuurin/ui'
+import type { FormProps, FormSubmitEvent } from '@byyuurin/ui'
 import * as z from 'zod'
 import type { ControlItems } from './ExampleView.vue'
 
@@ -18,7 +18,7 @@ const schema = z.object({
   select: z.string().refine((value) => value === 'option-2', {
     message: 'Select Option 2',
   }),
-  selectMultiple: z.any().refine((values) => !!values?.find((option: SelectOption) => option.value === 'option-2'), {
+  selectMultiple: z.string().array().refine((values) => !!values?.find((value) => value === 'option-2'), {
     message: 'Include Option 2',
   }),
   switch: z.boolean().refine((value) => value === true, {
