@@ -52,7 +52,7 @@ export function transformUnoRules(
 
   for (const rule of rules) {
     const [maybeString, maybeResult] = rule
-    const ruleRE = typeof maybeString === 'string' ? new RegExp(`^${maybeString}$`) : maybeString
+    const ruleRE = typeof maybeString === 'string' ? new RegExp(`^(?:${maybeString})$`) : maybeString
 
     if (Array.isArray(maybeResult)) {
       mergeRules.push([ruleRE, resolveCSSEntries(maybeResult)])
@@ -88,5 +88,5 @@ export function transformUnoRules(
     mergeRules.push([ruleRE, matcher])
   }
 
-  return mergeRules
+  return mergeRules.sort(([r1], [r2]) => r2.source.length - r1.source.length)
 }
