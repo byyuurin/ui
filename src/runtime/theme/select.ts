@@ -42,7 +42,7 @@ export default ct(/* @unocss-include */{
         base: [
           'color-ui-base/80 bg-ui-base ring ring-inset ring-ui-base/30 data-[state=open]:ring-2 data-[state=open]:ring-ui-base/50',
           'focus-within:ring-2 focus-within:ring-ui-base/50',
-          'disabled:ring-ui-base/80 hover:disabled:ring-ui-base/80',
+          'disabled:ring-ui-base/15 hover:disabled:ring-ui-base/15',
         ],
       },
       'soft': {

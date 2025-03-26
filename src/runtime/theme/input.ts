@@ -117,14 +117,14 @@ export default ct(/* @unocss-include */{
       variant: ['soft', 'soft-outline', 'ghost', 'none'],
       highlight: true,
       class: {
-        base: 'ring ring-inset ring-ui-fill/80 focus-within:ring-ui-fill/80',
+        base: 'ring ring-inset ring-ui-fill/80 focus-within:ring-ui-fill/80 hover:focus-within:ring-ui-fill/80',
       },
     },
     {
       variant: ['outline'],
       highlight: true,
       class: {
-        base: 'ring-2 ring-ui-fill/80 focus-within:ring-ui-fill/80',
+        base: 'ring-2 ring-ui-fill/80 focus-within:ring-ui-fill/80 hover:focus-within:ring-ui-fill/80',
       },
     },
     {

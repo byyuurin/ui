@@ -29,7 +29,7 @@ export default ct(/* @unocss-include */{
         container: [
           'color-ui-base/80 bg-ui-base ring ring-inset ring-ui-base/30',
           'focus-within:ring-2 focus-within:ring-ui-base/50',
-          'aria-disabled:ring-ui-base/80 hover:aria-disabled:ring-ui-base/80',
+          'aria-disabled:ring-ui-base/15 hover:aria-disabled:ring-ui-base/15',
         ],
       },
       'soft': {
