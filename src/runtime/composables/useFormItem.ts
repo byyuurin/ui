@@ -76,7 +76,7 @@ export function useFormItem<T>(props?: Props<T>, options?: { bind?: boolean, def
       if (!formItem?.value)
         return
 
-      const descriptiveAttrs = ['error' as const, 'hint' as const, 'description' as const]
+      const descriptiveAttrs = ['error' as const, 'hint' as const, 'help' as const, 'description' as const]
         .filter((type) => formItem?.value?.[type])
         .map((type) => `${formItem?.value.ariaId}-${type}`) || []
 

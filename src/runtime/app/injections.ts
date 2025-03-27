@@ -47,6 +47,7 @@ export interface FormItemProvideValue<T> {
   validateOnInputDelay?: number
   errorPattern?: RegExp
   hint?: string
+  help?: string
   description?: string
   ariaId: string
 }
