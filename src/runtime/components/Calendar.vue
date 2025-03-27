@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DateValue } from '@internationalized/date'
-import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits } from 'reka-ui'
+import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui'
 import type { calendar } from '../theme'
 import type { ComponentAttrs } from '../types'
 
@@ -17,11 +17,20 @@ export interface CalendarSlots {
 
 type CalendarVariants = VariantProps<typeof calendar>
 
-type CalendarModelValue<R extends boolean = false, M extends boolean = false> = R extends true
+type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
   ? DateRange
   : M extends true ? DateValue[] : DateValue
 
-export interface CalendarProps<R extends boolean, M extends boolean> extends ComponentAttrs<typeof calendar>, Omit<CalendarRootProps, 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'> {
+type CalendarModelValue<R extends boolean = false, M extends boolean = false> = R extends true
+  ? (DateRange | null)
+  : M extends true
+    ? (DateValue[] | undefined)
+    : (DateValue | undefined)
+
+type _CalendarRootProps = Omit<CalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
+type _RangeCalendarRootProps = Omit<RangeCalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
+
+export interface CalendarProps<R extends boolean = false, M extends boolean = false> extends ComponentAttrs<typeof calendar>, _CalendarRootProps, _RangeCalendarRootProps {
   /**
    * The icon to use for the next year control.
    * @default app.icons.chevronDoubleRight
@@ -54,12 +63,12 @@ export interface CalendarProps<R extends boolean, M extends boolean> extends Com
   monthControls?: boolean
   /** Show year controls */
   yearControls?: boolean
-  defaultValue?: CalendarModelValue<R, M>
-  modelValue?: CalendarModelValue<R, M>
+  defaultValue?: CalendarDefaultValue<R, M>
+  modelValue?: CalendarDefaultValue<R, M>
 }
 </script>
 
-<script setup lang="ts" generic="R extends boolean = false, M extends boolean = false">
+<script setup lang="ts" generic="R extends boolean, M extends boolean">
 import { reactiveOmit } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
 import { Calendar as BaseCalendar, RangeCalendar } from 'reka-ui/namespaced'

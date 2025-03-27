@@ -5,7 +5,7 @@ import type { switch as _switch } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface SwitchEmits {
-  (event: 'change', payload: Event): void
+  change: [payload: Event]
 }
 
 export interface SwitchSlots {

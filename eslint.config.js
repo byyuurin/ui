@@ -7,6 +7,7 @@ export default byyuurin(
     vue: {
       overrides: {
         'ts/no-empty-object-type': 'off',
+        'vue/no-extra-parens': 'off',
       },
     },
     formatters: {

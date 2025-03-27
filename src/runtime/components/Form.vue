@@ -4,8 +4,8 @@ import type { form } from '../theme'
 import type { ComponentAttrs, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, FormValidateOptions } from '../types'
 
 export interface FormEmits<T extends object> {
-  (e: 'submit', payload: FormSubmitEvent<T>): void
-  (e: 'error', payload: FormErrorEvent): void
+  submit: [payload: FormSubmitEvent<T>]
+  error: [payload: FormErrorEvent]
 }
 
 export interface FormSlots {

@@ -1,30 +1,26 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
 import type { breadcrumb } from '../theme'
-import type { ComponentAttrs, LinkProps } from '../types'
-
-type SlotProps<T> = (props: { item: T, index: number, active?: boolean }) => any
-
-type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
-  Slot extends string
-    ? Record<Slot | `${Slot}-${'leading' | 'label' | 'trailing'}`, SlotProps>
-    : Record<string, never>
-
-export type BreadcrumbSlots<T extends { slot?: string }> = {
-  'item'?: SlotProps<T>
-  'item-leading'?: SlotProps<T>
-  'item-label'?: SlotProps<T>
-  'item-trailing'?: SlotProps<T>
-  'separator'?: (props?: {}) => any
-} & DynamicSlots<T, SlotProps<T>>
+import type { ComponentAttrs, DynamicSlots, LinkProps } from '../types'
 
 export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
   label?: string
   icon?: string
   slot?: string
+  [key: string]: any
 }
 
-export interface BreadcrumbProps<T> extends ComponentAttrs<typeof breadcrumb> {
+type SlotProps<T extends BreadcrumbItem> = (props: { item: T, index: number, active?: boolean }) => any
+
+export type BreadcrumbSlots<T extends BreadcrumbItem = BreadcrumbItem> = {
+  'item'?: SlotProps<T>
+  'item-leading'?: SlotProps<T>
+  'item-label'?: SlotProps<T>
+  'item-trailing'?: SlotProps<T>
+  'separator'?: any
+} & DynamicSlots<T, 'leading' | 'label' | 'trailing', SlotProps<T>>
+
+export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> extends ComponentAttrs<typeof breadcrumb> {
   /**
    * The element or component this component should render as.
    * @default "nav"
@@ -80,18 +76,18 @@ const style = computed(() => generateStyle('breadcrumb', props))
               :aria-current="active && (index === items!.length - 1) ? 'page' : undefined"
               :class="style.link({ class: props.ui?.link, active: index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
             >
-              <slot :name="item.slot || 'item'" :item="item" :index="index">
-                <slot :name="`${item.slot || 'item'}-leading`" :item="item" :active="index === items!.length - 1" :index="index">
+              <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="item" :index="index">
+                <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index">
                   <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })"></span>
                 </slot>
 
-                <span v-if="get(item, props.labelKey) || slots[`${item.slot || 'item'}-label`]" :class="style.linkLabel({ class: props.ui?.linkLabel })">
-                  <slot :name="`${item.slot || 'item'}-label`" :item="item" :active="index === items!.length - 1" :index="index">
+                <span v-if="get(item, props.labelKey) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="style.linkLabel({ class: props.ui?.linkLabel })">
+                  <slot :name="(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey) }}
                   </slot>
                 </span>
 
-                <slot :name="`${item.slot || 'item'}-trailing`" :item="item" :active="index === items!.length - 1" :index="index"></slot>
+                <slot :name="(`${item.slot || 'item'}-trailing` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index"></slot>
               </slot>
             </LinkBase>
           </Link>

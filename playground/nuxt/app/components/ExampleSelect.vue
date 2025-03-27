@@ -11,7 +11,7 @@ const options = [
   [{ label: 'Icon', value: 'Icon', icon: 'i-carbon-user-avatar' }],
 ]
 
-const controls: ControlItems<SelectProps<any, any, any, any>> = [
+const controls: ControlItems<SelectProps<typeof options>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
   { prop: 'placeholder', value: 'placeholder', placeholder: 'placeholder' },

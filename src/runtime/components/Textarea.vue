@@ -5,9 +5,9 @@ import type { textarea } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface TextareaEmits {
-  (e: 'update:modelValue', payload: string): void
-  (e: 'blur', event: FocusEvent): void
-  (e: 'change', event: Event): void
+  'update:modelValue': [payload: string]
+  'blur': [event: FocusEvent]
+  'change': [event: Event]
 }
 
 export interface TextareaSlots {

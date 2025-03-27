@@ -5,7 +5,7 @@ import type { checkbox } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface CheckboxEmits {
-  (event: 'change', payload: Event): void
+  change: [payload: Event]
 }
 
 export interface CheckboxSlots {

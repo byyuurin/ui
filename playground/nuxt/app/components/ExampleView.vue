@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { SelectOption } from '@byyuurin/ui'
+import type { SelectItem } from '@byyuurin/ui'
 import { upperFirst } from 'scule'
 
 export type ControlItem<T> = {
@@ -55,10 +55,6 @@ onMounted(() => {
     deep: true,
   })
 })
-
-function typedSelectOptions(item: ControlItem<T>) {
-  return (item?.options ?? []) as unknown as SelectOption[]
-}
 </script>
 
 <template>
@@ -93,7 +89,7 @@ function typedSelectOptions(item: ControlItem<T>) {
             <USelect
               v-if="item?.type === 'select' || item?.options"
               v-model="attrs[item!.prop]"
-              :options="typedSelectOptions(item)"
+              :options="((item.options ?? []) as SelectItem[])"
               :placeholder="item.placeholder"
               :multiple="item.type === 'multiple'"
             />

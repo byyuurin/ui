@@ -1,44 +1,35 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { AcceptableValue, PrimitiveProps, RadioGroupRootProps } from 'reka-ui'
+import type { PrimitiveProps, RadioGroupRootProps } from 'reka-ui'
 import type { radioGroup } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { AcceptableValue, ComponentAttrs } from '../types'
 
 export interface RadioGroupEmits {
-  (event: 'update:modelValue', payload: string): void
-  (event: 'change', payload: Event): void
+  'update:modelValue': [payload: string]
+  'change': [payload: Event]
 }
 
-type SlotProps<T> = (props: { item: NormalizeItem<T>, modelValue?: AcceptableValue }) => any
+export type RadioGroupValue = AcceptableValue
 
-export interface RadioGroupSlots<T> {
-  legend?: (props?: {}) => any
+export type RadioGroupItem = {
+  label?: string
+  description?: string
+  disabled?: boolean
+  value?: RadioGroupValue
+  [key: string]: any
+} | RadioGroupValue
+
+type SlotProps<T extends RadioGroupItem> = (props: { item: T & { id: string }, modelValue?: RadioGroupValue }) => any
+
+export interface RadioGroupSlots<T extends RadioGroupItem = RadioGroupItem> {
+  legend?: any
   label?: SlotProps<T>
   description?: SlotProps<T>
 }
 
-type NormalizeItem<T> = { id: string } & (
-  T extends RadioOption
-    ? T
-    : {
-        id: string
-        label: string
-        value: any
-        description: string
-        disabled: boolean
-      }
-    )
-
 type RadioGroupVariants = VariantProps<typeof radioGroup>
 
-export interface RadioOption {
-  label?: string
-  description?: string
-  disabled?: boolean
-  value?: string
-}
-
-export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, Pick<RadioGroupRootProps, 'defaultValue' | 'disabled' | 'loop' | 'modelValue' | 'name' | 'required'> {
+export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> extends ComponentAttrs<typeof radioGroup>, Pick<RadioGroupRootProps, 'defaultValue' | 'disabled' | 'loop' | 'modelValue' | 'name' | 'required'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -70,7 +61,7 @@ export interface RadioGroupProps<T> extends ComponentAttrs<typeof radioGroup>, P
 }
 </script>
 
-<script lang="ts" setup generic="T extends RadioOption | AcceptableValue">
+<script lang="ts" setup generic="T extends RadioGroupItem">
 import { reactivePick } from '@vueuse/core'
 import { Label, RadioGroupIndicator, RadioGroupItem, RadioGroupRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, useId } from 'vue'
@@ -100,15 +91,22 @@ const style = computed(() => generateStyle('radioGroup', {
   disabled: disabled.value,
 }))
 
-function normalizeItem(item: any): NormalizeItem<T> {
-  if (['string', 'number', 'boolean'].includes(typeof item)) {
+function normalizeItem(item: any) {
+  if (item === null) {
+    return {
+      id: `${id}:null`,
+      label: undefined,
+      value: undefined,
+    }
+  }
+
+  if (typeof item === 'string' || typeof item === 'number') {
     return {
       id: `${id}:${item}`,
+      label: String(item),
       value: item,
-      label: item,
-      description: '',
       disabled: disabled.value,
-    } as any
+    }
   }
 
   const value = get(item, props.valueKey)
@@ -117,10 +115,10 @@ function normalizeItem(item: any): NormalizeItem<T> {
 
   return {
     ...item,
-    value,
-    label,
-    description,
     id: `${id}:${value}`,
+    label,
+    value,
+    description,
     disabled: disabled.value || item.disabled,
   }
 }
@@ -168,10 +166,10 @@ function onUpdate(value: any) {
 
         <div :class="style.wrapper({ class: props.ui?.wrapper })">
           <Label :for="item.id" :class="style.label({ class: props.ui?.label })">
-            <slot name="label" :item="item" :model-value="modelValue">{{ item.label }}</slot>
+            <slot name="label" :item="item" :model-value="(modelValue as RadioGroupValue)">{{ item.label }}</slot>
           </Label>
           <p v-if="item.description || slots.description" :class="style.description({ class: props.ui?.description })">
-            <slot name="description" :item="item" :model-value="modelValue">
+            <slot name="description" :item="item" :model-value="(modelValue as RadioGroupValue)">
               {{ item.description }}
             </slot>
           </p>

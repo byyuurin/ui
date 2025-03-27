@@ -7,9 +7,9 @@ import type { input } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface InputEmits {
-  (e: 'update:modelValue', payload: string | number): void
-  (e: 'blur', event: FocusEvent): void
-  (e: 'change', event: Event): void
+  'update:modelValue': [payload: string | number]
+  'blur': [event: FocusEvent]
+  'change': [event: Event]
 }
 
 export interface InputSlots {

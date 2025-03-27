@@ -5,7 +5,7 @@ import type { badge } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface BadgeEmits {
-  (e: 'update:show', payload: boolean): void
+  'update:show': [payload: boolean]
 }
 
 export interface BadgeSlots {

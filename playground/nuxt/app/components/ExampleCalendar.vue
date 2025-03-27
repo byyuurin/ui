@@ -17,9 +17,6 @@ const controls: ControlItems<CalendarProps<boolean, boolean>> = [
   { prop: 'disabled', value: false },
   { prop: 'fixedWeeks', value: false, description: 'Whether or not to always display 6 weeks in the calendar' },
 ]
-
-const toMultipleAttrs = (attrs: CalendarProps<boolean, boolean>) => attrs as CalendarProps<boolean, true>
-const toRangeAttrs = (attrs: CalendarProps<boolean, boolean>) => attrs as CalendarProps<true, boolean>
 </script>
 
 <template>
@@ -34,10 +31,10 @@ const toRangeAttrs = (attrs: CalendarProps<boolean, boolean>) => attrs as Calend
         <UCalendar v-bind="attrs" v-model="singleValue" />
       </UCard>
       <UCard title="Multiple">
-        <UCalendar v-bind="toMultipleAttrs(attrs)" v-model="multipleValue" multiple />
+        <UCalendar v-bind="(attrs as CalendarProps<boolean, true>)" v-model="multipleValue" multiple />
       </UCard>
       <UCard title="Range">
-        <UCalendar v-bind="toRangeAttrs(attrs)" v-model="rangeValue" range />
+        <UCalendar v-bind="(attrs as CalendarProps<true, boolean>)" v-model="rangeValue" range />
       </UCard>
       <UCard title="Disable Days">
         <UCalendar v-bind="attrs" v-model="singleValue" :is-date-disabled="(date) => date.day >= 10 && date.day <= 16" />

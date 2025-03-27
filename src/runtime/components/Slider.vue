@@ -2,11 +2,11 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SliderRootProps } from 'reka-ui'
 import type { slider } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentAttrs, MaybeArray } from '../types'
 
 export interface SliderEmits {
-  (event: 'update:modelValue', payload: number | number[]): void
-  (event: 'change', payload: Event): void
+  'update:modelValue': [payload: MaybeArray<number>]
+  'change': [payload: Event]
 }
 
 type SliderVariants = VariantProps<typeof slider>

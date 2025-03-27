@@ -165,6 +165,7 @@ export default ct(/* @unocss-include */{
     },
   ],
   defaultVariants: {
+    variant: 'outline',
     size: 'md',
   },
 })

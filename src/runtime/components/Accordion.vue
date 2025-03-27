@@ -1,24 +1,9 @@
 <script lang="ts">
 import type { AccordionRootEmits, AccordionRootProps } from 'reka-ui'
 import type { accordion } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface AccordionEmits extends AccordionRootEmits {}
-
-type SlotProps<T> = (props: { item: T, index: number, open: boolean }) => any
-
-type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
-  Slot extends string
-    ? Record<Slot | `${Slot}-body`, SlotProps>
-    : Record<string, never>
-
-export type AccordionSlots<T extends { slot?: string }> = {
-  default?: SlotProps<T>
-  leading?: SlotProps<T>
-  trailing?: SlotProps<T>
-  content?: SlotProps<T>
-  body?: SlotProps<T>
-} & DynamicSlots<T, SlotProps<T>>
 
 export interface AccordionItem {
   label?: string
@@ -29,9 +14,20 @@ export interface AccordionItem {
   /** A unique value for the accordion item. Defaults to the index. */
   value?: string
   disabled?: boolean
+  [key: string]: any
 }
 
-export interface AccordionProps<T> extends ComponentAttrs<typeof accordion>, Pick<AccordionRootProps, 'as' | 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
+type SlotProps<T extends AccordionItem> = (props: { item: T, index: number, open: boolean }) => any
+
+export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
+  default?: SlotProps<T>
+  leading?: SlotProps<T>
+  trailing?: SlotProps<T>
+  content?: SlotProps<T>
+  body?: SlotProps<T>
+} & DynamicSlots<T, 'body', SlotProps<T>>
+
+export interface AccordionProps<T extends AccordionItem = AccordionItem> extends ComponentAttrs<typeof accordion>, Pick<AccordionRootProps, 'as' | 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
   items?: T[]
   /**
    * The icon displayed on the right side of the trigger.
@@ -91,12 +87,12 @@ const style = computed(() => generateStyle('accordion', props))
       </AccordionHeader>
 
       <AccordionContent
-        v-if="item.content || slots.content || (item.slot && slots[item.slot]) || slots.body || (item.slot && slots[`${item.slot}-body`])"
+        v-if="item.content || slots.content || (item.slot && slots[item.slot as keyof AccordionSlots<T>]) || slots.body || (item.slot && slots[`${item.slot}-body` as keyof AccordionSlots<T>])"
         :class="style.content({ class: props.ui?.content })"
       >
-        <slot :name="item.slot || 'content'" v-bind="{ item, index, open }">
+        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" v-bind="{ item, index, open }">
           <div :class="style.body({ class: props.ui?.body })">
-            <slot :name="item.slot ? `${item.slot}-body` : 'body'" v-bind="{ item, index, open }">
+            <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" v-bind="{ item, index, open }">
               {{ item.content }}
             </slot>
           </div>

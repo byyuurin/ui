@@ -9,14 +9,14 @@ export interface DrawerEmits extends DialogRootEmits {
 }
 
 export interface DrawerSlots {
-  default?: (props?: {}) => any
-  content?: (props?: {}) => any
-  header?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  close?: (props?: {}) => any
-  body?: (props?: {}) => any
-  footer?: (props?: {}) => any
+  default?: any
+  content?: any
+  header?: any
+  title?: any
+  description?: any
+  close?: (props: { ui: ComponentAttrs<typeof drawer>['ui'] }) => any
+  body?: any
+  footer?: any
 }
 
 type DrawerVariants = VariantProps<typeof drawer>
@@ -140,7 +140,7 @@ const style = computed(() => generateStyle('drawer', props))
                 </DialogTitle>
 
                 <DialogClose v-if="props.close || slots.close" as-child>
-                  <slot name="close">
+                  <slot name="close" :ui="props.ui">
                     <Button
                       variant="ghost"
                       :icon="props.closeIcon || theme.app.icons.close"

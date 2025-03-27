@@ -5,7 +5,7 @@ import type { alert } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
 export interface AlertEmits {
-  (event: 'update:open', value: boolean): void
+  'update:open': [value: boolean]
 }
 
 export interface AlertSlots {

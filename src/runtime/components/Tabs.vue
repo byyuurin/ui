@@ -6,15 +6,6 @@ import type { ComponentAttrs, DynamicSlots } from '../types'
 
 export interface TabsEmits extends TabsRootEmits<string | number> {}
 
-type SlotProps<T> = (props: { item: T, index: number }) => any
-
-export type TabsSlots<T extends { slot?: string }> = {
-  leading?: SlotProps<T>
-  default?: SlotProps<T>
-  trailing?: SlotProps<T>
-  content?: SlotProps<T>
-} & DynamicSlots<T, SlotProps<T>>
-
 export interface TabsItem {
   label?: string
   icon?: string
@@ -23,11 +14,21 @@ export interface TabsItem {
   /** A unique value for the tab item. Defaults to the index. */
   value?: string | number
   disabled?: boolean
+  [key: string]: any
 }
+
+type SlotProps<T extends TabsItem> = (props: { item: T, index: number }) => any
+
+export type TabsSlots<T extends TabsItem = TabsItem> = {
+  leading?: SlotProps<T>
+  default?: SlotProps<T>
+  trailing?: SlotProps<T>
+  content?: SlotProps<T>
+} & DynamicSlots<T, undefined, SlotProps<T>>
 
 type TabsVariants = VariantProps<typeof tabs>
 
-export interface TabsProps<T> extends ComponentAttrs<typeof tabs>, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
+export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs<typeof tabs>, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -108,7 +109,7 @@ const style = computed(() => generateStyle('tabs', props))
         :value="item.value || String(index)"
         :class="style.content({ class: props.ui?.content })"
       >
-        <slot :name="item.slot || 'content'" :item="item" :index="index">
+        <slot :name="((item.slot || 'content') as keyof TabsSlots<T>)" :item="(item as Extract<T, { slot: string }>)" :index="index">
           {{ item.content }}
         </slot>
       </TabsContent>

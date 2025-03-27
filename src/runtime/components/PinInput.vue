@@ -5,10 +5,10 @@ import type { pinInput } from '../theme'
 import type { ComponentAttrs } from '../types'
 
 export interface PinInputEmits {
-  (event: 'update:modelValue', value: string[]): void
-  (event: 'complete', value: string[]): void
-  (event: 'change', payload: Event): void
-  (event: 'blur', payload: Event): void
+  'update:modelValue': [value: string[]]
+  'complete': [value: string[]]
+  'change': [payload: Event]
+  'blur': [payload: Event]
 }
 
 type PinInputVariants = VariantProps<typeof pinInput>

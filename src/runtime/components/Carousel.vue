@@ -11,13 +11,15 @@ import type { AcceptableValue, PrimitiveProps } from 'reka-ui'
 import type { carousel } from '../theme'
 import type { ButtonProps, ComponentAttrs } from '../types'
 
-export interface CarouselSlots<T> {
+export type CarouselItem = AcceptableValue
+
+export interface CarouselSlots<T extends CarouselItem = CarouselItem> {
   default?: (props: { item: T, index: number }) => any
 }
 
 type CarouselVariants = VariantProps<typeof carousel>
 
-export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
+export interface CarouselProps<T extends CarouselItem = CarouselItem> extends ComponentAttrs<typeof carousel>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -88,7 +90,7 @@ export interface CarouselProps<T> extends ComponentAttrs<typeof carousel>, Omit<
 }
 </script>
 
-<script setup lang="ts" generic="T extends AcceptableValue">
+<script setup lang="ts" generic="T extends CarouselItem">
 import { computedAsync, reactivePick } from '@vueuse/core'
 import useEmblaCarousel from 'embla-carousel-vue'
 import { Primitive, useForwardProps } from 'reka-ui'

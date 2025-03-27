@@ -102,3 +102,7 @@ export function compare<T>(
 
   return isEqual(value, currentValue)
 }
+
+export function isArrayOfArray<T>(item: T[] | T[][]): item is T[][] {
+  return Array.isArray(item[0])
+}

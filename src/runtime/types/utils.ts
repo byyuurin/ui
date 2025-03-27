@@ -1,13 +1,9 @@
 import type { ClassValue, CTReturn, CVReturnType, VariantProps } from '@byyuurin/ui-kit'
-
-export type HintString<T extends string> = T & (string & {})
+import type { AcceptableValue as RekaAcceptableValue } from 'reka-ui'
 
 export type MaybeArray<T> = T | T[]
-export type MaybeArrayOfArray<T> = T[] | T[][]
 
-export type MaybeArrayOfArrayItem<T> = T extends Array<infer V1>
-  ? V1 extends Array<infer V2> ? V2 : V1
-  : never
+export type AcceptableValue = Exclude<RekaAcceptableValue, Record<string, any>>
 
 export type EmitsToProps<T> = {
   [K in keyof T as `on${Capitalize<string & K>}`]: T[K] extends [...args: infer Args]
@@ -15,20 +11,50 @@ export type EmitsToProps<T> = {
     : never
 }
 
-export type PartialTheme<T> = {
-  [P in keyof T as T[P] extends undefined ? never : P]?: T[P] extends Array<infer V>
-    ? V extends string ? string : V[]
-    : T[P] extends object
-      ? PartialTheme<T[P]>
-      : T[P] extends string
-        ? string
-        : T[P]
+// ref: https://github.com/nuxt/ui/pull/3331
+export type DynamicSlots<
+  T extends { slot?: string },
+  SlotExtra extends string | undefined = undefined,
+  SlotProps extends object = Record<string, never>,
+> = {
+  [ K in T['slot'] as K extends string
+    ? SlotExtra extends string
+      ? (K | `${K}-${SlotExtra}`)
+      : K
+    : never
+  ]?: (props: { item: Extract<T, { slot: K extends `${infer Base}-${SlotExtra}` ? Base : K }> } & Omit<SlotProps, 'item'>) => any
 }
 
-export type DynamicSlots<T extends { slot?: string }, SlotProps, Slot = T['slot']> =
-  Slot extends string
-    ? Record<Slot, SlotProps>
-    : Record<string, never>
+export type ArrayOrNested<T> = T[] | T[][]
+export type NestedItem<T> = T extends Array<infer I> ? NestedItem<I> : T
+export type GetItemKeys<T> = keyof Extract<NestedItem<T>, object>
+export type GetItemValue<I, VK extends GetItemKeys<I> | undefined, T extends NestedItem<I> = NestedItem<I>> =
+  T extends object
+    ? VK extends undefined
+      ? T
+      : VK extends keyof T ? T[VK] : never
+    : T
+
+export type GetModelValue<
+  T,
+  VK extends GetItemKeys<T> | undefined,
+  M extends boolean,
+> = M extends true
+  ? GetItemValue<T, VK>[]
+  : GetItemValue<T, VK>
+
+export interface GetModelValueEmits<
+  T,
+  VK extends GetItemKeys<T> | undefined,
+  M extends boolean,
+> {
+  /** Event handler called when the value changes. */
+  'update:modelValue': [payload: GetModelValue<T, VK, M>]
+}
+
+export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>
+  ? MaybeObject[Key]
+  : never
 
 export interface ComponentAttrs<T> {
   class?: MaybeArray<string | Record<string, boolean>>
@@ -57,26 +83,4 @@ export type Styler<T> = T extends CVReturnType<infer V, any, any>
   ? [keyof V] extends string[]
       ? (props: VariantProps<T> & StylerBaseProps) => StylerReturnType<T>
       : (props?: StylerBaseProps) => StylerReturnType<T>
-  : never
-
-export interface SelectModelValueEmits<T, V, M extends boolean = false, DV = T> {
-  (event: 'update:modelValue', payload: SelectModelValue<T, V, M, DV>): void
-}
-
-export type SelectModelValue<T, V, M extends boolean = false, DV = T> = (
-  T extends Record<string, any>
-    ? V extends keyof T
-      ? T[V]
-      : DV
-    : T
-) extends infer U
-  ? M extends true
-    ? U[]
-    : U
-  : never
-
-export type SelectOptionKey<T> = T extends Record<string, any> ? keyof T : string
-
-export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>
-  ? MaybeObject[Key]
   : never

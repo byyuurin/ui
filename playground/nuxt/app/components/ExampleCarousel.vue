@@ -2,7 +2,10 @@
 import type { CarouselProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const items = Array.from({ length: 15 }, (_, i) => `https://picsum.photos/id/${i + i * 11}/640/640`)
+const items = Array.from({ length: 15 }, (_, i) => ({
+  index: i,
+  url: `https://picsum.photos/id/${i + i * 11}/640/640`,
+}))
 
 const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
@@ -36,7 +39,7 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
           item: 'sm:basis-1/2 md:basis-1/3 xl:basis-1/4',
         }"
       >
-        <img :src="item" width="320" height="320" alt="" />
+        <img :src="item.url" width="320" height="320" alt="" />
       </UCarousel>
     </div>
   </ExampleView>
