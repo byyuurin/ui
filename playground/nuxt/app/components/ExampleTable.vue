@@ -63,6 +63,7 @@ const columns: TableColumn<typeof data.value[number]>[] = [
 ]
 
 const controls: ControlItems<TableProps<typeof data.value[number]>> = [
+  { prop: 'empty', value: '' },
   { prop: 'sticky', value: false },
 ]
 </script>
