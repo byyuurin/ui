@@ -10,9 +10,10 @@ type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T
 type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
 
 export type TableSlots<T> = {
-  expanded: (props: { row: Row<T> }) => any
-  empty: (props?: {}) => any
-  caption: (props?: {}) => any
+  expanded?: (props: { row: Row<T> }) => any
+  empty?: any
+  loading?: any
+  caption?: any
 } & DynamicHeaderSlots<T> & DynamicCellSlots<T>
 
 export type TableData = RowData
@@ -43,6 +44,8 @@ export interface TableProps<T extends TableData> extends ComponentAttrs<typeof t
    * @default false
    */
   sticky?: boolean
+  /** Whether the table should be in loading state. */
+  loading?: boolean
   /**
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/global-filtering#table-options)
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/global-filtering)
@@ -116,8 +119,7 @@ import { useLocale } from '../composables/useLocale'
 import { useTheme } from '../composables/useTheme'
 
 const props = defineProps<TableProps<T>>()
-
-defineSlots<TableSlots<T>>()
+const slots = defineSlots<TableSlots<T>>()
 
 const globalFilterState = defineModel<string>('globalFilter', { default: undefined })
 const columnFiltersState = defineModel<ColumnFiltersState>('columnFilters', { default: [] })
@@ -142,7 +144,7 @@ const columns = computed<TableColumn<T>[]>(
 )
 
 const tableApi = useVueTable({
-  ...reactiveOmit(props, 'data', 'columns', 'caption', 'sticky', 'class', 'ui'),
+  ...reactiveOmit(props, 'data', 'columns', 'caption', 'sticky', 'loading', 'class', 'ui'),
   data,
   columns: columns.value,
   getCoreRowModel: getCoreRowModel(),
@@ -245,7 +247,7 @@ defineExpose({
 <template>
   <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
     <table :class="style.base({ class: props.ui?.base })">
-      <caption v-if="props.caption" :class="style.caption({ class: props.caption })">
+      <caption v-if="props.caption || slots.caption" :class="style.caption({ class: props.caption })">
         <slot name="caption">
           {{ props.caption }}
         </slot>
@@ -288,6 +290,12 @@ defineExpose({
             </tr>
           </template>
         </template>
+
+        <tr v-else-if="props.loading && slots.loading">
+          <td :colspan="columns.length" :class="style.loading({ class: props.ui?.loading })">
+            <slot name="loading"></slot>
+          </td>
+        </tr>
 
         <tr v-else :class="style.tr({ class: props.ui?.tr })">
           <td :colspan="columns.length" :class="style.empty({ class: props.ui?.empty })">

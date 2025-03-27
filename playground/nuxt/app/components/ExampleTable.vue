@@ -65,6 +65,7 @@ const columns: TableColumn<typeof data.value[number]>[] = [
 const controls: ControlItems<TableProps<typeof data.value[number]>> = [
   { prop: 'empty', value: '' },
   { prop: 'sticky', value: false },
+  { prop: 'loading', value: false },
 ]
 </script>
 
@@ -83,6 +84,9 @@ const controls: ControlItems<TableProps<typeof data.value[number]>> = [
         <UTable class="max-h-100" v-bind="attrs" :columns="columns" :column-pinning="{ right: ['status'] }" :data="isEmpty ? [] : data">
           <template #expanded="{ row }">
             <pre>{{ row.original }}</pre>
+          </template>
+          <template #loading>
+            <Placeholder class="h-40" label="#loading" />
           </template>
         </UTable>
       </UCard>
