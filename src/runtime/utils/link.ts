@@ -2,14 +2,17 @@ import { reactivePick } from '@vueuse/core'
 import type { LinkProps } from '../types'
 
 export function pickLinkProps(
-  link: LinkProps & { ariaLabel?: string, title?: string },
+  link: LinkProps & { [key: string]: any },
 ) {
-  return reactivePick(
-    link,
+  const keys = Object.keys(link)
+
+  const ariaKeys = keys.filter((key) => key.startsWith('aria-')) as Array<`aria-${string}`>
+  const dataKeys = keys.filter((key) => key.startsWith('data-')) as Array<`data-${string}`>
+
+  const pickProps: (keyof LinkProps | 'title')[] = [
     'active',
     'activeClass',
     'ariaCurrentValue',
-    'ariaLabel',
     'as',
     'disabled',
     'disableClass',
@@ -30,5 +33,12 @@ export function pickLinkProps(
     'to',
     'type',
     'title',
+  ]
+
+  return reactivePick(
+    link,
+    ...pickProps,
+    ...ariaKeys,
+    ...dataKeys,
   )
 }
