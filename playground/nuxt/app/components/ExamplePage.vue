@@ -57,6 +57,7 @@ onMounted(() => {
       <ExampleChip :class="uiColor" />
       <ExampleCollapsible :class="uiColor" />
       <ExampleDrawer :class="uiColor" />
+      <ExampleDropdownMenu :class="uiColor" />
       <ExampleForm :class="uiColor" />
       <ExampleFormItem :class="uiColor" />
       <ExampleInput :class="uiColor" />

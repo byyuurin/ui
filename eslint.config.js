@@ -8,6 +8,7 @@ export default byyuurin(
       overrides: {
         'ts/no-empty-object-type': 'off',
         'vue/no-extra-parens': 'off',
+        'unicorn/explicit-length-check': 'off',
       },
     },
     formatters: {
@@ -30,6 +31,7 @@ export default byyuurin(
   {
     files: [
       'src/runtime/components/Calendar.vue',
+      'src/runtime/components/DropdownMenuContent.vue',
       'src/runtime/components/Popover.vue',
     ],
     rules: {

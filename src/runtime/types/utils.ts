@@ -11,6 +11,20 @@ export type EmitsToProps<T> = {
     : never
 }
 
+type AllKeys<T> = T extends any ? keyof T : never
+type NonCommonKeys<T extends object> = Exclude<AllKeys<T>, keyof T>
+type PickTypeOf<T, K extends string | number | symbol> = K extends AllKeys<T>
+  ? T extends { [k in K]?: any }
+    ? T[K]
+    : undefined
+  : never
+
+export type MergeTypes<T extends object> = {
+  [TK in keyof T]: PickTypeOf<T, TK>;
+} & {
+  [TK in NonCommonKeys<T>]?: PickTypeOf<T, TK>;
+}
+
 // ref: https://github.com/nuxt/ui/pull/3331
 export type DynamicSlots<
   T extends { slot?: string },

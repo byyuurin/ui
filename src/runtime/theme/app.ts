@@ -14,5 +14,6 @@ export default {
     ellipsis: 'i-mdi-dots-horizontal',
     plus: 'i-mdi-plus',
     minus: 'i-mdi-minus',
+    external: 'i-mdi-arrow-top-right',
   },
 }
