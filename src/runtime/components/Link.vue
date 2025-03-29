@@ -168,12 +168,18 @@ const isExternalLink = computed(() => {
   if (!to)
     return false
 
+  if (props.target === '_blank')
+    return true
+
   return typeof to === 'string' && hasProtocol(to, { acceptRelative: true })
 })
 
 function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
   if (props.active !== undefined)
     return props.active
+
+  if (isExternalLink.value || !props.to)
+    return false
 
   if (props.exactQuery === 'partial') {
     if (!isPartiallyEqual(linkRoute?.query, route.value?.query))
@@ -275,19 +281,28 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
       v-else
       v-slot="{ href, navigate, route: linkRoute, isActive, isExactActive }"
       v-bind="linkProps"
-      :to="to || '#'"
+      :to="isExternalLink ? '#' : to || '#'"
       custom
     >
       <template v-if="custom">
         <slot
           v-bind="{
             ...$attrs,
+            ...isExternalLink
+              ? {
+                href: to || props.href,
+                target: props.target,
+              }
+              : {
+                href: to ? href : undefined,
+                target: undefined,
+              },
             as,
             type,
             disabled,
-            href: to ? href : undefined,
             navigate,
             active: isLinkActive({ route: linkRoute, isActive, isExactActive }),
+            isExternal: isExternalLink,
           }"
         >
           {{ props.label }}

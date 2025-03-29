@@ -16,8 +16,8 @@ const items = [
     {
       label: 'Profile',
       icon: 'i-lucide-user',
-      active: true,
       slot: 'profile' as const,
+      to: '/',
     },
     {
       label: 'Billing',
@@ -71,14 +71,17 @@ const items = [
       label: 'GitHub',
       icon: 'i-simple-icons-github',
       target: '_blank',
+      to: 'https://github.com',
     },
     {
-      label: 'Support',
-      icon: 'i-lucide-life-buoy',
+      label: 'GitHub',
+      icon: 'i-simple-icons-github',
+      to: 'https://github.com',
     },
     {
-      label: 'API',
-      icon: 'i-lucide-cloud',
+      label: 'GitHub',
+      icon: 'i-simple-icons-github',
+      to: 'https://github.com',
       disabled: true,
     },
   ],
@@ -87,6 +90,7 @@ const items = [
       label: 'Logout',
       icon: 'i-lucide-log-out',
       kbds: ['shift', 'meta', 'q'],
+      to: '/other',
     },
   ],
 ] satisfies DropdownMenuItem[][]
