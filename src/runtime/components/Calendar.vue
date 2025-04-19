@@ -116,8 +116,9 @@ const style = computed(() => generateStyle('calendar', props))
     :locale="locale"
     :dir="dir"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
   >
-    <Calendar.Header :class="style.header({ class: props.ui?.header })">
+    <Calendar.Header :class="style.header({ class: props.ui?.header })" data-part="header">
       <Calendar.Prev v-if="props.yearControls" :prev-page="date => paginateYear(date, -1)" :aria-label="t('calendar.prevYear')" as-child>
         <Button :icon="prevYearIcon" :size="props.size" variant="ghost" />
       </Calendar.Prev>
@@ -125,7 +126,7 @@ const style = computed(() => generateStyle('calendar', props))
         <Button :icon="prevMonthIcon" :size="props.size" variant="ghost" />
       </Calendar.Prev>
 
-      <Calendar.Heading v-slot="{ headingValue }" :class="style.heading({ class: props.ui?.heading })">
+      <Calendar.Heading v-slot="{ headingValue }" :class="style.heading({ class: props.ui?.heading })" data-part="heading">
         <slot name="heading" :value="headingValue">
           {{ headingValue }}
         </slot>
@@ -137,32 +138,35 @@ const style = computed(() => generateStyle('calendar', props))
         <Button :icon="nextYearIcon" :size="props.size" variant="ghost" />
       </Calendar.Next>
     </Calendar.Header>
-    <div :class="style.body({ class: props.ui?.body })">
+    <div :class="style.body({ class: props.ui?.body })" data-part="body">
       <Calendar.Grid
         v-for="month in grid"
         :key="month.value.toString()"
         :class="style.grid({ class: props.ui?.grid })"
+        data-part="grid"
       >
         <Calendar.GridHead>
-          <Calendar.GridRow :class="style.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })">
-            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="style.headCell({ class: props.ui?.headCell })">
+          <Calendar.GridRow :class="style.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="grid-week-day-row">
+            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="style.headCell({ class: props.ui?.headCell })" data-part="head-cell">
               <slot name="week-day" :day="day">
                 {{ day }}
               </slot>
             </Calendar.HeadCell>
           </Calendar.GridRow>
         </Calendar.GridHead>
-        <Calendar.GridBody :class="style.gridBody({ class: props.ui?.gridBody })">
+        <Calendar.GridBody :class="style.gridBody({ class: props.ui?.gridBody })" data-part="grid-body">
           <Calendar.GridRow
             v-for="(weekDates, index) in month.rows"
             :key="`weekDates-${index}`"
             :class="style.gridRow({ class: props.ui?.gridRow })"
+            data-part="grid-row"
           >
             <Calendar.Cell
               v-for="weekDate in weekDates"
               :key="weekDate.toString()"
               :date="weekDate"
               :class="style.cell({ class: props.ui?.cell })"
+              data-part="cell"
             >
               <Calendar.CellTrigger
                 v-slot="{ disabled, unavailable }"
@@ -170,7 +174,7 @@ const style = computed(() => generateStyle('calendar', props))
                 :month="month.value"
                 as-child
               >
-                <div :class="style.cellTrigger({ class: props.ui?.cellTrigger, disabled: disabled || unavailable })">
+                <div :class="style.cellTrigger({ class: props.ui?.cellTrigger, disabled: disabled || unavailable })" data-part="cell-trigger">
                   <slot name="day" :day="weekDate">
                     {{ weekDate.day }}
                   </slot>

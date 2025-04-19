@@ -58,12 +58,13 @@ const style = computed(() => generateStyle('badge', props))
   <Primitive
     :as="props.as"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    :data-part="$attrs['data-part'] ?? 'root'"
   >
     <Slot v-bind="$attrs">
       <slot></slot>
     </Slot>
 
-    <span v-if="show" :class="style.base({ class: props.ui?.base })">
+    <span v-if="show" :class="style.base({ class: props.ui?.base })" data-part="base">
       <slot name="content">
         {{ props.text }}
       </slot>

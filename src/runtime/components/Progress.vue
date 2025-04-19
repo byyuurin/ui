@@ -134,8 +134,8 @@ function stepVariant(index: number | string) {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.wrapper({ class: [props.class, props.ui?.wrapper] })">
-    <div v-if="!isIndeterminate && (props.status || slots.status)" :class="style.status({ class: props.ui?.status })" :style="statusStyle">
+  <Primitive :as="props.as" :class="style.wrapper({ class: [props.class, props.ui?.wrapper] })" data-part="wrapper">
+    <div v-if="!isIndeterminate && (props.status || slots.status)" :class="style.status({ class: props.ui?.status })" data-part="status" :style="statusStyle">
       <slot name="status" :percent="percent">
         {{ percent }}%
       </slot>
@@ -146,13 +146,14 @@ function stepVariant(index: number | string) {
       :model-value="Number.isNaN(rootProps.modelValue) ? null : rootProps.modelValue"
       :max="max"
       :class="style.root({ class: props.ui?.root })"
+      data-part="root"
       style="transform: translateZ(0)"
     >
-      <ProgressIndicator :class="style.indicator({ class: props.ui?.indicator })" :style="indicatorStyle" />
+      <ProgressIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" :style="indicatorStyle" />
     </ProgressRoot>
 
-    <div v-if="hasSteps" :class="style.steps({ class: props.ui?.steps })">
-      <div v-for="(step, index) in props.max" :key="index" :class="style.step({ class: props.ui?.step, step: stepVariant(index) })">
+    <div v-if="hasSteps" :class="style.steps({ class: props.ui?.steps })" data-part="steps">
+      <div v-for="(step, index) in props.max" :key="index" :class="style.step({ class: props.ui?.step, step: stepVariant(index) })" data-part="step">
         <slot :name="`step-${index}`" :step="step">
           {{ step }}
         </slot>

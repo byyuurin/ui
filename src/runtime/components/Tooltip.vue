@@ -56,12 +56,12 @@ const style = computed(() => generateStyle('tooltip', props))
     </TooltipTrigger>
 
     <TooltipPortal :disabled="!props.portal">
-      <TooltipContent v-bind="contentProps" :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })">
+      <TooltipContent v-bind="contentProps" :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })" data-part="content">
         <slot name="content">
-          <span v-if="props.text" :class="style.text({ class: props.ui?.text })">{{ props.text }}</span>
+          <span v-if="props.text" :class="style.text({ class: props.ui?.text })" data-part="text">{{ props.text }}</span>
         </slot>
 
-        <TooltipArrow v-if="props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" />
+        <TooltipArrow v-if="props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" data-part="arrow" />
       </TooltipContent>
     </TooltipPortal>
   </TooltipRoot>

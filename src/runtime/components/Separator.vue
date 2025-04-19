@@ -42,18 +42,18 @@ const style = computed(() => generateStyle('separator', props))
 </script>
 
 <template>
-  <Separator v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <div :class="style.line({ class: props.ui?.line, start: props.align === 'start' })"></div>
+  <Separator v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <div :class="style.line({ class: props.ui?.line, start: props.align === 'start' })" data-part="line"></div>
 
     <template v-if="props.label || props.icon || slots.default">
-      <div :class="style.container({ class: props.ui?.container })">
+      <div :class="style.container({ class: props.ui?.container })" data-part="container">
         <slot>
-          <span v-if="props.label" :class="style.label({ class: props.ui?.label })">{{ props.label }}</span>
-          <span v-else-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
+          <span v-if="props.label" :class="style.label({ class: props.ui?.label })" data-part="label">{{ props.label }}</span>
+          <span v-else-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
         </slot>
       </div>
 
-      <div :class="style.line({ class: props.ui?.line, end: props.align === 'end' })"></div>
+      <div :class="style.line({ class: props.ui?.line, end: props.align === 'end' })" data-part="line"></div>
     </template>
   </Separator>
 </template>

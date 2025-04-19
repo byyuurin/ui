@@ -74,29 +74,31 @@ function onUpdate(value: any) {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <div :class="style.container({ class: props.ui?.container })">
+  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <div :class="style.container({ class: props.ui?.container })" data-part="container">
       <CheckboxRoot
         v-slot="{ modelValue }"
         v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
         v-model="innerValue"
         :class="style.base({ class: props.ui?.base })"
+        data-part="base"
         @update:model-value="onUpdate"
       >
         <CheckboxIndicator as-child force-mount>
           <span
             v-if="modelValue === 'indeterminate'"
             :class="style.icon({ class: [props.indeterminateIcon || theme.app.icons.indeterminate, props.ui?.icon] })"
+            data-part="icon"
           ></span>
-          <span v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })"></span>
+          <span v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })" data-part="icon"></span>
         </CheckboxIndicator>
       </CheckboxRoot>
     </div>
-    <div v-if="props.label || slots.label || props.description || slots.description" :class="style.wrapper({ class: props.ui?.wrapper })">
-      <Label v-if="props.label || slots.label" :for="id" :class="style.label({ class: props.ui?.label })">
+    <div v-if="props.label || slots.label || props.description || slots.description" :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <Label v-if="props.label || slots.label" :for="id" :class="style.label({ class: props.ui?.label })" data-part="label">
         <slot name="label" :label="props.label">{{ props.label }}</slot>
       </Label>
-      <p v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })">
+      <p v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>

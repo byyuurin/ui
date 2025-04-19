@@ -112,21 +112,21 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.
 </script>
 
 <template>
-  <PaginationRoot v-slot="{ page, pageCount }" v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <PaginationList v-slot="{ items }" :class="style.list({ class: props.ui?.list })">
-      <PaginationFirst v-if="props.showControls || !!slots.first" :class="style.first({ class: props.ui?.first })" as-child>
+  <PaginationRoot v-slot="{ page, pageCount }" v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <PaginationList v-slot="{ items }" :class="style.list({ class: props.ui?.list })" data-part="list">
+      <PaginationFirst v-if="props.showControls || !!slots.first" :class="style.first({ class: props.ui?.first })" data-part="first" as-child>
         <slot name="first">
           <Button :variant="props.variant" :size="props.size" :icon="firstIcon" :to="props.to?.(1)" />
         </slot>
       </PaginationFirst>
-      <PaginationPrev v-if="props.showControls || !!slots.prev" :class="style.prev({ class: props.ui?.prev })" as-child>
+      <PaginationPrev v-if="props.showControls || !!slots.prev" :class="style.prev({ class: props.ui?.prev })" data-part="perv" as-child>
         <slot name="prev">
           <Button :variant="props.variant" :size="props.size" :icon="prevIcon" :to="page > 1 ? props.to?.(page - 1) : undefined" />
         </slot>
       </PaginationPrev>
 
       <template v-for="(item, index) in items">
-        <PaginationListItem v-if="item.type === 'page'" :key="index" :class="style.item({ class: props.ui?.item })" :value="item.value" as-child>
+        <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" :class="style.item({ class: props.ui?.item })" data-part="item" as-child>
           <slot name="item" v-bind="{ item, index, page, pageCount }">
             <Button
               :variant="props.page === item.value ? props.activeVariant : props.variant"
@@ -141,12 +141,13 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.
         <PaginationEllipsis
           v-else
           :key="item.type"
+          :index="index"
+          :disabled="props.disabled"
           :class="[
             style.item({ class: props.ui?.item }),
             style.ellipsis({ class: props.ui?.ellipsis }),
           ]"
-          :index="index"
-          :disabled="props.disabled"
+          data-part="ellipsis"
           as-child
         >
           <slot name="ellipsis">
@@ -159,12 +160,12 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.
         </PaginationEllipsis>
       </template>
 
-      <PaginationNext v-if="props.showControls || !!slots.next" :class="style.next({ class: props.ui?.next })" as-child>
+      <PaginationNext v-if="props.showControls || !!slots.next" :class="style.next({ class: props.ui?.next })" data-part="next" as-child>
         <slot name="next">
           <Button :variant="props.variant" :size="props.size" :icon="nextIcon" :to="page < pageCount ? props.to?.(page + 1) : undefined" />
         </slot>
       </PaginationNext>
-      <PaginationLast v-if="props.showControls || !!slots.last" :class="style.last({ class: props.ui?.last })" as-child>
+      <PaginationLast v-if="props.showControls || !!slots.last" :class="style.last({ class: props.ui?.last })" data-part="last" as-child>
         <slot name="last">
           <Button :variant="props.variant" :size="props.size" :icon="lastIcon" :to="props.to?.(pageCount)" />
         </slot>

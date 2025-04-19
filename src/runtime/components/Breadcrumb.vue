@@ -65,23 +65,24 @@ const style = computed(() => generateStyle('breadcrumb', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" aria-label="breadcrumb" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <ol :class="style.list({ class: props.ui?.list })">
+  <Primitive :as="props.as" aria-label="breadcrumb" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <ol :class="style.list({ class: props.ui?.list })" data-part="list">
       <template v-for="(item, index) in props.items" :key="index">
-        <li :class="style.item({ class: props.ui?.item })">
+        <li :class="style.item({ class: props.ui?.item })" data-part="item">
           <Link v-slot="{ active, ...slotProps }" v-bind="pickLinkProps(item)" custom>
             <LinkBase
               v-bind="slotProps"
               as="span"
               :aria-current="active && (index === items!.length - 1) ? 'page' : undefined"
               :class="style.link({ class: props.ui?.link, active: index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
+              data-part="link"
             >
               <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="item" :index="index">
                 <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index">
-                  <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })"></span>
+                  <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })" data-part="link-leading-icon"></span>
                 </slot>
 
-                <span v-if="get(item, props.labelKey) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="style.linkLabel({ class: props.ui?.linkLabel })">
+                <span v-if="get(item, props.labelKey) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="style.linkLabel({ class: props.ui?.linkLabel })" data-part="link-label">
                   <slot :name="(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey) }}
                   </slot>
@@ -93,9 +94,9 @@ const style = computed(() => generateStyle('breadcrumb', props))
           </Link>
         </li>
 
-        <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" :class="style.separator({ class: props.ui?.separator })">
+        <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" :class="style.separator({ class: props.ui?.separator })" data-part="separator">
           <slot name="separator">
-            <span :class="style.separatorIcon({ class: [separatorIcon, props.ui?.separatorIcon] })"></span>
+            <span :class="style.separatorIcon({ class: [separatorIcon, props.ui?.separatorIcon] })" data-part="separator-icon"></span>
           </slot>
         </li>
       </template>

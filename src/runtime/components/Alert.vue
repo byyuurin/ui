@@ -74,33 +74,34 @@ const style = computed(() => generateStyle('alert', {
 <template>
   <Primitive
     :as="props.as"
-    :data-orientation="props.orientation"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    :data-orientation="props.orientation"
+    data-part="root"
   >
     <slot name="leading">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
+      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
     </slot>
 
-    <div :class="style.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="props.title || slots.title" :class="style.title({ class: props.ui?.title })">
+    <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <div v-if="props.title || slots.title" :class="style.title({ class: props.ui?.title })" data-part="title">
         <slot name="title">
           {{ props.title }}
         </slot>
       </div>
-      <div v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })">
+      <div v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
         <slot name="description">
           {{ props.description }}
         </slot>
       </div>
 
-      <div v-if="props.orientation === 'vertical' && props.actions?.length" :class="style.actions({ class: props.ui?.actions })">
+      <div v-if="props.orientation === 'vertical' && props.actions?.length" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
         </slot>
       </div>
     </div>
 
-    <div v-if="(props.orientation === 'horizontal' && props.actions?.length) || props.close" :class="style.actions({ class: props.ui?.actions, orientation: 'horizontal' })">
+    <div v-if="(props.orientation === 'horizontal' && props.actions?.length) || props.close" :class="style.actions({ class: props.ui?.actions, orientation: 'horizontal' })" data-part="actions">
       <template v-if="props.orientation === 'horizontal' && props.actions?.length">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
@@ -116,6 +117,7 @@ const style = computed(() => generateStyle('alert', {
           :aria-label="t('alert.close')"
           v-bind="typeof props.close === 'object' ? props.close : undefined"
           :class="style.close({ class: props.ui?.close })"
+          data-part="close"
           @click="emit('update:open', false)"
         />
       </slot>

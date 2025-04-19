@@ -258,24 +258,26 @@ defineExpose({
     aria-roledescription="carousel"
     tabindex="0"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
     @keydown="onKeyDown"
   >
-    <div ref="emblaRef" :class="style.viewport({ class: props.ui?.viewport })">
-      <div :class="style.container({ class: props.ui?.container })">
+    <div ref="emblaRef" :class="style.viewport({ class: props.ui?.viewport })" data-part="viewport">
+      <div :class="style.container({ class: props.ui?.container })" data-part="container">
         <div
           v-for="(item, index) in props.items"
           :key="index"
           role="group"
           aria-roledescription="slide"
           :class="style.item({ class: props.ui?.item })"
+          data-part="item"
         >
           <slot :item="item" :index="index"></slot>
         </div>
       </div>
     </div>
 
-    <div v-if="props.arrows || props.dots" :class="style.controls({ class: props.ui?.controls })">
-      <div v-if="props.arrows" :class="style.arrows({ class: props.ui?.arrows })">
+    <div v-if="props.arrows || props.dots" :class="style.controls({ class: props.ui?.controls })" data-part="controls">
+      <div v-if="props.arrows" :class="style.arrows({ class: props.ui?.arrows })" data-part="arrows">
         <Button
           :disabled="!canScrollPrev"
           :icon="prevIcon"
@@ -284,6 +286,7 @@ defineExpose({
           :aria-label="t('carousel.prev')"
           v-bind="typeof props.prev === 'object' ? props.prev : undefined"
           :class="style.prev({ class: props.ui?.prev })"
+          data-part="prev"
           @click="scrollPrev"
         />
         <Button
@@ -294,15 +297,17 @@ defineExpose({
           :aria-label="t('carousel.next')"
           v-bind="typeof props.next === 'object' ? props.next : undefined"
           :class="style.next({ class: props.ui?.next })"
+          data-part="next"
           @click="scrollNext"
         />
       </div>
 
-      <div v-if="props.dots" :class="style.dots({ class: props.ui?.dots })">
+      <div v-if="props.dots" :class="style.dots({ class: props.ui?.dots })" data-part="dots">
         <template v-for="(_, index) in scrollSnaps" :key="index">
           <button
             :aria-label="t('carousel.goto', { page: index + 1 })"
             :class="style.dot({ class: props.ui?.dot, active: selectedIndex === index })"
+            data-part="dot"
             @click="scrollTo(index)"
           ></button>
         </template>

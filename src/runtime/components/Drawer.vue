@@ -110,11 +110,12 @@ const style = computed(() => generateStyle('drawer', props))
     </DialogTrigger>
 
     <DialogPortal :disabled="!props.portal">
-      <DialogOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" />
+      <DialogOverlay v-if="props.overlay" :class="style.overlay({ class: props.ui?.overlay })" data-part="overlay" />
 
       <DialogContent
         :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
         :data-direction="props.direction"
+        data-part="content"
         v-bind="contentProps"
         v-on="contentEvents"
         @after-leave="emit('after-leave')"
@@ -124,15 +125,17 @@ const style = computed(() => generateStyle('drawer', props))
         </VisuallyHidden>
 
         <slot name="content">
-          <div :class="style.container({ class: props.ui?.container })">
+          <div :class="style.container({ class: props.ui?.container })" data-part="container">
             <div
               v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
               :class="style.header({ class: props.ui?.header })"
+              data-part="header"
             >
               <slot name="header">
                 <DialogTitle
                   v-if="props.title || slots.title"
                   :class="style.title({ class: props.ui?.title })"
+                  data-part="title"
                 >
                   <slot name="title">
                     {{ props.title }}
@@ -145,8 +148,9 @@ const style = computed(() => generateStyle('drawer', props))
                       variant="ghost"
                       :icon="props.closeIcon || theme.app.icons.close"
                       v-bind="typeof props.close === 'boolean' ? {} : props.close"
-                      :class="style.close({ class: props.ui?.close })"
                       :aria-label="t('modal.close')"
+                      :class="style.close({ class: props.ui?.close })"
+                      data-part="close"
                     />
                   </slot>
                 </DialogClose>
@@ -154,6 +158,7 @@ const style = computed(() => generateStyle('drawer', props))
                 <DialogDescription
                   v-if="props.description || slots.description"
                   :class="style.description({ class: props.ui?.description })"
+                  data-part="description"
                 >
                   <slot name="description">
                     {{ props.description }}
@@ -162,11 +167,11 @@ const style = computed(() => generateStyle('drawer', props))
               </slot>
             </div>
 
-            <div v-if="slots.body" :class="style.body({ class: props.ui?.body })">
+            <div v-if="slots.body" :class="style.body({ class: props.ui?.body })" data-part="body">
               <slot name="body"></slot>
             </div>
 
-            <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })">
+            <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })" data-part="footer">
               <slot name="footer"></slot>
             </div>
           </div>

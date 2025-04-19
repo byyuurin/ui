@@ -37,12 +37,13 @@ const style = computed(() => generateStyle('collapsible', props))
     v-slot="{ open }"
     v-bind="rootProps"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
   >
     <CollapsibleTrigger v-if="slots.default" as-child>
       <slot :open="open"></slot>
     </CollapsibleTrigger>
 
-    <CollapsibleContent :class="style.content({ class: props.ui?.content })">
+    <CollapsibleContent :class="style.content({ class: props.ui?.content })" data-part="content">
       <slot name="content"></slot>
     </CollapsibleContent>
   </CollapsibleRoot>

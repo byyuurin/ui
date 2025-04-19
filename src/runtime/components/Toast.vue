@@ -78,25 +78,26 @@ defineExpose({
     v-slot="{ remaining, duration }"
     v-bind="rootProps"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
     :style="{ '--height': height }"
   >
     <slot name="icon">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
+      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
     </slot>
 
-    <div :class="style.wrapper({ class: props.ui?.wrapper })">
-      <ToastTitle v-if="props.title || !!slots.title" :class="style.title({ class: props.ui?.title })">
+    <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <ToastTitle v-if="props.title || !!slots.title" :class="style.title({ class: props.ui?.title })" data-part="title">
         <slot name="title">
           {{ props.title }}
         </slot>
       </ToastTitle>
-      <ToastDescription v-if="props.description || !!slots.description" :class="style.description({ class: props.ui?.description })">
+      <ToastDescription v-if="props.description || !!slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
         <slot name="description">
           {{ props.description }}
         </slot>
       </ToastDescription>
 
-      <div v-if="props.orientation === 'vertical' && actions?.length" :class="style.actions({ class: props.ui?.actions })">
+      <div v-if="props.orientation === 'vertical' && actions?.length" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
             <Button size="xs" v-bind="action" />
@@ -108,6 +109,7 @@ defineExpose({
     <div
       v-if="(props.orientation === 'horizontal' && actions?.length) || props.close || slots.close"
       :class="style.actions({ class: props.ui?.actions })"
+      data-part="actions"
     >
       <template v-if="props.orientation === 'horizontal'">
         <slot name="actions">
@@ -126,12 +128,13 @@ defineExpose({
             :aria-label="t('toast.close')"
             v-bind="typeof close === 'object' ? close : undefined"
             :class="style.close({ class: props.ui?.close })"
+            data-part="close"
             @click.stop
           />
         </slot>
       </ToastClose>
     </div>
 
-    <div v-if="remaining >= 0 && duration" :class="style.progress({ class: props.ui?.progress })" :style="{ width: `${remaining / duration * 100}%` }"></div>
+    <div v-if="remaining >= 0 && duration" :class="style.progress({ class: props.ui?.progress })" data-part="progress" :style="{ width: `${remaining / duration * 100}%` }"></div>
   </ToastRoot>
 </template>

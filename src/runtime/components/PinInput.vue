@@ -69,20 +69,23 @@ function onBlur(event: FocusEvent) {
   <PinInputRoot
     v-bind="{ ...rootProps, ...ariaAttrs, id, name }"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
     @update:model-value="emitFormInput"
     @complete="onComplete"
   >
     <span
       v-for="(ids, index) in looseToNumber(props.length)"
       :key="ids"
-      :class="style.container({ class: props.ui?.container })"
       :aria-disabled="disabled ? true : undefined"
+      :class="style.container({ class: props.ui?.container })"
+      data-part="container"
     >
       <PinInputInput
         v-bind="$attrs"
-        :class="style.base({ class: props.ui?.base })"
         :index="index"
         :disabled="disabled"
+        :class="style.base({ class: props.ui?.base })"
+        data-part="base"
         @blur="onBlur"
         @focus="emitFormFocus"
       />

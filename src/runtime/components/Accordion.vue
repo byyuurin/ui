@@ -61,7 +61,7 @@ const style = computed(() => generateStyle('accordion', props))
 </script>
 
 <template>
-  <AccordionRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
+  <AccordionRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
     <AccordionItem
       v-for="(item, index) in props.items"
       v-slot="{ open }"
@@ -69,19 +69,20 @@ const style = computed(() => generateStyle('accordion', props))
       :value="item.value || String(index)"
       :disabled="item.disabled"
       :class="style.item({ class: props.ui?.item })"
+      data-part="item"
     >
-      <AccordionHeader :class="style.header({ class: props.ui?.header })">
-        <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })">
+      <AccordionHeader :class="style.header({ class: props.ui?.header })" data-part="header">
+        <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })" data-part="trigger">
           <slot name="leading" v-bind="{ item, index, open }">
-            <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })"></span>
+            <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
           </slot>
 
-          <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
+          <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
             <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey) }}</slot>
           </span>
 
           <slot name="trailing" v-bind="{ item, index, open }">
-            <span :class="style.trailingIcon({ class: [item.trailingIcon || props.trailingIcon || theme.app.icons.chevronDown, props.ui?.trailingIcon] })"></span>
+            <span :class="style.trailingIcon({ class: [item.trailingIcon || props.trailingIcon || theme.app.icons.chevronDown, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
           </slot>
         </AccordionTrigger>
       </AccordionHeader>
@@ -89,9 +90,10 @@ const style = computed(() => generateStyle('accordion', props))
       <AccordionContent
         v-if="item.content || slots.content || (item.slot && slots[item.slot as keyof AccordionSlots<T>]) || slots.body || (item.slot && slots[`${item.slot}-body` as keyof AccordionSlots<T>])"
         :class="style.content({ class: props.ui?.content })"
+        data-part="content"
       >
         <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" v-bind="{ item, index, open }">
-          <div :class="style.body({ class: props.ui?.body })">
+          <div :class="style.body({ class: props.ui?.body })" data-part="body">
             <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" v-bind="{ item, index, open }">
               {{ item.content }}
             </slot>

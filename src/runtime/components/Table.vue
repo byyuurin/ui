@@ -245,21 +245,22 @@ defineExpose({
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <table :class="style.base({ class: props.ui?.base })">
-      <caption v-if="props.caption || slots.caption" :class="style.caption({ class: props.caption })">
+  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <table :class="style.base({ class: props.ui?.base })" data-part="base">
+      <caption v-if="props.caption || slots.caption" :class="style.caption({ class: props.caption })" data-part="caption">
         <slot name="caption">
           {{ props.caption }}
         </slot>
       </caption>
 
-      <thead :class="style.thead({ class: props.ui?.thead })">
-        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" :class="style.tr({ class: props.ui?.tr })">
+      <thead :class="style.thead({ class: props.ui?.thead })" data-part="thead">
+        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" :class="style.tr({ class: props.ui?.tr })" data-part="tr">
           <th
             v-for="header in headerGroup.headers"
             :key="header.id"
             :data-pinned="header.column.getIsPinned()"
             :class="style.th({ class: props.ui?.th, pinned: !!header.column.getIsPinned() })"
+            data-part="th"
           >
             <slot :name="`${header.id}-header`" v-bind="header.getContext()">
               <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext" />
@@ -268,23 +269,24 @@ defineExpose({
         </tr>
       </thead>
 
-      <tbody :class="style.tbody({ class: props.ui?.tbody })">
+      <tbody :class="style.tbody({ class: props.ui?.tbody })" data-part="tbody">
         <template v-if="tableApi.getRowModel().rows.length > 0">
           <template v-for="row in tableApi.getRowModel().rows" :key="row.id">
             <tr :data-selected="row.getIsSelected()" :data-expanded="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr })">
               <td
                 v-for="cell in row.getVisibleCells()"
                 :key="cell.id"
-                :data-pinned="cell.column.getIsPinned()"
                 :class="style.td({ class: props.ui?.td, pinned: !!cell.column.getIsPinned() })"
+                data-part="td"
+                :data-pinned="cell.column.getIsPinned()"
               >
                 <slot :name="`${cell.column.id}-cell`" v-bind="cell.getContext()">
                   <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                 </slot>
               </td>
             </tr>
-            <tr v-if="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr, expanded: true })">
-              <td :colspan="row.getAllCells().length" :class="style.td({ class: props.ui?.td })">
+            <tr v-if="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr, expanded: true })" data-part="tr">
+              <td :colspan="row.getAllCells().length" :class="style.td({ class: props.ui?.td })" data-part="td">
                 <slot name="expanded" :row="row"></slot>
               </td>
             </tr>
@@ -292,13 +294,13 @@ defineExpose({
         </template>
 
         <tr v-else-if="props.loading && slots.loading">
-          <td :colspan="columns.length" :class="style.loading({ class: props.ui?.loading })">
+          <td :colspan="columns.length" :class="style.loading({ class: props.ui?.loading })" data-part="loading">
             <slot name="loading"></slot>
           </td>
         </tr>
 
-        <tr v-else :class="style.tr({ class: props.ui?.tr })">
-          <td :colspan="columns.length" :class="style.empty({ class: props.ui?.empty })">
+        <tr v-else :class="style.tr({ class: props.ui?.tr })" data-part="tr">
+          <td :colspan="columns.length" :class="style.empty({ class: props.ui?.empty })" data-part="empty">
             <slot name="empty">
               {{ props.empty || t('table.noData') }}
             </slot>

@@ -123,6 +123,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
 
     <DropdownMenuContent
       :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
+      data-part="content"
       :ui="props.ui"
       v-bind="contentProps"
       :size="props.size"
@@ -137,7 +138,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
         <slot :name="(name as keyof DropdownMenuSlots<T>)" v-bind="slotProps"></slot>
       </template>
 
-      <DropdownMenuArrow v-if="props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" />
+      <DropdownMenuArrow v-if="props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" data-part="arrow" />
     </DropdownMenuContent>
   </DropdownMenuRoot>
 </template>

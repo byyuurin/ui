@@ -79,9 +79,9 @@ const style = computed(() => generateStyle('tabs', props))
 </script>
 
 <template>
-  <TabsRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <TabsList :class="style.list({ class: props.ui?.list })">
-      <TabsIndicator :class="style.indicator({ class: props.ui?.indicator })" />
+  <TabsRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <TabsList :class="style.list({ class: props.ui?.list })" data-part="list">
+      <TabsIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" />
 
       <TabsTrigger
         v-for="(item, index) of items"
@@ -89,12 +89,13 @@ const style = computed(() => generateStyle('tabs', props))
         :value="item.value || String(index)"
         :disabled="item.disabled"
         :class="style.trigger({ class: props.ui?.trigger })"
+        data-part="trigger"
       >
         <slot name="leading" :item="item" :index="index">
-          <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })"></span>
+          <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
         </slot>
 
-        <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })">
+        <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
           <slot :item="item" :index="index">{{ get(item, props.labelKey) }}</slot>
         </span>
 
@@ -108,6 +109,7 @@ const style = computed(() => generateStyle('tabs', props))
         :key="index"
         :value="item.value || String(index)"
         :class="style.content({ class: props.ui?.content })"
+        data-part="content"
       >
         <slot :name="((item.slot || 'content') as keyof TabsSlots<T>)" :item="(item as Extract<T, { slot: string }>)" :index="index">
           {{ item.content }}
