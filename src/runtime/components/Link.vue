@@ -270,6 +270,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
           isExternal,
         }"
         :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
+        :data-part="$attrs['data-part'] ?? 'base'"
       >
         <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
           {{ props.label }}
@@ -320,6 +321,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
         }"
         :is-external="isExternalLink"
         :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
+        :data-part="$attrs['data-part'] ?? 'base'"
       >
         <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
           {{ props.label }}
@@ -355,6 +357,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
       }"
       :is-external="isExternalLink"
       :class="resolveLinkClass()"
+      :data-part="$attrs['data-part'] ?? 'base'"
     >
       <slot :active="false">
         {{ props.label }}

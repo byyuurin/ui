@@ -55,16 +55,17 @@ watch(() => props.src, () => {
 </script>
 
 <template>
-  <AvatarRoot :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" :style="props.style">
+  <AvatarRoot :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" :data-part="$attrs['data-part'] ?? 'root'" :style="props.style">
     <AvatarImage
       :src="props.src"
       :alt="props.alt"
       :class="style.image({ class: props.ui?.image })"
+      data-part="image"
     />
 
     <AvatarFallback as-child>
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })"></span>
-      <span v-else :class="style.fallback({ class: props.ui?.fallback })">{{ fallback || '&nbsp;' }}</span>
+      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+      <span v-else :class="style.fallback({ class: props.ui?.fallback })" data-part="fallback">{{ fallback || '&nbsp;' }}</span>
     </AvatarFallback>
   </AvatarRoot>
 </template>

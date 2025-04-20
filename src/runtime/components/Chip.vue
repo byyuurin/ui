@@ -50,17 +50,17 @@ const style = computed(() => generateStyle('chip', {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })">
+  <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
     <slot name="leading">
-      <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"></span>
+      <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
     </slot>
 
-    <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })">
+    <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
       <slot>{{ props.label }}</slot>
     </span>
 
     <slot name="trailing">
-      <span v-if="isTrailing && trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"></span>
+      <span v-if="isTrailing && trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
     </slot>
   </Primitive>
 </template>

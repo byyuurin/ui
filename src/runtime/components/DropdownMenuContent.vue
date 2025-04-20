@@ -41,6 +41,10 @@ import Kbd from './Kbd.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = defineProps<DropdownMenuContentProps<T>>()
 const emit = defineEmits<DropdownMenuContentEmits>()
 const slots = defineSlots<DropdownMenuContentSlots<T>>()
@@ -68,22 +72,26 @@ const style = computed(() => generateStyle('dropdownMenu', props))
         <span
           v-if="item.loading"
           :class="style.itemLeadingIcon({ class: [loadingIcon || theme.app.icons.loading, props.ui?.itemLeadingIcon], loading: true })"
+          data-part="item-leading-icon"
         ></span>
         <span
           v-else-if="item.icon"
           :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon], active })"
+          data-part="item-leading-icon"
         ></span>
         <Avatar
           v-else-if="item.avatar"
           v-bind="item.avatar"
           :size="item.avatar.size || props.size"
           :class="style.itemLeadingAvatar({ class: props.ui?.itemLeadingAvatar, active })"
+          data-part="item-leading-avatar"
         />
       </slot>
 
       <span
         v-if="get(item, props.labelKey as string) || !!slots[(`${item.slot || 'item'}-label` as keyof DropdownMenuContentSlots<T>)]"
         :class="style.itemLabel({ class: props.ui?.itemLabel, active })"
+        data-part="item-label"
       >
         <slot :name="(`${item.slot || 'item'}-label` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
           {{ get(item, props.labelKey as string) }}
@@ -92,13 +100,14 @@ const style = computed(() => generateStyle('dropdownMenu', props))
         <span
           v-if="item.target === '_blank' && externalIcon !== false"
           :class="style.itemLabelExternalIcon({ class: [typeof externalIcon === 'string' ? externalIcon : theme.app.icons.external, props.ui?.itemLabelExternalIcon], active })"
+          data-part="item-label-external-icon"
         ></span>
       </span>
 
-      <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })">
+      <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })" data-part="item-trailing">
         <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
-          <span v-if="item.children?.length" :class="style.itemTrailingIcon({ class: [theme.app.icons.chevronRight, props.ui?.itemTrailingIcon], active })"></span>
-          <span v-else-if="item.kbds?.length" :class="style.itemTrailingKbds({ class: props.ui?.itemTrailingKbds })">
+          <span v-if="item.children?.length" :class="style.itemTrailingIcon({ class: [theme.app.icons.chevronRight, props.ui?.itemTrailingIcon], active })" data-part="item-trailing-icon"></span>
+          <span v-else-if="item.kbds?.length" :class="style.itemTrailingKbds({ class: props.ui?.itemTrailingKbds })" data-part="item-trailing-kbds">
             <Kbd
               v-for="(kbd, kbdIndex) in item.kbds"
               :key="kbdIndex"
@@ -109,20 +118,20 @@ const style = computed(() => generateStyle('dropdownMenu', props))
         </slot>
 
         <DropdownMenu.ItemIndicator as-child>
-          <span :class="style.itemTrailingIcon({ class: [checkedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })"></span>
+          <span :class="style.itemTrailingIcon({ class: [checkedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })" data-part="item-trailing-icon"></span>
         </DropdownMenu.ItemIndicator>
       </span>
     </slot>
   </DefineItemTemplate>
 
   <DropdownMenu.Portal :disabled="!portal">
-    <component :is="sub ? DropdownMenu.SubContent : DropdownMenu.Content" :class="props.class" v-bind="contentProps">
-      <DropdownMenu.Group v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" :class="style.group({ class: props.ui?.group })">
+    <component :is="sub ? DropdownMenu.SubContent : DropdownMenu.Content" :class="props.class" :data-part="$attrs['data-part']" v-bind="contentProps">
+      <DropdownMenu.Group v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" :class="style.group({ class: props.ui?.group })" data-part="group">
         <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
-          <DropdownMenu.Label v-if="item.type === 'label'" :class="style.label({ class: props.ui?.label })">
+          <DropdownMenu.Label v-if="item.type === 'label'" :class="style.label({ class: props.ui?.label })" data-part="label">
             <ReuseItemTemplate :item="item" :index="index" />
           </DropdownMenu.Label>
-          <DropdownMenu.Separator v-else-if="item.type === 'separator'" :class="style.separator({ class: props.ui?.separator })" />
+          <DropdownMenu.Separator v-else-if="item.type === 'separator'" :class="style.separator({ class: props.ui?.separator })" data-part="separator" />
           <DropdownMenu.Sub v-else-if="item?.children?.length" :open="item.open" :default-open="item.defaultOpen">
             <DropdownMenu.SubTrigger
               as="button"
@@ -130,6 +139,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
               :disabled="item.disabled"
               :text-value="get(item, props.labelKey as string)"
               :class="style.item({ class: props.ui?.item })"
+              data-part="item"
             >
               <ReuseItemTemplate :item="item" :index="index" />
             </DropdownMenu.SubTrigger>
@@ -161,6 +171,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
             :disabled="item.disabled"
             :text-value="get(item, props.labelKey as string)"
             :class="style.item({ class: [props.ui?.item, item.class] })"
+            data-part="item"
             @update:model-value="item.onUpdateChecked"
             @select="item.onSelect"
           >
@@ -174,7 +185,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
             @select="item.onSelect"
           >
             <Link v-slot="{ active, ...slotProps }" v-bind="pickLinkProps(item as Omit<DropdownMenuItem, 'type'>)" custom>
-              <LinkBase v-bind="slotProps" :class="style.item({ class: [props.ui?.item, item.class], active })">
+              <LinkBase v-bind="slotProps" :class="style.item({ class: [props.ui?.item, item.class], active })" data-part="item">
                 <ReuseItemTemplate :item="item" :active="active" :index="index" />
               </LinkBase>
             </Link>

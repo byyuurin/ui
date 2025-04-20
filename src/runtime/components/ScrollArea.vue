@@ -39,29 +39,33 @@ function scrollTopLeft() {
     ref="rootRef"
     v-bind="rootProps"
     :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
   >
-    <ScrollAreaViewport :class="style.viewport({ class: props.ui?.viewport })">
+    <ScrollAreaViewport :class="style.viewport({ class: props.ui?.viewport })" data-part="viewport">
       <slot></slot>
     </ScrollAreaViewport>
 
     <TransitionGroup v-bind="transitionProps">
       <ScrollAreaScrollbar
         key="scrollbar-horizontal"
-        :class="style.scrollbar({ class: props.ui?.scrollbar })"
         orientation="horizontal"
+        :class="style.scrollbar({ class: props.ui?.scrollbar })"
+        data-part="scrollbar"
       >
-        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
+        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb" />
       </ScrollAreaScrollbar>
       <ScrollAreaScrollbar
         key="scrollbar-vertical"
-        :class="style.scrollbar({ class: props.ui?.scrollbar })"
         orientation="vertical"
+        :class="style.scrollbar({ class: props.ui?.scrollbar })"
+        data-part="scrollbar"
       >
-        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" />
+        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb" />
       </ScrollAreaScrollbar>
       <ScrollAreaCorner
         key="corner"
         :class="style.corner({ class: props.ui?.corner })"
+        data-part="corner"
       />
     </TransitionGroup>
   </ScrollAreaRoot>

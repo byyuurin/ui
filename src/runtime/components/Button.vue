@@ -70,17 +70,20 @@ const style = computed(() => {
     :type="props.type"
     :disabled="props.disabled || props.loading"
     v-bind="omit(linkProps, ['type', 'disabled', 'activeClass', 'inactiveClass', 'disableClass'])"
+    data-part="base"
     raw
   >
     <slot name="leading">
       <span
         v-if="isLeading && leadingIconName"
         :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
+        data-part="leading-icon"
       ></span>
     </slot>
     <span
       v-if="props.label || slots.default"
       :class="style.label({ class: props.ui?.label })"
+      data-part="label"
     >
       <slot>{{ label }}</slot>
     </span>
@@ -88,6 +91,7 @@ const style = computed(() => {
       <span
         v-if="isTrailing && trailingIconName"
         :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
+        data-part="trailing-icon"
       ></span>
     </slot>
   </Link>

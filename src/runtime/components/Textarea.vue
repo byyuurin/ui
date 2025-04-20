@@ -152,12 +152,14 @@ onMounted(() => {
 <template>
   <Primitive
     :as="props.as"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
     :aria-disabled="disabled ? true : undefined"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :data-part="$attrs['data-part'] ?? 'root'"
   >
     <textarea
       ref="textareaRef"
       :class="style.base({ class: props.ui?.base })"
+      data-part="base"
       :value="modelValue"
       :rows="props.rows"
       :placeholder="props.placeholder"

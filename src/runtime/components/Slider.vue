@@ -84,15 +84,16 @@ function onChange(value: any) {
   <SliderRoot
     v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
     v-model="sliderValue"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
     :default-value="defaultSliderValue"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
+    data-part="root"
     :data-steps="thumbsCount"
     @value-commit="onChange"
   >
-    <SliderTrack :class="style.track({ class: props.ui?.track })">
-      <SliderRange :class="style.range({ class: props.ui?.range })" />
+    <SliderTrack :class="style.track({ class: props.ui?.track })" data-part="track">
+      <SliderRange :class="style.range({ class: props.ui?.range })" data-part="range" />
     </SliderTrack>
 
-    <SliderThumb v-for="count in thumbsCount" :key="count" :class="style.thumb({ class: props.ui?.thumb })" />
+    <SliderThumb v-for="count in thumbsCount" :key="count" :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb" />
   </SliderRoot>
 </template>

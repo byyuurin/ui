@@ -202,63 +202,64 @@ function onUpdateOpen(value: boolean) {
     @update:model-value="onUpdate"
     @update:open="onUpdateOpen"
   >
-    <SelectTrigger v-bind="{ ...$attrs, ...ariaAttrs, id }" :class="style.base({ class: [props.class, props.ui?.base] })">
-      <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
+    <SelectTrigger v-bind="{ ...$attrs, ...ariaAttrs, id }" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
+      <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
         <slot name="leading" :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open" :ui="props.ui">
-          <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"></span>
+          <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
         </slot>
       </span>
 
       <slot :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open">
         <template v-for="displayedModelValue in [displayValue((innerValue as GetModelValue<T, VK, M>))]" :key="displayedModelValue">
-          <span v-if="displayedModelValue" :class="style.value({ class: props.ui?.value })">
+          <span v-if="displayedModelValue" :class="style.value({ class: props.ui?.value })" data-part="value">
             {{ displayedModelValue }}
           </span>
-          <span v-else :class="style.placeholder({ class: props.ui?.placeholder })">
+          <span v-else :class="style.placeholder({ class: props.ui?.placeholder })" data-part="placeholder">
             {{ placeholder }}&nbsp;
           </span>
         </template>
       </slot>
 
-      <span v-if="isTrailing || !!slots.trailing" :class="style.trailing({ class: props.ui?.trailing })">
+      <span v-if="isTrailing || !!slots.trailing" :class="style.trailing({ class: props.ui?.trailing })" data-part="trailing">
         <slot name="trailing" :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open" :ui="props.ui">
-          <span v-if="trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"></span>
+          <span v-if="trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
         </slot>
       </span>
     </SelectTrigger>
 
     <SelectPortal :disabled="!props.portal">
-      <SelectContent v-bind="contentProps" :class="style.content({ class: props.ui?.content })">
-        <SelectViewport :class="style.viewport({ class: props.ui?.viewport })">
-          <SelectGroup v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" :class="style.group({ class: props.ui?.group })">
+      <SelectContent v-bind="contentProps" :class="style.content({ class: props.ui?.content })" data-part="content">
+        <SelectViewport :class="style.viewport({ class: props.ui?.viewport })" data-part="viewport">
+          <SelectGroup v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" :class="style.group({ class: props.ui?.group })" data-part="group">
             <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
-              <SelectLabel v-if="isSelectItem(item) && item.type === 'label'" :class="style.label({ class: props.ui?.label })">
+              <SelectLabel v-if="isSelectItem(item) && item.type === 'label'" :class="style.label({ class: props.ui?.label })" data-part="label">
                 {{ get(item, props.labelKey as string) }}
               </SelectLabel>
-              <SelectSeparator v-else-if="isSelectItem(item) && item.type === 'separator'" :class="style.separator({ class: props.ui?.separator })" />
+              <SelectSeparator v-else-if="isSelectItem(item) && item.type === 'separator'" :class="style.separator({ class: props.ui?.separator })" data-part="separator" />
 
               <SelectItem
                 v-else
-                :class="style.item({ class: props.ui?.item })"
-                :disabled="isSelectItem(item) && item.disabled"
                 :value="isSelectItem(item) ? get(item, props.valueKey as string) : item"
+                :disabled="isSelectItem(item) && item.disabled"
+                :class="style.item({ class: props.ui?.item })"
+                data-part="item"
               >
                 <slot name="item" :item="(item as NestedItem<T>)" :index="index">
                   <slot name="item-leading" :item="(item as NestedItem<T>)" :index="index">
-                    <span v-if="isSelectItem(item) && item.icon" :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon] })"></span>
+                    <span v-if="isSelectItem(item) && item.icon" :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon] })" data-part="item-leading-icon"></span>
                   </slot>
 
-                  <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })">
+                  <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })" data-part="item-label">
                     <slot name="item-label" :item="(item as NestedItem<T>)" :index="index">
                       {{ isSelectItem(item) ? get(item, props.labelKey as string) : item }}
                     </slot>
                   </SelectItemText>
 
-                  <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })">
+                  <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })" data-part="item-trailing">
                     <slot name="item-trailing" :item="(item as NestedItem<T>)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
-                      <span :class="style.itemTrailingIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })"></span>
+                      <span :class="style.itemTrailingIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })" data-part="item-trailing-icon"></span>
                     </SelectItemIndicator>
                   </span>
                 </slot>
@@ -267,7 +268,7 @@ function onUpdateOpen(value: boolean) {
           </SelectGroup>
         </SelectViewport>
 
-        <SelectArrow v-if="!!props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" />
+        <SelectArrow v-if="!!props.arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" data-part="arrow" />
       </SelectContent>
     </SelectPortal>
   </SelectRoot>

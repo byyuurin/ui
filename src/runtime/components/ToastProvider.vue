@@ -118,6 +118,7 @@ function getOffset(index: number) {
         '--transform': 'translateY(var(--translate)) scale(var(--scale))',
       }"
       :class="style.base({ clickable: !!(toast.onClick) })"
+      data-part="base"
       @update:open="onUpdateOpen($event, toast.id)"
       @click="toast.onClick && toast.onClick(toast)"
     />
@@ -126,6 +127,7 @@ function getOffset(index: number) {
       <ToastViewport
         :data-expanded="expanded"
         :class="style.viewport({ class: [props.class, props.ui?.viewport] })"
+        data-part="viewport"
         :style="{
           '--scale-factor': '0.05',
           '--translate-factor': position?.startsWith('top') ? '1px' : '-1px',

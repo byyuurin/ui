@@ -40,7 +40,7 @@ const style = computed(() => generateStyle('buttonGroup', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style">
+  <Primitive :as="props.as" :class="style" data-part="base">
     <slot></slot>
   </Primitive>
 </template>

@@ -148,14 +148,16 @@ onMounted(() => {
 <template>
   <Primitive
     :as="as"
-    :class="style.base({ class: [props.class, props.ui?.base] })"
     :aria-disabled="disabled ? true : undefined"
+    :class="style.base({ class: [props.class, props.ui?.base] })"
+    :data-part="$attrs['data-part'] ?? 'base'"
   >
-    <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })">
+    <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
       <slot name="leading">
         <span
           v-if="isLeading && leadingIconName"
           :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
+          data-part="leading-icon"
         ></span>
       </slot>
     </span>
@@ -163,6 +165,7 @@ onMounted(() => {
     <input
       ref="inputRef"
       :class="style.input({ class: props.ui?.input })"
+      data-part="input"
       :type="props.type"
       :value="modelValue"
       :placeholder="props.placeholder"
@@ -177,11 +180,12 @@ onMounted(() => {
 
     <slot></slot>
 
-    <span v-if="isTrailing || slots.trailing" :class="style.trailing({ class: props.ui?.trailing })">
+    <span v-if="isTrailing || slots.trailing" :class="style.trailing({ class: props.ui?.trailing })" data-part="trailing">
       <slot name="trailing">
         <span
           v-if="isTrailing && trailingIconName"
           :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
+          data-part="trailing-icon"
         ></span>
       </slot>
     </span>

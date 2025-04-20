@@ -89,37 +89,37 @@ const style = computed(() => generateStyle('formItem', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
-    <div :class="style.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="props.label || slots.label" :class="style.labelWrapper({ class: props.ui?.labelWrapper })">
-        <Label :for="id" :class="style.label({ class: props.ui?.label })">
+  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+    <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <div v-if="props.label || slots.label" :class="style.labelWrapper({ class: props.ui?.labelWrapper })" data-part="label-wrapper">
+        <Label :for="id" :class="style.label({ class: props.ui?.label })" data-part="label">
           <slot name="label" :label="props.label">
             {{ props.label }}
           </slot>
         </Label>
-        <span v-if="props.hint || slots.hint" :id="`${ariaId}-hint`" :class="style.hint({ class: props.ui?.hint })">
+        <span v-if="props.hint || slots.hint" :id="`${ariaId}-hint`" :class="style.hint({ class: props.ui?.hint })" data-part="hint">
           <slot name="hint" :hint="props.hint">
             {{ props.hint }}
           </slot>
         </span>
       </div>
 
-      <p v-if="props.description || slots.description" :id="`${ariaId}-description`" :class="style.description({ class: props.ui?.description })">
+      <p v-if="props.description || slots.description" :id="`${ariaId}-description`" :class="style.description({ class: props.ui?.description })" data-part="description">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>
       </p>
     </div>
 
-    <div :class="(props.label || slots.label || props.description || slots.description) && style.container({ class: props.ui?.container })">
+    <div :class="(props.label || slots.label || props.description || slots.description) && style.container({ class: props.ui?.container })" data-part="container">
       <slot :error="error"></slot>
 
-      <p v-if="(typeof error === 'string' && error) || slots.error" :id="`${ariaId}-error`" :class="style.error({ class: props.ui?.error })">
+      <p v-if="(typeof error === 'string' && error) || slots.error" :id="`${ariaId}-error`" :class="style.error({ class: props.ui?.error })" data-part="error">
         <slot name="error" :error="error">
           {{ error }}
         </slot>
       </p>
-      <p v-else :class="style.help({ class: props.ui?.help })">
+      <p v-else :class="style.help({ class: props.ui?.help })" data-part="help">
         <slot name="help" :help="props.help">
           {{ help }}
         </slot>

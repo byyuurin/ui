@@ -24,7 +24,7 @@ const styler = computed(() => generateStyle('skeleton', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="styler">
+  <Primitive :as="props.as" :class="styler" data-part="base">
     <slot></slot>
   </Primitive>
 </template>

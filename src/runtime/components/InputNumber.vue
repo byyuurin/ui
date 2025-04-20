@@ -128,9 +128,10 @@ function onBlur(event: FocusEvent) {
 <template>
   <NumberFieldRoot
     v-bind="{ ...rootProps, id, name, disabled }"
-    :class="style.base({ class: [props.class, props.ui?.base] })"
     :locale="locale"
     :aria-disabled="disabled ? true : undefined"
+    :class="style.base({ class: [props.class, props.ui?.base] })"
+    :data-part="$attrs['data-part'] ?? 'base'"
     @update:model-value="onUpdate"
   >
     <NumberFieldInput
@@ -139,11 +140,12 @@ function onBlur(event: FocusEvent) {
       :placeholder="props.placeholder"
       :required="props.required"
       :class="style.input({ class: props.ui?.input })"
+      data-part="input"
       @blur="onBlur"
       @focus="emitFormFocus"
     />
 
-    <div :class="style.increment({ class: props.ui?.increment })">
+    <div :class="style.increment({ class: props.ui?.increment })" data-part="increment">
       <NumberFieldIncrement as-child :disabled="disabled">
         <slot name="increment">
           <Button
@@ -157,7 +159,7 @@ function onBlur(event: FocusEvent) {
       </NumberFieldIncrement>
     </div>
 
-    <div :class="style.decrement({ class: props.ui?.decrement })">
+    <div :class="style.decrement({ class: props.ui?.decrement })" data-part="decrement">
       <NumberFieldDecrement as-child :disabled="disabled">
         <slot name="decrement">
           <Button

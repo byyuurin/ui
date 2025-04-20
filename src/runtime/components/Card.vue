@@ -40,17 +40,19 @@ const style = computed(() => generateStyle('card', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })">
+  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
     <slot name="content">
       <div
         v-if="slots.header || props.title || slots.title || props.description || slots.description "
         :class="style.header({ class: props.ui?.header })"
+        data-part="header"
       >
         <slot name="header">
           <Primitive
             v-if="props.title || slots.title"
             :as="slots.title ? undefined : 'h2'"
             :class="style.title({ class: props.ui?.title })"
+            data-part="title"
           >
             <slot name="title">
               {{ props.title }}
@@ -61,6 +63,7 @@ const style = computed(() => generateStyle('card', props))
             :as="slots.description ? undefined : 'p'"
             :as-child="!!slots.description"
             :class="style.description({ class: props.ui?.description })"
+            data-part="description"
           >
             <slot name="description">
               {{ props.description }}
@@ -69,11 +72,11 @@ const style = computed(() => generateStyle('card', props))
         </slot>
       </div>
 
-      <div v-if="slots.default" :class="style.body({ class: props.ui?.body })">
+      <div v-if="slots.default" :class="style.body({ class: props.ui?.body })" data-part="body">
         <slot></slot>
       </div>
 
-      <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })">
+      <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })" data-part="footer">
         <slot name="footer"></slot>
       </div>
     </slot>

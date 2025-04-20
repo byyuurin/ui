@@ -83,11 +83,12 @@ const style = computed(() => generateStyle('popover', props))
       <Component.Content
         v-bind="contentProps"
         :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
+        data-part="content"
         v-on="contentEvents"
       >
         <slot name="content"></slot>
 
-        <Component.Arrow v-if="!!arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" />
+        <Component.Arrow v-if="!!arrow" v-bind="arrowProps" :class="style.arrow({ class: props.ui?.arrow })" data-part="arrow" />
       </Component.Content>
     </Component.Portal>
   </Component.Root>
