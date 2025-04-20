@@ -10,7 +10,7 @@ export const transitionProps: TransitionGroupProps = {
 }
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     /** Contains all the parts of a scroll area. */
     root: 'relative overflow-hidden',
     /** The viewport area of the scroll area. */

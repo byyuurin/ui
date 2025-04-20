@@ -34,7 +34,7 @@ onMounted(() => {
     :toaster="toasterAttrs"
     :ui="{
       formItem: {
-        slots: {
+        parts: {
           root: 'leading-normal ui-red-500',
           help: 'min-h-1.5em',
         },

@@ -2,7 +2,7 @@ import { ct } from '@byyuurin/ui-kit'
 import { buttonGroupVariant } from './button-group'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     base: [
       'relative inline-flex items-center rounded-ui-button leading-normal transition-colors',
       'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',

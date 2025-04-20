@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'inline-flex items-center gap-x-2',
     container: 'rounded-ui-base border-0 transition-colors aria-disabled:opacity-50',
     base: 'w-full color-inherit bg-transparent text-center placeholder:color-ui-base/50 focus:outline-none disabled:cursor-not-allowed',

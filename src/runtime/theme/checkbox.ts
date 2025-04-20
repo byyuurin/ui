@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative flex items-start',
     base: [
       'size-1.25em shrink-0 flex items-center justify-center rounded-ui-checkbox color-ui-cx ring-2 ring-ui-fill ring-inset bg-ui-fill',

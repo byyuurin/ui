@@ -305,7 +305,7 @@ const style = computed(() => generateStyle('form', props))
 </script>
 
 <template>
-  <component :is="parentBus ? 'div' : 'form'" :id="formId" :class="style" data-part="base" @submit.prevent="onSubmitWrapper">
+  <component :is="parentBus ? 'div' : 'form'" :id="formId" :class="style.base()" data-part="base" @submit.prevent="onSubmitWrapper">
     <slot :errors="errors"></slot>
   </component>
 </template>

@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative inline-flex items-center justify-center shrink-0',
     base: [
       'inline-block rounded-full ring ring-ui-cx flex items-center justify-center color-ui-cx font-medium whitespace-nowrap',

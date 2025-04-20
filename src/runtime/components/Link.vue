@@ -224,7 +224,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
     },
   })
 
-  return styler({ ...props, active })
+  return styler({ ...props, active }).base()
 }
 </script>
 

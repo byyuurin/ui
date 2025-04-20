@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     wrapper: 'gap-2',
     root: 'relative overflow-hidden rounded-full bg-soft-ui-cb/30',
     indicator: 'bg-ui-fill rounded-full size-full transition-transform duration-200 ease-out',

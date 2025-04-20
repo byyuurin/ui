@@ -41,7 +41,7 @@ const style = computed(() => generateStyle('kbd', props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style" data-part="base">
+  <Primitive :as="props.as" :class="style.base()" data-part="base">
     <slot>{{ getKbdKey(props.value) }}</slot>
   </Primitive>
 </template>

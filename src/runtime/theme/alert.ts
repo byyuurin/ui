@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative overflow-hidden w-full rounded-ui-box p-4 flex gap-2.5',
     wrapper: 'min-w-0 flex-1 flex flex-col',
     title: 'text-xl font-medium',

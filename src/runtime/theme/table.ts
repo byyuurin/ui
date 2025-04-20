@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative overflow-auto',
     base: 'min-w-full overflow-clip',
     caption: 'sr-only',

@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: '',
     fieldset: 'flex flex-wrap gap-2 gap-x-4',
     legend: 'mb-2 color-ui-base',

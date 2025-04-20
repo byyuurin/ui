@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'rounded-ui-box divide-y',
     header: 'flex flex-wrap items-center gap-1 px-4 py-5 sm:px-6',
     body: 'flex-1 overflow-y-auto p-4 sm:p-6 empty:hidden',

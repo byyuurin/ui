@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     content: [
       'bg-ui-base shadow-lg rounded-ui-base ring ring-ui-base/10 divide-y divide-ui-base/10 overflow-y-auto scroll-py-1',
       'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',

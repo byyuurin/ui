@@ -2,7 +2,7 @@ import { ct } from '@byyuurin/ui-kit'
 import { buttonGroupVariant } from './button-group'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     base: 'inline-flex items-center rounded-ui-base leading-normal transition-colors',
     label: '',
     leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',

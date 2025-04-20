@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative inline-flex items-start',
     base: [
       'inline-flex items-center shrink-0 rounded-ui-switch border-2 border-transparent transition-colors duration-200',

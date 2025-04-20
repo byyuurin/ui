@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative flex items-center select-none touch-none aria-disabled:opacity-50',
     track: [
       'relative bg-soft-ui-cb/10 overflow-hidden rounded-full flex-grow cursor-pointer',

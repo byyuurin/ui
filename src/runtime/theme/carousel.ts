@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'relative focus:outline-none',
     viewport: 'overflow-hidden',
     container: 'flex items-start',

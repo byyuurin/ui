@@ -1,4 +1,4 @@
-import type { ClassValue, CRRule, CVCompoundVariants, CVDefaultVariants, CVMeta, CVSlots, CVVariants } from '@byyuurin/ui-kit'
+import type { ClassValue, CRRule, CVCompoundVariants, CVDefaultVariants, CVParts, CVScope, CVVariants } from '@byyuurin/ui-kit'
 import { cv } from '@byyuurin/ui-kit'
 import type { Styler } from '../types'
 
@@ -6,15 +6,15 @@ export function prepareStyler(rules: CRRule[] = []) {
   const createVariants = cv(rules)
 
   function createStyler<
-    V extends CVVariants<S, B>,
-    CV extends CVCompoundVariants<V, S, B>,
-    DV extends CVDefaultVariants<V, S>,
+    V extends CVVariants<P, B>,
+    CV extends CVCompoundVariants<V, P, B>,
+    DV extends CVDefaultVariants<V, P>,
     B extends ClassValue = undefined,
-    S extends CVSlots = undefined,
+    P extends CVParts = undefined,
   >(
-    theme: CVMeta<V, CV, DV, B, S>,
+    scope: CVScope<V, CV, DV, B, P>,
   ) {
-    const ui = createVariants(theme)
+    const ui = createVariants(scope)
     const styler: Styler<typeof ui> = (props: any) => ui(props)
     return styler
   }

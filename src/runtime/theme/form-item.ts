@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: '',
     wrapper: '',
     labelWrapper: 'flex content-center items-center justify-between',

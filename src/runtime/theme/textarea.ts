@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'rounded-ui-base transition-colors aria-disabled:opacity-50',
     base: [
       'w-full color-inherit bg-transparent border-0 resize-none placeholder:color-ui-base/50',

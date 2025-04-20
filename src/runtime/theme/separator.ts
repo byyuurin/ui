@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  slots: {
+  parts: {
     root: 'flex items-center justify-center text-center',
     line: 'border-solid border-ui-fill/20',
     container: 'color-ui-base/80 flex',
