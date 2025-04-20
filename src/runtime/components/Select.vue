@@ -18,7 +18,7 @@ interface SelectItemBase {
   [key: string]: any
 }
 
-export type SelectItem = SelectItemBase | AcceptableValue | boolean
+export type SelectItem = SelectItemBase | string | number | boolean
 
 export type SelectEmits<T extends ArrayOrNested<SelectItem>, VK extends GetItemKeys<T> | undefined, M extends boolean> = Omit<SelectRootEmits, 'update:modelValue'> & {
   change: [payload: Event]
@@ -92,9 +92,9 @@ export interface SelectProps<
   labelKey?: VK
   options?: T
   /** The value of the Select when initially rendered. Use when you do not need to control the state of the Select. */
-  defaultValue?: GetModelValue<T, VK, M>
+  defaultValue?: GetModelValue<T, VK, M> | null
   /** The controlled value of the Select. Can be bind as `v-model`. */
-  modelValue?: GetModelValue<T, VK, M>
+  modelValue?: GetModelValue<T, VK, M> | null
   /** Whether multiple options can be selected or not. */
   multiple?: M & boolean
   /** Highlight the ring color like a focus state. */
