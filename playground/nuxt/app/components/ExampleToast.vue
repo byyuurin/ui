@@ -2,9 +2,11 @@
 import type { ToastProps, ToastProviderProps, ToastState } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-interface Props extends Pick<ToastProviderProps, 'duration' | 'position' | 'expand'> {
+interface Props {
   color?: string
-  expand?: boolean
+  duration?: ToastProviderProps['duration']
+  position?: ToastProviderProps['position']
+  expand?: ToastProviderProps['expand']
 }
 
 const props = withDefaults(defineProps<Props>(), {
