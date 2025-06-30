@@ -81,6 +81,7 @@ const props = withDefaults(defineProps<CalendarProps<R, M>>(), {
   fixedWeeks: true,
   monthControls: true,
   yearControls: true,
+  numberOfMonths: 1,
 })
 const emit = defineEmits<CalendarEmits<R, M>>()
 defineSlots<CalendarSlots>()
@@ -104,7 +105,10 @@ function paginateYear(date: DateValue, sign: -1 | 1) {
 
 const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
 
-const style = computed(() => generateStyle('calendar', props))
+const style = computed(() => generateStyle('calendar', {
+  ...props,
+  multipleMonths: props.numberOfMonths > 1,
+}))
 </script>
 
 <template>
