@@ -41,14 +41,31 @@ export default ct(/* @unocss-include */{
         root: 'text-xl',
       },
     },
+    multipleMonths: {
+      true: {
+        cellTrigger: [
+          'data-[outside-view]:data-[selected]:not-hover:bg-inherit data-[outside-view]:data-[selected]:not-hover:color-ui-base/20',
+          'data-[outside-view]:data-[selected]:hover:bg-soft-ui-fill/10 data-[outside-view]:data-[selected]:hover:color-ui-base/20',
+        ],
+      },
+      false: {
+        cellTrigger: 'data-[outside-view]:data-[selected]:color-ui-cx',
+      },
+    },
     readonly: {
       true: {
-        cellTrigger: 'cursor-default data-[today]:not-[[data-selected]]:color-ui-fill/60',
+        cellTrigger: [
+          'cursor-default data-[today]:not-[[data-selected]]:color-ui-fill/60',
+          'data-[outside-view]:data-[selected]:hover:bg-inherit',
+        ],
       },
     },
     disabled: {
       true: {
-        cellTrigger: 'data-[today]:not-[[data-selected]]:color-ui-fill/60 data-[selected]:bg-soft-ui-fill/50',
+        cellTrigger: [
+          'data-[today]:not-[[data-selected]]:color-ui-fill/60 data-[selected]:bg-soft-ui-fill/50',
+          'data-[outside-view]:data-[selected]:hover:bg-inherit',
+        ],
       },
     },
   },
