@@ -1,11 +1,11 @@
 import type { CRRule, CRRuleMatcher } from '@byyuurin/ui-kit'
-import type { CSSEntries, CSSObject, UserConfig } from '@unocss/core'
+import type { CSSEntry, CSSObject, CSSValueInput, UserConfig } from '@unocss/core'
 import { mergeConfigs } from '@unocss/core'
-import { presetUno } from '@unocss/preset-uno'
+import { presetWind3 } from '@unocss/preset-wind3'
 import { preset } from './preset'
 
 const baseUnoConfig = mergeConfigs([
-  presetUno(),
+  presetWind3(),
   preset(),
 ])
 
@@ -41,7 +41,7 @@ export function transformUnoRules(
     return valueArray.join(',')
   }
 
-  const resolveCSSEntries = (entries: CSSEntries) => () => toString(entries.flatMap((value) => Object.keys(value)))
+  const resolveCSSValues = (values: (CSSEntry | CSSValueInput)[]) => () => toString(values.flatMap((value) => Object.keys(value)))
 
   const resolveCSSObject = (object: CSSObject) => () => {
     if (JSON.stringify(object) === '{}')
@@ -55,7 +55,8 @@ export function transformUnoRules(
     const ruleRE = typeof maybeString === 'string' ? new RegExp(`^(?:${maybeString})$`) : maybeString
 
     if (Array.isArray(maybeResult)) {
-      mergeRules.push([ruleRE, resolveCSSEntries(maybeResult)])
+      const inputs = maybeResult.filter((item) => typeof item === 'object')
+      mergeRules.push([ruleRE, resolveCSSValues(inputs)])
       continue
     }
 

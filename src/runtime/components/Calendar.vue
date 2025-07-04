@@ -115,8 +115,8 @@ const style = computed(() => generateStyle('calendar', {
   <Calendar.Root
     v-slot="{ weekDays, grid }"
     v-bind="rootProps"
-    :model-value="props.modelValue"
-    :default-value="props.defaultValue"
+    :model-value="(props.modelValue as DateValue | DateValue[])"
+    :default-value="(props.defaultValue as DateValue)"
     :locale="locale"
     :dir="dir"
     :class="style.root({ class: [props.class, props.ui?.root] })"

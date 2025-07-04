@@ -8,7 +8,7 @@ const rangeValue = ref<any>()
 
 const controls: ControlItems<CalendarProps<boolean, boolean>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'weekStartsOn', value: null, options: [0, 1, 2, 3, 4, 5, 6], placeholder: 'auto' },
+  { prop: 'weekStartsOn', value: null, options: [{ label: 'auto', value: null }, 0, 1, 2, 3, 4, 5, 6], placeholder: 'auto' },
   { prop: 'numberOfMonths', value: 1, min: 1 },
   { prop: 'initialFocus', value: false },
   { prop: 'yearControls', value: true },
