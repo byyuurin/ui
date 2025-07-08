@@ -65,6 +65,7 @@ onMounted(() => {
       <ExampleKbd :class="uiColor" />
       <ExampleLink :class="uiColor" />
       <ExampleModal :class="uiColor" />
+      <ExampleNavigationMenu :class="uiColor" />
       <ExamplePagination :class="uiColor" />
       <ExamplePinInput :class="uiColor" />
       <ExamplePopover :class="uiColor" />

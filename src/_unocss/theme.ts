@@ -61,6 +61,10 @@ export const theme: Theme = {
       'slide-out-to-bottom-and-fade': '{from {opacity: 1;transform: translateY(0);}to {opacity: 0;transform: translateY(4px);}}',
       'slide-in-from-left-and-fade': '{from {opacity: 0;transform: translateX(-4px);}to {opacity: 1;transform: translateX(0);}}',
       'slide-out-to-left-and-fade': '{from {opacity: 1;transform: translateX(0);}to {opacity: 0;transform: translateX(-4px);}}',
+      'enter-from-right': '{from{opacity:0;transform:translateX(200px);}to{opacity:1;transform:translateX(0);}}',
+      'enter-from-left': '{from{opacity:0;transform:translateX(-200px);}to{opacity:1;transform:translateX(0);}}',
+      'exit-to-right': '{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(200px);}}',
+      'exit-to-left': '{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-200px);}}',
     },
   },
 }

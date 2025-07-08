@@ -3,7 +3,7 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { breadcrumb } from '../theme'
 import type { ComponentAttrs, DynamicSlots, LinkProps } from '../types'
 
-export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
+export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
   label?: string
   icon?: string
   slot?: string

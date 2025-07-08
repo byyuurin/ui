@@ -71,7 +71,7 @@ onMounted(() => {
         >
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
             <label class="inline-flex justify-between items-center gap-2 opacity-80">
-              {{ upperFirst((item?.label ?? item?.prop) as string) }}
+              <span class="mr-auto">{{ upperFirst((item?.label ?? item?.prop) as string) }}</span>
               <UPopover v-if="item?.description" mode="click" arrow>
                 <UButton class="ui-primary" variant="link" size="xs" icon="i-mdi-help-circle-outline" :ui="{ base: 'p-0' }" />
                 <template #content>
