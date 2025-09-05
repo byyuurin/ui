@@ -73,7 +73,7 @@
     "unocss": "^66.3.2"
   },
   "dependencies": {
-    "@byyuurin/ui-kit": "^0.6.1",
+    "@byyuurin/ui-kit": "^0.7.0",
     "@internationalized/date": "^3.8.2",
     "@nuxt/kit": "^3.17.6",
     "@standard-schema/spec": "^1.0.0",
