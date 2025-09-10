@@ -61,17 +61,17 @@ export default ct(/* @unocss-include */{
     {
       size: ['xs', 'sm', 'md'],
       class: {
-        label: 'p-0.25em gap-0.25em',
-        item: 'p-0.25em gap-0.25em',
-        itemTrailingKbds: 'gap-0.125em',
+        label: 'p-1 gap-1',
+        item: 'p-1 gap-1',
+        itemTrailingKbds: 'gap-0.5',
       },
     },
     {
       size: ['lg', 'xl'],
       class: {
-        label: 'p-0.5em gap-0.5em',
-        item: 'p-0.5em gap-0.5em',
-        itemTrailingKbds: 'gap-0.25em',
+        label: 'p-2 gap-2',
+        item: 'p-2 gap-2',
+        itemTrailingKbds: 'gap-1',
       },
     },
   ],

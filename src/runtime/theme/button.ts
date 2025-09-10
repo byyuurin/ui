@@ -9,8 +9,8 @@ export default ct(/* @unocss-include */{
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
     ],
     label: 'color-inherit',
-    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-0.5',
-    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
+    leadingIcon: 'shrink-0 not-only-child:ml-0.5',
+    trailingIcon: 'shrink-0 not-only-child:mr-0.5',
   },
   variants: {
     ...buttonGroupVariant,
@@ -67,18 +67,28 @@ export default ct(/* @unocss-include */{
     size: {
       xs: {
         base: 'text-xs',
+        leadingIcon: 'size-4',
+        trailingIcon: 'size-4',
       },
       sm: {
         base: 'text-sm',
+        leadingIcon: 'size-5',
+        trailingIcon: 'size-5',
       },
       md: {
         base: 'text-base',
+        leadingIcon: 'size-6',
+        trailingIcon: 'size-6',
       },
       lg: {
         base: 'text-lg',
+        leadingIcon: 'size-7',
+        trailingIcon: 'size-7',
       },
       xl: {
         base: 'text-xl',
+        leadingIcon: 'size-7',
+        trailingIcon: 'size-7',
       },
     },
     active: {

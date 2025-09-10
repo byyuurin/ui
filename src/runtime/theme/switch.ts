@@ -7,12 +7,12 @@ export default ct(/* @unocss-include */{
       'inline-flex items-center shrink-0 rounded-ui-switch border-2 border-transparent transition-colors duration-200',
       'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
       'data-[state=unchecked]:bg-soft-ui-cb/10 data-[state=checked]:bg-soft-ui-fill/80',
-      'w-2.7em',
+      'w-11',
     ],
-    container: 'flex items-center h-1.5em',
+    container: 'flex items-center h-6',
     thumb: [
-      'group pointer-events-none rounded-ui-switch size-1.25em bg-ui-base shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
-      'data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:translate-x-0 data-[state=checked]:translate-x-1.25em data-[state=checked]:rtl:-translate-x-1.25em',
+      'group pointer-events-none rounded-ui-switch size-5 bg-ui-base shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
+      'data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:translate-x-0 data-[state=checked]:translate-x-5 data-[state=checked]:rtl:-translate-x-5',
     ],
     icon: [
       'absolute shrink-0 opacity-0 size-10/12 transition-[color,opacity] duration-200',

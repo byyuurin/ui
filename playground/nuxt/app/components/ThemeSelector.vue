@@ -65,6 +65,15 @@ export const themeOptions = defineThemeOptions([
     cx: '#ffffff',
   },
   {
+    name: 'wireframe dark',
+    colorScheme: 'dark',
+    fontFamily: 'Chalkboard,comic sans ms,"sans-serif"',
+    radius: '0.2rem',
+    cb: '#ffffff',
+    cp: '#b8b8b8',
+    cx: '#161616',
+  },
+  {
     name: 'coffee',
     colorScheme: 'dark',
     radius: '0.2rem',
@@ -298,7 +307,7 @@ function setCustomTheme() {
                 <div class="bg-soft-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
                 <div class="bg-soft-ui-cb/20 col-start-1 row-start-3"></div>
                 <div class="bg-ui-base col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                  <div class="text-xl font-bold">
+                  <div class="text-xl font-bold line-clamp-1">
                     {{ theme.name }}
                   </div>
                 </div>
