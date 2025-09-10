@@ -5,7 +5,7 @@ export default ct(/* @unocss-include */{
     root: '',
     list: 'flex items-center gap-1',
     ellipsis: 'pointer-events-none',
-    label: 'px-0 min-w-6 text-center',
+    label: 'px-0 min-w-1.5em text-center',
     item: '',
     first: '',
     prev: '',

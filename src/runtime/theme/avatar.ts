@@ -10,19 +10,19 @@ export default ct(/* @unocss-include */{
   variants: {
     size: {
       xs: {
-        root: 'text-xs size-4.5',
+        root: 'text-xs size-1.4em',
       },
       sm: {
-        root: 'text-sm size-5.5',
+        root: 'text-sm size-1.6em',
       },
       md: {
-        root: 'text-base size-8',
+        root: 'text-base size-2em',
       },
       lg: {
-        root: 'text-lg size-9',
+        root: 'text-lg size-2.4em',
       },
       xl: {
-        root: 'text-xl size-12',
+        root: 'text-xl size-3em',
       },
     },
   },

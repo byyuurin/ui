@@ -6,11 +6,11 @@ export default ct(/* @unocss-include */{
     wrapper: '',
     labelWrapper: 'flex content-center items-center justify-between',
     label: 'block font-medium color-ui-base/80',
-    container: 'mt-1 relative',
+    container: 'mt-0.25em relative',
     description: 'color-ui-base/60',
-    error: 'mt-1 color-ui-fill',
+    error: 'mt-0.25em color-ui-fill',
     hint: 'color-ui-base/60',
-    help: 'mt-1 color-ui-base/60',
+    help: 'mt-0.25em color-ui-base/60',
   },
   variants: {
     size: {

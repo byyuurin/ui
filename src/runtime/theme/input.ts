@@ -10,9 +10,9 @@ export default ct(/* @unocss-include */{
       'disabled:cursor-not-allowed',
     ],
     leading: 'flex items-center',
-    leadingIcon: 'shrink-0 size-5',
+    leadingIcon: 'shrink-0 size-1.25em',
     trailing: 'flex items-center',
-    trailingIcon: 'shrink-0 size-5',
+    trailingIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     ...buttonGroupVariant,
@@ -83,7 +83,7 @@ export default ct(/* @unocss-include */{
     },
     type: {
       file: {
-        input: 'leading-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-3.5 file:rounded-ui-button file:border-none file:color-ui-cx file:bg-soft-ui-cb/80',
+        input: 'leading-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded-ui-button file:border-none file:color-ui-cx file:bg-soft-ui-cb/80',
       },
     },
   },

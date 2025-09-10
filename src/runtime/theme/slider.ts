@@ -6,11 +6,11 @@ export default ct(/* @unocss-include */{
     track: [
       'relative bg-soft-ui-cb/10 overflow-hidden rounded-full flex-grow cursor-pointer',
       'data-[disabled]:cursor-not-allowed',
-      'data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5',
+      'data-[orientation=horizontal]:h-0.6em data-[orientation=vertical]:w-0.6em',
     ],
     range: 'absolute rounded-full bg-soft-ui-fill',
     thumb: [
-      'size-4 rounded-full bg-ui-base ring-3 cursor-pointer focus-visible:outline-3 focus-visible:outline-offset-3',
+      'size-1em rounded-full bg-ui-base ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
       'data-[disabled]:cursor-not-allowed',
       'ring-ui-fill outline-none focus-visible:outline-ui-fill/50',
     ],

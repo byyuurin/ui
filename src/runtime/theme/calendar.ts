@@ -13,7 +13,7 @@ export default ct(/* @unocss-include */{
     headCell: 'rounded-ui-base color-ui-fill',
     cell: 'relative text-center color-ui-base/80',
     cellTrigger: [
-      'relative size-9 flex items-center justify-center rounded-ui-button whitespace-nowrap transition',
+      'relative size-2.25em flex items-center justify-center rounded-ui-button whitespace-nowrap transition',
       'focus-visible:ring-2 focus-visible:ring-ui-base/90 focus:outline-none',
       'data-[disabled]:color-ui-base/50 data-[disabled]:cursor-not-allowed',
       'data-[unavailable]:line-through data-[unavailable]:color-ui-base/50 data-[unavailable]:cursor-not-allowed',

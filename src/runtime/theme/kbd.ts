@@ -1,7 +1,7 @@
 import { ct } from '@byyuurin/ui-kit'
 
 export default ct(/* @unocss-include */{
-  base: 'inline-flex items-center justify-center px-1 rounded-ui-base leading-normal min-w-6 font-medium font-sans select-none',
+  base: 'inline-flex items-center justify-center px-0.25em rounded-ui-base leading-normal min-w-1.5em font-medium font-sans select-none',
   variants: {
     variant: {
       'solid': 'color-ui-cx bg-soft-ui-fill/90',

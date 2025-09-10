@@ -6,12 +6,12 @@ export default ct(/* @unocss-include */{
     list: 'relative flex p-1 group',
     indicator: 'absolute transition-all duration-200',
     trigger: [
-      'group relative inline-flex items-center gap-1 shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
+      'group relative inline-flex items-center gap-0.25em shrink-0 min-w-0 font-medium rounded-ui-tabs transition-colors',
       'outline-none',
       'disabled:cursor-not-allowed disabled:opacity-50',
     ],
     content: 'w-full focus:outline-none',
-    leadingIcon: 'shrink-0 size-6',
+    leadingIcon: 'shrink-0 size-1.5em',
     label: 'truncate',
   },
   variants: {

@@ -6,7 +6,7 @@ export default ct(/* @unocss-include */{
     wrapper: 'min-w-0 flex-1 flex flex-col',
     title: 'text-xl font-medium',
     description: 'opacity-80',
-    icon: 'shrink-0 size-6',
+    icon: 'shrink-0 size-1.5em',
     actions: 'flex flex-wrap gap-1.5 shrink-0',
     close: 'p-0',
   },

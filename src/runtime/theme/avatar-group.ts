@@ -8,19 +8,19 @@ export default ct(/* @unocss-include */{
   variants: {
     size: {
       xs: {
-        base: 'ring-1 -me-0.5',
+        base: 'ring-1 -me-0.125em',
       },
       sm: {
-        base: 'ring-2 -me-0.5',
+        base: 'ring-2 -me-0.125em',
       },
       md: {
-        base: 'ring-2 -me-1',
+        base: 'ring-2 -me-0.25em',
       },
       lg: {
-        base: 'ring-3 -me-2',
+        base: 'ring-3 -me-0.5em',
       },
       xl: {
-        base: 'ring-3 -me-2',
+        base: 'ring-3 -me-0.5em',
       },
     },
   },

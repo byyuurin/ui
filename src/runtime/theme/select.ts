@@ -31,9 +31,9 @@ export default ct(/* @unocss-include */{
     itemTrailingIcon: 'shrink-0',
     itemLabel: 'truncate',
     leading: 'flex items-center',
-    leadingIcon: 'shrink-0 size-5',
+    leadingIcon: 'shrink-0 size-1.25em',
     trailing: 'flex items-center',
-    trailingIcon: 'shrink-0 size-5',
+    trailingIcon: 'shrink-0 size-1.25em',
   },
   variants: {
     ...buttonGroupVariant,
