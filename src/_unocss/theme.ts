@@ -1,4 +1,4 @@
-import type { Theme } from '@unocss/preset-mini'
+import type { Theme } from '@unocss/preset-wind3'
 import { cssVarsPrefix } from './constants'
 
 export const theme: Theme = {

@@ -70,17 +70,17 @@
     "prepack": "nuxt-module-build build"
   },
   "peerDependencies": {
-    "unocss": "^66.3.2"
+    "@unocss/core": ">=66.1.0",
+    "@unocss/preset-wind3": ">=66.1.0"
   },
   "dependencies": {
     "@byyuurin/ui-kit": "^0.7.0",
+    "@byyuurin/uno-merge": "^0.1.0",
     "@internationalized/date": "^3.8.2",
     "@nuxt/kit": "^3.17.6",
     "@standard-schema/spec": "^1.0.0",
     "@tanstack/vue-table": "^8.21.3",
-    "@unocss/core": "^66.3.2",
-    "@unocss/preset-mini": "^66.3.2",
-    "@unocss/preset-wind3": "^66.3.2",
+    "@unocss/preset-mini": "^66.5.1",
     "@vue/shared": "^3.5.17",
     "@vueuse/core": "^13.5.0",
     "defu": "^6.1.4",
@@ -114,7 +114,9 @@
     "@nuxt/schema": "^3.17.6",
     "@nuxt/test-utils": "^3.19.2",
     "@types/node": "^22.16.0",
-    "@unocss/reset": "^66.3.2",
+    "@unocss/core": "^66.5.1",
+    "@unocss/preset-wind3": "^66.5.1",
+    "@unocss/reset": "^66.5.1",
     "@vitejs/plugin-vue": "^6.0.0",
     "bumpp": "^10.2.0",
     "eslint": "^9.30.1",
@@ -124,7 +126,7 @@
     "nuxt": "^3.17.6",
     "simple-git-hooks": "^2.13.0",
     "typescript": "^5.8.3",
-    "unocss": "^66.3.2",
+    "unocss": "^66.5.1",
     "vite": "^7.0.2",
     "vite-plugin-inspect": "^11.3.0",
     "vitest": "^3.2.4",
