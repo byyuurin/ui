@@ -2,12 +2,11 @@ import { preset } from '@byyuurin/ui/unocss'
 import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVParts, CVScope, CVVariants } from '@byyuurin/ui-kit'
 import { createCV, cx } from '@byyuurin/ui-kit'
 import { createUnoMerge } from '@byyuurin/uno-merge'
-import { mergeConfigs } from '@unocss/core'
 import { presetWind3 } from '@unocss/preset-wind3'
 import { createSharedComposable } from '@vueuse/core'
 import { createDefu, defu } from 'defu'
 import { computed, toValue } from 'vue'
-import { injectThemeExtension, injectUnoConfig } from '../app/injections'
+import { injectThemeExtension } from '../app/injections'
 import * as uiTheme from '../theme'
 import type { Styler, StylerProps, StylerReturnType, StylerTheme } from '../types'
 
@@ -49,20 +48,14 @@ const extendTheme = createDefu((obj: any, key, value) => {
 
 type UITheme = typeof uiTheme
 
-const { merge: unoMerge, setConfig } = await createUnoMerge({})
+const { merge: unoMerge } = await createUnoMerge({ presets: [presetWind3(), preset()] })
 
 export const useTheme = createSharedComposable(() => {
   const cv = createCV((...classValues) => unoMerge(cx(...classValues)))
 
-  const unoConfig = injectUnoConfig()
   const themeExtension = injectThemeExtension()
   const themeDefaults: UITheme = JSON.parse(JSON.stringify(uiTheme))
   const theme = computed(() => extendTheme(toValue(themeExtension), themeDefaults) as UITheme)
-
-  setConfig(mergeConfigs([
-    { presets: [presetWind3(), preset()] },
-    toValue(unoConfig),
-  ]) as any)
 
   function createStyler<
     V extends CVVariants<P, B>,
