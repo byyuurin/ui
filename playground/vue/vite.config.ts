@@ -32,9 +32,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-uno'],
+          unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-wind4'],
           libs: ['reka-ui'],
-          ui: ['@byyuurin/ui'],
         },
       },
     },

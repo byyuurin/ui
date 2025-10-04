@@ -103,7 +103,7 @@
     "dev": "nuxi dev playground/nuxt --uiDev",
     "dev:build": "nuxi build playground/nuxt",
     "dev:preview": "nuxi preview playground/nuxt",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt && pnpm dev:vue:build",
     "dev:vue": "pnpm --filter \"./playground/vue\" dev -- --uiDev",
     "dev:vue:build": "pnpm --filter \"./playground/vue\" build",
     "dev:vue:preview": "pnpm --filter \"./playground/vue\" preview",
@@ -162,7 +162,6 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@antfu/ni": "^25.0.0",
     "@byyuurin/eslint-config": "^1.9.0",
     "@nuxt/eslint-config": "^1.9.0",
     "@nuxt/module-builder": "^1.0.2",
