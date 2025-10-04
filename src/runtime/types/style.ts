@@ -1,0 +1,33 @@
+import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVScopeMeta } from '@byyuurin/ui-kit'
+import type { AppConfig } from '@nuxt/schema'
+import type { AppConfigUI } from '#build/types/ui'
+
+export type RuntimeAppConfig = AppConfig & { ui: AppConfigUI }
+
+export interface ComponentBaseProps {
+  class?: ClassValue
+}
+
+export type ComponentUIProps<T> = T extends { parts: infer P }
+  ? { [Part in keyof P]?: string }
+  : Record<string, never>
+
+type UIConfigPartial<T> = {
+  [P in keyof T as T[P] extends undefined ? never : P]?: T[P] extends Array<infer V>
+    ? V extends string
+      ? V extends '' ? '' : V
+      : V[]
+    : T[P] extends object
+      ? UIConfigPartial<T[P]>
+      : T[P] extends string
+        ? T[P] extends '' ? '' : string
+        : T[P]
+}
+
+type _Variants<T> = T & Record<string, never>
+
+export type UIConfig<Themes extends Record<string, any>> = {
+  [Component in keyof Themes]?: Themes[Component] extends CVScopeMeta<infer V, any, any, infer B, infer P>
+    ? UIConfigPartial<CVScopeMeta<_Variants<V>, CVCompoundVariants<_Variants<V>, P, B>, CVDefaultVariants<_Variants<V>, P>, B, P>>
+    : never
+}

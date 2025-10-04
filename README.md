@@ -29,14 +29,11 @@ pnpm i -D @iconify-json/[the-collection-you-want]
 ```ts
 // uno.config.ts
 import { preset as ui } from '@byyuurin/ui/unocss'
-import { defineConfig, presetIcons, presetWind3 } from 'unocss'
+import { defineConfig, presetWind4 } from 'unocss'
 
 export default defineConfig({
   presets: [
-    presetWind3(),
-    presetIcons({
-      cdn: 'https://esm.sh/', // OR install @iconify-json/[the-collection-you-want]
-    }),
+    presetWind4(),
     ui({
       radius: '0rem', // optional
       radiusBox: '0rem', // optional

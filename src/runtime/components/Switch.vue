@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SwitchRootProps } from 'reka-ui'
-import type { switch as _switch } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/switch'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface SwitchEmits {
   change: [payload: Event]
@@ -13,10 +13,10 @@ export interface SwitchSlots {
   description?: (props: { description?: string }) => any
 }
 
-type SwitchVariants = VariantProps<typeof _switch>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<SwitchRootProps, 'as' | 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
-  size?: SwitchVariants['size']
+export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'as' | 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
+  size?: ThemeVariants['size']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
   /**
@@ -30,6 +30,7 @@ export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<Switch
   uncheckedIcon?: string
   label?: string
   description?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -37,8 +38,10 @@ export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<Switch
 import { reactivePick } from '@vueuse/core'
 import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
+import { useAppConfig } from '#imports'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<SwitchProps>(), {})
 const emit = defineEmits<SwitchEmits>()
@@ -50,14 +53,17 @@ const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defa
 const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SwitchProps>(props)
 const id = _id.value ?? useId()
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('switch', {
-  ...props,
-  size: size.value,
-  disabled: disabled.value,
-  checked: false,
-  unchecked: false,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.switch))
+  return ui({
+    ...props,
+    size: size.value,
+    disabled: disabled.value,
+    checked: false,
+    unchecked: false,
+  })
+})
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
@@ -81,10 +87,10 @@ function onUpdate(value: any) {
         @update:model-value="onUpdate"
       >
         <SwitchThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb">
-          <span v-if="props.loading" :class="style.icon({ class: [theme.app.icons.loading, props.ui?.icon], checked: true, unchecked: true })" data-part="icon"></span>
+          <Icon v-if="props.loading" :name="appConfig.ui.icons.loading" :class="style.icon({ class: props.ui?.icon, checked: true, unchecked: true })" data-part="icon" />
           <template v-else>
-            <span v-if="props.checkedIcon" :class="style.icon({ class: [props.checkedIcon, props.ui?.icon], checked: true })" data-part="icon"></span>
-            <span v-if="props.uncheckedIcon" :class="style.icon({ class: [props.uncheckedIcon, props.ui?.icon], unchecked: true })" data-part="icon"></span>
+            <Icon v-if="props.checkedIcon" :name="props.checkedIcon" :class="style.icon({ class: props.ui?.icon, checked: true })" data-part="icon" />
+            <Icon v-if="props.uncheckedIcon" :name="props.uncheckedIcon" :class="style.icon({ class: props.ui?.icon, unchecked: true })" data-part="icon" />
           </template>
         </SwitchThumb>
       </SwitchRoot>

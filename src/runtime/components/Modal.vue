@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
-import type { modal } from '../theme'
-import type { ButtonProps, ComponentAttrs, EmitsToProps } from '../types'
+import theme from '#build/ui/modal'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { EmitsToProps } from '../types/utils'
 
 export interface ModalEmits extends DialogRootEmits {
   'after-leave': []
@@ -14,14 +15,14 @@ export interface ModalSlots {
   header?: any
   title?: any
   description?: any
-  close?: (props: { ui: ComponentAttrs<typeof modal>['ui'] }) => any
+  close?: (props: { ui?: ComponentUIProps<typeof theme> }) => any
   body?: any
   footer?: any
 }
 
-type ModalVariants = VariantProps<typeof modal>
+type ModalVariants = VariantProps<typeof theme>
 
-export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProps {
+export interface ModalProps extends ComponentBaseProps, DialogRootProps {
   title?: string
   description?: string
   size?: ModalVariants['size']
@@ -44,6 +45,7 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
   close?: ButtonProps | boolean
   /** @default app.icons.close */
   closeIcon?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -51,8 +53,9 @@ export interface ModalProps extends ComponentAttrs<typeof modal>, DialogRootProp
 import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits, VisuallyHidden } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ModalProps>(), {
@@ -82,8 +85,11 @@ const contentEvents = computed(() => {
 })
 
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('modal', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.modal))
+  return ui(props)
+})
 </script>
 
 <template>
@@ -124,7 +130,7 @@ const style = computed(() => generateStyle('modal', props))
                 <slot name="close" :ui="props.ui">
                   <Button
                     variant="ghost"
-                    :icon="props.closeIcon || theme.app.icons.close"
+                    :icon="props.closeIcon || appConfig.ui.icons.close"
                     v-bind="typeof props.close === 'boolean' ? {} : props.close"
                     :aria-label="t('modal.close')"
                     :class="style.close({ class: props.ui?.close })"

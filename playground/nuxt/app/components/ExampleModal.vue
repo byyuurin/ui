@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ModalProps } from '@byyuurin/ui'
-import { Button, Modal } from '@byyuurin/ui'
+import Button from '@byyuurin/ui/components/Button.vue'
+import Modal from '@byyuurin/ui/components/Modal.vue'
 import type { ControlItems } from './ExampleView.vue'
 import Placeholder from './Placeholder.vue'
 

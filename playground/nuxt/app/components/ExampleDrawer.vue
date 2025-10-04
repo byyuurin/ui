@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DrawerProps } from '@byyuurin/ui'
-import { Button, Drawer } from '@byyuurin/ui'
+import Button from '@byyuurin/ui/components/Button.vue'
+import Drawer from '@byyuurin/ui/components/Drawer.vue'
 import type { ControlItems } from './ExampleView.vue'
 import Placeholder from './Placeholder.vue'
 

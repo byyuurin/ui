@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import type { breadcrumb } from '../theme'
-import type { ComponentAttrs, DynamicSlots, LinkProps } from '../types'
+import theme from '#build/ui/breadcrumb'
+import type { ComponentBaseProps, ComponentUIProps, LinkProps, RuntimeAppConfig } from '../types'
+import type { DynamicSlots } from '../types/utils'
 
 export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
   label?: string
@@ -20,7 +21,7 @@ export type BreadcrumbSlots<T extends BreadcrumbItem = BreadcrumbItem> = {
   'separator'?: any
 } & DynamicSlots<T, 'leading' | 'label' | 'trailing', SlotProps<T>>
 
-export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> extends ComponentAttrs<typeof breadcrumb> {
+export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "nav"
@@ -37,15 +38,18 @@ export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> exte
    * @default "label"
    */
   labelKey?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts" generic="T extends BreadcrumbItem">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
 import { get, pickLinkProps } from '../utils'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
 
@@ -57,11 +61,14 @@ const props = withDefaults(defineProps<BreadcrumbProps<T>>(), {
 const slots = defineSlots<BreadcrumbSlots<T>>()
 
 const { dir } = useLocale()
-const { theme, generateStyle } = useTheme()
+const appConfig = useAppConfig() as RuntimeAppConfig
 
-const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
+const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
 
-const style = computed(() => generateStyle('breadcrumb', props))
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.breadcrumb))
+  return ui(props)
+})
 </script>
 
 <template>
@@ -96,7 +103,7 @@ const style = computed(() => generateStyle('breadcrumb', props))
 
         <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" :class="style.separator({ class: props.ui?.separator })" data-part="separator">
           <slot name="separator">
-            <span :class="style.separatorIcon({ class: [separatorIcon, props.ui?.separatorIcon] })" data-part="separator-icon"></span>
+            <Icon :name="separatorIcon" :class="style.separatorIcon({ class: props.ui?.separatorIcon })" data-part="separator-icon" />
           </slot>
         </li>
       </template>

@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { UserConfig } from '@unocss/core'
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { Messages, ThemeExtension, ToastProviderProps } from '../types'
+import type { Messages, ToastProviderProps } from '../types'
 import type { Locale } from '../utils'
 
 export interface AppSlots {
@@ -9,8 +8,6 @@ export interface AppSlots {
 }
 
 export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
-  unoConfig?: UserConfig
-  ui?: ThemeExtension
   toaster?: ToastProviderProps
   tooltip?: TooltipProviderProps
   locale?: Locale<Messages>
@@ -21,25 +18,18 @@ export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'l
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
 import { toRef, useId } from 'vue'
-import { provideLocaleContext, provideThemeExtension, provideUnoConfig } from '../app/injections'
+import { provideLocaleContext } from '../composables/injections'
 import OverlayProvider from './OverlayProvider.vue'
 import ToastProvider from './ToastProvider.vue'
 
-const props = withDefaults(defineProps<AppProps>(), {
-  unoConfig: () => ({}),
-  ui: () => ({}),
-})
-
+const props = defineProps<AppProps>()
 defineSlots<AppSlots>()
 
 const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
 const tooltipProps = toRef(() => props.tooltip)
 const toastProviderProps = toRef(() => props.toaster)
-
-provideUnoConfig(() => props.unoConfig)
-provideThemeExtension(() => props.ui)
-
 const locale = toRef(() => props.locale)
+
 provideLocaleContext(locale)
 </script>
 

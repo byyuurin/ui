@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { textarea } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/textarea'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface TextareaEmits {
   'update:modelValue': [payload: string]
@@ -14,9 +14,9 @@ export interface TextareaSlots {
   default?: (props?: {}) => any
 }
 
-type TextareaVariants = VariantProps<typeof textarea>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface TextareaProps extends ComponentAttrs<typeof textarea> {
+export interface TextareaProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -25,8 +25,8 @@ export interface TextareaProps extends ComponentAttrs<typeof textarea> {
   id?: string
   name?: string
   placeholder?: string
-  size?: TextareaVariants['size']
-  variant?: TextareaVariants['variant']
+  size?: ThemeVariants['size']
+  variant?: ThemeVariants['variant']
   highlight?: boolean
   underline?: boolean
   required?: boolean
@@ -36,14 +36,16 @@ export interface TextareaProps extends ComponentAttrs<typeof textarea> {
   rows?: number
   maxRows?: number
   autoResize?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, nextTick, onMounted, useTemplateRef, watch } from 'vue'
+import { useAppConfig } from '#imports'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 defineOptions({
   inheritAttrs: false,
@@ -63,12 +65,15 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 const textareaRef = useTemplateRef('textareaRef')
 
 const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormItem<TextareaProps>(props)
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('textarea', {
-  ...props,
-  size: size.value,
-  highlight: highlight.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.textarea))
+  return ui({
+    ...props,
+    size: size.value,
+    highlight: highlight.value,
+  })
+})
 
 function autoFocus() {
   if (props.autofocus)

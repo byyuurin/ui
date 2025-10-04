@@ -10,7 +10,7 @@
     "prepare": "nuxt prepare"
   },
   "devDependencies": {
-    "@unocss/nuxt": "^66.5.2",
+    "@byyuurin/ui": "workspace:*",
     "compodium": "0.1.0-beta.5",
     "nuxt": "^3.19.2"
   }

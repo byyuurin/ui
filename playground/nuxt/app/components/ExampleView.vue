@@ -67,7 +67,7 @@ onMounted(() => {
       >
         <div
           v-if="props.controls.length > 0"
-          class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box"
+          class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded"
         >
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
             <label class="inline-flex justify-between items-center gap-2 opacity-80">

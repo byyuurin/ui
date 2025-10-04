@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import { injectAvatarGroup } from '../app/injections'
 import type { AvatarProps } from '../types'
+import { injectAvatarGroup } from './injections'
 
 export function useAvatarGroup(props: AvatarProps = {}) {
   const avatarGroup = injectAvatarGroup()

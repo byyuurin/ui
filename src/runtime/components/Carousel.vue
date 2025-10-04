@@ -8,8 +8,8 @@ import type { ClassNamesOptionsType } from 'embla-carousel-class-names'
 import type { FadeOptionsType } from 'embla-carousel-fade'
 import type { WheelGesturesPluginOptions } from 'embla-carousel-wheel-gestures'
 import type { AcceptableValue, PrimitiveProps } from 'reka-ui'
-import type { carousel } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/carousel'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export type CarouselItem = AcceptableValue
 
@@ -17,9 +17,9 @@ export interface CarouselSlots<T extends CarouselItem = CarouselItem> {
   default?: (props: { item: T, index: number }) => any
 }
 
-type CarouselVariants = VariantProps<typeof carousel>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface CarouselProps<T extends CarouselItem = CarouselItem> extends ComponentAttrs<typeof carousel>, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
+export interface CarouselProps<T extends CarouselItem = CarouselItem> extends ComponentBaseProps, Omit<EmblaOptionsType, 'axis' | 'container' | 'slides' | 'direction'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -55,7 +55,7 @@ export interface CarouselProps<T extends CarouselItem = CarouselItem> extends Co
    * @default false
    */
   dots?: boolean
-  orientation?: CarouselVariants['orientation']
+  orientation?: ThemeVariants['orientation']
   items?: T[]
   /**
    * Enable Autoplay plugin
@@ -87,6 +87,7 @@ export interface CarouselProps<T extends CarouselItem = CarouselItem> extends Co
    * @link https://www.embla-carousel.com/plugins/wheel-gestures/
    */
   wheelGestures?: boolean | WheelGesturesPluginOptions
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -95,8 +96,9 @@ import { computedAsync, reactivePick } from '@vueuse/core'
 import useEmblaCarousel from 'embla-carousel-vue'
 import { Primitive, useForwardProps } from 'reka-ui'
 import { computed, onMounted, ref, watch } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
@@ -135,11 +137,14 @@ defineSlots<CarouselSlots<T>>()
 const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakpoints', 'containScroll', 'dragFree', 'dragThreshold', 'duration', 'inViewThreshold', 'loop', 'skipSnaps', 'slidesToScroll', 'startIndex', 'watchDrag', 'watchResize', 'watchSlides', 'watchFocus'))
 
 const { t, dir } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('carousel', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.carousel))
+  return ui(props)
+})
 
-const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
-const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
+const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronRight : appConfig.ui.icons.chevronLeft))
+const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
 
 const options = computed<EmblaOptionsType>(() => ({
   ...(props.fade ? { align: 'center', containScroll: false } : {}),

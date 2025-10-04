@@ -1,26 +1,28 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SliderRootProps } from 'reka-ui'
-import type { slider } from '../theme'
-import type { ComponentAttrs, MaybeArray } from '../types'
+import theme from '#build/ui/slider'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { MaybeArray } from '../types/utils'
 
 export interface SliderEmits {
   'update:modelValue': [payload: MaybeArray<number>]
   'change': [payload: Event]
 }
 
-type SliderVariants = VariantProps<typeof slider>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderRootProps, 'as' | 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
+export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, 'as' | 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
   modelValue?: number | number[]
-  size?: SliderVariants['size']
+  size?: ThemeVariants['size']
   /**
    * The orientation of the slider.
    * @default "horizontal"
    */
-  orientation?: SliderVariants['orientation']
+  orientation?: ThemeVariants['orientation']
   /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
   defaultValue?: number | number[]
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -28,8 +30,9 @@ export interface SliderProps extends ComponentAttrs<typeof slider>, Pick<SliderR
 import { reactivePick } from '@vueuse/core'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<SliderProps>(), {
   orientation: 'horizontal',
@@ -65,11 +68,14 @@ const sliderValue = computed({
 const thumbsCount = computed(() => sliderValue.value?.length ?? 1)
 
 const { id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SliderProps>(props)
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('slider', {
-  ...props,
-  size: size.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.slider))
+  return ui({
+    ...props,
+    size: size.value,
+  })
+})
 
 function onChange(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

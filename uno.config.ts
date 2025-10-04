@@ -1,15 +1,9 @@
-import { defineConfig, presetIcons, presetWind3, transformerDirectives } from 'unocss'
-import { preset as ui } from './src/unocss'
+import { defineConfig, presetWind4 } from 'unocss'
+import { createUnoPreset } from './src/unocss'
 
 export default defineConfig({
   presets: [
-    presetWind3(),
-    presetIcons({
-      cdn: 'https://esm.sh/',
-    }),
-    ui(),
-  ],
-  transformers: [
-    transformerDirectives(),
+    presetWind4(),
+    createUnoPreset(),
   ],
 })

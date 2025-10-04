@@ -1,9 +1,10 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SelectArrowProps, SelectContentEmits, SelectContentProps, SelectRootEmits, SelectRootProps } from 'reka-ui'
+import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { select } from '../theme'
-import type { AcceptableValue, ArrayOrNested, ComponentAttrs, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AcceptableValue, ArrayOrNested, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem } from '../types/utils'
 
 interface SelectItemBase {
   label?: string
@@ -34,27 +35,27 @@ export interface SelectSlots<
   M extends boolean = false,
   I extends NestedItem<T> = NestedItem<T>,
 > {
-  'leading'?: (props: { modelValue?: GetModelValue<T, VK, M>, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  'leading'?: (props: { modelValue?: GetModelValue<T, VK, M>, open: boolean, ui?: ComponentUIProps<typeof theme> }) => any
   'default'?: (props: { modelValue?: GetModelValue<T, VK, M>, open: boolean }) => any
-  'trailing'?: (props: { modelValue?: GetModelValue<T, VK, M>, open: boolean, ui: ComponentAttrs<typeof select>['ui'] }) => any
+  'trailing'?: (props: { modelValue?: GetModelValue<T, VK, M>, open: boolean, ui?: ComponentUIProps<typeof theme> }) => any
   'item'?: SlotProps<I>
   'item-leading'?: SlotProps<I>
   'item-label'?: SlotProps<I>
   'item-trailing'?: SlotProps<I>
 }
 
-type SelectVariants = VariantProps<typeof select>
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface SelectProps<
   T extends ArrayOrNested<SelectItem> = ArrayOrNested<SelectItem>,
   VK extends GetItemKeys<T> = 'value',
   M extends boolean = false,
-> extends ComponentAttrs<typeof select>, UseComponentIconsProps, Omit<SelectRootProps<T>, 'dir' | 'multiple' | 'modelValue' | 'defaultValue' | 'by'> {
+> extends ComponentBaseProps, UseComponentIconsProps, Omit<SelectRootProps<T>, 'dir' | 'multiple' | 'modelValue' | 'defaultValue' | 'by'> {
   id?: string
   /** The placeholder text when the select is empty. */
   placeholder?: string
-  variant?: SelectVariants['variant']
-  size?: SelectVariants['size']
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   /**
    * The icon displayed to open the menu.
    * @default app.icons.chevronDown
@@ -100,6 +101,7 @@ export interface SelectProps<
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
   underline?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -108,11 +110,13 @@ import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectSeparator, SelectTrigger, SelectViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useAppConfig } from '#imports'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
 import { compare, get, isArrayOfArray } from '../utils'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -134,19 +138,22 @@ const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 const { id, name, size: formItemSize, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormItem<SelectProps<T, VK, M>>(props)
 const { size: buttonGroupSize, orientation } = useButtonGroup(props)
 
-const { theme, generateStyle } = useTheme()
-const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
-  trailingIcon: theme.value.app.icons.chevronDown,
-})))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.select))
+  return ui({
+    ...props,
+    groupOrientation: orientation.value,
+    size: buttonGroupSize.value || formItemSize.value,
+    highlight: highlight.value,
+    leading: isLeading.value,
+    trailing: isTrailing.value,
+  })
+})
 
-const style = computed(() => generateStyle('select', {
-  ...props,
-  groupOrientation: orientation.value,
-  size: buttonGroupSize.value || formItemSize.value,
-  highlight: highlight.value,
-  leading: isLeading.value,
-  trailing: isTrailing.value,
-}))
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
+  trailingIcon: appConfig.ui.icons.chevronDown,
+})))
 
 const groups = computed<SelectItem[][]>(
   () => props.options?.length
@@ -205,7 +212,7 @@ function onUpdateOpen(value: boolean) {
     <SelectTrigger v-bind="{ ...$attrs, ...ariaAttrs, id }" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
       <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
         <slot name="leading" :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open" :ui="props.ui">
-          <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
+          <Icon v-if="isLeading && leadingIconName" :name="leadingIconName" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
         </slot>
       </span>
 
@@ -222,7 +229,7 @@ function onUpdateOpen(value: boolean) {
 
       <span v-if="isTrailing || !!slots.trailing" :class="style.trailing({ class: props.ui?.trailing })" data-part="trailing">
         <slot name="trailing" :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open" :ui="props.ui">
-          <span v-if="trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
+          <Icon v-if="trailingIconName" :name="trailingIconName" :class="style.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />
         </slot>
       </span>
     </SelectTrigger>
@@ -246,7 +253,7 @@ function onUpdateOpen(value: boolean) {
               >
                 <slot name="item" :item="(item as NestedItem<T>)" :index="index">
                   <slot name="item-leading" :item="(item as NestedItem<T>)" :index="index">
-                    <span v-if="isSelectItem(item) && item.icon" :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon] })" data-part="item-leading-icon"></span>
+                    <Icon v-if="isSelectItem(item) && item.icon" :name="item.icon" :class="style.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })" data-part="item-leading-icon" />
                   </slot>
 
                   <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })" data-part="item-label">
@@ -259,7 +266,7 @@ function onUpdateOpen(value: boolean) {
                     <slot name="item-trailing" :item="(item as NestedItem<T>)" :index="index"></slot>
 
                     <SelectItemIndicator as-child>
-                      <span :class="style.itemTrailingIcon({ class: [props.selectedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })" data-part="item-trailing-icon"></span>
+                      <Icon :name="props.selectedIcon || appConfig.ui.icons.check" :class="style.itemTrailingIcon({ class: props.ui?.itemTrailingIcon })" data-part="item-trailing-icon" />
                     </SelectItemIndicator>
                   </span>
                 </slot>

@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
-import type { drawer } from '../theme'
-import type { ButtonProps, ComponentAttrs, EmitsToProps } from '../types'
+import theme from '#build/ui/drawer'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { EmitsToProps } from '../types/utils'
 
 export interface DrawerEmits extends DialogRootEmits {
   'after-leave': []
@@ -14,14 +15,14 @@ export interface DrawerSlots {
   header?: any
   title?: any
   description?: any
-  close?: (props: { ui: ComponentAttrs<typeof drawer>['ui'] }) => any
+  close?: (props: { ui?: ComponentUIProps<typeof theme> }) => any
   body?: any
   footer?: any
 }
 
-type DrawerVariants = VariantProps<typeof drawer>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootProps {
+export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
   title?: string
   description?: string
   /** The content of the drawer. */
@@ -37,7 +38,7 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootPr
    * The direction of the drawer.
    * @default "bottom"
    */
-  direction?: DrawerVariants['direction']
+  direction?: ThemeVariants['direction']
   /**
    * Whether to inset the drawer from the edges.
    */
@@ -59,6 +60,7 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootPr
    * @default true
    */
   dismissible?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -66,8 +68,9 @@ export interface DrawerProps extends ComponentAttrs<typeof drawer>, DialogRootPr
 import { reactivePick } from '@vueuse/core'
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle, DialogTrigger, useForwardPropsEmits, VisuallyHidden } from 'reka-ui'
 import { computed, toRef } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<DrawerProps>(), {
@@ -99,8 +102,12 @@ const contentEvents = computed(() => {
 })
 
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('drawer', props))
+
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.drawer))
+  return ui(props)
+})
 </script>
 
 <template>
@@ -146,7 +153,7 @@ const style = computed(() => generateStyle('drawer', props))
                   <slot name="close" :ui="props.ui">
                     <Button
                       variant="ghost"
-                      :icon="props.closeIcon || theme.app.icons.close"
+                      :icon="props.closeIcon || appConfig.ui.icons.close"
                       v-bind="typeof props.close === 'boolean' ? {} : props.close"
                       :aria-label="t('modal.close')"
                       :class="style.close({ class: props.ui?.close })"

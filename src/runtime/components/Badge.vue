@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { badge } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/badge'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface BadgeEmits {
   'update:show': [payload: boolean]
@@ -13,29 +13,31 @@ export interface BadgeSlots {
   content?: (props?: {}) => any
 }
 
-type BadgeVariants = VariantProps<typeof badge>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface BadgeProps extends ComponentAttrs<typeof badge> {
+export interface BadgeProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
   text?: string | number
-  size?: BadgeVariants['size']
-  position?: BadgeVariants['position']
+  size?: ThemeVariants['size']
+  position?: ThemeVariants['position']
   show?: boolean
   /** When `true`, keep the badge inside the component for rounded elements. */
   inset?: boolean
   /** When `true`, render the badge relatively to the parent. */
   standalone?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive, Slot } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 defineOptions({
   inheritAttrs: false,
@@ -50,8 +52,11 @@ defineSlots<BadgeSlots>()
 
 const show = defineModel<boolean>('show', { default: true })
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('badge', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.badge))
+  return ui(props)
+})
 </script>
 
 <template>

@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { HoverCardRootProps, PopoverArrowProps, PopoverContentEmits, PopoverContentProps, PopoverRootEmits, PopoverRootProps } from 'reka-ui'
-import type { popover } from '../theme'
-import type { ComponentAttrs, EmitsToProps } from '../types'
+import theme from '#build/ui/popover'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { EmitsToProps } from '../types/utils'
 
 export interface PopoverEmits extends PopoverRootEmits {}
 
@@ -10,7 +11,7 @@ export interface PopoverSlots {
   content?: (props?: {}) => any
 }
 
-export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
+export interface PopoverProps extends ComponentBaseProps, PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
   /**
    * The display mode of the popover.
    * @default "click"
@@ -26,6 +27,7 @@ export interface PopoverProps extends ComponentAttrs<typeof popover>, PopoverRoo
    * @default true
    */
   dismissible?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -35,7 +37,8 @@ import { defu } from 'defu'
 import { useForwardPropsEmits } from 'reka-ui'
 import { HoverCard, Popover } from 'reka-ui/namespaced'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<PopoverProps>(), {
   mode: 'click',
@@ -69,8 +72,11 @@ const arrowProps = toRef(() => props.arrow as PopoverArrowProps)
 
 const Component = computed(() => props.mode === 'hover' ? HoverCard : Popover)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('popover', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.popover))
+  return ui(props)
+})
 </script>
 
 <template>

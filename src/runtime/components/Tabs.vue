@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
-import type { tabs } from '../theme'
-import type { ComponentAttrs, DynamicSlots } from '../types'
+import theme from '#build/ui/tabs'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { DynamicSlots } from '../types/utils'
 
 export interface TabsEmits extends TabsRootEmits<string | number> {}
 
@@ -26,18 +27,18 @@ export type TabsSlots<T extends TabsItem = TabsItem> = {
   content?: SlotProps<T>
 } & DynamicSlots<T, undefined, SlotProps<T>>
 
-type TabsVariants = VariantProps<typeof tabs>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs<typeof tabs>, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
+export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentBaseProps, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: TabsRootProps<string | number>['as']
   items?: T[]
-  variant?: TabsVariants['variant']
-  orientation?: TabsVariants['orientation']
-  size?: TabsVariants['size']
+  variant?: ThemeVariants['variant']
+  orientation?: ThemeVariants['orientation']
+  size?: ThemeVariants['size']
   /** @default true */
   evenly?: boolean
   /**
@@ -50,6 +51,7 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs
    * @default "label"
    */
   labelKey?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -57,8 +59,9 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs
 import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { get } from '../utils'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: '0',
@@ -74,8 +77,11 @@ const slots = defineSlots<TabsSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'activationMode', 'unmountOnHide'), emit)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('tabs', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.tabs))
+  return ui(props)
+})
 </script>
 
 <template>

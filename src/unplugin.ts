@@ -1,25 +1,27 @@
 import { fileURLToPath } from 'node:url'
+import { defu } from 'defu'
 import { normalize } from 'pathe'
 import type { UnpluginOptions } from 'unplugin'
 import { createUnplugin } from 'unplugin'
 import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
-import AutoImportPlugin from './_unplugin/auto-import'
-import ComponentImportPlugin from './_unplugin/components'
-import NuxtEnvironmentPlugin from './_unplugin/nuxt-environment'
-import { packageName } from './shared'
+import { name as packageName } from '../package.json'
+import type { AppConfigUI } from './defaults'
+import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
+import type { ModuleOptions } from './module'
+import AppConfigPlugin from './plugins/app-config'
+import AutoImportPlugin from './plugins/auto-import'
+import ComponentImportPlugin from './plugins/components'
+import NuxtEnvironmentPlugin from './plugins/nuxt-environment'
+import PluginsPlugin from './plugins/plugins'
+import TemplatesPlugin from './plugins/templates'
 
 export const runtimeDir = normalize(fileURLToPath(new URL('runtime', import.meta.url)))
 
-export interface UIOptions {
-  /**
-   * prefix for components used in templates
-   *
-   * @default "U"
-   */
-  prefix?: string
+export interface UIOptions extends ModuleOptions {
   /** Whether to generate declaration files for auto-imported components. */
   dts?: boolean
+  ui?: AppConfigUI
   /**
    * Override options for `unplugin-auto-import`
    */
@@ -30,21 +32,24 @@ export interface UIOptions {
   components?: Partial<ComponentsOptions>
 }
 
-export const unplugin = createUnplugin<UIOptions | undefined>((options: UIOptions = {}, meta) => {
+export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOptions = {}, meta) => {
+  const options = defu(userOptions, defaultOptions)
+
+  options.theme ||= {} as any
+  options.theme.colors = resolveColors(options.theme.colors)
+
+  const appConfig = defu({ ui: options.ui }, { ui: getDefaultUIConfig(options.theme.colors) })
+
   return [
     NuxtEnvironmentPlugin(),
     ComponentImportPlugin(options, meta),
     AutoImportPlugin(options, meta),
+    PluginsPlugin(options),
+    TemplatesPlugin(options, appConfig),
+    AppConfigPlugin(options, appConfig),
     <UnpluginOptions>{
       name: 'byyuurin:ui:plugins-duplication-detection',
       vite: {
-        config() {
-          return {
-            optimizeDeps: {
-              include: [`${packageName}/unocss`],
-            },
-          }
-        },
         configResolved(config) {
           const checkPluginNames = [
             'unplugin-auto-import',
@@ -61,5 +66,5 @@ export const unplugin = createUnplugin<UIOptions | undefined>((options: UIOption
         },
       },
     },
-  ]
+  ].flat(1)
 })

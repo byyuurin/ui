@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { formItem } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/form-item'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface FormFieldSlots {
   label?: (props: { label?: string }) => any
@@ -13,9 +13,9 @@ export interface FormFieldSlots {
   default?: (props: { error?: string | boolean }) => any
 }
 
-type FormItemVariants = VariantProps<typeof formItem>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface FormItemProps extends ComponentAttrs<typeof formItem> {
+export interface FormItemProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -33,7 +33,7 @@ export interface FormItemProps extends ComponentAttrs<typeof formItem> {
   /**
    * @default 'md'
    */
-  size?: FormItemVariants['size']
+  size?: ThemeVariants['size']
   required?: boolean
   /** If true, validation on input will be active immediately instead of waiting for a blur event. */
   eagerValidation?: boolean
@@ -42,14 +42,16 @@ export interface FormItemProps extends ComponentAttrs<typeof formItem> {
    * @default 300
    */
   validateOnInputDelay?: number
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Label, Primitive } from 'reka-ui'
 import { computed, ref, useId } from 'vue'
-import { injectFormErrors, provideFormInputId, provideFormItem } from '../app/injections'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { injectFormErrors, provideFormInputId, provideFormItem } from '../composables/injections'
+import { cv, merge } from '../utils/style'
 
 const props = defineProps<FormItemProps>()
 const slots = defineSlots<FormFieldSlots>()
@@ -84,8 +86,11 @@ provideFormItem(computed(() => ({
   ariaId,
 })))
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('formItem', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.formItem))
+  return ui(props)
+})
 </script>
 
 <template>

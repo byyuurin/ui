@@ -1,34 +1,36 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { avatarGroup } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/avatar-group'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface AvatarGroupSlots {
   default?: (props?: {}) => any
 }
 
-type AvatarGroupVariants = VariantProps<typeof avatarGroup>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface AvatarGroupProps extends ComponentAttrs<typeof avatarGroup> {
+export interface AvatarGroupProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  size?: AvatarGroupVariants['size']
+  size?: ThemeVariants['size']
   /**
    * The maximum number of avatars to display.
    */
   max?: number | string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { provideAvatarGroup } from '../app/injections'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { provideAvatarGroup } from '../composables/injections'
+import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 
 const props = defineProps<AvatarGroupProps>()
@@ -73,8 +75,11 @@ const hiddenCount = computed(() => {
   return children.value.length - visibleAvatars.value.length
 })
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('avatarGroup', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.avatarGroup))
+  return ui(props)
+})
 
 provideAvatarGroup(computed(() => props))
 </script>

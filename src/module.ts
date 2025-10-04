@@ -1,49 +1,102 @@
-import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, hasNuxtModule, useLogger } from '@nuxt/kit'
-import { packageName, packageVersion } from './shared'
+import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { defu } from 'defu'
+import { name, version } from '../package.json'
+import type { defaultColors } from './defaults'
+import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
+import { addTemplates } from './templates'
+
+export type * from './runtime/types'
+
+type Color = typeof defaultColors[number] | (string & {})
 
 export interface ModuleOptions {
   /**
-   * prefix for components used in templates
+   * Prefix for components
    *
    * @default "U"
    */
   prefix?: string
+
+  /**
+   * Enable or disable `@nuxtjs/color-mode` module
+   *
+   * @default true
+   */
+  colorMode?: boolean
+
+  /**
+   * Customize how the theme is generated
+   */
+  theme?: {
+    /**
+     * Define the color aliases available for components
+     * @default ["primary", "secondary", "success", "info", "warning", "error"]
+     */
+    colors?: Color[]
+
+    /**
+     * Enable or disable transitions on components
+     * @default true
+     */
+    transitions?: boolean
+
+    defaultVariants?: {
+      /**
+       * The default color variant to use for components
+       */
+      color?: Color
+    }
+  }
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: packageName,
-    version: packageVersion,
+    name,
+    version,
     configKey: 'ui',
     compatibility: {
-      nuxt: '>=3.13.1',
+      nuxt: '>=3.16.2',
     },
   },
-  defaults: {
-    prefix: 'U',
-  },
-  setup(options, nuxt) {
-    const logger = useLogger(packageName)
+  defaults: defaultOptions,
+  async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
-    // Make sure the UnoCSS Nuxt module is installed
-    if (!hasNuxtModule('@unocss/nuxt')) {
-      logger.error(`\`${packageName}\` requires the \`@unocss/nuxt\` module to be installed.`)
-      return
+    options.theme ||= {}
+    options.theme.colors = resolveColors(options.theme.colors)
+
+    nuxt.options.ui = options
+    nuxt.options.alias['#ui'] = resolve('./runtime')
+    nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, getDefaultUIConfig(options.theme.colors))
+
+    async function registerModule(name: string, key: string, options: Record<string, any>) {
+      if (hasNuxtModule(name))
+        (nuxt.options as any)[key] = defu((nuxt.options as any)[key], options)
+      else
+        await installModule(name, defu((nuxt.options as any)[key], options))
     }
 
-    nuxt.options.vite.optimizeDeps ??= {}
-    nuxt.options.vite.optimizeDeps.include ??= []
-    nuxt.options.vite.optimizeDeps.include.push(`${packageName}/unocss`)
+    await registerModule('@nuxt/icon', 'icon', {
+      cssLayer: 'components',
+    })
 
-    nuxt.options.alias['#ui'] = resolve('./runtime')
+    if (options.colorMode) {
+      await registerModule('@nuxtjs/color-mode', 'colorMode', {
+        classSuffix: '',
+        disableTransition: true,
+      })
+    }
+
+    addPlugin({ src: resolve('./runtime/plugins/colors') })
 
     addComponentsDir({
       path: resolve('./runtime/components'),
-      prefix: options.prefix,
       pathPrefix: false,
+      prefix: options.prefix,
     })
 
     addImportsDir(resolve('./runtime/composables'))
+
+    addTemplates(options, nuxt, resolve)
   },
 })

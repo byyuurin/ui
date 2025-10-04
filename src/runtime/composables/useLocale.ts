@@ -1,9 +1,9 @@
 import { createSharedComposable } from '@vueuse/core'
 import { computed, toValue } from 'vue'
-import { injectLocaleContext } from '../app/injections'
 import localeDefault from '../locale/en'
 import { createTranslator } from '../utils'
 import type { Translator } from '../utils/translator'
+import { injectLocaleContext } from './injections'
 
 export const useLocale = createSharedComposable(() => {
   const _locale = injectLocaleContext()

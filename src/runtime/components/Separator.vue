@@ -1,17 +1,17 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SeparatorProps as RekaSeparatorProps } from 'reka-ui'
-import type { separator } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/separator'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface SeparatorSlots {
   default?: (props: {}) => any
 }
 
-type SeparatorVariants = VariantProps<typeof separator>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface SeparatorProps extends ComponentAttrs<typeof separator>, Pick<RekaSeparatorProps, 'as' | 'decorative'> {
-  orientation?: SeparatorVariants['orientation']
+export interface SeparatorProps extends ComponentBaseProps, Pick<RekaSeparatorProps, 'as' | 'decorative'> {
+  orientation?: ThemeVariants['orientation']
   align?: 'start' | 'end' | 'center'
   /** Display a label in the middle. */
   label?: string
@@ -19,6 +19,7 @@ export interface SeparatorProps extends ComponentAttrs<typeof separator>, Pick<R
    * Display an icon in the middle.
    */
   icon?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -26,7 +27,8 @@ export interface SeparatorProps extends ComponentAttrs<typeof separator>, Pick<R
 import { reactivePick } from '@vueuse/core'
 import { Separator, useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<SeparatorProps>(), {
   orientation: 'horizontal',
@@ -37,8 +39,11 @@ const slots = defineSlots<SeparatorSlots>()
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orientation'))
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('separator', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.separator))
+  return ui(props)
+})
 </script>
 
 <template>

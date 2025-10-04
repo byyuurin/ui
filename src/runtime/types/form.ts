@@ -1,5 +1,5 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec'
-import type { FormExpose } from './components'
+import type { FormExpose } from '.'
 
 export type FormSchema<_T> = StandardSchemaV1
 

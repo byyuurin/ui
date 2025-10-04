@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { AccordionRootEmits, AccordionRootProps } from 'reka-ui'
-import type { accordion } from '../theme'
-import type { ComponentAttrs, DynamicSlots } from '../types'
+import theme from '#build/ui/accordion'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { DynamicSlots } from '../types/utils'
 
 export interface AccordionEmits extends AccordionRootEmits {}
 
@@ -27,7 +28,7 @@ export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
   body?: SlotProps<T>
 } & DynamicSlots<T, 'body', SlotProps<T>>
 
-export interface AccordionProps<T extends AccordionItem = AccordionItem> extends ComponentAttrs<typeof accordion>, Pick<AccordionRootProps, 'as' | 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
+export interface AccordionProps<T extends AccordionItem = AccordionItem> extends ComponentBaseProps, Pick<AccordionRootProps, 'as' | 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
   items?: T[]
   /**
    * The icon displayed on the right side of the trigger.
@@ -35,6 +36,7 @@ export interface AccordionProps<T extends AccordionItem = AccordionItem> extends
    */
   trailingIcon?: string
   labelKey?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -42,8 +44,10 @@ export interface AccordionProps<T extends AccordionItem = AccordionItem> extends
 import { reactivePick } from '@vueuse/core'
 import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { get } from '../utils'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<AccordionProps<T>>(), {
   type: 'single',
@@ -56,8 +60,12 @@ const emit = defineEmits<AccordionEmits>()
 const slots = defineSlots<AccordionSlots<T>>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'type', 'unmountOnHide'), emit)
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('accordion', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.accordion))
+  return ui(props)
+})
 </script>
 
 <template>
@@ -82,7 +90,7 @@ const style = computed(() => generateStyle('accordion', props))
           </span>
 
           <slot name="trailing" v-bind="{ item, index, open }">
-            <span :class="style.trailingIcon({ class: [item.trailingIcon || props.trailingIcon || theme.app.icons.chevronDown, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
+            <Icon :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="style.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />
           </slot>
         </AccordionTrigger>
       </AccordionHeader>

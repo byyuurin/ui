@@ -1,13 +1,14 @@
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
+import type { FormInputEvents } from '../types'
+import type { GetObjectField } from '../types/utils'
 import {
   injectFormBus,
   injectFormInputId,
   injectFormInputs,
   injectFormItem,
   injectFormOptions,
-} from '../app/injections'
-import type { FormInputEvents, GetObjectField } from '../types'
+} from './injections'
 
 interface Props<T> {
   id?: string

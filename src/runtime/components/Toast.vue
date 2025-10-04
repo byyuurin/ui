@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
-import type { toast } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/toast'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface ToastEmits extends ToastRootEmits {}
 
@@ -11,18 +11,18 @@ export interface ToastSlots {
   title?: (props?: {}) => any
   description?: (props?: {}) => any
   actions?: (props?: {}) => any
-  close?: (props: { ui: ComponentAttrs<typeof toast>['ui'] }) => any
+  close?: (props: { ui?: ComponentUIProps<typeof theme> }) => any
 }
 
-type ToastVariants = VariantProps<typeof toast>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
+export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
   /** @default "li" */
   as?: PrimitiveProps['as']
   title?: string
   description?: string
   icon?: string
-  orientation?: ToastVariants['orientation']
+  orientation?: ThemeVariants['orientation']
   /**
    * Display a list of actions:
    * - under the title and description when orientation is `vertical`
@@ -36,6 +36,7 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
   close?: ButtonProps | boolean
   /** @default app.icons.close */
   closeIcon?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -43,8 +44,9 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
 import { reactivePick, useElementBounding } from '@vueuse/core'
 import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<ToastProps>(), {
@@ -61,11 +63,14 @@ const el = ref<InstanceType<typeof ToastRoot>>()
 const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
 
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('toast', {
-  ...props,
-  title: !!(props.title || slots.title),
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.toast))
+  return ui({
+    ...props,
+    title: !!(props.title || slots.title),
+  })
+})
 
 defineExpose({
   height,
@@ -122,7 +127,7 @@ defineExpose({
       <ToastClose v-if="props.close || slots.close" as-child>
         <slot name="close" :ui="props.ui">
           <Button
-            :icon="props.closeIcon || theme.app.icons.close"
+            :icon="props.closeIcon || appConfig.ui.icons.close"
             size="sm"
             variant="link"
             :aria-label="t('toast.close')"

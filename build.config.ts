@@ -1,18 +1,30 @@
 import { defineBuildConfig } from 'unbuild'
 
-// https://github.com/wobsoriano/vue-sfc-unbuild/blob/main/build.config.ts
 export default defineBuildConfig({
   entries: [
-    'src/unplugin',
-    'src/vite',
-    'src/unocss',
+    './src/unplugin',
+    './src/vite',
+    './src/unocss',
+    './src/config',
   ],
-  clean: true,
-  declaration: true,
-  sourcemap: true,
+  rollup: {
+    replace: {
+      values: {
+        // Used in development to import directly from theme
+        'process.argv.includes(\'--uiDev\')': 'false',
+      },
+    },
+  },
+  hooks: {
+    'mkdist:entry:options': function (ctx, entry, options) {
+      options.addRelativeDeclarationExtensions = false
+    },
+  },
   externals: [
-    '@nuxt/schema',
-    'vue',
+    '#build/ui',
+    'unconfig',
+    '@unocss/core',
+    '@unocss/config',
     'vite',
   ],
 })

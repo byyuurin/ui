@@ -1,24 +1,30 @@
 <script lang="ts">
 import type { ScrollAreaRootProps } from 'reka-ui'
-import type { scrollArea } from '../theme'
-import { transitionProps } from '../theme/scroll-area'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/scroll-area'
+import { transitionProps } from '../../theme/scroll-area'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
-export interface ScrollAreaProps extends ComponentAttrs<typeof scrollArea>, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {}
+export interface ScrollAreaProps extends ComponentBaseProps, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {
+  ui?: ComponentUIProps<typeof theme>
+}
 </script>
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ScrollAreaCorner, ScrollAreaRoot, ScrollAreaScrollbar, ScrollAreaThumb, ScrollAreaViewport } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ScrollAreaProps>(), {})
 const rootRef = ref<InstanceType<typeof ScrollAreaRoot>>()
 const rootProps = reactivePick(props, 'type', 'dir', 'scrollHideDelay')
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('scrollArea', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.scrollArea))
+  return ui(props)
+})
 
 defineExpose({
   scrollTop,

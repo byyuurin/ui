@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { card } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/card'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface CardSlots {
   default?: (props?: {}) => any
@@ -13,30 +13,35 @@ export interface CardSlots {
   footer?: (props?: {}) => any
 }
 
-type CardVariants = VariantProps<typeof card>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface CardProps extends ComponentAttrs<typeof card> {
+export interface CardProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  variant?: CardVariants['variant']
+  variant?: ThemeVariants['variant']
   title?: string
   description?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<CardProps>(), {})
 const slots = defineSlots<CardSlots>()
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('card', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.card))
+  return ui(props)
+})
 </script>
 
 <template>

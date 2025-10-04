@@ -1,6 +1,9 @@
-import type { Ref } from 'vue'
+import type { Plugin as VuePlugin, Ref } from 'vue'
 import { ref } from 'vue'
+import type { NuxtApp } from '#app'
 
+export { useAppConfig } from './composables/useAppConfig'
+export { useHead } from '@unhead/vue'
 export { useRoute, useRouter } from 'vue-router'
 
 const state: Record<string, any> = {}
@@ -19,4 +22,12 @@ export function useNuxtApp() {
     isHydrating: true,
     payload: { serverRendered: false },
   }
+}
+
+export function defineNuxtPlugin(plugin: (nuxtApp: NuxtApp) => void) {
+  return {
+    install(app) {
+      app.runWithContext(() => plugin({ vueApp: app } as NuxtApp))
+    },
+  } satisfies VuePlugin
 }

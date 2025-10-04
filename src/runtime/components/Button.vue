@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
+import theme from '#build/ui/button'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { button } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { LinkProps } from './Link.vue'
 
 export interface ButtonSlots {
@@ -11,26 +11,29 @@ export interface ButtonSlots {
   trailing?: (props?: {}) => any
 }
 
-type ButtonVariants = VariantProps<typeof button>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ButtonProps extends ComponentAttrs<typeof button>, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
+export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
   icon?: string
   label?: string
-  variant?: ButtonVariants['variant']
-  size?: ButtonVariants['size']
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   loading?: boolean
   active?: boolean
   disabled?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script lang="ts" setup>
 import { useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
-import { useTheme } from '../composables/useTheme'
 import { omit, pickLinkProps } from '../utils'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 import Link from './Link.vue'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -46,10 +49,10 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 
 const linkProps = useForwardProps(pickLinkProps(props))
 
-const { generateStyle } = useTheme()
-
+const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
-  return generateStyle('button', {
+  const ui = cv(merge(theme, appConfig.ui.button))
+  return ui({
     ...props,
     size: size.value,
     groupOrientation: orientation.value,
@@ -74,11 +77,12 @@ const style = computed(() => {
     raw
   >
     <slot name="leading">
-      <span
+      <Icon
         v-if="isLeading && leadingIconName"
-        :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
+        :name="leadingIconName"
+        :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
         data-part="leading-icon"
-      ></span>
+      />
     </slot>
     <span
       v-if="props.label || slots.default"
@@ -88,11 +92,12 @@ const style = computed(() => {
       <slot>{{ label }}</slot>
     </span>
     <slot name="trailing">
-      <span
+      <Icon
         v-if="isTrailing && trailingIconName"
-        :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
+        :name="trailingIconName"
+        :class="style.trailingIcon({ class: props.ui?.trailingIcon })"
         data-part="trailing-icon"
-      ></span>
+      />
     </slot>
   </Link>
 </template>

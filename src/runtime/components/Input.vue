@@ -2,9 +2,9 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import type { InputHTMLAttributes } from 'vue'
+import theme from '#build/ui/input'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { input } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface InputEmits {
   'update:modelValue': [payload: string | number]
@@ -18,9 +18,9 @@ export interface InputSlots {
   trailing?: (props?: {}) => any
 }
 
-type InputVariants = VariantProps<typeof input>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIconsProps {
+export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -30,8 +30,8 @@ export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIc
   name?: string
   type?: InputHTMLAttributes['type']
   placeholder?: string
-  size?: InputVariants['size']
-  variant?: InputVariants['variant']
+  size?: ThemeVariants['size']
+  variant?: ThemeVariants['variant']
   loading?: boolean
   highlight?: boolean
   underline?: boolean
@@ -40,17 +40,19 @@ export interface InputProps extends ComponentAttrs<typeof input>, UseComponentIc
   autofocus?: boolean
   autofocusDelay?: number
   disabled?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
+import { useAppConfig } from '#imports'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
+import { cv, merge } from '../utils/style'
 
 defineOptions({
   inheritAttrs: false,
@@ -84,16 +86,20 @@ const {
 const { size: buttonGroupSize, orientation } = useButtonGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('input', {
-  ...props,
-  type: props.type as InputVariants['type'],
-  size: buttonGroupSize.value || formItemSize.value,
-  highlight: highlight.value,
-  groupOrientation: orientation.value,
-  leading: isLeading.value || !!slots.leading,
-  trailing: isTrailing.value || !!slots.trailing,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.input))
+
+  return ui({
+    ...props,
+    type: props.type as ThemeVariants['type'],
+    size: buttonGroupSize.value || formItemSize.value,
+    highlight: highlight.value,
+    groupOrientation: orientation.value,
+    leading: isLeading.value || !!slots.leading,
+    trailing: isTrailing.value || !!slots.trailing,
+  })
+})
 
 function autoFocus() {
   if (props.autofocus)

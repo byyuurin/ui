@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<{
 
 <template>
   <span
-    class="group relative overflow-hidden rounded-ui-base border border-dashed px-4 flex items-center justify-center border-[--color]"
+    class="group relative overflow-hidden rounded border border-dashed px-4 flex items-center justify-center border-[--color]"
     :style="{
       '--base': 'color-mix(in srgb,rgb(var(--ui-cb)),rgb(var(--ui-cx)))',
       '--color': 'color-mix(in srgb,var(--base) 30%,transparent)',

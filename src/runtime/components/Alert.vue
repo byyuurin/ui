@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { alert } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/alert'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface AlertEmits {
   'update:open': [value: boolean]
@@ -13,12 +13,12 @@ export interface AlertSlots {
   title?: (props?: {}) => any
   description?: (props?: {}) => any
   actions?: (props?: {}) => any
-  close?: (props: { ui: ComponentAttrs<typeof alert>['ui'] }) => any
+  close?: (props: { ui?: ComponentUIProps<typeof theme> }) => any
 }
 
-type AlertVariants = VariantProps<typeof alert>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface AlertProps extends ComponentAttrs<typeof alert> {
+export interface AlertProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -27,8 +27,8 @@ export interface AlertProps extends ComponentAttrs<typeof alert> {
   title?: string
   description?: string
   icon?: string
-  variant?: AlertVariants['variant']
-  orientation?: AlertVariants['orientation']
+  variant?: ThemeVariants['variant']
+  orientation?: ThemeVariants['orientation']
   /**
    * Display a list of actions:
    * - under the title and description when orientation is `vertical`
@@ -45,14 +45,16 @@ export interface AlertProps extends ComponentAttrs<typeof alert> {
    * @default app.icons.close
    */
   closeIcon?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<AlertProps>(), {
@@ -63,12 +65,17 @@ const props = withDefaults(defineProps<AlertProps>(), {
 const emit = defineEmits<AlertEmits>()
 const slots = defineSlots<AlertSlots>()
 
+const appConfig = useAppConfig() as RuntimeAppConfig
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('alert', {
-  ...props,
-  title: !!props.title || !!slots.title,
-}))
+
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.alert))
+
+  return ui({
+    ...props,
+    title: !!props.title || !!slots.title,
+  })
+})
 </script>
 
 <template>
@@ -111,7 +118,7 @@ const style = computed(() => generateStyle('alert', {
       <slot name="close" :ui="props.ui">
         <Button
           v-if="props.close"
-          :icon="props.closeIcon || theme.app.icons.close"
+          :icon="props.closeIcon || appConfig.ui.icons.close"
           size="md"
           variant="link"
           :aria-label="t('alert.close')"

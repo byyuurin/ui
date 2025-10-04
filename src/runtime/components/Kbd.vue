@@ -2,32 +2,33 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import { computed } from 'vue'
+import theme from '#build/ui/kbd'
 import type { KbdKey } from '../composables/useKbd'
-import type { kbd } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 
 export interface KbdSlots {
   default?: (props?: {}) => any
 }
 
-type KbdVariants = VariantProps<typeof kbd>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface KbdProps extends Omit<ComponentAttrs<typeof kbd>, 'ui'> {
+export interface KbdProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "kbd"
    */
   as?: PrimitiveProps['as']
-  variant?: KbdVariants['variant']
-  size?: KbdVariants['size']
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   value?: KbdKey | (string & {})
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
+import { useAppConfig } from '#imports'
 import { useKbd } from '../composables/useKbd'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<KbdProps>(), {
   as: 'kbd',
@@ -36,8 +37,11 @@ const props = withDefaults(defineProps<KbdProps>(), {
 defineSlots<KbdSlots>()
 
 const { getKbdKey } = useKbd()
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('kbd', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.kbd))
+  return ui(props)
+})
 </script>
 
 <template>

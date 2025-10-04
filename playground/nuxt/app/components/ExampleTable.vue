@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn, TableProps } from '@byyuurin/ui'
-import { Button, Chip } from '@byyuurin/ui'
+import Button from '@byyuurin/ui/components/Button.vue'
+import Chip from '@byyuurin/ui/components/Chip.vue'
 import type { ControlItems } from './ExampleView.vue'
 
 const isEmpty = shallowRef(false)

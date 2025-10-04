@@ -2,8 +2,8 @@
 import type { CellContext, ColumnDef, ColumnFiltersOptions, ColumnFiltersState, ColumnOrderState, ColumnPinningOptions, ColumnPinningState, ColumnSizingInfoState, ColumnSizingOptions, ColumnSizingState, CoreOptions, ExpandedOptions, ExpandedState, FacetedOptions, GlobalFilterOptions, GroupingOptions, GroupingState, HeaderContext, PaginationOptions, PaginationState, Row, RowData, RowPinningOptions, RowPinningState, RowSelectionOptions, RowSelectionState, SortingOptions, SortingState, Updater, VisibilityOptions, VisibilityState } from '@tanstack/vue-table'
 import type { PrimitiveProps } from 'reka-ui'
 import type { Ref } from 'vue'
-import type { table } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/table'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
 
@@ -25,7 +25,7 @@ export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 
   renderFallbackValue?: CoreOptions<T>['renderFallbackValue']
 }
 
-export interface TableProps<T extends TableData> extends ComponentAttrs<typeof table>, TableOptions<T> {
+export interface TableProps<T extends TableData> extends ComponentBaseProps, TableOptions<T> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -106,6 +106,7 @@ export interface TableProps<T extends TableData> extends ComponentAttrs<typeof t
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-faceting)
    */
   facetedOptions?: FacetedOptions<T>
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -115,8 +116,9 @@ import { reactiveOmit } from '@vueuse/core'
 import { Primitive } from 'reka-ui'
 import { upperFirst } from 'scule'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = defineProps<TableProps<T>>()
 const slots = defineSlots<TableSlots<T>>()
@@ -236,8 +238,11 @@ function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
 }
 
 const { t } = useLocale()
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('table', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.table))
+  return ui(props)
+})
 
 defineExpose({
   tableApi,

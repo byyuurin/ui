@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { NumberFieldRootProps } from 'reka-ui'
-import type { inputNumber } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/input-number'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface InputNumberEmits {
   'update:modelValue': [payload: number]
@@ -15,13 +15,13 @@ export interface InputNumberSlots {
   decrement?: (props?: {}) => any
 }
 
-type InputNumberVariants = VariantProps<typeof inputNumber>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pick<NumberFieldRootProps, 'as' | 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions'> {
+export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRootProps, 'as' | 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions'> {
   /** The placeholder text when the input is empty. */
   placeholder?: string
-  variant?: InputNumberVariants['variant']
-  size?: InputNumberVariants['size']
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   underline?: boolean
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
@@ -29,7 +29,7 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
    * The orientation of the input menu.
    * @default "horizontal"
    */
-  orientation?: InputNumberVariants['orientation']
+  orientation?: ThemeVariants['orientation']
   /**
    * Configure the increment button. The `color` and `size` are inherited.
    * @default { variant: 'link' }
@@ -56,6 +56,7 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
    * The locale to use for formatting and parsing numbers.
    */
   locale?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -63,9 +64,10 @@ export interface InputNumberProps extends ComponentAttrs<typeof inputNumber>, Pi
 import { reactivePick } from '@vueuse/core'
 import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
+import { useAppConfig } from '#imports'
 import { useFormItem } from '../composables/useFormItem'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 defineOptions({
@@ -86,15 +88,19 @@ const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
 const { t, code: codeLocale } = useLocale()
 const locale = computed(() => props.locale || codeLocale.value)
 const { id, name, size, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormItem<InputNumberProps>(props)
-const { theme, generateStyle } = useTheme()
-const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.plus : theme.value.app.icons.chevronUp))
-const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? theme.value.app.icons.minus : theme.value.app.icons.chevronDown))
 
-const style = computed(() => generateStyle('inputNumber', {
-  ...props,
-  size: size.value,
-  highlight: highlight.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.inputNumber))
+  return ui({
+    ...props,
+    size: size.value,
+    highlight: highlight.value,
+  })
+})
+
+const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.plus : appConfig.ui.icons.chevronUp))
+const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.minus : appConfig.ui.icons.chevronDown))
 
 onMounted(() => {
   setTimeout(() => {

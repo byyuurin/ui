@@ -1,31 +1,32 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { buttonGroup } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/button-group'
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 
 export interface ButtonGroupSlots {
   default?: (props?: {}) => any
 }
 
-type ButtonGroupVariant = VariantProps<typeof buttonGroup>
+type ThemeVariant = VariantProps<typeof theme>
 
-export interface ButtonGroupProps extends Omit<ComponentAttrs<typeof buttonGroup>, 'ui'> {
+export interface ButtonGroupProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  size?: ButtonGroupVariant['size']
-  orientation?: ButtonGroupVariant['orientation']
+  size?: ThemeVariant['size']
+  orientation?: ThemeVariant['orientation']
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { provideButtonGroup } from '../app/injections'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { provideButtonGroup } from '../composables/injections'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ButtonGroupProps>(), {
   orientation: 'horizontal',
@@ -35,8 +36,11 @@ defineSlots<ButtonGroupSlots>()
 
 provideButtonGroup(computed(() => props))
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('buttonGroup', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.buttonGroup))
+  return ui(props)
+})
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
+import theme from '#build/ui/chip'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { chip } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface ChipSlots {
   leading?: (props?: {}) => any
@@ -11,26 +11,28 @@ export interface ChipSlots {
   trailing?: (props?: {}) => any
 }
 
-type ChipVariants = VariantProps<typeof chip>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ChipProps extends ComponentAttrs<typeof chip>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+export interface ChipProps extends ComponentBaseProps, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  variant?: ChipVariants['variant']
-  size?: ChipVariants['size']
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   label?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ChipProps>(), {
   variant: 'solid',
@@ -41,12 +43,15 @@ const slots = defineSlots<ChipSlots>()
 const { size, orientation } = useButtonGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('chip', {
-  ...props,
-  size: size.value,
-  groupOrientation: orientation.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.chip))
+  return ui({
+    ...props,
+    size: size.value,
+    groupOrientation: orientation.value,
+  })
+})
 </script>
 
 <template>

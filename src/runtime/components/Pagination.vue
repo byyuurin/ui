@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PaginationRootEmits, PaginationRootProps } from 'reka-ui'
-import type { pagination } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/pagination'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface PaginationEmits extends PaginationRootEmits {}
 
@@ -24,7 +24,7 @@ export interface PaginationSlots {
   }) => any
 }
 
-export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick<PaginationRootProps, 'as' | 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'> {
+export interface PaginationProps extends ComponentBaseProps, Pick<PaginationRootProps, 'as' | 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'> {
   /**
    * The icon to use for the first page control.
    * @default app.icons.doubleLeft
@@ -74,6 +74,7 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
    * A function to render page controls as links.
    */
   to?: (page: number) => ButtonProps['to']
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -81,8 +82,9 @@ export interface PaginationProps extends ComponentAttrs<typeof pagination>, Pick
 import { reactivePick } from '@vueuse/core'
 import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, PaginationListItem, PaginationNext, PaginationPrev, PaginationRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<PaginationProps>(), {
@@ -101,14 +103,17 @@ const slots = defineSlots<PaginationSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultPage', 'disabled', 'itemsPerPage', 'page', 'showEdges', 'siblingCount', 'total'), emit)
 
 const { dir } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('pagination', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.pagination))
+  return ui(props)
+})
 
-const firstIcon = computed(() => props.firstIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleRight : theme.value.app.icons.chevronDoubleLeft))
-const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
-const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
-const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleLeft : theme.value.app.icons.chevronDoubleRight))
-const ellipsisIcon = computed(() => props.ellipsisIcon || theme.value.app.icons.ellipsis)
+const firstIcon = computed(() => props.firstIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleRight : appConfig.ui.icons.chevronDoubleLeft))
+const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronRight : appConfig.ui.icons.chevronLeft))
+const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
+const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleLeft : appConfig.ui.icons.chevronDoubleRight))
+const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ellipsis)
 </script>
 
 <template>

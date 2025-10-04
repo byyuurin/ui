@@ -1,10 +1,9 @@
-import { resolve } from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
-import UI from '../../src/vite'
+import ui from './ui.config'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,7 +14,7 @@ export default defineConfig({
       dts: 'src/typed-routes.d.ts',
     }),
     Vue(),
-    UI({
+    ui.vite({
       autoImport: {
         dts: 'src/typed-imports.d.ts',
         imports: ['vue', 'vue-router'],
@@ -29,13 +28,6 @@ export default defineConfig({
       },
     }),
   ],
-  resolve: {
-    alias: {
-      '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
-      '@byyuurin/ui/locale': resolve(__dirname, '../../src/runtime/locale/index.ts'),
-      '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
-    },
-  },
   build: {
     rollupOptions: {
       output: {

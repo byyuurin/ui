@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ProgressRootEmits, ProgressRootProps } from 'reka-ui'
-import type { progress } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/progress'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface ProgressEmits extends ProgressRootEmits {}
 
@@ -12,9 +12,9 @@ export type ProgressSlots = {
   [key: `step-${number}`]: (props: { step: string | number }) => any
 }
 
-type ProgressVariants = VariantProps<typeof progress>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ProgressProps extends ComponentAttrs<typeof progress>, Pick<ProgressRootProps, 'getValueLabel' | 'modelValue'> {
+export interface ProgressProps extends ComponentBaseProps, Pick<ProgressRootProps, 'getValueLabel' | 'modelValue'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -25,16 +25,17 @@ export interface ProgressProps extends ComponentAttrs<typeof progress>, Pick<Pro
   /**
    * @default "md"
    */
-  size?: ProgressVariants['size']
+  size?: ThemeVariants['size']
   /**
    * The orientation of the progress bar.
    * @default "horizontal"
    */
-  orientation?: ProgressVariants['orientation']
+  orientation?: ThemeVariants['orientation']
   /** Display the current progress value. */
   status?: boolean
   /** Whether the progress is visually inverted. */
   inverted?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -42,8 +43,9 @@ export interface ProgressProps extends ComponentAttrs<typeof progress>, Pick<Pro
 import { reactivePick } from '@vueuse/core'
 import { Primitive, ProgressIndicator, ProgressRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ProgressProps>(), {
   modelValue: null,
@@ -83,8 +85,11 @@ const percent = computed(() => {
 })
 
 const { dir } = useLocale()
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('progress', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.progress))
+  return ui(props)
+})
 
 const indicatorStyle = computed(() => {
   if (percent.value === undefined)

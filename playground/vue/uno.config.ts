@@ -1,9 +1,9 @@
-import { defineConfig } from 'unocss'
-import config from '../../uno.config'
+import { defineConfig, presetWind4 } from 'unocss'
+import ui from './ui.config'
 
 export default defineConfig({
-  ...config,
-  configDeps: [
-    '../../uno.config',
+  presets: [
+    presetWind4(),
+    ui.uno(),
   ],
 })

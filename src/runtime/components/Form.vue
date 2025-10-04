@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { ComputedRef, DeepReadonly, Ref } from 'vue'
-import type { form } from '../theme'
-import type { ComponentAttrs, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, FormValidateOptions } from '../types'
+import theme from '#build/ui/form'
+import type { ComponentBaseProps, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, FormValidateOptions, RuntimeAppConfig } from '../types'
 
 export interface FormEmits<T extends object> {
   submit: [payload: FormSubmitEvent<T>]
@@ -26,7 +26,7 @@ export interface FormExpose<T extends object> {
   blurredFields: DeepReadonly<Set<keyof T>>
 }
 
-export interface FormProps<T extends object> extends Omit<ComponentAttrs<typeof form>, 'ui'> {
+export interface FormProps<T extends object> extends ComponentBaseProps {
   id?: string | number
   /**  Schema to validate the form state. */
   schema?: FormSchema<T>
@@ -77,9 +77,10 @@ export class FormValidationExceptionError extends Error {
 <script setup lang="ts" generic="T extends object">
 import { useEventBus } from '@vueuse/core'
 import { computed, nextTick, onMounted, onUnmounted, readonly, ref, useId } from 'vue'
-import { injectFormBus, provideFormBus, provideFormErrors, provideFormInputs, provideFormLoading, provideFormOptions } from '../app/injections'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { injectFormBus, provideFormBus, provideFormErrors, provideFormInputs, provideFormLoading, provideFormOptions } from '../composables/injections'
 import { validateSchema } from '../utils'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<FormProps<T>>(), {
   validateOn: () => ['input', 'blur', 'change'],
@@ -300,8 +301,11 @@ defineExpose<FormExpose<T>>({
   touchedFields: readonly(touchedFields) as DeepReadonly<Set<keyof T>>,
 })
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('form', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.form))
+  return ui(props)
+})
 </script>
 
 <template>

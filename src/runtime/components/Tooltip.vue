@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { TooltipArrowProps, TooltipContentEmits, TooltipContentProps, TooltipRootEmits, TooltipRootProps } from 'reka-ui'
-import type { tooltip } from '../theme'
-import type { ComponentAttrs, EmitsToProps } from '../types'
+import theme from '#build/ui/tooltip'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { EmitsToProps } from '../types/utils'
 
 export interface TooltipEmits extends TooltipRootEmits {}
 
@@ -10,12 +11,13 @@ export interface TooltipSlots {
   content?: (props: {}) => any
 }
 
-export interface TooltipProps extends ComponentAttrs<typeof tooltip>, TooltipRootProps {
+export interface TooltipProps extends ComponentBaseProps, TooltipRootProps {
   text?: string
   content?: Omit<TooltipContentProps, 'as' | 'asChild'> & Partial<EmitsToProps<TooltipContentEmits>>
   arrow?: boolean | Omit<TooltipArrowProps, 'as' | 'asChild'>
   /** @default true */
   portal?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -24,7 +26,8 @@ import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   portal: true,
@@ -44,8 +47,11 @@ const contentProps = toRef(() => defu(props.content, contentDefaults) as Tooltip
 
 const arrowProps = toRef(() => props.arrow as TooltipArrowProps)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('tooltip', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.tooltip))
+  return ui(props)
+})
 </script>
 
 <template>

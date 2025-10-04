@@ -1,5 +1,6 @@
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
-import { useTheme } from './useTheme'
+import { useAppConfig } from '#imports'
+import type { RuntimeAppConfig } from '../types'
 
 export interface UseComponentIconsProps {
   /** Display an icon based on the `leading` and `trailing` props. */
@@ -22,7 +23,7 @@ export interface UseComponentIconsProps {
 }
 
 export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentIconsProps>) {
-  const { theme } = useTheme()
+  const appConfig = useAppConfig() as RuntimeAppConfig
 
   const props = computed(() => toValue(componentProps))
 
@@ -31,13 +32,13 @@ export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentI
 
   const leadingIconName = computed(() => {
     if (props.value.loading)
-      return props.value.loadingIcon || theme.value.app.icons.loading
+      return props.value.loadingIcon || appConfig.ui.icons.loading
 
     return props.value.leadingIcon || props.value.icon
   })
   const trailingIconName = computed(() => {
     if (props.value.loading && !isLeading.value)
-      return props.value.loadingIcon || theme.value.app.icons.loading
+      return props.value.loadingIcon || appConfig.ui.icons.loading
 
     return props.value.trailingIcon || props.value.icon
   })

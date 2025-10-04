@@ -17,7 +17,7 @@ const controls: ControlItems<ScrollAreaProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
+      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded">
         <div class="grid grid-cols-2 gap-1 w-screen">
           <Placeholder class="bg-ui-cb/10 h-50" />
           <Placeholder class="bg-red/10 h-50" />
@@ -26,11 +26,11 @@ const controls: ControlItems<ScrollAreaProps> = [
         </div>
       </UScrollArea>
 
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
+      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded">
         <Placeholder class="h-50 w-screen" />
       </UScrollArea>
 
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
+      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded">
         <Placeholder class="bg-ui-cb/10 h-50" />
         <Placeholder class="bg-red/10 h-50" />
         <Placeholder class="bg-green/10 h-50" />

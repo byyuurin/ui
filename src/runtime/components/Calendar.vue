@@ -2,8 +2,8 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DateValue } from '@internationalized/date'
 import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui'
-import type { calendar } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/calendar'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface CalendarEmits<R extends boolean, M extends boolean> extends Omit<CalendarRootEmits & RangeCalendarRootEmits, 'update:modelValue'> {
   'update:modelValue': [date: CalendarModelValue<R, M>]
@@ -15,7 +15,7 @@ export interface CalendarSlots {
   'week-day'?: (props: { day: string }) => any
 }
 
-type CalendarVariants = VariantProps<typeof calendar>
+type ThemeVariants = VariantProps<typeof theme>
 
 type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
   ? DateRange
@@ -30,7 +30,7 @@ type CalendarModelValue<R extends boolean = false, M extends boolean = false> = 
 type _CalendarRootProps = Omit<CalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
 type _RangeCalendarRootProps = Omit<RangeCalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
 
-export interface CalendarProps<R extends boolean = false, M extends boolean = false> extends ComponentAttrs<typeof calendar>, _CalendarRootProps, _RangeCalendarRootProps {
+export interface CalendarProps<R extends boolean = false, M extends boolean = false> extends ComponentBaseProps, _CalendarRootProps, _RangeCalendarRootProps {
   /**
    * The icon to use for the next year control.
    * @default app.icons.chevronDoubleRight
@@ -54,7 +54,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   /**
    * @default "md"
    */
-  size?: CalendarVariants['size']
+  size?: ThemeVariants['size']
   /** Whether or not a range of dates can be selected */
   range?: R & boolean
   /** Whether or not multiple dates can be selected */
@@ -65,6 +65,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   yearControls?: boolean
   defaultValue?: CalendarDefaultValue<R, M>
   modelValue?: CalendarDefaultValue<R, M>
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -73,8 +74,9 @@ import { reactiveOmit } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
 import { Calendar as BaseCalendar, RangeCalendar } from 'reka-ui/namespaced'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<CalendarProps<R, M>>(), {
@@ -89,12 +91,21 @@ defineSlots<CalendarSlots>()
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'size', 'monthControls', 'yearControls', 'class', 'ui'), emit)
 
 const { code: locale, dir, t } = useLocale()
-const { theme, generateStyle } = useTheme()
 
-const nextYearIcon = computed(() => props.nextYearIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleLeft : theme.value.app.icons.chevronDoubleRight))
-const nextMonthIcon = computed(() => props.nextMonthIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronLeft : theme.value.app.icons.chevronRight))
-const prevYearIcon = computed(() => props.prevYearIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronDoubleRight : theme.value.app.icons.chevronDoubleLeft))
-const prevMonthIcon = computed(() => props.prevMonthIcon || (dir.value === 'rtl' ? theme.value.app.icons.chevronRight : theme.value.app.icons.chevronLeft))
+const appConfig = useAppConfig() as RuntimeAppConfig
+
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.calendar))
+  return ui({
+    ...props,
+    multipleMonths: props.numberOfMonths > 1,
+  })
+})
+
+const nextYearIcon = computed(() => props.nextYearIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleLeft : appConfig.ui.icons.chevronDoubleRight))
+const nextMonthIcon = computed(() => props.nextMonthIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
+const prevYearIcon = computed(() => props.prevYearIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleRight : appConfig.ui.icons.chevronDoubleLeft))
+const prevMonthIcon = computed(() => props.prevMonthIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronRight : appConfig.ui.icons.chevronLeft))
 
 function paginateYear(date: DateValue, sign: -1 | 1) {
   if (sign === -1)
@@ -104,11 +115,6 @@ function paginateYear(date: DateValue, sign: -1 | 1) {
 }
 
 const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
-
-const style = computed(() => generateStyle('calendar', {
-  ...props,
-  multipleMonths: props.numberOfMonths > 1,
-}))
 </script>
 
 <template>

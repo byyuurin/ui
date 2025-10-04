@@ -1,7 +1,41 @@
 <script lang="ts">
-import { cssVarsBase, cssVarsPrefix } from '@byyuurin/ui/unocss'
 import { parseCssColor } from '@unocss/preset-mini/utils'
 import { useCloned } from '@vueuse/core'
+
+export const cssVarsPrefix = 'ui'
+export const cssVarsBase = ['cb', 'cp', 'cx']
+
+interface PresetOptions {
+  /** @default "0rem" */
+  radius?: string
+  /** @default "[radius]" */
+  radiusBox?: string
+  /** @default "[radius]" */
+  radiusButton?: string
+  /** @default "[radius]" */
+  radiusCheckbox?: string
+  /** @default "[radius]" */
+  radiusRadio?: string
+  /** @default "[radius]" */
+  radiusSwitch?: string
+  /** @default "[radius]" */
+  radiusTabs?: string
+  /**
+   * Base content color
+   * @default "#1f2937"
+   */
+  cb?: string
+  /**
+   * Primary color
+   * @default "[cb]"
+   */
+  cp?: string
+  /**
+   * Base background color
+   * @default "#ffffff"
+   */
+  cx?: string
+}
 
 export interface ThemeConfig<T extends string = string> extends PresetOptions {
   name: T
@@ -162,8 +196,6 @@ function resolveThemeAttrs(theme: ThemeConfig) {
 </script>
 
 <script setup lang="ts">
-import type { PresetOptions } from '@byyuurin/ui/unocss'
-
 const props = withDefaults(defineProps<{
   config: ThemeConfig | null
   color?: string
@@ -324,7 +356,7 @@ function setCustomTheme() {
       </div>
     </template>
     <template #customize>
-      <div class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box">
+      <div class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded">
         <label class="opacity-80">colorScheme</label>
         <USelect v-model="themeCustomize.colorScheme" :options="['dark', 'light']" @update:model-value="setCustomTheme" />
         <label class="opacity-80">fontFamily</label>

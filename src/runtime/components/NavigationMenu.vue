@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AccordionRootProps, NavigationMenuContentEmits, NavigationMenuContentProps, NavigationMenuRootEmits, NavigationMenuRootProps } from 'reka-ui'
-import type { navigationMenu } from '../theme'
-import type { ArrayOrNested, ChipProps, ComponentAttrs, DynamicSlots, EmitsToProps, LinkProps, MergeTypes, NestedItem, PopoverProps, TooltipProps } from '../types'
+import theme from '#build/ui/navigation-menu'
+import type { ChipProps, ComponentBaseProps, ComponentUIProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
+import type { ArrayOrNested, DynamicSlots, EmitsToProps, MergeTypes, NestedItem } from '../types/utils'
 
 export interface NavigationMenuChildItem extends Omit<NavigationMenuItem, 'children' | 'type'> {
   /** Description is only used when `orientation` is `horizontal`. */
@@ -10,7 +11,7 @@ export interface NavigationMenuChildItem extends Omit<NavigationMenuItem, 'child
   [key: string]: any
 }
 
-export interface NavigationMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'custom'> {
+export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 'type' | 'raw' | 'custom'> {
   label?: string
   icon?: string
   /**
@@ -45,8 +46,7 @@ export interface NavigationMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'cu
   defaultOpen?: boolean
   open?: boolean
   onSelect?: (e: Event) => void
-  ui?: Pick<ComponentAttrs<typeof navigationMenu>['ui'] & {}, 'item' | 'linkLeadingIcon' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkTrailing' | 'linkTrailingChip' | 'linkTrailingIcon' | 'label' | 'link' | 'content' | 'childList' | 'childLabel' | 'childItem' | 'childLink' | 'childLinkIcon' | 'childLinkWrapper' | 'childLinkLabel' | 'childLinkLabelExternalIcon' | 'childLinkDescription'>
-  class?: ComponentAttrs<typeof navigationMenu>['class']
+  ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'linkLeadingIcon' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkTrailing' | 'linkTrailingChip' | 'linkTrailingIcon' | 'label' | 'link' | 'content' | 'childList' | 'childLabel' | 'childItem' | 'childLink' | 'childLinkIcon' | 'childLinkWrapper' | 'childLinkLabel' | 'childLinkLabelExternalIcon' | 'childLinkDescription'>
   [key: string]: any
 }
 
@@ -67,10 +67,10 @@ export type NavigationMenuSlots<
   'list-trailing': (props?: {}) => any
 } & DynamicSlots<MergeTypes<I>, 'leading' | 'label' | 'trailing' | 'content', SlotProps<I>>
 
-type NavigationMenuVariants = VariantProps<typeof navigationMenu>
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>> extends
-  ComponentAttrs<typeof navigationMenu>,
+  ComponentBaseProps,
   Pick<NavigationMenuRootProps, 'as' | 'modelValue' | 'defaultValue' | 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>,
   Pick<AccordionRootProps, 'disabled' | 'type' | 'collapsible'> {
   /**
@@ -85,7 +85,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
    */
   externalIcon?: boolean | string
   items?: T
-  variant?: NavigationMenuVariants['variant']
+  variant?: ThemeVariants['variant']
   /**
    * The orientation of the menu.
    * @default 'horizontal'
@@ -118,7 +118,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
    * Only works when `orientation` is `horizontal`.
    * @default 'horizontal'
    */
-  contentOrientation?: NavigationMenuVariants['contentOrientation']
+  contentOrientation?: ThemeVariants['contentOrientation']
   /**
    * Display an arrow alongside the menu.
    * @default false
@@ -129,6 +129,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
    * @default 'label'
    */
   labelKey?: string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -137,9 +138,11 @@ import { createReusableTemplate, reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { AccordionContent, AccordionItem, AccordionRoot, AccordionTrigger, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot, NavigationMenuTrigger, NavigationMenuViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { get, isArrayOfArray, pickLinkProps } from '../utils'
+import { cv, merge } from '../utils/style'
 import Chip from './Chip.vue'
+import Icon from './Icon.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
 import Popover from './Popover.vue'
@@ -190,8 +193,11 @@ const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: N
 
 const lists = computed<NavigationMenuItem[][]>(() => props.items?.length ? (isArrayOfArray(props.items) ? props.items : [props.items]) : [])
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('navigationMenu', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.navigationMenu))
+  return ui(props)
+})
 
 function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
   const indexes = list.reduce((result: string[], item, index) => {
@@ -209,7 +215,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
   <DefineLinkTemplate v-slot="{ item, active, index }">
     <slot :name="((item.slot || 'item') as keyof NavigationMenuSlots<T>)" :item="item" :index="index">
       <slot :name="(`${item.slot || 'item'}-leading` as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index">
-        <i v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon], active, disabled: !!item.disabled })" data-part="link-leading-icon"></i>
+        <Icon v-if="item.icon" :name="item.icon" :class="style.linkLeadingIcon({ class: props.ui?.linkLeadingIcon, active, disabled: !!item.disabled })" data-part="link-leading-icon" />
       </slot>
 
       <span
@@ -221,14 +227,15 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           {{ get(item, props.labelKey) }}
         </slot>
 
-        <i
+        <Icon
           v-if="item.target === '_blank' && props.externalIcon !== false"
+          :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external"
           :class="style.linkLabelExternalIcon({
-            class: [typeof props.externalIcon === 'string' ? props.externalIcon : theme.app.icons.external, props.ui?.linkLabelExternalIcon],
+            class: props.ui?.linkLabelExternalIcon,
             active,
           })"
           data-part="link-label-external-icon"
-        ></i>
+        />
       </span>
 
       <component :is="orientation === 'vertical' && item.children?.length && !collapsed ? AccordionTrigger : 'span'" v-if="(!collapsed || orientation !== 'vertical') && (item.chip || (orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[(item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>])" as="span" :class="style.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })" @click.stop.prevent>
@@ -240,8 +247,8 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             :class="style.linkTrailingChip({ class: [props.ui?.linkTrailingChip, item.ui?.linkTrailingChip] })"
           />
 
-          <i v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)" :class="style.linkTrailingIcon({ class: [item.trailingIcon || props.trailingIcon || theme.app.icons.chevronDown, props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"></i>
-          <i v-else-if="item.trailingIcon" :class="style.linkTrailingIcon({ class: [item.trailingIcon, props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"></i>
+          <Icon v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)" :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })" />
+          <Icon v-else-if="item.trailingIcon" :name="item.trailingIcon" :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })" />
         </slot>
       </component>
     </slot>
@@ -302,12 +309,12 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
                     <Link v-slot="{ active: childActive, ...childSlotProps }" v-bind="pickLinkProps(childItem)" custom>
                       <NavigationMenuLink as-child :active="childActive" @select="childItem.onSelect">
                         <LinkBase v-bind="childSlotProps" :class="style.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="child-link">
-                          <i v-if="childItem.icon" :class="style.childLinkIcon({ class: [childItem.icon, props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon"></i>
+                          <Icon v-if="childItem.icon" :name="childItem.icon" :class="style.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon" />
 
                           <span :class="style.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="child-link-label">
                             {{ get(childItem, props.labelKey) }}
 
-                            <i v-if="childItem.target === '_blank' && props.externalIcon !== false" :class="style.childLinkLabelExternalIcon({ class: [typeof props.externalIcon === 'string' ? props.externalIcon : theme.app.icons.external, style.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon"></i>
+                            <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="style.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon" />
                           </span>
                         </LinkBase>
                       </NavigationMenuLink>
@@ -339,13 +346,13 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
                 <Link v-slot="{ active: childActive, ...childSlotProps }" v-bind="pickLinkProps(childItem)" custom>
                   <NavigationMenuLink as-child :active="childActive" @select="childItem.onSelect">
                     <LinkBase v-bind="childSlotProps" :class="style.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="child-link">
-                      <i v-if="childItem.icon" :class="style.childLinkIcon({ class: [childItem.icon, props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon"></i>
+                      <Icon v-if="childItem.icon" :name="childItem.icon" :class="style.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon" />
 
                       <div :class="style.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })" data-part="child-link-wrapper">
                         <p :class="style.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="child-link-label">
                           {{ get(childItem, props.labelKey) }}
 
-                          <i v-if="childItem.target === '_blank' && props.externalIcon !== false" :class="style.childLinkLabelExternalIcon({ class: [typeof props.externalIcon === 'string' ? props.externalIcon : theme.app.icons.external, style.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon"></i>
+                          <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="style.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon" />
                         </p>
                         <p v-if="childItem.description" :class="style.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })" data-part="child-link-description">
                           {{ childItem.description }}

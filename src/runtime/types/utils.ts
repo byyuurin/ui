@@ -1,4 +1,3 @@
-import type { ClassValue, CVReturnType, CVScopeMeta, VariantProps } from '@byyuurin/ui-kit'
 import type { AcceptableValue as RekaAcceptableValue } from 'reka-ui'
 
 export type MaybeArray<T> = T | T[]
@@ -68,33 +67,4 @@ export interface GetModelValueEmits<
 
 export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>
   ? MaybeObject[Key]
-  : never
-
-export interface ComponentAttrs<T> {
-  class?: MaybeArray<string | Record<string, boolean>>
-  ui?: T extends { parts: infer P }
-    ? { [Part in keyof P]?: string }
-    : never
-}
-
-export type StylerTheme<T> = T extends CVScopeMeta<infer V, any, any, infer B, infer S>
-  ? CVReturnType<V, S, B>
-  : never
-
-export interface StylerBaseProps {
-  class?: ClassValue
-}
-
-export type StylerProps<T> = T extends CVScopeMeta<infer V, any, any, infer B, infer S>
-  ? Parameters<Styler<CVReturnType<V, S, B>>>[0]
-  : never
-
-export type StylerReturnType<T> = T extends CVReturnType<infer V, infer S, infer B>
-  ? ReturnType<CVReturnType<V, S, B>>
-  : never
-
-export type Styler<T> = T extends CVReturnType<infer V, any, any>
-  ? [keyof V] extends string[]
-      ? (props: VariantProps<T> & StylerBaseProps) => StylerReturnType<T>
-      : (props?: StylerBaseProps) => StylerReturnType<T>
   : never

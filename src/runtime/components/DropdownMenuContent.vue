@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuContentEmits as RekaDropdownMenuContentEmits, DropdownMenuContentProps as RekaDropdownMenuContentProps } from 'reka-ui'
-import type { dropdownMenu } from '../theme'
-import type { ArrayOrNested, ComponentAttrs, DropdownMenuItem, DropdownMenuSlots, NestedItem } from '../types'
+import theme from '#build/ui/dropdown-menu'
+import type { ComponentBaseProps, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, RuntimeAppConfig } from '../types'
+import type { ArrayOrNested, NestedItem } from '../types/utils'
 
 type ExtractItem<T extends ArrayOrNested<any>> = Extract<NestedItem<T>, { slot: string }>
 
@@ -12,10 +13,10 @@ export type DropdownMenuContentSlots<T extends ArrayOrNested<DropdownMenuItem>> 
 
 export interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
 
-type DropdownMenuVariants = VariantProps<typeof dropdownMenu>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuItem>> extends ComponentAttrs<typeof dropdownMenu>, Omit<RekaDropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> {
-  size?: DropdownMenuVariants['size']
+export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuItem>> extends ComponentBaseProps, Omit<RekaDropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> {
+  size?: ThemeVariants['size']
   items?: T
   portal?: boolean
   sub?: boolean
@@ -23,6 +24,7 @@ export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuIt
   checkedIcon?: string
   loadingIcon?: string
   externalIcon?: boolean | string
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -31,12 +33,13 @@ import { createReusableTemplate, reactiveOmit } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
 import { DropdownMenu } from 'reka-ui/namespaced'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { get, isArrayOfArray, omit } from '../utils'
 import { pickLinkProps } from '../utils/link'
+import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
-// eslint-disable-next-line import/no-self-import
 import DropdownMenuContent from './DropdownMenuContent.vue'
+import Icon from './Icon.vue'
 import Kbd from './Kbd.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
@@ -61,24 +64,29 @@ const groups = computed(
     : [],
 )
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('dropdownMenu', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.dropdownMenu))
+  return ui(props)
+})
 </script>
 
 <template>
   <DefineItemTemplate v-slot="{ item, active, index }">
     <slot :name="((item.slot || 'item') as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :index="index">
       <slot :name="(`${item.slot || 'item'}-leading` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
-        <span
+        <Icon
           v-if="item.loading"
-          :class="style.itemLeadingIcon({ class: [loadingIcon || theme.app.icons.loading, props.ui?.itemLeadingIcon], loading: true })"
+          :name="loadingIcon || appConfig.ui.icons.loading"
+          :class="style.itemLeadingIcon({ class: props.ui?.itemLeadingIcon, loading: true })"
           data-part="item-leading-icon"
-        ></span>
-        <span
+        />
+        <Icon
           v-else-if="item.icon"
-          :class="style.itemLeadingIcon({ class: [item.icon, props.ui?.itemLeadingIcon], active })"
+          :name="item.icon"
+          :class="style.itemLeadingIcon({ class: props.ui?.itemLeadingIcon, active })"
           data-part="item-leading-icon"
-        ></span>
+        />
         <Avatar
           v-else-if="item.avatar"
           v-bind="item.avatar"
@@ -97,16 +105,17 @@ const style = computed(() => generateStyle('dropdownMenu', props))
           {{ get(item, props.labelKey as string) }}
         </slot>
 
-        <span
+        <Icon
           v-if="item.target === '_blank' && externalIcon !== false"
-          :class="style.itemLabelExternalIcon({ class: [typeof externalIcon === 'string' ? externalIcon : theme.app.icons.external, props.ui?.itemLabelExternalIcon], active })"
+          :name="typeof externalIcon === 'string' ? externalIcon : appConfig.ui.icons.external"
+          :class="style.itemLabelExternalIcon({ class: props.ui?.itemLabelExternalIcon, active })"
           data-part="item-label-external-icon"
-        ></span>
+        />
       </span>
 
       <span :class="style.itemTrailing({ class: props.ui?.itemTrailing })" data-part="item-trailing">
         <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
-          <span v-if="item.children?.length" :class="style.itemTrailingIcon({ class: [theme.app.icons.chevronRight, props.ui?.itemTrailingIcon], active })" data-part="item-trailing-icon"></span>
+          <Icon v-if="item.children?.length" :name="appConfig.ui.icons.chevronRight" :class="style.itemTrailingIcon({ class: props.ui?.itemTrailingIcon, active })" data-part="item-trailing-icon" />
           <span v-else-if="item.kbds?.length" :class="style.itemTrailingKbds({ class: props.ui?.itemTrailingKbds })" data-part="item-trailing-kbds">
             <Kbd
               v-for="(kbd, kbdIndex) in item.kbds"
@@ -118,7 +127,7 @@ const style = computed(() => generateStyle('dropdownMenu', props))
         </slot>
 
         <DropdownMenu.ItemIndicator as-child>
-          <span :class="style.itemTrailingIcon({ class: [checkedIcon || theme.app.icons.check, props.ui?.itemTrailingIcon] })" data-part="item-trailing-icon"></span>
+          <Icon :name="checkedIcon || appConfig.ui.icons.check" :class="style.itemTrailingIcon({ class: props.ui?.itemTrailingIcon })" data-part="item-trailing-icon" />
         </DropdownMenu.ItemIndicator>
       </span>
     </slot>

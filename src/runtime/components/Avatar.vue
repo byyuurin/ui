@@ -1,16 +1,16 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AvatarRootProps } from 'reka-ui'
-import type { avatar } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/avatar'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface AvatarSlots {
   default?: (props?: {}) => any
 }
 
-type AvatarVariants = VariantProps<typeof avatar>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface AvatarProps extends ComponentAttrs<typeof avatar> {
+export interface AvatarProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "span"
@@ -20,16 +20,18 @@ export interface AvatarProps extends ComponentAttrs<typeof avatar> {
   alt?: string
   icon?: string
   text?: string
-  size?: AvatarVariants['size']
+  size?: ThemeVariants['size']
   style?: string | HTMLElement['style']
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui'
 import { computed, shallowRef, watch } from 'vue'
+import { useAppConfig } from '#imports'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 defineOptions({ inheritAttrs: false })
 
@@ -40,11 +42,14 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 const { size } = useAvatarGroup(props)
 const fallback = computed(() => props.text || (props.alt || '').split(' ').map((word) => word.charAt(0)).join('').slice(0, 2))
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('avatar', {
-  ...props,
-  size: size.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.avatar))
+  return ui({
+    ...props,
+    size: size.value,
+  })
+})
 
 const error = shallowRef(false)
 

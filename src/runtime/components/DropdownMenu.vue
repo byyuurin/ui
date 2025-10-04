@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuArrowProps, DropdownMenuContentEmits, DropdownMenuContentProps, DropdownMenuRootEmits, DropdownMenuRootProps } from 'reka-ui'
-import type { dropdownMenu } from '../theme'
-import type { ArrayOrNested, AvatarProps, ComponentAttrs, DynamicSlots, EmitsToProps, KbdProps, LinkProps, MergeTypes, NestedItem } from '../types'
+import theme from '#build/ui/dropdown-menu'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, KbdProps, LinkProps, RuntimeAppConfig } from '../types'
+import type { ArrayOrNested, DynamicSlots, EmitsToProps, MergeTypes, NestedItem } from '../types/utils'
 
 export interface DropdownMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'custom' | 'underline'> {
   icon?: string
@@ -41,13 +42,13 @@ export type DropdownMenuSlots<
 
 export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
 
-type DropdownMenuVariants = VariantProps<typeof dropdownMenu>
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface DropdownMenuProps<
   T extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
-> extends ComponentAttrs<typeof dropdownMenu>, Omit<DropdownMenuRootProps, 'dir'> {
+> extends ComponentBaseProps, Omit<DropdownMenuRootProps, 'dir'> {
   /** @default "md" */
-  size?: DropdownMenuVariants['size']
+  size?: ThemeVariants['size']
   items?: T
   /**
    * The icon displayed when an item is checked.
@@ -86,6 +87,7 @@ export interface DropdownMenuProps<
    */
   labelKey?: keyof NestedItem<T>
   disabled?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -93,8 +95,9 @@ export interface DropdownMenuProps<
 import { reactivePick } from '@vueuse/core'
 import { DropdownMenuArrow, DropdownMenuRoot, DropdownMenuTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { omit } from '../utils'
+import { cv, merge } from '../utils/style'
 import DropdownMenuContent from './DropdownMenuContent.vue'
 
 const props = withDefaults(defineProps<DropdownMenuProps<T>>(), {
@@ -111,8 +114,11 @@ const contentProps = toRef(() => ({ side: 'bottom', sideOffset: 8, collisionPadd
 const arrowProps = toRef(() => props.arrow as DropdownMenuArrowProps)
 const proxySlots = omit(slots, ['default'])
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('dropdownMenu', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.dropdownMenu))
+  return ui(props)
+})
 </script>
 
 <template>

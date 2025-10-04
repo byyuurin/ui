@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import { injectButtonGroup } from '../app/injections'
 import type { ButtonProps } from '../types'
+import { injectButtonGroup } from './injections'
 
 export function useButtonGroup(props: Pick<ButtonProps, 'size'> = {}) {
   const buttonGroup = injectButtonGroup()

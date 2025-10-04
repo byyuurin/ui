@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { ToastProviderProps as RekaToastProviderProps } from 'reka-ui'
-import type { toastProvider } from '../theme'
-import type { ComponentAttrs, ToastProps } from '../types'
+import theme from '#build/ui/toast-provider'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig, ToastProps } from '../types'
 
 export interface ToastState extends Omit<ToastProps, 'defaultOpen'> {
   id: string | number
@@ -13,11 +13,11 @@ export interface ToasterSlots {
   default?: (props?: {}) => any
 }
 
-type ToasterVariants = VariantProps<typeof toastProvider>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ToastProviderProps extends ComponentAttrs<typeof toastProvider>, Omit<RekaToastProviderProps, 'swipeDirection'> {
+export interface ToastProviderProps extends ComponentBaseProps, Omit<RekaToastProviderProps, 'swipeDirection'> {
   /** @default "bottom-right" */
-  position?: ToasterVariants['position']
+  position?: ThemeVariants['position']
   /**
    * Expand the toasts to show multiple toasts at once.
    * @default true
@@ -28,6 +28,7 @@ export interface ToastProviderProps extends ComponentAttrs<typeof toastProvider>
    * @default true
    */
   portal?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -35,9 +36,10 @@ export interface ToastProviderProps extends ComponentAttrs<typeof toastProvider>
 import { reactivePick } from '@vueuse/core'
 import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
 import { useToast } from '../composables/useToast'
 import { omit } from '../utils'
+import { cv, merge } from '../utils/style'
 import Toast from './Toast.vue'
 
 const props = withDefaults(defineProps<ToastProviderProps>(), {
@@ -71,12 +73,15 @@ const swipeDirection = computed(() => {
   return 'right'
 })
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('toastProvider', {
-  ...props,
-  swipeDirection: swipeDirection.value,
-  clickable: false,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.toastProvider))
+  return ui({
+    ...props,
+    swipeDirection: swipeDirection.value,
+    clickable: false,
+  })
+})
 
 function onUpdateOpen(value: boolean, id: string | number) {
   if (value)

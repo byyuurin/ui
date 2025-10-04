@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PinInputRootEmits, PinInputRootProps } from 'reka-ui'
-import type { pinInput } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/pin-input'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 type PinInputType = 'text' | 'number'
 
@@ -11,14 +11,15 @@ export type PinInputEmits<T extends PinInputType = 'text' | 'number'> = PinInput
   blur: [payload: Event]
 }
 
-type PinInputVariants = VariantProps<typeof pinInput>
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface PinInputProps<T extends PinInputType = 'text' | 'number'> extends ComponentAttrs<typeof pinInput>, Pick<PinInputRootProps<T>, 'as' | 'defaultValue' | 'disabled' | 'id' | 'mask' | 'modelValue' | 'name' | 'otp' | 'placeholder' | 'required' | 'type'> {
-  variant?: PinInputVariants['variant']
-  size?: PinInputVariants['size']
+export interface PinInputProps<T extends PinInputType = 'text' | 'number'> extends ComponentBaseProps, Pick<PinInputRootProps<T>, 'as' | 'defaultValue' | 'disabled' | 'id' | 'mask' | 'modelValue' | 'name' | 'otp' | 'placeholder' | 'required' | 'type'> {
+  variant?: ThemeVariants['variant']
+  size?: ThemeVariants['size']
   length?: number | string
   underline?: boolean
   highlight?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
@@ -26,9 +27,10 @@ export interface PinInputProps<T extends PinInputType = 'text' | 'number'> exten
 import { reactivePick } from '@vueuse/core'
 import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
+import { useAppConfig } from '#imports'
 import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
 import { looseToNumber } from '../utils'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<PinInputProps<T>>(), {
   variant: 'outline',
@@ -43,12 +45,15 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'defaultValue', 'disa
 const completed = ref(false)
 
 const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormFocus, emitFormBlur } = useFormItem<PinInputProps>(props)
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('pinInput', {
-  ...props,
-  size: size.value,
-  highlight: highlight.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const style = computed(() => {
+  const ui = cv(merge(theme, appConfig.ui.pinInput))
+  return ui({
+    ...props,
+    size: size.value,
+    highlight: highlight.value,
+  })
+})
 
 function onComplete(value: string[] | number[]) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

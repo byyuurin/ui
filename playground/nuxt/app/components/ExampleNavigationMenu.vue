@@ -165,10 +165,10 @@ const controls: ControlItems<NavigationMenuProps<typeof items.value[number]>> = 
             <ul>
               <li v-for="child in item.children" :key="child.label">
                 <ULink class="text-sm text-left rounded-md p-3 transition-colors hover:bg-soft-ui-fill/5">
-                  <p class="font-medium color-ui-cb">
+                  <p class="font-medium text-default">
                     {{ child.label }}
                   </p>
-                  <p class="color-ui-cb/50 line-clamp-2">
+                  <p class="text-default line-clamp-2">
                     {{ child.description }}
                   </p>
                 </ULink>

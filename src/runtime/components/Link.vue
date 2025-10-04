@@ -2,8 +2,7 @@
 import type { PrimitiveProps } from 'reka-ui'
 import type { ButtonHTMLAttributes } from 'vue'
 import type { RouteLocationRaw, RouterLinkProps } from 'vue-router'
-import type { link } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 
 export interface LinkSlots {
   default?: (props: { active: boolean }) => any
@@ -55,7 +54,7 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   noPrefetch?: boolean
 }
 
-export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, NuxtLinkProps {
+export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
   /**
    * The element or component this component should render as when not a link.
    * @default "button"
@@ -93,8 +92,9 @@ import { diff, isEqual } from 'ohash/utils'
 import { useForwardProps } from 'reka-ui'
 import { hasProtocol } from 'ufo'
 import { computed, getCurrentInstance, resolveComponent } from 'vue'
-import { useNuxtApp, useRoute } from '#imports'
-import { useTheme } from '../composables/useTheme'
+import theme from '#build/ui/link'
+import { useAppConfig, useNuxtApp, useRoute } from '#imports'
+import { cv, merge } from '../utils/style'
 import LinkBase from './LinkBase.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -201,16 +201,17 @@ function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
   return false
 }
 
-const { theme, createStyler } = useTheme()
+const appConfig = useAppConfig() as RuntimeAppConfig
 
 function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
-  const { link } = theme.value
   const active = isLinkActive({ route, isActive, isExactActive })
 
   if (props.raw)
     return [props.class, active ? props.activeClass : props.inactiveClass]
 
-  const styler = createStyler({
+  const link = merge(theme, appConfig.ui.link)
+
+  const ui = cv({
     ...link,
     variants: {
       ...link.variants,
@@ -224,7 +225,10 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
     },
   })
 
-  return styler({ ...props, active }).base()
+  return ui({
+    ...props,
+    active,
+  }).base()
 }
 </script>
 
