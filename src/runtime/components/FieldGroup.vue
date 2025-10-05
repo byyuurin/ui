@@ -1,16 +1,16 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import theme from '#build/ui/button-group'
+import theme from '#build/ui/field-group'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 
-export interface ButtonGroupSlots {
+export interface FieldGroupSlots {
   default?: (props?: {}) => any
 }
 
 type ThemeVariant = VariantProps<typeof theme>
 
-export interface ButtonGroupProps extends ComponentBaseProps {
+export interface FieldGroupProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -25,20 +25,20 @@ export interface ButtonGroupProps extends ComponentBaseProps {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { provideButtonGroup } from '../composables/injections'
+import { provideFieldGroup } from '../composables/injections'
 import { cv, merge } from '../utils/style'
 
-const props = withDefaults(defineProps<ButtonGroupProps>(), {
+const props = withDefaults(defineProps<FieldGroupProps>(), {
   orientation: 'horizontal',
 })
 
-defineSlots<ButtonGroupSlots>()
+defineSlots<FieldGroupSlots>()
 
-provideButtonGroup(computed(() => props))
+provideFieldGroup(computed(() => props))
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.buttonGroup))
+  const ui = cv(merge(theme, appConfig.ui.fieldGroup))
   return ui(props)
 })
 </script>

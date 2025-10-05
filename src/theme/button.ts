@@ -1,5 +1,5 @@
 import { ct } from '@byyuurin/ui-kit'
-import { buttonGroupVariant } from './button-group'
+import { fieldGroupVariant } from './field-group'
 
 export default ct(/* @unocss-include */{
   parts: {
@@ -13,7 +13,7 @@ export default ct(/* @unocss-include */{
     trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
   },
   variants: {
-    ...buttonGroupVariant,
+    ...fieldGroupVariant,
     variant: {
       'solid': {
         base: [

@@ -1,6 +1,6 @@
 import type { UseEventBusReturn } from '@vueuse/core'
 import type { ComputedRef, MaybeRefOrGetter, Ref } from 'vue'
-import type { AvatarGroupProps, ButtonGroupProps, FormErrorWithId, FormEvent, FormItemProps, Messages } from '../types'
+import type { AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormItemProps, Messages } from '../types'
 import type { GetObjectField } from '../types/utils'
 import type { Locale } from '../utils'
 import { defineInjection } from '../utils'
@@ -13,13 +13,13 @@ export const {
   provide: provideAvatarGroup,
 } = defineInjection<ComputedRef<AvatarGroupProvideValue>>('ui.avatar-group')
 
-// ButtonGroup
-export type ButtonGroupProvideValue = Pick<ButtonGroupProps, 'size' | 'orientation'>
+// FieldGroup
+export type FieldGroupProvideValue = Pick<FieldGroupProps, 'size' | 'orientation'>
 export const {
-  InjectionKey: InjectionKeyButtonGroup,
-  inject: injectButtonGroup,
-  provide: provideButtonGroup,
-} = defineInjection<ComputedRef<ButtonGroupProvideValue>>('ui.button-group')
+  InjectionKey: InjectionKeyFieldGroup,
+  inject: injectFieldGroup,
+  provide: provideFieldGroup,
+} = defineInjection<ComputedRef<FieldGroupProvideValue>>('ui.field-group')
 
 // Form
 export interface FormOptionsProvideValue {

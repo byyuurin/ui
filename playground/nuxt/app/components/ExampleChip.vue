@@ -2,12 +2,13 @@
 import type { ChipProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const icon = 'i-carbon-logo-youtube'
-
 const controls: ControlItems<ChipProps> = [
-  { prop: 'label', value: '', placeholder: 'Text' },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
+  { prop: 'text', value: '1' },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'position', value: 'top-right', options: ['top-left', 'bottom-left', 'top-right', 'bottom-right'] },
+  { prop: 'inset', value: false, description: 'When `true`, keep the badge inside the component for rounded elements.' },
+  { prop: 'standalone', value: false, description: 'When `true`, render the badge relatively to the parent.' },
+  { prop: 'show', value: true },
 ]
 </script>
 
@@ -15,28 +16,12 @@ const controls: ControlItems<ChipProps> = [
   <ExampleView
     v-slot="attrs"
     title="Chip"
-    description="A short text to represent a status or a category."
+    description="An indicator of a numeric value or a state."
     :controls="controls"
   >
-    <div class="flex flex-wrap items-start gap-4">
-      <UChip v-bind="attrs" label="" :icon="icon" />
-      <UChip v-bind="attrs" :label="attrs.label || 'Text'" />
-      <UChip v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
-      <UChip v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
-    </div>
-    <div class="py-4">
-      <UChip v-bind="attrs" :label="attrs.label || 'Text'">
-        <template #leading>
-          <Placeholder label="#leading" />
-        </template>
-
-        <template #default>
-          <Placeholder label="#default" />
-        </template>
-
-        <template #trailing>
-          <Placeholder label="#trailing" />
-        </template>
+    <div class="flex flex-wrap gap-4 items-start">
+      <UChip v-bind="attrs">
+        <UButton class="ui-base" icon="i-lucide-mail" />
       </UChip>
     </div>
   </ExampleView>

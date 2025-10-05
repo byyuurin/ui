@@ -1,60 +1,86 @@
 import { ct } from '@byyuurin/ui-kit'
-import { buttonGroupVariant } from './button-group'
 
 export default ct(/* @unocss-include */{
   parts: {
-    base: 'inline-flex items-center rounded leading-normal transition-colors',
-    label: '',
-    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',
-    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-1.5',
+    root: 'relative inline-flex items-center justify-center shrink-0',
+    base: [
+      'inline-block rounded-full ring ring-ui-cx flex items-center justify-center color-ui-cx font-medium whitespace-nowrap',
+      'h-1.2em min-w-1.2em p-0.2em text-0.8em bg-ui-fill',
+    ],
   },
   variants: {
-    ...buttonGroupVariant,
-    variant: {
-      'solid': {
-        base: 'color-ui-cx bg-soft-ui-fill/90',
-      },
-      'outline': {
-        base: 'color-ui-fill bg-ui-base ring ring-inset ring-ui-fill/30',
-      },
-      'soft': {
-        base: 'color-ui-fill/80 bg-soft-ui-fill/10',
-      },
-      'soft-outline': {
-        base: 'color-ui-fill/80 bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/30',
-      },
-    },
     size: {
       xs: {
-        base: 'text-xs',
+        root: 'text-xs',
       },
       sm: {
-        base: 'text-sm',
+        root: 'text-sm',
       },
       md: {
-        base: 'text-base',
+        root: 'text-base',
       },
       lg: {
-        base: 'text-lg',
+        root: 'text-lg',
       },
       xl: {
-        base: 'text-xl',
+        root: 'text-xl',
+      },
+    },
+    position: {
+      'top-right': {
+        base: 'top-0 right-0',
+      },
+      'bottom-right': {
+        base: 'bottom-0 right-0',
+      },
+      'top-left': {
+        base: 'top-0 left-0',
+      },
+      'bottom-left': {
+        base: 'bottom-0 left-0',
+      },
+    },
+    show: {
+      true: {
+        base: 'animate-[scale-in_200ms_ease-out]',
+      },
+    },
+    inset: {
+      true: '',
+    },
+    standalone: {
+      false: {
+        base: 'absolute',
       },
     },
   },
   compoundVariants: [
     {
-      size: ['xs', 'sm', 'md'],
+      position: 'top-right',
+      inset: false,
       class: {
-        base: 'p-0.5',
-        label: 'px-1',
+        base: '-translate-y-1/2 translate-x-1/2 transform',
       },
     },
     {
-      size: ['lg', 'xl'],
+      position: 'bottom-right',
+      inset: false,
       class: {
-        base: 'p-1',
-        label: 'px-2',
+        base: 'translate-y-1/2 translate-x-1/2 transform',
+      },
+    },
+    {
+      position: 'top-left',
+      inset: false,
+      class: {
+        base: '-translate-y-1/2 -translate-x-1/2 transform',
+      },
+    },
+    {
+      position: 'bottom-left',
+      inset: false,
+      class: {
+        base: 'translate-y-1/2 -translate-x-1/2 transform',
       },
     },
   ],

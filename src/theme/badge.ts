@@ -1,86 +1,60 @@
 import { ct } from '@byyuurin/ui-kit'
+import { fieldGroupVariant } from './field-group'
 
 export default ct(/* @unocss-include */{
   parts: {
-    root: 'relative inline-flex items-center justify-center shrink-0',
-    base: [
-      'inline-block rounded-full ring ring-ui-cx flex items-center justify-center color-ui-cx font-medium whitespace-nowrap',
-      'h-1.2em min-w-1.2em p-0.2em text-0.8em bg-ui-fill',
-    ],
+    base: 'inline-flex items-center rounded leading-normal transition-colors',
+    label: '',
+    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',
+    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-1.5',
   },
   variants: {
+    ...fieldGroupVariant,
+    variant: {
+      'solid': {
+        base: 'color-ui-cx bg-soft-ui-fill/90',
+      },
+      'outline': {
+        base: 'color-ui-fill bg-ui-base ring ring-inset ring-ui-fill/30',
+      },
+      'soft': {
+        base: 'color-ui-fill/80 bg-soft-ui-fill/10',
+      },
+      'soft-outline': {
+        base: 'color-ui-fill/80 bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/30',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        base: 'text-xs',
       },
       sm: {
-        root: 'text-sm',
+        base: 'text-sm',
       },
       md: {
-        root: 'text-base',
+        base: 'text-base',
       },
       lg: {
-        root: 'text-lg',
+        base: 'text-lg',
       },
       xl: {
-        root: 'text-xl',
-      },
-    },
-    position: {
-      'top-right': {
-        base: 'top-0 right-0',
-      },
-      'bottom-right': {
-        base: 'bottom-0 right-0',
-      },
-      'top-left': {
-        base: 'top-0 left-0',
-      },
-      'bottom-left': {
-        base: 'bottom-0 left-0',
-      },
-    },
-    show: {
-      true: {
-        base: 'animate-[scale-in_200ms_ease-out]',
-      },
-    },
-    inset: {
-      true: '',
-    },
-    standalone: {
-      false: {
-        base: 'absolute',
+        base: 'text-xl',
       },
     },
   },
   compoundVariants: [
     {
-      position: 'top-right',
-      inset: false,
+      size: ['xs', 'sm', 'md'],
       class: {
-        base: '-translate-y-1/2 translate-x-1/2 transform',
+        base: 'p-0.5',
+        label: 'px-1',
       },
     },
     {
-      position: 'bottom-right',
-      inset: false,
+      size: ['lg', 'xl'],
       class: {
-        base: 'translate-y-1/2 translate-x-1/2 transform',
-      },
-    },
-    {
-      position: 'top-left',
-      inset: false,
-      class: {
-        base: '-translate-y-1/2 -translate-x-1/2 transform',
-      },
-    },
-    {
-      position: 'bottom-left',
-      inset: false,
-      class: {
-        base: 'translate-y-1/2 -translate-x-1/2 transform',
+        base: 'p-1',
+        label: 'px-2',
       },
     },
   ],

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn, TableProps } from '@byyuurin/ui'
+import Badge from '@byyuurin/ui/components/Badge.vue'
 import Button from '@byyuurin/ui/components/Button.vue'
-import Chip from '@byyuurin/ui/components/Chip.vue'
 import type { ControlItems } from './ExampleView.vue'
 
 const isEmpty = shallowRef(false)
@@ -59,7 +59,7 @@ const columns: TableColumn<typeof data.value[number]>[] = [
       failed: 'ui-red',
       refunded: 'ui-gray',
     }
-    return h(Chip, { label: row.original.status, variant: 'soft-outline', class: colors[row.original.status] })
+    return h(Badge, { label: row.original.status, variant: 'soft-outline', class: colors[row.original.status] })
   } },
 ]
 

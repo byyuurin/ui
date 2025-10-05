@@ -29,8 +29,8 @@ export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps,
 import { useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
+import { useFieldGroup } from '../composables/useFieldGroup'
 import { omit, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 const slots = defineSlots<ButtonSlots>()
 
-const { size, orientation } = useButtonGroup(props)
+const { size, orientation } = useFieldGroup(props)
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(
   computed(() => ({ ...props, loading: props.loading })),
 )

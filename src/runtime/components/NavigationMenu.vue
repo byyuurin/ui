@@ -141,7 +141,7 @@ import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { get, isArrayOfArray, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
-import Chip from './Chip.vue'
+import Badge from './Badge.vue'
 import Icon from './Icon.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
@@ -240,7 +240,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
 
       <component :is="orientation === 'vertical' && item.children?.length && !collapsed ? AccordionTrigger : 'span'" v-if="(!collapsed || orientation !== 'vertical') && (item.chip || (orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[(item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>])" as="span" :class="style.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })" @click.stop.prevent>
         <slot :name="((item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index">
-          <Chip
+          <Badge
             v-if="item.chip"
             variant="outline"
             v-bind="(typeof item.chip === 'string' || typeof item.chip === 'number') ? { label: String(item.chip) } : item.chip"

@@ -48,8 +48,8 @@ export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
-import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
+import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormItem } from '../composables/useFormItem'
 import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
@@ -83,7 +83,7 @@ const {
   emitFormChange,
   emitFormFocus,
 } = useFormItem<InputProps>(props, { deferInputValidation: true })
-const { size: buttonGroupSize, orientation } = useButtonGroup(props)
+const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
@@ -93,7 +93,7 @@ const style = computed(() => {
   return ui({
     ...props,
     type: props.type as ThemeVariants['type'],
-    size: buttonGroupSize.value || formItemSize.value,
+    size: fieldGroupSize.value || formItemSize.value,
     highlight: highlight.value,
     groupOrientation: orientation.value,
     leading: isLeading.value || !!slots.leading,

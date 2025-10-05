@@ -17,7 +17,7 @@ export default ct(/* @unocss-include */{
   },
 })
 
-export const buttonGroupVariant = {
+export const fieldGroupVariant = {
   groupOrientation: {
     horizontal: {
       base: 'not-only-child:first:rounded-e-none not-only-child:last:rounded-s-none not-last:not-first:rounded-none',
@@ -28,7 +28,7 @@ export const buttonGroupVariant = {
   },
 }
 
-export const buttonGroupVariantWithRoot = {
+export const fieldGroupVariantWithRoot = {
   groupOrientation: {
     horizontal: {
       root: 'group',

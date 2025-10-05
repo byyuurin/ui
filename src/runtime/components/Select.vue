@@ -111,8 +111,8 @@ import { defu } from 'defu'
 import { SelectArrow, SelectContent, SelectGroup, SelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectSeparator, SelectTrigger, SelectViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
-import { useButtonGroup } from '../composables/useButtonGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
+import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormItem } from '../composables/useFormItem'
 import { compare, get, isArrayOfArray } from '../utils'
 import { cv, merge } from '../utils/style'
@@ -136,7 +136,7 @@ const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffse
 const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 
 const { id, name, size: formItemSize, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormItem<SelectProps<T, VK, M>>(props)
-const { size: buttonGroupSize, orientation } = useButtonGroup(props)
+const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
@@ -144,7 +144,7 @@ const style = computed(() => {
   return ui({
     ...props,
     groupOrientation: orientation.value,
-    size: buttonGroupSize.value || formItemSize.value,
+    size: fieldGroupSize.value || formItemSize.value,
     highlight: highlight.value,
     leading: isLeading.value,
     trailing: isTrailing.value,
