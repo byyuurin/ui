@@ -20,6 +20,7 @@ export interface KbdProps extends ComponentBaseProps {
   as?: PrimitiveProps['as']
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   value?: KbdKey | (string & {})
 }
 </script>

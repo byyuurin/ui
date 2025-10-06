@@ -37,7 +37,8 @@ const toast = useToast()
 
 const examples: ControlInfo[] = [
   {
-    icon: 'animate-head-shake animate-count-infinite i-carbon-notification',
+    icon: 'i-carbon-notification',
+    ui: { icon: 'animate-head-shake animate-count-infinite' },
   },
   {
     actions: [

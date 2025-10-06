@@ -1,11 +1,12 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
     root: '',
     list: 'flex items-center gap-1',
     ellipsis: 'pointer-events-none',
-    label: 'px-0 min-w-1.5em text-center',
+    label: 'min-w-5 text-center',
     item: '',
     first: '',
     prev: '',

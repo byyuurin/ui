@@ -26,11 +26,17 @@ export interface ProgressProps extends ComponentBaseProps, Pick<ProgressRootProp
    * @default "md"
    */
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   /**
    * The orientation of the progress bar.
    * @default "horizontal"
    */
   orientation?: ThemeVariants['orientation']
+  /**
+   * The animation of the progress bar.
+   * @default "carousel"
+   */
+  animation?: ThemeVariants['animation']
   /** Display the current progress value. */
   status?: boolean
   /** Whether the progress is visually inverted. */
@@ -139,7 +145,7 @@ function stepVariant(index: number | string) {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.wrapper({ class: [props.class, props.ui?.wrapper] })" data-part="wrapper">
+  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
     <div v-if="!isIndeterminate && (props.status || slots.status)" :class="style.status({ class: props.ui?.status })" data-part="status" :style="statusStyle">
       <slot name="status" :percent="percent">
         {{ percent }}%
@@ -150,8 +156,8 @@ function stepVariant(index: number | string) {
       v-bind="rootProps"
       :model-value="Number.isNaN(rootProps.modelValue) ? null : rootProps.modelValue"
       :max="max"
-      :class="style.root({ class: props.ui?.root })"
-      data-part="root"
+      :class="style.base({ class: props.ui?.base })"
+      data-part="base"
       style="transform: translateZ(0)"
     >
       <ProgressIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" :style="indicatorStyle" />

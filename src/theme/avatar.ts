@@ -1,28 +1,41 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
-    root: 'inline-flex items-center justify-center shrink-0 select-none overflow-hidden rounded-full align-middle bg-soft-ui-cb/10',
-    image: 'size-full rounded-inherit object-cover',
-    fallback: 'leading-none color-ui-base/60 truncate',
-    icon: 'size-3/4 color-ui-base/60 shrink-0',
+    root: 'inline-flex items-center justify-center shrink-0 select-none rounded-full align-middle bg-elevated',
+    image: 'h-full w-full rounded-[inherit] object-cover',
+    fallback: 'font-medium leading-none text-muted truncate',
+    icon: 'text-muted shrink-0',
   },
   variants: {
     size: {
-      xs: {
-        root: 'text-xs size-1.4em',
+      '3xs': {
+        root: 'size-4 text-[0.5rem]',
       },
-      sm: {
-        root: 'text-sm size-1.6em',
+      '2xs': {
+        root: 'size-5 text-[0.625rem]',
       },
-      md: {
-        root: 'text-base size-2em',
+      'xs': {
+        root: 'size-6 text-xs',
       },
-      lg: {
-        root: 'text-lg size-2.4em',
+      'sm': {
+        root: 'size-7 text-sm',
       },
-      xl: {
-        root: 'text-xl size-3em',
+      'md': {
+        root: 'size-8 text-base',
+      },
+      'lg': {
+        root: 'size-9 text-lg',
+      },
+      'xl': {
+        root: 'size-10 text-xl',
+      },
+      '2xl': {
+        root: 'size-11 text-[1.375rem]',
+      },
+      '3xl': {
+        root: 'size-12 text-2xl',
       },
     },
   },

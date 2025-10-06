@@ -1,13 +1,14 @@
 import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
 import { name, version } from '../package.json'
-import type { defaultColors } from './defaults'
+import type { VariantsColor, VariantsSize } from './defaults'
 import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
 import { addTemplates } from './templates'
 
 export type * from './runtime/types'
 
-type Color = typeof defaultColors[number] | (string & {})
+type Color = VariantsColor | (string & {})
+type Size = VariantsSize | (string & {})
 
 export interface ModuleOptions {
   /**
@@ -43,8 +44,15 @@ export interface ModuleOptions {
     defaultVariants?: {
       /**
        * The default color variant to use for components
+       * @default "primary"
        */
       color?: Color
+
+      /**
+       * The default size variant to use for components
+       * @default "md"
+       */
+      size?: Size
     }
   }
 }

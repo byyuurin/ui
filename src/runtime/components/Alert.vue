@@ -27,6 +27,7 @@ export interface AlertProps extends ComponentBaseProps {
   title?: string
   description?: string
   icon?: string
+  color?: ThemeVariants['color']
   variant?: ThemeVariants['variant']
   orientation?: ThemeVariants['orientation']
   /**
@@ -56,6 +57,7 @@ import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<AlertProps>(), {
   variant: 'solid',
@@ -86,7 +88,7 @@ const style = computed(() => {
     data-part="root"
   >
     <slot name="leading">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">

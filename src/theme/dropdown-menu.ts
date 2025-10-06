@@ -1,54 +1,46 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    content: [
-      'bg-ui-base shadow-lg rounded ring ring-ui-base/10 divide-y divide-ui-base/10 overflow-y-auto scroll-py-1',
-      'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
-    ],
-    arrow: '-mt-px fill-ui-cx stroke-ui-base/10',
+    content: 'min-w-32 bg-default shadow-lg rounded-md ring ring-default overflow-hidden data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-[--reka-dropdown-menu-content-transform-origin] flex flex-col',
+    viewport: 'relative divide-y divide-default scroll-py-1 overflow-y-auto flex-1',
+    arrow: 'fill-default',
     group: 'p-1 isolate',
-    label: 'w-full flex items-center font-semibold color-ui-base',
-    separator: '-mx-1 my-1 h-px bg-ui-cb/10',
-    item: [
-      'group relative w-full flex items-center select-none outline-none',
-      'before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded',
-      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
-    ],
+    label: 'w-full flex items-center font-semibold text-highlighted',
+    separator: '-mx-1 my-1 h-px bg-border',
+    item: 'group relative w-full flex items-center select-none outline-none before:absolute before:z-[-1] before:inset-px before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75',
     itemLeadingIcon: 'shrink-0',
     itemLeadingAvatar: 'shrink-0',
+    itemLeadingAvatarSize: '',
     itemTrailing: 'ms-auto inline-flex gap-1.5 items-center',
     itemTrailingIcon: 'shrink-0',
     itemTrailingKbds: 'hidden lg:inline-flex items-center shrink-0',
+    itemTrailingKbdsSize: '',
     itemLabel: 'truncate',
-    itemLabelExternalIcon: 'inline-block size-3 align-top color-ui-base/50',
+    itemLabelExternalIcon: 'inline-block size-3 align-top text-dimmed',
   },
   variants: {
-    size: {
-      xs: {
-        content: 'text-xs',
-      },
-      sm: {
-        content: 'text-sm',
-      },
-      md: {
-        content: 'text-base',
-      },
-      lg: {
-        content: 'text-lg',
-      },
-      xl: {
-        content: 'text-xl',
-      },
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
     },
     active: {
       true: {
-        item: 'color-ui-base before:bg-ui-cb/10',
-        itemLeadingIcon: 'color-ui-base/80',
+        item: 'text-highlighted before:bg-elevated',
+        itemLeadingIcon: 'text-default',
       },
       false: {
-        item: 'color-ui-base/80 data-[highlighted]:color-ui-base data-[state=open]:color-ui-base data-[highlighted]:before:bg-ui-cb/5 data-[state=open]:before:bg-ui-cb/5 transition-colors before:transition-colors',
-        itemLeadingIcon: 'color-ui-base/50 group-data-[highlighted]:color-ui-base/80 group-data-[state=open]:color-ui-base/80 transition-colors',
+        item: [
+          'text-default data-highlighted:text-highlighted data-[state=open]:text-highlighted data-highlighted:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50',
+          options.theme.transitions && 'transition-colors before:transition-colors',
+        ],
+        itemLeadingIcon: [
+          'text-dimmed group-data-highlighted:text-default group-data-[state=open]:text-default',
+          options.theme.transitions && 'transition-colors',
+        ],
       },
     },
     loading: {
@@ -56,24 +48,71 @@ export default ct(/* @unocss-include */{
         itemLeadingIcon: 'animate-spin',
       },
     },
+    size: {
+      xs: {
+        label: 'p-1 text-xs gap-1',
+        item: 'p-1 text-xs gap-1',
+        itemLeadingIcon: 'size-4',
+        itemLeadingAvatarSize: '3xs',
+        itemTrailingIcon: 'size-4',
+        itemTrailingKbds: 'gap-0.5',
+        itemTrailingKbdsSize: 'sm',
+      },
+      sm: {
+        label: 'p-1.5 text-xs gap-1.5',
+        item: 'p-1.5 text-xs gap-1.5',
+        itemLeadingIcon: 'size-4',
+        itemLeadingAvatarSize: '3xs',
+        itemTrailingIcon: 'size-4',
+        itemTrailingKbds: 'gap-0.5',
+        itemTrailingKbdsSize: 'sm',
+      },
+      md: {
+        label: 'p-1.5 text-sm gap-1.5',
+        item: 'p-1.5 text-sm gap-1.5',
+        itemLeadingIcon: 'size-5',
+        itemLeadingAvatarSize: '2xs',
+        itemTrailingIcon: 'size-5',
+        itemTrailingKbds: 'gap-0.5',
+        itemTrailingKbdsSize: 'md',
+      },
+      lg: {
+        label: 'p-2 text-sm gap-2',
+        item: 'p-2 text-sm gap-2',
+        itemLeadingIcon: 'size-5',
+        itemLeadingAvatarSize: '2xs',
+        itemTrailingIcon: 'size-5',
+        itemTrailingKbds: 'gap-1',
+        itemTrailingKbdsSize: 'md',
+      },
+      xl: {
+        label: 'p-2 text-base gap-2',
+        item: 'p-2 text-base gap-2',
+        itemLeadingIcon: 'size-6',
+        itemLeadingAvatarSize: 'xs',
+        itemTrailingIcon: 'size-6',
+        itemTrailingKbds: 'gap-1',
+        itemTrailingKbdsSize: 'lg',
+      },
+    },
   },
   compoundVariants: [
-    {
-      size: ['xs', 'sm', 'md'],
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      active: false,
       class: {
-        label: 'p-0.25em gap-0.25em',
-        item: 'p-0.25em gap-0.25em',
-        itemTrailingKbds: 'gap-0.125em',
+        item: `text-${color} data-[highlighted]:text-${color} data-[highlighted]:before:bg-${color}/10 data-[state=open]:before:bg-${color}/10`,
+        itemLeadingIcon: `text-${color}/75 group-data-[highlighted]:text-${color} group-data-[state=open]:text-${color}`,
       },
-    },
-    {
-      size: ['lg', 'xl'],
+    })),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      active: true,
       class: {
-        label: 'p-0.5em gap-0.5em',
-        item: 'p-0.5em gap-0.5em',
-        itemTrailingKbds: 'gap-0.25em',
+        item: `text-${color} before:bg-${color}/10`,
+        itemLeadingIcon: `text-${color}`,
       },
-    },
+    })),
   ],
   defaultVariants: {
     size: 'md',

@@ -6,7 +6,8 @@ const leadingIcon = 'i-carbon-unlocked'
 const trailingIcon = 'i-carbon-share'
 
 const controls: ControlItems<InputProps> = [
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
+  { prop: 'color', value: 'primary', options: ['error', 'primary', 'secondary', 'success', 'info', 'warning', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'type', value: 'text', options: ['text', 'number', 'password', 'search', 'file'] },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },

@@ -62,10 +62,10 @@ import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { get } from '../utils'
 import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
   defaultValue: '0',
-  variant: 'solid',
   orientation: 'horizontal',
   evenly: true,
   content: true,
@@ -98,7 +98,7 @@ const style = computed(() => {
         data-part="trigger"
       >
         <slot name="leading" :item="item" :index="index">
-          <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
+          <Icon v-if="item.icon" :name="item.icon" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
         </slot>
 
         <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">

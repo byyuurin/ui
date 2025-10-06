@@ -55,6 +55,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
    * @default "md"
    */
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   /** Whether or not a range of dates can be selected */
   range?: R & boolean
   /** Whether or not multiple dates can be selected */
@@ -179,16 +180,14 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
               data-part="cell"
             >
               <Calendar.CellTrigger
-                v-slot="{ disabled, unavailable }"
                 :day="weekDate"
                 :month="month.value"
-                as-child
+                :class="style.cellTrigger({ class: props.ui?.cellTrigger })"
+                data-part="cell-trigger"
               >
-                <div :class="style.cellTrigger({ class: props.ui?.cellTrigger, disabled: disabled || unavailable })" data-part="cell-trigger">
-                  <slot name="day" :day="weekDate">
-                    {{ weekDate.day }}
-                  </slot>
-                </div>
+                <slot name="day" :day="weekDate">
+                  {{ weekDate.day }}
+                </slot>
               </Calendar.CellTrigger>
             </Calendar.Cell>
           </Calendar.GridRow>

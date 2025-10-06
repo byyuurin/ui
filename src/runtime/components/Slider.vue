@@ -15,6 +15,7 @@ type ThemeVariants = VariantProps<typeof theme>
 export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, 'as' | 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
   modelValue?: number | number[]
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   /**
    * The orientation of the slider.
    * @default "horizontal"
@@ -31,7 +32,7 @@ import { reactivePick } from '@vueuse/core'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<SliderProps>(), {
@@ -67,13 +68,14 @@ const sliderValue = computed({
 
 const thumbsCount = computed(() => sliderValue.value?.length ?? 1)
 
-const { id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SliderProps>(props)
+const { id, size, color, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<SliderProps>(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
   const ui = cv(merge(theme, appConfig.ui.slider))
   return ui({
     ...props,
     size: size.value,
+    color: color.value,
   })
 })
 

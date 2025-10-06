@@ -82,7 +82,7 @@ const style = computed(() => {
       <AccordionHeader :class="style.header({ class: props.ui?.header })" data-part="header">
         <AccordionTrigger :class="style.trigger({ class: props.ui?.trigger, disabled: item.disabled })" data-part="trigger">
           <slot name="leading" v-bind="{ item, index, open }">
-            <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
+            <Icon v-if="item.icon" :name="item.icon" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
           </slot>
 
           <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">

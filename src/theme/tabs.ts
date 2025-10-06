@@ -1,114 +1,86 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'flex items-center gap-2',
     list: 'relative flex p-1 group',
-    indicator: 'absolute transition-all duration-200',
+    indicator: 'absolute transition duration-200',
     trigger: [
-      'group relative inline-flex items-center gap-0.25em shrink-0 min-w-0 font-medium rounded transition-colors',
-      'outline-none',
-      'disabled:cursor-not-allowed disabled:opacity-50',
+      'group relative inline-flex items-center min-w-0 data-[state=inactive]:text-muted hover:data-[state=inactive]:not-disabled:text-default font-medium rounded-md disabled:cursor-not-allowed disabled:opacity-75',
+      options.theme.transitions && 'transition-colors',
     ],
-    content: 'w-full focus:outline-none',
-    leadingIcon: 'shrink-0 size-1.5em',
+    leadingIcon: 'shrink-0',
+    leadingAvatar: 'shrink-0',
+    leadingAvatarSize: '',
     label: 'truncate',
+    trailingBadge: 'shrink-0',
+    trailingBadgeSize: 'sm',
+    content: 'focus:outline-none w-full',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
+    },
     variant: {
-      'solid': {
-        list: 'bg-soft-ui-cb/5 rounded',
-        trigger: [
-          'data-[state=active]:color-ui-cx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
-          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
-        ],
-        indicator: 'bg-soft-ui-fill/90 rounded shadow-sm',
+      pill: {
+        list: 'bg-elevated rounded-lg',
+        trigger: 'grow',
+        indicator: 'rounded-md shadow-xs',
       },
-      'outline': {
-        list: 'bg-soft-ui-cb/5 rounded',
-        trigger: [
-          'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill/80',
-          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
-        ],
-        indicator: 'rounded ring ring-inset ring-ui-fill',
-      },
-      'soft': {
-        list: 'bg-soft-ui-cb/5 rounded',
-        trigger: [
-          'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
-          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
-        ],
-        indicator: 'bg-soft-ui-fill/10 rounded shadow-sm',
-      },
-      'soft-outline': {
-        list: 'bg-soft-ui-cb/5 rounded',
-        trigger: [
-          'data-[state=active]:color-ui-fill focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-fill',
-          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
-        ],
-        indicator: 'bg-soft-ui-fill/10 rounded shadow-sm ring ring-inset ring-ui-fill/30',
-      },
-      'link': {
-        list: 'bg-soft-ui-cb/5 border-ui-base/10',
-        indicator: 'bg-soft-ui-fill rounded-full',
-        trigger: [
-          'data-[state=active]:color-ui-base focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ui-base',
-          'data-[state=inactive]:color-ui-base/80 hover:data-[state=inactive]:not-disabled:color-ui-base',
-        ],
+      link: {
+        list: 'border-default',
+        indicator: 'rounded-full',
+        trigger: 'focus:outline-none',
       },
     },
     orientation: {
       horizontal: {
         root: 'flex-col',
         list: 'w-full',
-        indicator: 'left-0 w-[var(--reka-tabs-indicator-size)] translate-x-[var(--reka-tabs-indicator-position)]',
+        indicator: 'left-0 w-[--reka-tabs-indicator-size] translate-x-[--reka-tabs-indicator-position]',
         trigger: 'justify-center',
       },
       vertical: {
         list: 'flex-col',
-        indicator: 'top-0 h-[var(--reka-tabs-indicator-size)] translate-y-[var(--reka-tabs-indicator-position)]',
-        trigger: 'flex-1 w-full',
+        indicator: 'top-0 h-[--reka-tabs-indicator-size] translate-y-[--reka-tabs-indicator-position]',
       },
     },
     size: {
       xs: {
-        root: 'text-sm',
+        trigger: 'px-2 py-1 text-xs gap-1',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
       },
       sm: {
-        root: 'tex-tsm',
+        trigger: 'px-2.5 py-1.5 text-xs gap-1.5',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
       },
       md: {
-        root: 'text-base',
+        trigger: 'px-3 py-1.5 text-sm gap-1.5',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
       },
       lg: {
-        root: 'text-lg',
+        trigger: 'px-3 py-2 text-sm gap-2',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
       },
       xl: {
-        root: 'text-xl',
-      },
-    },
-    evenly: {
-      true: {
-        trigger: 'w-full flex-1',
+        trigger: 'px-3 py-2 text-base gap-2',
+        leadingIcon: 'size-6',
+        leadingAvatarSize: 'xs',
       },
     },
   },
   compoundVariants: [
     {
-      size: ['xs', 'sm', 'md'],
-      class: {
-        trigger: 'p-1.5 px-2.5',
-      },
-    },
-    {
-      size: ['lg', 'xl'],
-      class: {
-        trigger: 'p-2.5 px-4.5',
-      },
-    },
-    {
       orientation: 'horizontal',
-      variant: ['solid', 'soft', 'outline', 'soft-outline'],
+      variant: 'pill',
       class: {
         indicator: 'inset-y-1',
       },
@@ -123,10 +95,10 @@ export default ct(/* @unocss-include */{
     },
     {
       orientation: 'vertical',
-      variant: ['solid', 'soft', 'outline', 'soft-outline'],
+      variant: 'pill',
       class: {
         indicator: 'inset-x-1',
-        list: 'items-center rounded-[calc(var(--ui-radius-tabs)*0.66)]',
+        list: 'items-center',
       },
     },
     {
@@ -137,8 +109,42 @@ export default ct(/* @unocss-include */{
         indicator: '-start-px w-px',
       },
     },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'pill',
+      class: {
+        indicator: `bg-${color}`,
+        trigger: `data-[state=active]:text-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'pill',
+      class: {
+        indicator: 'bg-inverted',
+        trigger: 'data-[state=active]:text-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted',
+      },
+    },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'link',
+      class: {
+        indicator: `bg-${color}`,
+        trigger: `data-[state=active]:text-${color} focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'link',
+      class: {
+        indicator: 'bg-inverted',
+        trigger: 'data-[state=active]:text-highlighted focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted',
+      },
+    },
   ],
   defaultVariants: {
+    color: 'primary',
+    variant: 'pill',
     size: 'md',
   },
 })

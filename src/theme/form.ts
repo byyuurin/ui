@@ -1,5 +1,6 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   base: '',
 })

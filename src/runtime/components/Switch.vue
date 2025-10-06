@@ -39,7 +39,7 @@ import { reactivePick } from '@vueuse/core'
 import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -50,7 +50,7 @@ const modelValue = defineModel<boolean>({ default: undefined })
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SwitchProps>(props)
+const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<SwitchProps>(props)
 const id = _id.value ?? useId()
 
 const appConfig = useAppConfig() as RuntimeAppConfig

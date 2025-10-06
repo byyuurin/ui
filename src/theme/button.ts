@@ -1,87 +1,75 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 import { fieldGroupVariant } from './field-group'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     base: [
-      'relative inline-flex items-center rounded leading-normal transition-colors',
-      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
-      'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:opacity-50',
+      'rounded-md font-medium inline-flex items-center',
+      options.theme.transitions && 'transition-colors',
+      'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75',
     ],
-    label: 'color-inherit',
-    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-0.5',
-    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-0.5',
+    label: 'truncate',
+    leadingIcon: 'shrink-0',
+    leadingAvatar: 'shrink-0',
+    leadingAvatarSize: '',
+    trailingIcon: 'shrink-0',
   },
   variants: {
     ...fieldGroupVariant,
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
+    },
     variant: {
-      'solid': {
-        base: [
-          'color-ui-cx bg-soft-ui-fill/85',
-          'hover:bg-soft-ui-fill/75 active:bg-soft-ui-fill/95',
-          'disabled:bg-soft-ui-fill/85 aria-disabled:bg-soft-ui-fill/85',
-          'hover:disabled:bg-soft-ui-fill/85 hover:aria-disabled:bg-soft-ui-fill/85',
-        ],
-      },
-      'outline': {
-        base: [
-          'color-ui-fill/80 bg-ui-base ring ring-inset ring-ui-fill/30',
-          'hover:bg-soft-ui-fill/5 active:bg-soft-ui-fill/10',
-          'disabled:bg-ui-base aria-disabled:bg-ui-base',
-          'hover:disabled:bg-ui-base hover:aria-disabled:bg-ui-base',
-        ],
-      },
-      'soft': {
-        base: [
-          'color-ui-fill/80 bg-soft-ui-fill/15',
-          'hover:bg-soft-ui-fill/10 hover:color-ui-fill/80 active:bg-soft-ui-fill/25 active:color-ui-fill/90',
-          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
-          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-fill/80 hover:aria-disabled:color-ui-fill/80',
-        ],
-      },
-      'soft-outline': {
-        base: [
-          'color-ui-fill/80 bg-soft-ui-fill/15 ring ring-inset ring-ui-fill/30',
-          'hover:bg-soft-ui-fill/10 hover:color-ui-fill/80 active:bg-soft-ui-fill/25 active:color-ui-fill/90',
-          'disabled:bg-soft-ui-fill/15 aria-disabled:bg-soft-ui-fill/15 disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
-          'hover:disabled:bg-soft-ui-fill/15 hover:aria-disabled:bg-soft-ui-fill/15 hover:disabled:color-ui-fill/80 hover:aria-disabled:color-ui-fill/80',
-        ],
-      },
-      'ghost': {
-        base: [
-          'color-ui-fill/80 bg-transparent',
-          'hover:bg-soft-ui-fill/5 hover:color-ui-fill/80 active:bg-soft-ui-fill/10 active:color-ui-fill/90',
-          'disabled:bg-transparent aria-disabled:bg-transparent disabled:hover:bg-transparent aria-disabled:hover:bg-transparent disabled:color-ui-fill/80 aria-disabled:color-ui-fill/80',
-          'hover:disabled:bg-transparent hover:aria-disabled:bg-transparent hover:disabled:hover:bg-transparent hover:aria-disabled:hover:bg-transparent hover:disabled:color-ui-fill/80 hover:aria-disabled:color-ui-fill/80',
-        ],
-      },
-      'link': {
-        base: [
-          'color-ui-fill/80 bg-transparent',
-          'hover:color-ui-fill/60 active:color-ui-fill',
-          'disabled:color-ui-fill aria-disabled:color-ui-fill',
-          'hover:disabled:color-ui-fill hover:aria-disabled:color-ui-fill',
-        ],
-      },
+      solid: '',
+      outline: '',
+      soft: '',
+      subtle: '',
+      ghost: '',
+      link: '',
     },
     size: {
       xs: {
-        base: 'text-xs',
+        base: 'px-2 py-1 text-xs gap-1',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-4',
       },
       sm: {
-        base: 'text-sm',
+        base: 'px-2.5 py-1.5 text-xs gap-1.5',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-4',
       },
       md: {
-        base: 'text-base',
+        base: 'px-2.5 py-1.5 text-sm gap-1.5',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-5',
       },
       lg: {
-        base: 'text-lg',
+        base: 'px-3 py-2 text-sm gap-2',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-5',
       },
       xl: {
-        base: 'text-xl',
+        base: 'px-3 py-2 text-base gap-2',
+        leadingIcon: 'size-6',
+        leadingAvatarSize: 'xs',
+        trailingIcon: 'size-6',
       },
     },
-    active: {
+    block: {
+      true: {
+        base: 'w-full justify-center',
+        trailingIcon: 'ms-auto',
+      },
+    },
+    square: {
       true: '',
     },
     leading: {
@@ -93,70 +81,144 @@ export default ct(/* @unocss-include */{
     loading: {
       true: '',
     },
+    active: {
+      true: {
+        base: '',
+      },
+      false: {
+        base: '',
+      },
+    },
   },
   compoundVariants: [
-    {
-      size: ['xs', 'sm', 'md'],
-      class: {
-        base: 'p-1.5',
-        label: 'px-1',
-      },
-    },
-    {
-      size: ['lg', 'xl'],
-      class: {
-        base: 'p-2.5',
-        label: 'px-2',
-      },
-    },
-    {
-      active: true,
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
       variant: 'solid',
       class: {
-        base: 'bg-soft-ui-fill/95 hover:bg-soft-ui-fill/95',
+        base: `text-inverted bg-${color} hover:bg-${color}/75 active:bg-${color}/75 disabled:bg-${color} aria-disabled:bg-${color} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color}`,
       },
-    },
-    {
-      active: true,
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
       variant: 'outline',
       class: {
-        base: 'bg-soft-ui-fill/10 hover:bg-soft-ui-fill/30',
+        base: `ring ring-inset ring-${color}/50 text-${color} hover:bg-${color}/10 active:bg-${color}/10 disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent focus:outline-none focus-visible:ring-2 } focus-visible:ring-${color}`,
       },
-    },
-    {
-      active: true,
-      variant: ['soft', 'soft-outline'],
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'soft',
       class: {
-        base: 'color-ui-fill/90 bg-soft-ui-fill/25 hover:color-ui-fill/90 hover:bg-soft-ui-fill/25',
+        base: `text-${color} bg-${color}/10 hover:bg-${color}/15 active:bg-${color}/15 focus:outline-none focus-visible:bg-${color}/15 disabled:bg-${color}/10 aria-disabled:bg-${color}/10`,
       },
-    },
-    {
-      active: true,
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'subtle',
+      class: {
+        base: `text-${color} ring ring-inset ring-${color}/25 bg-${color}/10 hover:bg-${color}/15 active:bg-${color}/15 disabled:bg-${color}/10 aria-disabled:bg-${color}/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-${color}`,
+      },
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
       variant: 'ghost',
       class: {
-        base: 'color-ui-fill/90 bg-soft-ui-fill/10 hover:color-ui-fill/90 hover:bg-soft-ui-fill/10',
+        base: `text-${color} hover:bg-${color}/10 active:bg-${color}/10 focus:outline-none focus-visible:bg-${color}/10 disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent`,
+      },
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'link',
+      class: {
+        base: `text-${color} hover:text-${color}/75 active:text-${color}/75 disabled:text-${color} aria-disabled:text-${color} focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'solid',
+      class: {
+        base: 'text-inverted bg-inverted hover:bg-inverted/90 active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted',
       },
     },
     {
-      active: true,
+      color: 'neutral',
+      variant: 'outline',
+      class: {
+        base: 'ring ring-inset ring-accented text-default bg-default hover:bg-elevated active:bg-elevated disabled:bg-default aria-disabled:bg-default focus:outline-none focus-visible:ring-2 focus-visible:ring-inverted',
+      },
+    },
+    {
+      color: 'neutral',
+      variant: 'soft',
+      class: {
+        base: 'text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 focus:outline-none focus-visible:bg-accented/75 disabled:bg-elevated aria-disabled:bg-elevated',
+      },
+    },
+    {
+      color: 'neutral',
+      variant: 'subtle',
+      class: {
+        base: 'ring ring-inset ring-accented text-default bg-elevated hover:bg-accented/75 active:bg-accented/75 disabled:bg-elevated aria-disabled:bg-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-inverted',
+      },
+    },
+    {
+      color: 'neutral',
+      variant: 'ghost',
+      class: {
+        base: 'text-default hover:bg-elevated active:bg-elevated focus:outline-none focus-visible:bg-elevated hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent',
+      },
+    },
+    {
+      color: 'neutral',
       variant: 'link',
       class: {
-        base: 'color-ui-fill hover:color-ui-fill',
+        base: 'text-muted hover:text-default active:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted',
       },
+    },
+    {
+      size: 'xs',
+      square: true,
+      class: { base: 'p-1' },
+    },
+    {
+      size: 'sm',
+      square: true,
+      class: { base: 'p-1.5' },
+    },
+    {
+      size: 'md',
+      square: true,
+      class: { base: 'p-1.5' },
+    },
+    {
+      size: 'lg',
+      square: true,
+      class: { base: 'p-2' },
+    },
+    {
+      size: 'xl',
+      square: true,
+      class: { base: 'p-2' },
     },
     {
       loading: true,
       leading: true,
-      class: { leadingIcon: 'animate-spin' },
+      class: {
+        leadingIcon: 'animate-spin',
+      },
     },
     {
       loading: true,
       leading: false,
       trailing: true,
-      class: { trailingIcon: 'animate-spin' },
+      class: {
+        trailingIcon: 'animate-spin',
+      },
     },
   ],
   defaultVariants: {
+    color: 'primary',
+    variant: 'solid',
     size: 'md',
   },
 })

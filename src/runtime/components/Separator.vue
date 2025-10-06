@@ -48,7 +48,7 @@ const style = computed(() => {
 
 <template>
   <Separator v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <div :class="style.line({ class: props.ui?.line, start: props.align === 'start' })" data-part="line"></div>
+    <div :class="style.border({ class: props.ui?.border, start: props.align === 'start' })" data-part="border"></div>
 
     <template v-if="props.label || props.icon || slots.default">
       <div :class="style.container({ class: props.ui?.container })" data-part="container">
@@ -58,7 +58,7 @@ const style = computed(() => {
         </slot>
       </div>
 
-      <div :class="style.line({ class: props.ui?.line, end: props.align === 'end' })" data-part="line"></div>
+      <div :class="style.border({ class: props.ui?.border, end: props.align === 'end' })" data-part="border"></div>
     </template>
   </Separator>
 </template>

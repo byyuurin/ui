@@ -33,6 +33,7 @@ import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<BadgeProps>(), {
   variant: 'solid',
@@ -57,7 +58,7 @@ const style = computed(() => {
 <template>
   <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
     <slot name="leading">
-      <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
+      <Icon v-if="isLeading && leadingIconName" :name="leadingIconName" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
     </slot>
 
     <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
@@ -65,7 +66,7 @@ const style = computed(() => {
     </span>
 
     <slot name="trailing">
-      <span v-if="isTrailing && trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
+      <Icon v-if="isTrailing && trailingIconName" :name="trailingIconName" :class="style.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />
     </slot>
   </Primitive>
 </template>

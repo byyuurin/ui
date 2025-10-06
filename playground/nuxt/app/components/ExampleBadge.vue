@@ -6,7 +6,7 @@ const icon = 'i-carbon-logo-youtube'
 
 const controls: ControlItems<BadgeProps> = [
   { prop: 'label', value: '', placeholder: 'Text' },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'subtle'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
 ]
 </script>

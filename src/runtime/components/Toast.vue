@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import theme from '#build/ui/toast'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, ProgressProps, RuntimeAppConfig } from '../types'
 
 export interface ToastEmits extends ToastRootEmits {}
 
@@ -22,6 +22,7 @@ export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'de
   title?: string
   description?: string
   icon?: string
+  color?: ThemeVariants['color']
   orientation?: ThemeVariants['orientation']
   /**
    * Display a list of actions:
@@ -36,6 +37,11 @@ export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'de
   close?: ButtonProps | boolean
   /** @default app.icons.close */
   closeIcon?: string
+  /**
+   * Display a progress bar showing the toast's remaining duration.
+   * @default true
+   */
+  progress?: boolean | Pick<ProgressProps, 'color' | 'ui'>
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
@@ -48,10 +54,13 @@ import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
+import Icon from './Icon.vue'
+import Progress from './Progress.vue'
 
 const props = withDefaults(defineProps<ToastProps>(), {
   orientation: 'vertical',
   close: true,
+  progress: true,
 })
 
 const emit = defineEmits<ToastEmits>()
@@ -87,7 +96,7 @@ defineExpose({
     :style="{ '--height': height }"
   >
     <slot name="icon">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
@@ -140,6 +149,13 @@ defineExpose({
       </ToastClose>
     </div>
 
-    <div v-if="remaining >= 0 && duration" :class="style.progress({ class: props.ui?.progress })" data-part="progress" :style="{ width: `${remaining / duration * 100}%` }"></div>
+    <Progress
+      v-if="props.progress && props.open && remaining >= 0 && duration"
+      :model-value="remaining / duration * 100"
+      :color="props.color"
+      v-bind="(typeof props.progress === 'object' ? props.progress : {})"
+      size="sm"
+      :class="style.progress({ class: props.ui?.progress })"
+    />
   </ToastRoot>
 </template>

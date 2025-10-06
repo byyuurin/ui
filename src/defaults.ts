@@ -34,7 +34,7 @@ export type VariantsSize = typeof themeSizes[number]
 
 export const defaultColors = ['primary', 'secondary', 'success', 'info', 'warning', 'error'] as const
 
-export type VariantsColor = typeof defaultColors[number] | 'neutral'
+export type VariantsColor = typeof defaultColors[number]
 
 export function resolveColors(colors?: string[]) {
   return colors?.length

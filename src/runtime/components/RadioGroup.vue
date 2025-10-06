@@ -68,7 +68,7 @@ import { reactivePick } from '@vueuse/core'
 import { Label, RadioGroupIndicator, RadioGroupItem, RadioGroupRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { get } from '../utils'
 import { cv, merge } from '../utils/style'
 
@@ -84,7 +84,7 @@ const slots = defineSlots<RadioGroupSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emit)
 
-const { id: _id, name, size, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<RadioGroupProps<T>>(props)
+const { id: _id, name, size, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<RadioGroupProps<T>>(props)
 const id = _id.value ?? useId()
 
 const appConfig = useAppConfig() as RuntimeAppConfig

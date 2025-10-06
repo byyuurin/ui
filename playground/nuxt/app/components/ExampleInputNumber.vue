@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref<number>(0)
 
 const controls: ControlItems<InputNumberProps> = [
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'min', value: undefined, type: 'number' },

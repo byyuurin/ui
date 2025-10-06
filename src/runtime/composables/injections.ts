@@ -1,6 +1,6 @@
 import type { UseEventBusReturn } from '@vueuse/core'
 import type { ComputedRef, MaybeRefOrGetter, Ref } from 'vue'
-import type { AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormItemProps, Messages } from '../types'
+import type { AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormFieldProps, Messages } from '../types'
 import type { GetObjectField } from '../types/utils'
 import type { Locale } from '../utils'
 import { defineInjection } from '../utils'
@@ -39,7 +39,7 @@ export const {
   provide: provideFormBus,
 } = defineInjection<FormBusProvideValue>('ui.form-bus')
 
-export interface FormItemProvideValue<T> {
+export interface FormFieldProvideValue<T> {
   name?: string
   size?: GetObjectField<T, 'size'>
   error?: string | boolean
@@ -52,10 +52,10 @@ export interface FormItemProvideValue<T> {
   ariaId: string
 }
 export const {
-  InjectionKey: InjectionKeyFormItem,
-  inject: injectFormItem,
-  provide: provideFormItem,
-} = defineInjection<ComputedRef<FormItemProvideValue<FormItemProps>>>('ui.form-item')
+  InjectionKey: InjectionKeyFormField,
+  inject: injectFormField,
+  provide: provideFormField,
+} = defineInjection<ComputedRef<FormFieldProvideValue<FormFieldProps>>>('ui.form-field')
 
 export const {
   InjectionKey: InjectionKeyFormInputId,

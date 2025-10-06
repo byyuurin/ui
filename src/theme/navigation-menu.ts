@@ -1,37 +1,57 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'relative flex gap-1.5 [&>div]:min-w-0',
     list: 'isolate min-w-0',
-    label: 'w-full flex items-center gap-1.5 font-semibold text-xs/5 color-ui-base px-2.5 py-1.5',
+    label: 'w-full flex items-center gap-1.5 font-semibold text-xs/5 text-highlighted px-2.5 py-1.5',
     item: 'min-w-0',
-    link: 'group relative w-full flex items-center gap-1.5 font-medium text-sm before:content-empty before:absolute before:z-[-1] before:rounded focus:outline-none focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2 focus-visible:before:ring-ui-cb/90',
+    link: 'group relative w-full flex items-center gap-1.5 font-medium text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
     linkLeadingIcon: 'shrink-0 size-5',
+    linkLeadingAvatar: 'shrink-0',
+    linkLeadingAvatarSize: '2xs',
     linkTrailing: 'group ms-auto inline-flex gap-1.5 items-center',
-    linkTrailingChip: 'shrink-0',
+    linkTrailingBadge: 'shrink-0',
+    linkTrailingBadgeSize: 'sm',
     linkTrailingIcon: 'size-5 transform shrink-0 group-data-[state=open]:rotate-180 transition-transform duration-200',
     linkLabel: 'truncate',
-    linkLabelExternalIcon: 'inline-block size-3 align-top color-ui-base/50',
+    linkLabelExternalIcon: 'inline-block size-3 align-top text-dimmed',
     childList: 'isolate',
-    childLabel: 'text-xs color-ui-base',
+    childLabel: 'text-xs text-highlighted',
     childItem: '',
-    childLink: 'group relative size-full flex items-start text-start text-sm before:content-empty before:absolute before:z-[-1] before:rounded focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2 focus-visible:outline-ui-cb/90',
+    childLink: 'group relative size-full flex items-start text-start text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
     childLinkWrapper: 'min-w-0',
     childLinkIcon: 'size-5 shrink-0',
     childLinkLabel: 'truncate',
-    childLinkLabelExternalIcon: 'inline-block size-3 align-top color-ui-base/50',
-    childLinkDescription: 'color-ui-base/60',
-    separator: 'px-2 h-px bg-ui-cb/20',
+    childLinkLabelExternalIcon: 'inline-block size-3 align-top text-dimmed',
+    childLinkDescription: 'text-muted',
+    separator: 'px-2 h-px bg-border',
     viewportWrapper: 'absolute top-full left-0 flex w-full',
-    viewport: 'relative overflow-hidden bg-ui-cx shadow-lg rounded ring ring-ui-cb/20 h-[--reka-navigation-menu-viewport-height] w-full transition-[width,height,left] duration-200 origin-[top_center] data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] z-[1]',
+    viewport: 'relative overflow-hidden bg-default shadow-lg rounded-md ring ring-default h-[--reka-navigation-menu-viewport-height] w-full transition-[width,height,left] duration-200 origin-[top_center] data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] z-[1]',
     content: '',
-    indicator: 'absolute data-[state=visible]:animate-[fade-in_100ms_ease-out] data-[state=hidden]:animate-[fade-out_100ms_ease-in] data-[state=hidden]:opacity-0 bottom-0 z-[2] w-[--reka-navigation-menu-indicator-size] translate-x-[--reka-navigation-menu-indicator-position] flex h-2.5 items-end justify-center overflow-hidden transition-all duration-200',
-    arrow: 'relative top-[50%] size-2.5 rotate-45 border border-ui-cb/20 bg-ui-cx z-[1] rounded',
+    indicator: 'absolute data-[state=visible]:animate-[fade-in_100ms_ease-out] data-[state=hidden]:animate-[fade-out_100ms_ease-in] data-[state=hidden]:opacity-0 bottom-0 z-[2] w-[--reka-navigation-menu-indicator-size] translate-x-[--reka-navigation-menu-indicator-position] flex h-2.5 items-end justify-center overflow-hidden transition-[translate,width] duration-200',
+    arrow: 'relative top-[50%] size-2.5 rotate-45 border border-default bg-default z-[1] rounded-xs',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        link: `focus-visible:before:ring-${color}`,
+        childLink: `focus-visible:before:ring-${color}`,
+      }])) as Record<VariantsColor, { link: string, childLink: string }>,
+      neutral: {
+        link: 'focus-visible:before:ring-inverted',
+        childLink: 'focus-visible:before:ring-inverted',
+      },
+    },
+    highlightColor: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
+    },
     variant: {
-      ghost: '',
+      pill: '',
       link: '',
     },
     orientation: {
@@ -63,19 +83,25 @@ export default ct(/* @unocss-include */{
     },
     active: {
       true: {
-        childLink: 'before:bg-soft-ui-fill/5 color-ui-base',
-        childLinkIcon: 'color-ui-base/80',
+        childLink: 'before:bg-elevated text-highlighted',
+        childLinkIcon: 'text-default',
       },
       false: {
-        link: 'color-ui-base/60',
-        linkLeadingIcon: 'color-ui-base/50',
-        childLink: 'color-ui-base/80 transition-colors hover:bg-soft-ui-fill/5 hover:color-ui-base',
-        childLinkIcon: 'color-ui-base/50 transition-colors group-hover:color-ui-base/80',
+        link: 'text-muted',
+        linkLeadingIcon: 'text-dimmed',
+        childLink: [
+          'hover:before:bg-elevated/50 text-default hover:text-highlighted',
+          options.theme.transitions && 'transition-colors before:transition-colors',
+        ],
+        childLinkIcon: [
+          'text-dimmed group-hover:text-default',
+          options.theme.transitions && 'transition-colors',
+        ],
       },
     },
     disabled: {
       true: {
-        link: 'cursor-not-allowed opacity-50',
+        link: 'cursor-not-allowed opacity-75',
       },
     },
     highlight: {
@@ -108,7 +134,7 @@ export default ct(/* @unocss-include */{
       orientation: 'vertical',
       collapsed: false,
       class: {
-        childList: 'ms-5 border-s border-ui-cb/20',
+        childList: 'ms-5 border-s border-default',
         childItem: 'ps-1.5 -ms-px',
         content: 'data-[state=open]:animate-[collapsible-down_200ms_ease-out] data-[state=closed]:animate-[collapsible-up_200ms_ease-out] overflow-hidden',
       },
@@ -118,14 +144,17 @@ export default ct(/* @unocss-include */{
       collapsed: true,
       class: {
         link: 'px-1.5',
-        content: 'shadow-sm rounded min-h-6 p-1',
+        content: 'shadow-sm rounded-sm min-h-6 p-1',
       },
     },
     {
       orientation: 'horizontal',
       highlight: true,
       class: {
-        link: 'after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full after:transition-colors',
+        link: [
+          'after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full',
+          options.theme.transitions && 'after:transition-colors',
+        ],
       },
     },
     {
@@ -133,62 +162,89 @@ export default ct(/* @unocss-include */{
       highlight: true,
       level: true,
       class: {
-        link: 'after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full after:transition-colors',
+        link: [
+          'after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full',
+          options.theme.transitions && 'after:transition-colors',
+        ],
       },
     },
     {
       disabled: false,
       active: false,
-      variant: 'ghost',
+      variant: 'pill',
       class: {
-        link: 'hover:color-ui-base hover:before:bg-ui-fill/5 transition-colors before:transition-colors',
-        linkLeadingIcon: 'group-hover:color-ui-base/80 transition-colors',
+        link: [
+          'hover:text-highlighted hover:before:bg-elevated/50',
+          options.theme.transitions && 'transition-colors before:transition-colors',
+        ],
+        linkLeadingIcon: [
+          'group-hover:text-default',
+          options.theme.transitions && 'transition-colors',
+        ],
       },
     },
     {
       disabled: false,
       active: false,
-      variant: 'ghost',
+      variant: 'pill',
       orientation: 'horizontal',
       class: {
-        link: 'data-[state=open]:color-ui-base',
-        linkLeadingIcon: 'group-data-[state=open]:color-ui-base/80',
+        link: 'data-[state=open]:text-highlighted',
+        linkLeadingIcon: 'group-data-[state=open]:text-default',
       },
     },
     {
       disabled: false,
-      variant: 'ghost',
+      variant: 'pill',
       highlight: true,
       orientation: 'horizontal',
       class: {
-        link: 'data-[state=open]:before:bg-ui-fill/5',
+        link: 'data-[state=open]:before:bg-elevated/50',
       },
     },
     {
       disabled: false,
-      variant: 'ghost',
+      variant: 'pill',
       highlight: false,
       active: false,
       orientation: 'horizontal',
       class: {
-        link: 'data-[state=open]:before:bg-ui-fill/5',
+        link: 'data-[state=open]:before:bg-elevated/50',
+      },
+    },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'pill',
+      active: true,
+      class: {
+        link: `text-${color}`,
+        linkLeadingIcon: `text-${color} group-data-[state=open]:text-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'pill',
+      active: true,
+      class: {
+        link: 'text-highlighted',
+        linkLeadingIcon: 'text-highlighted group-data-[state=open]:text-highlighted',
       },
     },
     {
-      variant: 'ghost',
+      variant: 'pill',
       active: true,
       highlight: false,
       class: {
-        link: 'before:bg-ui-fill/10',
+        link: 'before:bg-elevated',
       },
     },
     {
-      variant: 'ghost',
+      variant: 'pill',
       active: true,
       highlight: true,
       disabled: false,
       class: {
-        link: 'hover:before:bg-ui-fill/10 before:transition-colors',
+        link: ['hover:before:bg-elevated/50', options.theme.transitions && 'before:transition-colors'],
       },
     },
     {
@@ -196,8 +252,8 @@ export default ct(/* @unocss-include */{
       active: false,
       variant: 'link',
       class: {
-        link: 'hover:color-ui-base transition-colors',
-        linkLeadingIcon: 'group-hover:color-ui-base/80 transition-colors',
+        link: ['hover:text-highlighted', options.theme.transitions && 'transition-colors'],
+        linkLeadingIcon: ['group-hover:text-default', options.theme.transitions && 'transition-colors'],
       },
     },
     {
@@ -206,20 +262,50 @@ export default ct(/* @unocss-include */{
       variant: 'link',
       orientation: 'horizontal',
       class: {
-        link: 'data-[state=open]:color-ui-base',
-        linkLeadingIcon: 'group-data-[state=open]:color-ui-base/80',
+        link: 'data-[state=open]:text-highlighted',
+        linkLeadingIcon: 'group-data-[state=open]:text-default',
       },
     },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'link',
+      active: true,
+      class: {
+        link: `text-${color}`,
+        linkLeadingIcon: `text-${color} group-data-[state=open]:text-${color}`,
+      },
+    } as const)),
     {
+      color: 'neutral',
+      variant: 'link',
+      active: true,
+      class: {
+        link: 'text-highlighted',
+        linkLeadingIcon: 'text-highlighted group-data-[state=open]:text-highlighted',
+      },
+    },
+    ...(options.theme.colors || []).map((highlightColor: string) => ({
+      highlightColor: highlightColor as VariantsColor,
       highlight: true,
       level: true,
       active: true,
       class: {
-        link: 'after:content-empty after:bg-soft-ui-fill/95',
+        link: `after:bg-${highlightColor}`,
+      },
+    })),
+    {
+      highlightColor: 'neutral',
+      highlight: true,
+      level: true,
+      active: true,
+      class: {
+        link: 'after:bg-inverted',
       },
     },
   ],
   defaultVariants: {
-    variant: 'ghost',
+    color: 'primary',
+    highlightColor: 'primary',
+    variant: 'pill',
   },
 })

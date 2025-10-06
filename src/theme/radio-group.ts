@@ -1,19 +1,43 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    root: '',
-    fieldset: 'flex flex-wrap gap-2 gap-x-4',
-    legend: 'mb-2 color-ui-base',
-    item: 'relative flex items-start',
-    base: 'relative size-1.25em rounded ring ring-inset ring-ui-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80 transition data-[state=checked]:ring-ui-base',
-    indicator: 'absolute inset-0 scale-0 rounded bg-ui-fill transition data-[state=checked]:scale-66',
-    container: 'h-1.5em flex items-center',
-    wrapper: '',
-    label: 'block ps-2 color-ui-base',
-    description: 'ps-2 color-ui-base/60',
+    root: 'relative',
+    fieldset: 'flex gap-x-2',
+    legend: 'mb-1 block font-medium text-default',
+    item: 'flex items-start',
+    container: 'flex items-center',
+    base: 'rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
+    indicator: 'flex items-center justify-center size-full after:content-empty after:bg-default after:rounded-full',
+    wrapper: 'w-full',
+    label: 'block font-medium text-default',
+    description: 'text-muted',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        base: `focus-visible:outline-${color}`,
+        indicator: `bg-${color}`,
+      }])) as Record<VariantsColor, { base: string, indicator: string }>,
+      neutral: {
+        base: 'focus-visible:outline-inverted',
+        indicator: 'bg-inverted',
+      },
+    },
+    variant: {
+      list: {
+        item: '',
+      },
+      card: {
+        item: 'border border-muted rounded-lg',
+      },
+      table: {
+        item: 'border border-muted',
+      },
+    },
     orientation: {
       horizontal: {
         fieldset: 'flex-row',
@@ -22,38 +46,137 @@ export default ct(/* @unocss-include */{
         fieldset: 'flex-col',
       },
     },
+    indicator: {
+      start: {
+        item: 'flex-row',
+        wrapper: 'ms-2',
+      },
+      end: {
+        item: 'flex-row-reverse',
+        wrapper: 'me-2',
+      },
+      hidden: {
+        base: 'sr-only',
+        wrapper: 'text-center',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        fieldset: 'gap-y-0.5',
+        legend: 'text-xs',
+        base: 'size-3',
+        item: 'text-xs',
+        container: 'h-4',
+        indicator: 'after:size-1',
       },
       sm: {
-        root: 'text-sm',
+        fieldset: 'gap-y-0.5',
+        legend: 'text-xs',
+        base: 'size-3.5',
+        item: 'text-xs',
+        container: 'h-4',
+        indicator: 'after:size-1',
       },
       md: {
-        root: 'text-base',
+        fieldset: 'gap-y-1',
+        legend: 'text-sm',
+        base: 'size-4',
+        item: 'text-sm',
+        container: 'h-5',
+        indicator: 'after:size-1.5',
       },
       lg: {
-        root: 'text-lg',
+        fieldset: 'gap-y-1',
+        legend: 'text-sm',
+        base: 'size-4.5',
+        item: 'text-sm',
+        container: 'h-5',
+        indicator: 'after:size-1.5',
       },
       xl: {
-        root: 'text-xl',
+        fieldset: 'gap-y-1.5',
+        legend: 'text-base',
+        base: 'size-5',
+        item: 'text-base',
+        container: 'h-6',
+        indicator: 'after:size-2',
       },
     },
     disabled: {
       true: {
-        item: 'opacity-50 after:content-empty after:absolute after:inset-0 after:cursor-not-allowed',
-      },
-      false: {
-        label: 'cursor-pointer',
+        base: 'cursor-not-allowed opacity-75',
+        label: 'cursor-not-allowed opacity-75',
       },
     },
     required: {
       true: {
-        legend: 'after:content-[\'*\'] after:ms-0.5',
+        legend: `after:content-['*'] after:ms-0.5 after:text-error`,
       },
     },
   },
+  compoundVariants: [
+    { size: 'xs', variant: ['card', 'table'], class: { item: 'p-2.5' } },
+    { size: 'sm', variant: ['card', 'table'], class: { item: 'p-3' } },
+    { size: 'md', variant: ['card', 'table'], class: { item: 'p-3.5' } },
+    { size: 'lg', variant: ['card', 'table'], class: { item: 'p-4' } },
+    { size: 'xl', variant: ['card', 'table'], class: { item: 'p-4.5' } },
+    {
+      orientation: 'horizontal',
+      variant: 'table',
+      class: {
+        item: 'first-of-type:rounded-s-lg last-of-type:rounded-e-lg',
+        fieldset: 'gap-0 -space-x-px',
+      },
+    },
+    {
+      orientation: 'vertical',
+      variant: 'table',
+      class: {
+        item: 'first-of-type:rounded-t-lg last-of-type:rounded-b-lg',
+        fieldset: 'gap-0 -space-y-px',
+      },
+    },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'card',
+      class: {
+        item: `has-data-[state=checked]:border-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'card',
+      class: {
+        item: 'has-data-[state=checked]:border-inverted',
+      },
+    },
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'table',
+      class: {
+        item: `has-data-[state=checked]:bg-${color}/10 has-data-[state=checked]:border-${color}/50 has-data-[state=checked]:z-[1]`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'table',
+      class: {
+        item: 'has-data-[state=checked]:bg-elevated has-data-[state=checked]:border-inverted/50 has-data-[state=checked]:z-[1]',
+      },
+    },
+    {
+      variant: ['card', 'table'],
+      disabled: true,
+      class: {
+        item: 'cursor-not-allowed opacity-75',
+      },
+    },
+  ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
+    variant: 'list',
+    orientation: 'vertical',
+    indicator: 'start',
   },
 })

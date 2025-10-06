@@ -60,6 +60,7 @@ export interface SelectProps<
    * The icon displayed to open the menu.
    * @default app.icons.chevronDown
    */
+  color?: ThemeVariants['color']
   trailingIcon?: string
   /**
    * The icon displayed when an item is selected.
@@ -113,7 +114,7 @@ import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { compare, get, isArrayOfArray } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
@@ -135,7 +136,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen'
 const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as SelectContentProps)
 const arrowProps = toRef(() => props.arrow as SelectArrowProps)
 
-const { id, name, size: formItemSize, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormItem<SelectProps<T, VK, M>>(props)
+const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormField<SelectProps<T, VK, M>>(props)
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
@@ -144,7 +145,8 @@ const style = computed(() => {
   return ui({
     ...props,
     groupOrientation: orientation.value,
-    size: fieldGroupSize.value || formItemSize.value,
+    size: fieldGroupSize.value || formFieldSize.value,
+    color: color.value,
     highlight: highlight.value,
     leading: isLeading.value,
     trailing: isTrailing.value,

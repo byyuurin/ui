@@ -32,6 +32,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
 import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
@@ -69,7 +70,7 @@ watch(() => props.src, () => {
     />
 
     <AvatarFallback as-child>
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
       <span v-else :class="style.fallback({ class: props.ui?.fallback })" data-part="fallback">{{ fallback || '&nbsp;' }}</span>
     </AvatarFallback>
   </AvatarRoot>

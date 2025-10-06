@@ -30,6 +30,7 @@ export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
   name?: string
   type?: InputHTMLAttributes['type']
   placeholder?: string
+  color?: ThemeVariants['color']
   size?: ThemeVariants['size']
   variant?: ThemeVariants['variant']
   loading?: boolean
@@ -50,7 +51,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
 
@@ -72,9 +73,10 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const {
-  size: formItemSize,
+  size: formFieldSize,
   id,
   name,
+  color,
   highlight,
   disabled,
   ariaAttrs,
@@ -82,7 +84,7 @@ const {
   emitFormInput,
   emitFormChange,
   emitFormFocus,
-} = useFormItem<InputProps>(props, { deferInputValidation: true })
+} = useFormField<InputProps>(props, { deferInputValidation: true })
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
@@ -93,7 +95,8 @@ const style = computed(() => {
   return ui({
     ...props,
     type: props.type as ThemeVariants['type'],
-    size: fieldGroupSize.value || formItemSize.value,
+    color: color.value,
+    size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
     groupOrientation: orientation.value,
     leading: isLeading.value || !!slots.leading,
@@ -155,8 +158,8 @@ onMounted(() => {
   <Primitive
     :as="as"
     :aria-disabled="disabled ? true : undefined"
-    :class="style.base({ class: [props.class, props.ui?.base] })"
-    :data-part="$attrs['data-part'] ?? 'base'"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :data-part="$attrs['data-part'] ?? 'root'"
   >
     <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
       <slot name="leading">
@@ -170,7 +173,7 @@ onMounted(() => {
 
     <input
       ref="inputRef"
-      :class="style.input({ class: props.ui?.input })"
+      :class="style.base({ class: props.ui?.base })"
       data-part="input"
       :type="props.type"
       :value="modelValue"

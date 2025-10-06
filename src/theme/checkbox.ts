@@ -1,52 +1,128 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'relative flex items-start',
-    base: [
-      'size-1.25em shrink-0 flex items-center justify-center rounded color-ui-cx ring-2 ring-ui-fill ring-inset bg-ui-fill',
-      'outline-none focus-visible:outline-ui-base/80 focus-visible:outline-2 focus-visible:outline-offset-2',
-      'aria-[checked=false]:ring-1 aria-[checked=false]:ring-ui-base aria-[checked=false]:bg-ui-base',
-    ],
-    container: 'flex items-center h-1.25em overflow-hidden',
-    wrapper: 'text-inherit ms-2',
-    icon: 'color-ui-cx shrink-0 size-1em transition data-[state=unchecked]:translate-y-full',
-    label: 'flex color-ui-base after:content-empty',
-    description: 'color-ui-base/60',
+    container: 'flex items-center',
+    base: 'rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
+    indicator: 'flex items-center justify-center size-full text-inverted',
+    icon: 'shrink-0 size-full',
+    wrapper: 'w-full',
+    label: 'block font-medium text-default',
+    description: 'text-muted',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        base: `focus-visible:outline-${color}`,
+        indicator: `bg-${color}`,
+      }])) as Record<VariantsColor, { base: string, indicator: string }>,
+      neutral: {
+        base: 'focus-visible:outline-inverted',
+        indicator: 'bg-inverted',
+      },
+    },
+    variant: {
+      list: {
+        root: '',
+      },
+      card: {
+        root: 'border border-muted rounded-lg',
+      },
+    },
+    indicator: {
+      start: {
+        root: 'flex-row',
+        wrapper: 'ms-2',
+      },
+      end: {
+        root: 'flex-row-reverse',
+        wrapper: 'me-2',
+      },
+      hidden: {
+        base: 'sr-only',
+        wrapper: 'text-center',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        base: 'size-3',
+        container: 'h-4',
+        wrapper: 'text-xs',
       },
       sm: {
-        root: 'text-sm',
+        base: 'size-3.5',
+        container: 'h-4',
+        wrapper: 'text-xs',
       },
       md: {
-        root: 'text-base',
+        base: 'size-4',
+        container: 'h-5',
+        wrapper: 'text-sm',
       },
       lg: {
-        root: 'text-lg',
+        base: 'size-4.5',
+        container: 'h-5',
+        wrapper: 'text-sm',
       },
       xl: {
-        root: 'text-xl',
+        base: 'size-5',
+        container: 'h-6',
+        wrapper: 'text-base',
       },
     },
     required: {
       true: {
-        label: `after:content-['*'] after:ms-0.5`,
+        label: `after:content-['*'] after:ms-0.5 after:text-error`,
       },
     },
     disabled: {
       true: {
-        root: 'opacity-50 after:content-empty after:absolute after:inset-0 after:cursor-not-allowed',
-      },
-      false: {
-        label: 'cursor-pointer',
+        base: 'cursor-not-allowed opacity-75',
+        label: 'cursor-not-allowed opacity-75',
+        description: 'cursor-not-allowed opacity-75',
       },
     },
+    checked: {
+      true: '',
+    },
   },
+  compoundVariants: [
+    { size: 'xs', variant: 'card', class: { root: 'p-2.5' } },
+    { size: 'sm', variant: 'card', class: { root: 'p-3' } },
+    { size: 'md', variant: 'card', class: { root: 'p-3.5' } },
+    { size: 'lg', variant: 'card', class: { root: 'p-4' } },
+    { size: 'xl', variant: 'card', class: { root: 'p-4.5' } },
+
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'card',
+      class: {
+        root: `has-data-[state=checked]:border-${color}`,
+      },
+    } as const)),
+    {
+      color: 'neutral',
+      variant: 'card',
+      class: {
+        root: 'has-data-[state=checked]:border-inverted',
+      },
+    },
+    {
+      variant: 'card',
+      disabled: true,
+      class: {
+        root: 'cursor-not-allowed opacity-75',
+      },
+    },
+  ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
+    variant: 'list',
+    indicator: 'start',
   },
 })

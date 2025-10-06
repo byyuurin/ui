@@ -18,6 +18,11 @@ export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps,
   label?: string
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
+  /** Render the button with equal padding on all sides. */
+  square?: boolean
+  /** Render the button full width. */
+  block?: boolean
   loading?: boolean
   active?: boolean
   disabled?: boolean
@@ -56,6 +61,8 @@ const style = computed(() => {
     ...props,
     size: size.value,
     groupOrientation: orientation.value,
+    block: props.block,
+    square: props.square || (!slots.default && !props.label),
     leading: isLeading.value,
     trailing: isTrailing.value,
     class: [

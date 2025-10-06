@@ -1,64 +1,136 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 import { fieldGroupVariant } from './field-group'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    base: 'inline-flex items-center rounded leading-normal transition-colors',
-    label: '',
-    leadingIcon: 'shrink-0 size-1.5em not-only-child:ml-1.5',
-    trailingIcon: 'shrink-0 size-1.5em not-only-child:mr-1.5',
+    base: 'font-medium inline-flex items-center',
+    label: 'truncate',
+    leadingIcon: 'shrink-0',
+    leadingAvatar: 'shrink-0',
+    leadingAvatarSize: '',
+    trailingIcon: 'shrink-0',
   },
   variants: {
     ...fieldGroupVariant,
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
+    },
     variant: {
-      'solid': {
-        base: 'color-ui-cx bg-soft-ui-fill/90',
-      },
-      'outline': {
-        base: 'color-ui-fill bg-ui-base ring ring-inset ring-ui-fill/30',
-      },
-      'soft': {
-        base: 'color-ui-fill/80 bg-soft-ui-fill/10',
-      },
-      'soft-outline': {
-        base: 'color-ui-fill/80 bg-soft-ui-fill/10 ring ring-inset ring-ui-fill/30',
-      },
+      solid: '',
+      outline: '',
+      soft: '',
+      subtle: '',
     },
     size: {
       xs: {
-        base: 'text-xs',
+        base: 'text-[0.5rem]/3 px-1 py-0.5 gap-1 rounded-sm',
+        leadingIcon: 'size-3',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-3',
       },
       sm: {
-        base: 'text-sm',
+        base: 'text-[0.625rem]/3 px-1.5 py-1 gap-1 rounded-sm',
+        leadingIcon: 'size-3',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-3',
       },
       md: {
-        base: 'text-base',
+        base: 'text-xs px-2 py-1 gap-1 rounded-md',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-4',
       },
       lg: {
-        base: 'text-lg',
+        base: 'text-sm px-2 py-1 gap-1.5 rounded-md',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-5',
       },
       xl: {
-        base: 'text-xl',
+        base: 'text-base px-2.5 py-1 gap-1.5 rounded-md',
+        leadingIcon: 'size-6',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-6',
       },
+    },
+    square: {
+      true: '',
     },
   },
   compoundVariants: [
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'solid',
+      class: { base: `bg-${color} text-inverted` },
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'outline',
+      class: { base: `text-${color} ring ring-inset ring-${color}/50` },
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'soft',
+      class: { base: `bg-${color}/10 text-${color}` },
+    } as const)),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: 'subtle',
+      class: { base: `bg-${color}/10 text-${color} ring ring-inset ring-${color}/25` },
+    } as const)),
     {
-      size: ['xs', 'sm', 'md'],
-      class: {
-        base: 'p-0.5',
-        label: 'px-1',
-      },
+      color: 'neutral',
+      variant: 'solid',
+      class: { base: 'text-inverted bg-inverted' },
     },
     {
-      size: ['lg', 'xl'],
-      class: {
-        base: 'p-1',
-        label: 'px-2',
-      },
+      color: 'neutral',
+      variant: 'outline',
+      class: { base: 'ring ring-inset ring-accented text-default bg-default' },
+    },
+    {
+      color: 'neutral',
+      variant: 'soft',
+      class: { base: 'text-default bg-elevated' },
+    },
+    {
+      color: 'neutral',
+      variant: 'subtle',
+      class: { base: 'ring ring-inset ring-accented text-default bg-elevated' },
+    },
+    {
+      size: 'xs',
+      square: true,
+      class: { base: 'p-0.5' },
+    },
+    {
+      size: 'sm',
+      square: true,
+      class: { base: 'p-1' },
+    },
+    {
+      size: 'md',
+      square: true,
+      class: { base: 'p-1' },
+    },
+    {
+      size: 'lg',
+      square: true,
+      class: { base: 'p-1' },
+    },
+    {
+      size: 'xl',
+      square: true,
+      class: { base: 'p-1' },
     },
   ],
   defaultVariants: {
+    color: 'primary',
+    variant: 'solid',
     size: 'md',
   },
 })

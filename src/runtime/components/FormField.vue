@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import theme from '#build/ui/form-item'
+import theme from '#build/ui/form-field'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface FormFieldSlots {
@@ -15,13 +15,13 @@ export interface FormFieldSlots {
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface FormItemProps extends ComponentBaseProps {
+export interface FormFieldProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  /** The name of the FormItem. Also used to match form errors. */
+  /** The name of the FormField. Also used to match form errors. */
   name?: string
   /** A regular expression to match form error names. */
   errorPattern?: RegExp
@@ -50,10 +50,10 @@ export interface FormItemProps extends ComponentBaseProps {
 import { Label, Primitive } from 'reka-ui'
 import { computed, ref, useId } from 'vue'
 import { useAppConfig } from '#imports'
-import { injectFormErrors, provideFormInputId, provideFormItem } from '../composables/injections'
+import { injectFormErrors, provideFormField, provideFormInputId } from '../composables/injections'
 import { cv, merge } from '../utils/style'
 
-const props = defineProps<FormItemProps>()
+const props = defineProps<FormFieldProps>()
 const slots = defineSlots<FormFieldSlots>()
 
 const id = ref(useId())
@@ -80,7 +80,7 @@ const error = computed(() => {
   return formError?.message
 })
 
-provideFormItem(computed(() => ({
+provideFormField(computed(() => ({
   ...props,
   error: error.value,
   ariaId,
@@ -88,7 +88,7 @@ provideFormItem(computed(() => ({
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.formItem))
+  const ui = cv(merge(theme, appConfig.ui.formField))
   return ui(props)
 })
 </script>

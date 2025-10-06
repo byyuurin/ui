@@ -139,6 +139,7 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ell
               :label="String(item.value)"
               :to="props.to?.(item.value)"
               :ui="{ label: style.label({ class: props.ui?.label }) }"
+              square
             />
           </slot>
         </PaginationListItem>

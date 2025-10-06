@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AccordionRootProps, NavigationMenuContentEmits, NavigationMenuContentProps, NavigationMenuRootEmits, NavigationMenuRootProps } from 'reka-ui'
 import theme from '#build/ui/navigation-menu'
-import type { ChipProps, ComponentBaseProps, ComponentUIProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
+import type { BadgeProps, ComponentBaseProps, ComponentUIProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
 import type { ArrayOrNested, DynamicSlots, EmitsToProps, MergeTypes, NestedItem } from '../types/utils'
 
 export interface NavigationMenuChildItem extends Omit<NavigationMenuItem, 'children' | 'type'> {
@@ -18,7 +18,7 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
    * Display a chip on the item.
    * `{ size: 'xs', variant: 'outline' }`
    */
-  chip?: string | number | ChipProps
+  badge?: string | number | BadgeProps
   /**
    * Display a tooltip on the item when the menu is collapsed with the label of the item.
    * This has priority over the global `tooltip` prop.
@@ -46,7 +46,7 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
   defaultOpen?: boolean
   open?: boolean
   onSelect?: (e: Event) => void
-  ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'linkLeadingIcon' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkTrailing' | 'linkTrailingChip' | 'linkTrailingIcon' | 'label' | 'link' | 'content' | 'childList' | 'childLabel' | 'childItem' | 'childLink' | 'childLinkIcon' | 'childLinkWrapper' | 'childLinkLabel' | 'childLinkLabelExternalIcon' | 'childLinkDescription'>
+  ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'linkLeadingAvatarSize' | 'linkLeadingAvatar' | 'linkLeadingIcon' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkTrailing' | 'linkTrailingBadgeSize' | 'linkTrailingBadge' | 'linkTrailingIcon' | 'label' | 'link' | 'content' | 'childList' | 'childLabel' | 'childItem' | 'childLink' | 'childLinkIcon' | 'childLinkWrapper' | 'childLinkLabel' | 'childLinkLabelExternalIcon' | 'childLinkDescription'>
   [key: string]: any
 }
 
@@ -238,13 +238,13 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
         />
       </span>
 
-      <component :is="orientation === 'vertical' && item.children?.length && !collapsed ? AccordionTrigger : 'span'" v-if="(!collapsed || orientation !== 'vertical') && (item.chip || (orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[(item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>])" as="span" :class="style.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })" @click.stop.prevent>
+      <component :is="orientation === 'vertical' && item.children?.length && !collapsed ? AccordionTrigger : 'span'" v-if="(!collapsed || orientation !== 'vertical') && (item.badge || (orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[(item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>])" as="span" :class="style.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })" @click.stop.prevent>
         <slot :name="((item.slot ? `${item.slot}-trailing` : 'item-trailing') as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index">
           <Badge
-            v-if="item.chip"
+            v-if="item.badge"
             variant="outline"
-            v-bind="(typeof item.chip === 'string' || typeof item.chip === 'number') ? { label: String(item.chip) } : item.chip"
-            :class="style.linkTrailingChip({ class: [props.ui?.linkTrailingChip, item.ui?.linkTrailingChip] })"
+            v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: String(item.badge) } : item.badge"
+            :class="style.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })"
           />
 
           <Icon v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)" :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })" />

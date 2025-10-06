@@ -117,8 +117,8 @@ export function createUnoPreset(options: PresetOptions = {}) {
       'stroke-inverted': 'stroke-[--ui-border-inverted]',
 
       // fill color
-      'fill-default': 'fill[--ui-border]',
-      'fill-inverted': 'fill[--ui-border-inverted]',
+      'fill-default': 'fill-[--ui-border]',
+      'fill-inverted': 'fill-[--ui-border-inverted]',
     },
     safelist: Object.keys(keyframes).map((s) => `keyframes-${s}`),
     preflights: [

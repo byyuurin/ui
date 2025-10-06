@@ -1,43 +1,66 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    root: 'relative inline-flex items-start',
+    root: 'relative flex items-start',
     base: [
-      'inline-flex items-center shrink-0 rounded border-2 border-transparent transition-colors duration-200',
-      'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-base/80',
-      'data-[state=unchecked]:bg-soft-ui-cb/10 data-[state=checked]:bg-soft-ui-fill/80',
-      'w-2.7em',
+      'inline-flex items-center shrink-0 rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented',
+      options.theme.transitions && 'transition-colors duration-200',
     ],
-    container: 'flex items-center h-1.5em',
-    thumb: [
-      'group pointer-events-none rounded size-1.25em bg-ui-base shadow-lg ring-0 transition-transform duration-200 flex items-center justify-center',
-      'data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:translate-x-0 data-[state=checked]:translate-x-1.25em data-[state=checked]:rtl:-translate-x-1.25em',
-    ],
+    container: 'flex items-center',
+    thumb: 'group pointer-events-none rounded-full bg-default shadow-lg ring-0 transition-transform duration-200 data-[state=unchecked]:translate-x-0 data-[state=unchecked]:rtl:-translate-x-0 flex items-center justify-center',
     icon: [
-      'absolute shrink-0 opacity-0 size-10/12 transition-[color,opacity] duration-200',
-      'group-data-[state=unchecked]:color-ui-base/50 group-data-[state=checked]:color-ui-base',
+      'absolute shrink-0 group-data-[state=unchecked]:text-dimmed opacity-0 size-10/12',
+      options.theme.transitions && 'transition-[color,opacity] duration-200',
     ],
     wrapper: 'ms-2',
-    label: 'flex color-ui-base/80',
-    description: 'color-ui-base/60',
+    label: 'block font-medium text-default',
+    description: 'text-muted',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        base: `data-[state=checked]:bg-${color} focus-visible:outline-${color}`,
+        icon: `group-data-[state=checked]:text-${color}`,
+      }])) as Record<VariantsColor, { base: string, icon: string }>,
+      neutral: {
+        base: 'data-[state=checked]:bg-inverted focus-visible:outline-inverted',
+        icon: 'group-data-[state=checked]:text-highlighted',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        base: 'w-7',
+        container: 'h-4',
+        thumb: 'size-3 data-[state=checked]:translate-x-3 data-[state=checked]:rtl:-translate-x-3',
+        wrapper: 'text-xs',
       },
       sm: {
-        root: 'text-sm',
+        base: 'w-8',
+        container: 'h-4',
+        thumb: 'size-3.5 data-[state=checked]:translate-x-3.5 data-[state=checked]:rtl:-translate-x-3.5',
+        wrapper: 'text-xs',
       },
       md: {
-        root: 'text-base',
+        base: 'w-9',
+        container: 'h-5',
+        thumb: 'size-4 data-[state=checked]:translate-x-4 data-[state=checked]:rtl:-translate-x-4',
+        wrapper: 'text-sm',
       },
       lg: {
-        root: 'text-lg',
+        base: 'w-10',
+        container: 'h-5',
+        thumb: 'size-4.5 data-[state=checked]:translate-x-4.5 data-[state=checked]:rtl:-translate-x-4.5',
+        wrapper: 'text-sm',
       },
       xl: {
-        root: 'text-xl',
+        base: 'w-11',
+        container: 'h-6',
+        thumb: 'size-5 data-[state=checked]:translate-x-5 data-[state=checked]:rtl:-translate-x-5',
+        wrapper: 'text-base',
       },
     },
     checked: {
@@ -52,25 +75,24 @@ export default ct(/* @unocss-include */{
     },
     loading: {
       true: {
-        root: 'opacity-50 after:content-empty after:absolute after:inset-0 after:cursor-not-allowed',
         icon: 'animate-spin',
       },
     },
     required: {
       true: {
-        label: `after:content-['*'] after:ms-0.5`,
+        label: `after:content-['*'] after:ms-0.5 after:text-error`,
       },
     },
     disabled: {
       true: {
-        root: 'opacity-50 after:content-empty after:absolute after:inset-0 after:cursor-not-allowed',
-      },
-      false: {
-        label: 'cursor-pointer',
+        base: 'cursor-not-allowed opacity-75',
+        label: 'cursor-not-allowed opacity-75',
+        description: 'cursor-not-allowed opacity-75',
       },
     },
   },
   defaultVariants: {
+    color: 'primary',
     size: 'md',
   },
 })

@@ -29,66 +29,53 @@ onMounted(() => {
 </script>
 
 <template>
-  <UApp
-    :locale="locale"
-    :toaster="toasterAttrs"
-    :ui="{
-      formItem: {
-        parts: {
-          root: 'leading-normal ui-red-500',
-          help: 'min-h-1.5em',
-        },
-      },
-    }"
-  >
+  <UApp :locale="locale" :toaster="toasterAttrs">
     <div>
-      <ExampleAccordion :class="uiColor" />
-      <ExampleAlert :class="uiColor" />
-      <ExampleAvatar :class="uiColor" />
-      <ExampleAvatarGroup :class="uiColor" />
-      <ExampleBadge :class="uiColor" />
-      <ExampleBreadcrumb :class="uiColor" />
-      <ExampleButton :class="uiColor" />
-      <ExampleCalendar :class="uiColor" />
-      <ExampleCard :class="uiColor" />
-      <ExampleCarousel :class="uiColor" />
-      <ExampleCheckbox :class="uiColor" />
-      <ExampleChip :class="uiColor" />
-      <ExampleCollapsible :class="uiColor" />
-      <ExampleDrawer :class="uiColor" />
-      <ExampleDropdownMenu :class="uiColor" />
-      <ExampleFieldGroup :class="uiColor" />
-      <ExampleForm :class="uiColor" />
-      <ExampleFormItem :class="uiColor" />
-      <ExampleInput :class="uiColor" />
-      <ExampleInputNumber :class="uiColor" />
-      <ExampleKbd :class="uiColor" />
-      <ExampleLink :class="uiColor" />
-      <ExampleModal :class="uiColor" />
-      <ExampleNavigationMenu :class="uiColor" />
-      <ExamplePagination :class="uiColor" />
-      <ExamplePinInput :class="uiColor" />
-      <ExamplePopover :class="uiColor" />
-      <ExampleProgress :class="uiColor" />
-      <ExampleRadioGroup :class="uiColor" />
-      <ExampleScrollArea :class="uiColor" />
-      <ExampleSelect :class="uiColor" />
-      <ExampleSeparator :class="uiColor" />
-      <ExampleSkeleton :class="uiColor" />
-      <ExampleSlider :class="uiColor" />
-      <ExampleSwitch :class="uiColor" />
-      <ExampleTable :class="uiColor" />
-      <ExampleTabs :class="uiColor" />
-      <ExampleTextarea :class="uiColor" />
+      <ExampleAccordion />
+      <ExampleAlert />
+      <ExampleAvatar />
+      <ExampleAvatarGroup />
+      <ExampleBadge />
+      <ExampleBreadcrumb />
+      <ExampleButton />
+      <ExampleCalendar />
+      <ExampleCard />
+      <ExampleCarousel />
+      <ExampleCheckbox />
+      <ExampleChip />
+      <ExampleCollapsible />
+      <ExampleDrawer />
+      <ExampleDropdownMenu />
+      <ExampleFieldGroup />
+      <ExampleForm />
+      <ExampleFormField />
+      <ExampleInput />
+      <ExampleInputNumber />
+      <ExampleKbd />
+      <ExampleLink />
+      <ExampleModal />
+      <ExampleNavigationMenu />
+      <ExamplePagination />
+      <ExamplePinInput />
+      <ExamplePopover />
+      <ExampleProgress />
+      <ExampleRadioGroup />
+      <ExampleScrollArea />
+      <ExampleSelect />
+      <ExampleSeparator />
+      <ExampleSkeleton />
+      <ExampleSlider />
+      <ExampleSwitch />
+      <ExampleTable />
+      <ExampleTabs />
+      <ExampleTextarea />
       <ExampleToast
         v-model:duration="toasterAttrs.duration"
         v-model:position="toasterAttrs.position"
         v-model:expand="toasterAttrs.expand"
-        :class="uiColor"
-        :color="uiColor"
       />
-      <ExampleTooltip :class="uiColor" />
-      <ExampleNative :class="uiColor" />
+      <ExampleTooltip />
+      <ExampleNative />
 
       <div class="py-6">
         <UDrawer

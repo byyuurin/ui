@@ -9,14 +9,10 @@ const props = withDefaults(defineProps<{
 
 <template>
   <span
-    class="group relative overflow-hidden rounded border border-dashed px-4 flex items-center justify-center border-[--color]"
-    :style="{
-      '--base': 'color-mix(in srgb,rgb(var(--ui-cb)),rgb(var(--ui-cx)))',
-      '--color': 'color-mix(in srgb,var(--base) 30%,transparent)',
-    }"
+    class="group relative overflow-hidden rounded border border-dashed px-4 flex items-center justify-center border-default"
   >
     <svg
-      class="absolute inset-0 size-full stroke-[--color]"
+      class="absolute inset-0 size-full stroke-default"
       fill="none"
     >
       <defs>
@@ -36,7 +32,7 @@ const props = withDefaults(defineProps<{
 
     <slot>
       <span
-        class="w-full"
+        class="relative z-1 w-full"
         :class="{
           'text-center': props.labelPosition === 'center',
           'text-left': props.labelPosition === 'left',

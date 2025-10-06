@@ -1,70 +1,77 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
-import { fieldGroupVariant } from './field-group'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
+import { fieldGroupVariantWithRoot } from './field-group'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    base: 'inline-flex items-center rounded transition-colors aria-disabled:opacity-50',
-    input: [
-      'w-full color-inherit bg-transparent border-0 placeholder:color-ui-base/50',
-      'focus:outline-none',
-      'disabled:cursor-not-allowed',
+    root: 'relative inline-flex items-center',
+    base: [
+      'w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75',
+      options.theme.transitions && 'transition-colors',
     ],
-    leading: 'flex items-center',
-    leadingIcon: 'shrink-0 size-1.25em',
-    trailing: 'flex items-center',
-    trailingIcon: 'shrink-0 size-1.25em',
+    leading: 'absolute inset-y-0 start-0 flex items-center',
+    leadingIcon: 'shrink-0 text-dimmed',
+    leadingAvatar: 'shrink-0',
+    leadingAvatarSize: '',
+    trailing: 'absolute inset-y-0 end-0 flex items-center',
+    trailingIcon: 'shrink-0 text-dimmed',
   },
   variants: {
-    ...fieldGroupVariant,
+    ...fieldGroupVariantWithRoot,
     size: {
       xs: {
-        base: 'text-xs',
+        base: 'px-2 py-1 text-xs gap-1',
+        leading: 'ps-2',
+        trailing: 'pe-2',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-4',
       },
       sm: {
-        base: 'text-sm',
+        base: 'px-2.5 py-1.5 text-xs gap-1.5',
+        leading: 'ps-2.5',
+        trailing: 'pe-2.5',
+        leadingIcon: 'size-4',
+        leadingAvatarSize: '3xs',
+        trailingIcon: 'size-4',
       },
       md: {
-        base: 'text-base',
+        base: 'px-2.5 py-1.5 text-sm gap-1.5',
+        leading: 'ps-2.5',
+        trailing: 'pe-2.5',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-5',
       },
       lg: {
-        base: 'text-lg',
+        base: 'px-3 py-2 text-sm gap-2',
+        leading: 'ps-3',
+        trailing: 'pe-3',
+        leadingIcon: 'size-5',
+        leadingAvatarSize: '2xs',
+        trailingIcon: 'size-5',
       },
       xl: {
-        base: 'text-xl',
+        base: 'px-3 py-2 text-base gap-2',
+        leading: 'ps-3',
+        trailing: 'pe-3',
+        leadingIcon: 'size-6',
+        leadingAvatarSize: 'xs',
+        trailingIcon: 'size-6',
       },
     },
     variant: {
-      'outline': {
-        base: [
-          'color-ui-base/80 bg-ui-base ring ring-inset ring-ui-base/30',
-          'focus-within:ring-2 focus-within:ring-ui-base/50 hover:focus-within:ring-ui-base/50',
-          'aria-disabled:ring-ui-base/20 hover:aria-disabled:ring-ui-base/20',
-        ],
-      },
-      'soft': {
-        base: [
-          'color-ui-base/80 bg-soft-ui-cb/4',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-base/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-base/85 hover:focus-within:color-ui-base/85',
-          'aria-disabled:color-ui-base/80 aria-disabled:bg-soft-ui-cb/5 hover:aria-disabled:color-ui-base/80 hover:aria-disabled:bg-soft-ui-cb/5',
-        ],
-      },
-      'soft-outline': {
-        base: [
-          'color-ui-base/80 bg-soft-ui-cb/4 ring ring-inset ring-ui-base/30',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-base/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-base/85 hover:focus-within:color-ui-base/85',
-          'aria-disabled:color-ui-base/80 aria-disabled:bg-soft-ui-cb/5 hover:aria-disabled:color-ui-base/80 hover:aria-disabled:bg-soft-ui-cb/5',
-        ],
-      },
-      'ghost': {
-        base: [
-          'color-ui-base/80 bg-transparent',
-          'hover:bg-soft-ui-cb/6 hover:color-ui-base/80 focus-within:bg-soft-ui-cb/8 hover:focus-within:bg-soft-ui-cb/8 focus-within:color-ui-base/85 hover:focus-within:color-ui-base/85',
-          'aria-disabled:color-ui-fill/80 aria-disabled:bg-transparent hover:aria-disabled:color-ui-fill/80 hover:aria-disabled:bg-transparent',
-        ],
-      },
-      'none': {
-        base: 'color-ui-base bg-transparent',
-      },
+      outline: { base: 'text-highlighted bg-default ring ring-inset ring-accented' },
+      soft: { base: 'text-highlighted bg-elevated/50 hover:bg-elevated focus:bg-elevated disabled:bg-elevated/50' },
+      subtle: { base: 'text-highlighted bg-elevated ring ring-inset ring-accented' },
+      ghost: { base: 'text-highlighted bg-transparent hover:bg-elevated focus:bg-elevated disabled:bg-transparent dark:disabled:bg-transparent' },
+      none: { base: 'text-highlighted bg-transparent' },
+    },
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
+      neutral: '',
     },
     leading: {
       true: '',
@@ -75,57 +82,83 @@ export default ct(/* @unocss-include */{
     loading: {
       true: '',
     },
-    underline: {
-      true: '',
-    },
     highlight: {
       true: '',
     },
     type: {
-      file: {
-        input: 'leading-normal not-disabled:cursor-pointer file:pointer-events-none file:py-0 file:font-size-0.875em file:rounded file:border-none file:color-ui-cx file:bg-soft-ui-cb/80',
-      },
+      file: { base: 'file:me-1.5 file:font-medium file:text-muted file:outline-none' },
     },
   },
   compoundVariants: [
-    {
-      variant: ['soft', 'ghost', 'none'],
-      highlight: false,
-      underline: true,
-      class: {
-        base: [
-          'relative after:content-empty after:absolute after:inset-x-0 after:bottom-0 after:h-1px after:bg-soft-ui-cb/40',
-          'focus-within:after:h-2px focus-within:after:bg-soft-ui-fill/60',
-        ],
-      },
-    },
-    {
-      size: ['xs', 'sm', 'md'],
-      class: {
-        base: 'p-1.5',
-        input: 'px-1',
-      },
-    },
-    {
-      size: ['lg', 'xl'],
-      class: {
-        base: 'p-2.5',
-        input: 'px-1.5',
-      },
-    },
-    {
-      variant: ['soft', 'soft-outline', 'ghost', 'none'],
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
+      variant: ['outline' as const, 'subtle' as const],
+      class: { base: `focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}` },
+    })),
+    ...(options.theme.colors || []).map((color: string) => ({
+      color: color as VariantsColor,
       highlight: true,
-      class: {
-        base: 'ring ring-inset ring-ui-fill/80 focus-within:ring-ui-fill/80 hover:focus-within:ring-ui-fill/80',
-      },
+      class: { base: `ring ring-inset ring-${color}` },
+    })),
+    {
+      color: 'neutral',
+      variant: ['outline', 'subtle'],
+      class: { base: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted' },
     },
     {
-      variant: ['outline'],
+      color: 'neutral',
       highlight: true,
-      class: {
-        base: 'ring-2 ring-ui-fill/80 focus-within:ring-ui-fill/80 hover:focus-within:ring-ui-fill/80',
-      },
+      class: { base: 'ring ring-inset ring-inverted' },
+    },
+    {
+      leading: true,
+      size: 'xs',
+      class: { base: 'ps-7' },
+    },
+    {
+      leading: true,
+      size: 'sm',
+      class: { base: 'ps-8' },
+    },
+    {
+      leading: true,
+      size: 'md',
+      class: { base: 'ps-9' },
+    },
+    {
+      leading: true,
+      size: 'lg',
+      class: { base: 'ps-10' },
+    },
+    {
+      leading: true,
+      size: 'xl',
+      class: { base: 'ps-11' },
+    },
+    {
+      trailing: true,
+      size: 'xs',
+      class: { base: 'pe-7' },
+    },
+    {
+      trailing: true,
+      size: 'sm',
+      class: { base: 'pe-8' },
+    },
+    {
+      trailing: true,
+      size: 'md',
+      class: { base: 'pe-9' },
+    },
+    {
+      trailing: true,
+      size: 'lg',
+      class: { base: 'pe-10' },
+    },
+    {
+      trailing: true,
+      size: 'xl',
+      class: { base: 'pe-11' },
     },
     {
       loading: true,
@@ -145,5 +178,7 @@ export default ct(/* @unocss-include */{
   ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
+    variant: 'outline',
   },
 })

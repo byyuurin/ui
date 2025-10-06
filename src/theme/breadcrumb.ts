@@ -1,28 +1,32 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'relative min-w-0',
     list: 'flex items-center gap-1.5',
     item: 'flex min-w-0',
-    link: 'group relative flex items-center gap-1.5 text-sm min-w-0 focus-visible:outline-ui-primary',
+    link: 'group relative flex items-center gap-1.5 text-sm min-w-0 focus-visible:outline-primary',
     linkLeadingIcon: 'shrink-0 size-5',
+    linkLeadingAvatar: 'shrink-0',
+    linkLeadingAvatarSize: '2xs',
     linkLabel: 'truncate',
     separator: 'flex',
-    separatorIcon: 'shrink-0 size-5 color-ui-base/60',
+    separatorIcon: 'shrink-0 size-5 text-muted',
   },
   variants: {
     active: {
       true: {
-        link: 'color-ui-primary font-semibold',
+        link: 'text-primary font-semibold',
       },
       false: {
-        link: 'color-ui-base/60 font-medium',
+        link: 'text-muted font-medium',
       },
     },
     disabled: {
       true: {
-        link: 'cursor-not-allowed opacity-50',
+        link: 'cursor-not-allowed opacity-75',
       },
     },
     to: {
@@ -35,7 +39,10 @@ export default ct(/* @unocss-include */{
       active: false,
       to: true,
       class: {
-        link: 'hover:color-ui-base/80 transition-colors',
+        link: [
+          'hover:text-default',
+          options.theme.transitions && 'transition-colors',
+        ],
       },
     },
   ],

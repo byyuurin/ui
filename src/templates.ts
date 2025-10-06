@@ -44,6 +44,8 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
               `import template from ${JSON.stringify(templatePath)}`,
               `const options = ${JSON.stringify(options, null, 2)}`,
               `const result = typeof template === 'function' ? (template as Function)(options) : template`,
+              `if (result?.defaultVariants?.color && options.theme?.defaultVariants?.color) result.defaultVariants.color = options.theme.defaultVariants.color`,
+              `if (result?.defaultVariants?.size && options.theme?.defaultVariants?.size) result.defaultVariants.size = options.theme.defaultVariants.size`,
               `const theme = ct(${json})`,
               `export default result as typeof theme`,
             ].join('\n\n')

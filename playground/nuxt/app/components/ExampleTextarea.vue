@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref('')
 const controls: ControlItems<TextareaProps> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'soft-outline', 'ghost', 'none'] },
+  { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'rows', value: 3 },
   { prop: 'maxRows', value: 0 },

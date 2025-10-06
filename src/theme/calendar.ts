@@ -1,84 +1,69 @@
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct(/* @unocss-include */{
   parts: {
     root: '',
     header: 'flex items-center justify-between',
     body: 'flex flex-col space-y-4 pt-4 sm:flex-row sm:space-x-4 sm:space-y-0',
     heading: 'text-center font-medium truncate mx-auto',
     grid: 'w-full border-collapse select-none space-y-1 focus:outline-none',
-    gridRow: 'grid gap-1 grid-cols-7',
-    gridWeekDaysRow: 'mb-1 grid gap-1 w-full grid-cols-7',
+    gridRow: 'grid grid-cols-7 place-items-center',
+    gridWeekDaysRow: 'mb-1 grid w-full grid-cols-7',
     gridBody: 'grid',
-    headCell: 'rounded color-ui-fill',
-    cell: 'relative text-center color-ui-base/80',
+    headCell: 'rounded-md',
+    cell: 'relative text-center',
     cellTrigger: [
-      'relative size-2.25em flex items-center justify-center rounded whitespace-nowrap transition',
-      'focus-visible:ring-2 focus-visible:ring-ui-base/90 focus:outline-none',
-      'data-[disabled]:color-ui-base/50 data-[disabled]:cursor-not-allowed',
-      'data-[unavailable]:line-through data-[unavailable]:color-ui-base/50 data-[unavailable]:cursor-not-allowed',
-      'data-[selected]:color-ui-cx data-[selected]:bg-soft-ui-fill/95',
-      'data-[today]:font-semibold data-[today]:not-[[data-selected]]:color-ui-fill/95',
-      'data-[highlighted]:bg-soft-ui-fill/20',
-      'data-[outside-view]:color-ui-base/20',
+      'm-0.5 relative flex items-center justify-center rounded-full whitespace-nowrap focus-visible:ring-2 focus:outline-none data-[disabled]:text-muted data-[unavailable]:line-through data-[unavailable]:text-muted data-[unavailable]:pointer-events-none data-[selected]:text-inverted data-today:font-semibold data-[outside-view]:text-muted',
+      options.theme.transitions && 'transition',
     ],
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        headCell: `text-${color}`,
+        cellTrigger: `focus-visible:ring-${color} data-[selected]:bg-${color} data-[today]:not-[[data-selected]]:text-${color} data-[highlighted]:bg-${color}/20 hover:not-[[data-selected]]:bg-${color}/20`,
+      }])) as Record<VariantsColor, { headCell: string, cellTrigger: string }>,
+      neutral: {
+        headCell: 'text-highlighted',
+        cellTrigger: 'focus-visible:ring-inverted data-[selected]:bg-inverted data-[today]:not-[[data-selected]]:text-highlighted data-[highlighted]:bg-inverted/20 hover:not-[[data-selected]]:bg-inverted',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        heading: 'text-xs',
+        cell: 'text-xs',
+        headCell: 'text-[0.625rem]',
+        cellTrigger: 'size-7',
+        body: 'space-y-2 pt-2',
       },
       sm: {
-        root: 'text-sm',
+        heading: 'text-xs',
+        headCell: 'text-xs',
+        cell: 'text-xs',
+        cellTrigger: 'size-7',
       },
       md: {
-        root: 'text-base',
+        heading: 'text-sm',
+        headCell: 'text-xs',
+        cell: 'text-sm',
+        cellTrigger: 'size-8',
       },
       lg: {
-        root: 'text-lg',
+        heading: 'text-base',
+        headCell: 'text-base',
+        cellTrigger: 'size-9 text-base',
       },
       xl: {
-        root: 'text-xl',
-      },
-    },
-    multipleMonths: {
-      true: {
-        cellTrigger: [
-          'data-[outside-view]:data-[selected]:not-hover:bg-inherit data-[outside-view]:data-[selected]:not-hover:color-ui-base/20',
-          'data-[outside-view]:data-[selected]:hover:bg-soft-ui-fill/10 data-[outside-view]:data-[selected]:hover:color-ui-base/20',
-        ],
-      },
-      false: {
-        cellTrigger: 'data-[outside-view]:data-[selected]:color-ui-cx',
-      },
-    },
-    readonly: {
-      true: {
-        cellTrigger: [
-          'cursor-default data-[today]:not-[[data-selected]]:color-ui-fill/60',
-          'data-[outside-view]:data-[selected]:hover:bg-inherit',
-        ],
-      },
-    },
-    disabled: {
-      true: {
-        cellTrigger: [
-          'data-[today]:not-[[data-selected]]:color-ui-fill/60 data-[selected]:bg-soft-ui-fill/50',
-          'data-[outside-view]:data-[selected]:hover:bg-inherit',
-        ],
+        heading: 'text-lg',
+        headCell: 'text-lg',
+        cellTrigger: 'size-10 text-lg',
       },
     },
   },
-  compoundVariants: [
-    {
-      readonly: false,
-      disabled: false,
-      class: {
-        cellTrigger: 'hover:not-[[data-selected],[data-disabled],[data-unavailable]]:bg-soft-ui-fill/10',
-      },
-    },
-  ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
   },
 })

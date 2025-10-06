@@ -1,9 +1,12 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
-    content: 'z-1 flex items-center gap-1 bg-ui-base color-ui-base shadow-sm rounded ring ring-ui-base/10 h-6 px-2 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
-    arrow: 'fill-ui-cx stroke-ui-cb/10',
+    content: 'flex items-center gap-1 bg-default text-highlighted shadow-sm rounded-sm ring ring-default h-6 px-2.5 py-1 text-xs select-none data-[state=delayed-open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-[--reka-tooltip-content-transform-origin] pointer-events-auto',
+    arrow: 'fill-default',
     text: 'truncate',
+    kbds: `hidden lg:inline-flex items-center shrink-0 gap-0.5 not-first-of-type:before:content-['·'] not-first-of-type:before:me-0.5`,
+    kbdsSize: 'sm',
   },
 })

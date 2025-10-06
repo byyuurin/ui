@@ -6,35 +6,23 @@ export const cssVarsPrefix = 'ui'
 export const cssVarsBase = ['cb', 'cp', 'cx']
 
 interface PresetOptions {
-  /** @default "0rem" */
-  radius?: string
-  /** @default "[radius]" */
-  radiusBox?: string
-  /** @default "[radius]" */
-  radiusButton?: string
-  /** @default "[radius]" */
-  radiusCheckbox?: string
-  /** @default "[radius]" */
-  radiusRadio?: string
-  /** @default "[radius]" */
-  radiusSwitch?: string
-  /** @default "[radius]" */
-  radiusTabs?: string
-  /**
-   * Base content color
-   * @default "#1f2937"
-   */
-  cb?: string
   /**
    * Primary color
-   * @default "[cb]"
+   * @default "green"
    */
-  cp?: string
+  primary?: string
+  /**
+   * Base content color
+   * @default "slate"
+   */
+  neutral?: string
   /**
    * Base background color
    * @default "#ffffff"
    */
-  cx?: string
+  bg?: string
+  /** @default "0.25rem" */
+  radius?: string
 }
 
 export interface ThemeConfig<T extends string = string> extends PresetOptions {
@@ -48,105 +36,94 @@ export const themeOptions = defineThemeOptions([
     name: 'Daisy light',
     colorScheme: 'light',
     radius: '3px',
-    radiusBox: '1rem',
-    radiusButton: '0.5rem',
-    cb: '#1f2937',
-    cp: '#4e00ff',
-    cx: '#ffffff',
+    neutral: '#1f2937',
+    primary: '#4e00ff',
+    bg: '#ffffff',
   },
   {
     name: 'Daisy dark',
     colorScheme: 'dark',
     radius: '3px',
-    radiusBox: '1rem',
-    radiusButton: '0.5rem',
-    cb: '#a6adbb',
-    cp: '#777eff',
-    cx: '#1d232a',
+    neutral: '#a6adbb',
+    primary: '#777eff',
+    bg: '#1d232a',
   },
   {
     name: 'retro',
     colorScheme: 'light',
     radius: '0.4rem',
-    cb: '#282425',
-    cp: '#ec9a96',
-    cx: '#ece3ca',
+    neutral: '#282425',
+    primary: '#ec9a96',
+    bg: '#ece3ca',
   },
   {
     name: 'cyberpunk',
     colorScheme: 'light',
     fontFamily: 'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace',
-    cb: '#161402',
-    cp: '#ff6796',
-    cx: '#fff248',
+    neutral: '#161402',
+    primary: '#ff6796',
+    bg: '#fff248',
   },
   {
     name: 'valentine',
     colorScheme: 'light',
     radius: '1.9rem',
-    radiusBox: '1rem',
-    cb: '#632c3b',
-    cp: '#e56e7c',
-    cx: '#fae7f4',
+    neutral: '#632c3b',
+    primary: '#e56e7c',
+    bg: '#fae7f4',
   },
   {
     name: 'wireframe',
     colorScheme: 'light',
     fontFamily: 'Chalkboard,comic sans ms,"sans-serif"',
     radius: '0.2rem',
-    cb: '#161616',
-    cp: '#b8b8b8',
-    cx: '#ffffff',
+    neutral: '#161616',
+    primary: '#b8b8b8',
+    bg: '#ffffff',
   },
   {
     name: 'coffee',
     colorScheme: 'dark',
     radius: '0.2rem',
-    radiusBox: '1rem',
-    radiusButton: '0.5rem',
-    cb: '#c59f60',
-    cp: '#d89352',
-    cx: '#20161f',
+    neutral: '#c59f60',
+    primary: '#d89352',
+    bg: '#20161f',
   },
   {
     name: 'Nuxt light',
     colorScheme: 'light',
     fontFamily: '"Public Sans",sans-serif',
     radius: '0.25rem',
-    radiusButton: '0.375rem',
-    radiusBox: '0.5rem',
-    cb: '#314158',
-    cp: '#00dc82',
-    cx: '#ffffff',
+    neutral: '#314158',
+    primary: '#00dc82',
+    bg: '#ffffff',
   },
   {
     name: 'Nuxt dark',
     colorScheme: 'dark',
     fontFamily: '"Public Sans",sans-serif',
     radius: '0.25rem',
-    radiusButton: '0.375rem',
-    radiusBox: '0.5rem',
-    cb: '#90a1b9',
-    cp: '#00dc82',
-    cx: '#0f172b',
+    neutral: '#90a1b9',
+    primary: '#00dc82',
+    bg: '#0f172b',
   },
   {
     name: 'Antfu light',
     colorScheme: 'light',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
-    cb: '#374151',
-    cp: '#808080',
-    cx: '#ffffff',
+    neutral: '#374151',
+    primary: '#808080',
+    bg: '#ffffff',
   },
   {
     name: 'Antfu dark',
     colorScheme: 'dark',
     fontFamily: 'Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"',
     radius: '0.2rem',
-    cb: '#e5e7eb',
-    cp: '#808080',
-    cx: '#050505',
+    neutral: '#e5e7eb',
+    primary: '#808080',
+    bg: '#050505',
   },
 ])
 
@@ -154,15 +131,9 @@ function defineThemeOptions<T extends string>(options: ThemeConfig<T>[]) {
   return options.map((option) => ({
     fontFamily: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Vazirmatn,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
     radius: option.radius ?? '0rem',
-    radiusBox: option.radius ?? '0rem',
-    radiusButton: option.radius ?? '0rem',
-    radiusCheckbox: option.radius ?? '0rem',
-    radiusRadio: option.radius ?? '0rem',
-    radiusSwitch: option.radius ?? '0rem',
-    radiusTabs: option.radius ?? '0rem',
-    cb: '#1f2937',
-    cp: option.cp ?? option.cb ?? '#1f2937',
-    cx: '#ffffff',
+    neutral: '#1f2937',
+    primary: option.primary ?? option.neutral ?? '#1f2937',
+    bg: '#ffffff',
     ...option,
   }))
 }
@@ -172,14 +143,15 @@ function cssVar(color: string) {
   return data?.components.join(' ')
 }
 
-export function setTheme(theme: ThemeConfig) {
+export function setTheme(_theme: ThemeConfig) {
   const html = document.querySelector('html')!
 
-  html.classList.toggle('bg-ui-base', true)
+  html.classList.toggle('text-default', true)
+  html.classList.toggle('bg-default', true)
   html.classList.toggle('transition', true)
 
-  const attrs = resolveThemeAttrs(theme)
-  attrs.forEach(([k, v]) => html.style.setProperty(k, v))
+  // const attrs = resolveThemeAttrs(theme)
+  // attrs.forEach(([k, v]) => html.style.setProperty(k, v))
 }
 
 function resolveThemeAttrs(theme: ThemeConfig) {
@@ -217,16 +189,10 @@ const { cloned: themeCustomize } = useCloned<ThemeConfig>(() => {
   return {
     colorScheme: 'light',
     fontFamily: '',
-    radius: '0rem',
-    radiusBox: '',
-    radiusButton: '',
-    radiusCheckbox: '',
-    radiusRadio: '',
-    radiusSwitch: '',
-    radiusTabs: '',
-    cb: baseColor,
-    cp: props.config?.cp ?? props.config?.cb ?? baseColor,
-    cx: '#ffffff',
+    radius: '0.25rem',
+    neutral: baseColor,
+    primary: props.config?.primary ?? props.config?.neutral ?? baseColor,
+    bg: '#ffffff',
     ...props.config,
     name: 'customize',
   }
@@ -236,9 +202,9 @@ const themeItems = computed(() => [
   ...themeOptions,
   {
     ...themeCustomize.value,
-    cb: cssVar(themeCustomize.value.cb!),
-    cp: cssVar(themeCustomize.value.cp!),
-    cx: cssVar(themeCustomize.value.cx!),
+    neutral: cssVar(themeCustomize.value.neutral!),
+    cp: cssVar(themeCustomize.value.primary!),
+    bg: cssVar(themeCustomize.value.bg!),
   },
 ])
 
@@ -285,9 +251,9 @@ function onOptionClick(theme: ThemeConfig) {
   themeCustomize.value = {
     ...theme,
     name: 'customize',
-    cb: theme.cb,
-    cp: theme.cp || theme.cb,
-    cx: theme.cx,
+    neutral: theme.neutral,
+    primary: theme.primary || theme.neutral,
+    bg: theme.bg,
   }
 
   emit('update:config', themeCustomize.value)
@@ -363,24 +329,12 @@ function setCustomTheme() {
         <UInput v-model="themeCustomize.fontFamily" placeholder="inherit" @update:model-value="setCustomTheme" />
         <label class="opacity-80">radius</label>
         <UInput v-model="themeCustomize.radius" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusBox</label>
-        <UInput v-model="themeCustomize.radiusBox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusButton</label>
-        <UInput v-model="themeCustomize.radiusButton" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusCheckbox</label>
-        <UInput v-model="themeCustomize.radiusCheckbox" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusRadio</label>
-        <UInput v-model="themeCustomize.radiusRadio" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusSwitch</label>
-        <UInput v-model="themeCustomize.radiusSwitch" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">radiusTabs</label>
-        <UInput v-model="themeCustomize.radiusTabs" :placeholder="themeCustomize.radius" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">cb</label>
-        <UInput v-model="themeCustomize.cb" type="color" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">cp</label>
-        <UInput v-model="themeCustomize.cp" type="color" @update:model-value="setCustomTheme" />
-        <label class="opacity-80">cx</label>
-        <UInput v-model="themeCustomize.cx" type="color" @update:model-value="setCustomTheme" />
+        <label class="opacity-80">primary</label>
+        <UInput v-model="themeCustomize.primary" type="color" @update:model-value="setCustomTheme" />
+        <label class="opacity-80">neutral</label>
+        <UInput v-model="themeCustomize.neutral" type="color" @update:model-value="setCustomTheme" />
+        <label class="opacity-80">bg</label>
+        <UInput v-model="themeCustomize.bg" type="color" @update:model-value="setCustomTheme" />
       </div>
     </template>
   </UTabs>

@@ -16,8 +16,10 @@ type ThemeVariants = VariantProps<typeof theme>
 export interface PinInputProps<T extends PinInputType = 'text' | 'number'> extends ComponentBaseProps, Pick<PinInputRootProps<T>, 'as' | 'defaultValue' | 'disabled' | 'id' | 'mask' | 'modelValue' | 'name' | 'otp' | 'placeholder' | 'required' | 'type'> {
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   length?: number | string
-  underline?: boolean
+  autofocus?: boolean
+  autofocusDelay?: number
   highlight?: boolean
   ui?: ComponentUIProps<typeof theme>
 }
@@ -26,9 +28,10 @@ export interface PinInputProps<T extends PinInputType = 'text' | 'number'> exten
 <script setup lang="ts" generic="T extends PinInputType = 'text' | 'number'">
 import { reactivePick } from '@vueuse/core'
 import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
-import { computed, ref } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
 
@@ -42,15 +45,17 @@ const emit = defineEmits<PinInputEmits<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'defaultValue', 'disabled', 'id', 'mask', 'modelValue', 'name', 'otp', 'required', 'type'), emit)
 
+const inputsRef = ref<ComponentPublicInstance[]>([])
 const completed = ref(false)
 
-const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormFocus, emitFormBlur } = useFormItem<PinInputProps>(props)
+const { id, name, size, color, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormFocus, emitFormBlur } = useFormField<PinInputProps>(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
   const ui = cv(merge(theme, appConfig.ui.pinInput))
   return ui({
     ...props,
     size: size.value,
+    color: color.value,
     highlight: highlight.value,
   })
 })
@@ -68,6 +73,21 @@ function onBlur(event: FocusEvent) {
     emitFormBlur()
   }
 }
+
+function autoFocus() {
+  if (props.autofocus)
+    inputsRef.value[0]?.$el?.focus()
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    autoFocus()
+  }, props.autofocusDelay)
+})
+
+defineExpose({
+  inputsRef,
+})
 </script>
 
 <template>
@@ -79,22 +99,17 @@ function onBlur(event: FocusEvent) {
     @update:model-value="emitFormInput"
     @complete="onComplete"
   >
-    <span
+    <PinInputInput
       v-for="(ids, index) in looseToNumber(props.length)"
       :key="ids"
-      :aria-disabled="disabled ? true : undefined"
-      :class="style.container({ class: props.ui?.container })"
-      data-part="container"
-    >
-      <PinInputInput
-        v-bind="$attrs"
-        :index="index"
-        :disabled="disabled"
-        :class="style.base({ class: props.ui?.base })"
-        data-part="base"
-        @blur="onBlur"
-        @focus="emitFormFocus"
-      />
-    </span>
+      v-bind="$attrs"
+      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
+      :index="index"
+      :disabled="disabled"
+      :class="style.base({ class: props.ui?.base })"
+      data-part="base"
+      @blur="onBlur"
+      @focus="emitFormFocus"
+    />
   </PinInputRoot>
 </template>

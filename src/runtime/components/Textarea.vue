@@ -26,6 +26,7 @@ export interface TextareaProps extends ComponentBaseProps {
   name?: string
   placeholder?: string
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   variant?: ThemeVariants['variant']
   highlight?: boolean
   underline?: boolean
@@ -44,7 +45,7 @@ export interface TextareaProps extends ComponentBaseProps {
 import { Primitive } from 'reka-ui'
 import { computed, nextTick, onMounted, useTemplateRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 
 defineOptions({
@@ -64,13 +65,14 @@ const [modelValue, modelModifiers] = defineModel<string | number>()
 
 const textareaRef = useTemplateRef('textareaRef')
 
-const { id, name, size, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormItem<TextareaProps>(props)
+const { id, name, size, color, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormField<TextareaProps>(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
   const ui = cv(merge(theme, appConfig.ui.textarea))
   return ui({
     ...props,
     size: size.value,
+    color: color.value,
     highlight: highlight.value,
   })
 })

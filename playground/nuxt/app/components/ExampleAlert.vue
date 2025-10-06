@@ -3,8 +3,9 @@ import type { AlertProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<AlertProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'orientation', value: 'vertical', options: ['horizontal', 'vertical'] },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'subtle'] },
   { prop: 'title', value: 'Title' },
   { prop: 'description', value: 'Description' },
   { prop: 'close', value: false },

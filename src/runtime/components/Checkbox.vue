@@ -31,7 +31,7 @@ export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProp
   icon?: string
   /**
    * The icon displayed when the checkbox is indeterminate.
-   * @default app.icons.indeterminate
+   * @default app.icons.minus
    */
   indeterminateIcon?: string
   ui?: ComponentUIProps<typeof theme>
@@ -43,7 +43,7 @@ import { reactivePick } from '@vueuse/core'
 import { CheckboxIndicator, CheckboxRoot, Label, Primitive, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -57,7 +57,7 @@ const slots = defineSlots<CheckboxSlots>()
 const innerValue = defineModel<boolean | 'indeterminate'>({ default: undefined })
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<CheckboxProps>(props)
+const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<CheckboxProps>(props)
 const id = _id.value ?? useId()
 
 const appConfig = useAppConfig() as RuntimeAppConfig
@@ -93,7 +93,7 @@ function onUpdate(value: any) {
         <CheckboxIndicator as-child force-mount>
           <Icon
             v-if="modelValue === 'indeterminate'"
-            :name="props.indeterminateIcon || appConfig.ui.icons.indeterminate"
+            :name="props.indeterminateIcon || appConfig.ui.icons.minus"
             :class="style.icon({ class: props.ui?.icon })"
             data-part="icon"
           />

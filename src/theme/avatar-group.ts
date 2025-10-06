@@ -1,26 +1,39 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
     root: 'inline-flex flex-row-reverse justify-end',
-    base: 'relative rounded-full ring-ui-cx first:me-0',
+    base: 'relative rounded-full ring-bg first:me-0',
   },
   variants: {
     size: {
-      xs: {
-        base: 'ring-1 -me-0.125em',
+      '3xs': {
+        base: 'ring -me-0.5',
       },
-      sm: {
-        base: 'ring-2 -me-0.125em',
+      '2xs': {
+        base: 'ring -me-0.5',
       },
-      md: {
-        base: 'ring-2 -me-0.25em',
+      'xs': {
+        base: 'ring -me-0.5',
       },
-      lg: {
-        base: 'ring-3 -me-0.5em',
+      'sm': {
+        base: 'ring-2 -me-1.5',
       },
-      xl: {
-        base: 'ring-3 -me-0.5em',
+      'md': {
+        base: 'ring-2 -me-1.5',
+      },
+      'lg': {
+        base: 'ring-2 -me-1.5',
+      },
+      'xl': {
+        base: 'ring-3 -me-2',
+      },
+      '2xl': {
+        base: 'ring-3 -me-2',
+      },
+      '3xl': {
+        base: 'ring-3 -me-2',
       },
     },
   },

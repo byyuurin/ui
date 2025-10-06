@@ -286,7 +286,7 @@ defineExpose({
         <Button
           :disabled="!canScrollPrev"
           :icon="prevIcon"
-          size="md"
+          color="neutral"
           variant="outline"
           :aria-label="t('carousel.prev')"
           v-bind="typeof props.prev === 'object' ? props.prev : undefined"
@@ -297,7 +297,7 @@ defineExpose({
         <Button
           :disabled="!canScrollNext"
           :icon="nextIcon"
-          size="md"
+          color="neutral"
           variant="outline"
           :aria-label="t('carousel.next')"
           v-bind="typeof props.next === 'object' ? props.next : undefined"
@@ -313,6 +313,7 @@ defineExpose({
             :aria-label="t('carousel.goto', { page: index + 1 })"
             :class="style.dot({ class: props.ui?.dot, active: selectedIndex === index })"
             data-part="dot"
+            :data-state="selectedIndex === index ? 'active' : undefined"
             @click="scrollTo(index)"
           ></button>
         </template>

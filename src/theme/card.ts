@@ -1,6 +1,7 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
     root: 'rounded divide-y',
     header: 'flex flex-wrap items-center gap-1 px-4 py-5 sm:px-6',
@@ -11,21 +12,17 @@ export default ct(/* @unocss-include */{
   },
   variants: {
     variant: {
-      'solid': {
-        root: 'color-ui-cx bg-ui-fill divide-ui-cx/20',
-        description: 'color-ui-cx/80',
+      solid: {
+        root: 'bg-inverted text-inverted',
       },
-      'outline': {
-        root: 'color-ui-fill bg-ui-base divide-ui-fill/20 ring ring-inset ring-ui-fill/20',
-        description: 'color-ui-fill/80',
+      outline: {
+        root: 'bg-default ring ring-default divide-y divide-default',
       },
-      'soft': {
-        root: 'color-ui-fill bg-soft-ui-fill/10 divide-ui-fill/20',
-        description: 'color-ui-fill/80',
+      soft: {
+        root: 'bg-elevated/50 divide-y divide-default',
       },
-      'soft-outline': {
-        root: 'color-ui-fill bg-soft-ui-fill/10 divide-ui-fill/20 ring ring-inset ring-ui-fill/20',
-        description: 'color-ui-fill/80',
+      subtle: {
+        root: 'bg-elevated/50 ring ring-default divide-y divide-default',
       },
     },
   },

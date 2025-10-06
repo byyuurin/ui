@@ -22,6 +22,7 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
   placeholder?: string
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   underline?: boolean
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
@@ -65,7 +66,7 @@ import { reactivePick } from '@vueuse/core'
 import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
-import { useFormItem } from '../composables/useFormItem'
+import { useFormField } from '../composables/useFormField'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
@@ -87,7 +88,7 @@ const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
 
 const { t, code: codeLocale } = useLocale()
 const locale = computed(() => props.locale || codeLocale.value)
-const { id, name, size, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormItem<InputNumberProps>(props)
+const { id, name, size, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormField<InputNumberProps>(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
@@ -95,6 +96,7 @@ const style = computed(() => {
   return ui({
     ...props,
     size: size.value,
+    color: color.value,
     highlight: highlight.value,
   })
 })
@@ -136,8 +138,8 @@ function onBlur(event: FocusEvent) {
     v-bind="{ ...rootProps, id, name, disabled }"
     :locale="locale"
     :aria-disabled="disabled ? true : undefined"
-    :class="style.base({ class: [props.class, props.ui?.base] })"
-    :data-part="$attrs['data-part'] ?? 'base'"
+    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :data-part="$attrs['data-part'] ?? 'root'"
     @update:model-value="onUpdate"
   >
     <NumberFieldInput
@@ -145,8 +147,8 @@ function onBlur(event: FocusEvent) {
       ref="inputRef"
       :placeholder="props.placeholder"
       :required="props.required"
-      :class="style.input({ class: props.ui?.input })"
-      data-part="input"
+      :class="style.base({ class: props.ui?.base })"
+      data-part="base"
       @blur="onBlur"
       @focus="emitFormFocus"
     />
@@ -157,6 +159,7 @@ function onBlur(event: FocusEvent) {
           <Button
             :icon="incrementIcon"
             :size="props.size"
+            :color="color"
             variant="link"
             :aria-label="t('inputNumber.increment')"
             v-bind="typeof props.increment === 'object' ? props.increment : undefined"
@@ -171,6 +174,7 @@ function onBlur(event: FocusEvent) {
           <Button
             :icon="decrementIcon"
             :size="props.size"
+            :color="color"
             variant="link"
             :aria-label="t('inputNumber.decrement')"
             v-bind="typeof props.decrement === 'object' ? props.decrement : undefined"

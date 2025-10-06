@@ -1,36 +1,41 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
+import type { VariantsColor } from '../defaults'
+import type { ModuleOptions } from '../module'
 
-export default ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
-    root: 'relative flex items-center select-none touch-none aria-disabled:opacity-50',
-    track: [
-      'relative bg-soft-ui-cb/10 overflow-hidden rounded-full flex-grow cursor-pointer',
-      'data-[disabled]:cursor-not-allowed',
-      'data-[orientation=horizontal]:h-0.6em data-[orientation=vertical]:w-0.6em',
-    ],
-    range: 'absolute rounded-full bg-soft-ui-fill',
-    thumb: [
-      'size-1em rounded-full bg-ui-base ring-0.2em cursor-pointer focus-visible:outline-0.2em focus-visible:outline-offset-0.2em',
-      'data-[disabled]:cursor-not-allowed',
-      'ring-ui-fill outline-none focus-visible:outline-ui-fill/50',
-    ],
+    root: 'relative flex items-center select-none touch-none',
+    track: 'relative bg-accented overflow-hidden rounded-full grow',
+    range: 'absolute rounded-full',
+    thumb: 'rounded-full bg-default ring-2 focus-visible:outline-2 focus-visible:outline-offset-2',
   },
   variants: {
+    color: {
+      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+        range: `bg-${color}`,
+        thumb: `ring-${color} focus-visible:outline-${color}/50`,
+      }])) as Record<VariantsColor, { range: string, thumb: string }>,
+      neutral: {
+        range: 'bg-inverted',
+        thumb: 'ring-inverted focus-visible:outline-inverted/50',
+      },
+    },
     size: {
       xs: {
-        root: 'text-xs',
+        thumb: 'size-3',
       },
       sm: {
-        root: 'text-sm',
+        thumb: 'size-3.5',
       },
       md: {
-        root: 'text-base',
+        thumb: 'size-4',
       },
       lg: {
-        root: 'text-lg',
+        thumb: 'size-4.5',
       },
       xl: {
-        root: 'text-xl',
+        thumb: 'size-5',
       },
     },
     orientation: {
@@ -43,8 +48,86 @@ export default ct(/* @unocss-include */{
         range: 'w-full',
       },
     },
+    disabled: {
+      true: {
+        root: 'opacity-75 cursor-not-allowed',
+      },
+    },
   },
+  compoundVariants: [
+    {
+      orientation: 'horizontal',
+      size: 'xs',
+      class: {
+        track: 'h-[6px]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      size: 'sm',
+      class: {
+        track: 'h-[7px]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      size: 'md',
+      class: {
+        track: 'h-[8px]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      size: 'lg',
+      class: {
+        track: 'h-[9px]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      size: 'xl',
+      class: {
+        track: 'h-[10px]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      size: 'xs',
+      class: {
+        track: 'w-[6px]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      size: 'sm',
+      class: {
+        track: 'w-[7px]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      size: 'md',
+      class: {
+        track: 'w-[8px]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      size: 'lg',
+      class: {
+        track: 'w-[9px]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      size: 'xl',
+      class: {
+        track: 'w-[10px]',
+      },
+    },
+  ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
   },
 })

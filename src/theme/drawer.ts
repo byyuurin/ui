@@ -1,30 +1,35 @@
+/* @unocss-include */
 import { ct } from '@byyuurin/ui-kit'
 
-export default ct(/* @unocss-include */{
+export default ct({
   parts: {
-    overlay: 'fixed z-1 inset-0 bg-black/40',
-    content: 'fixed z-1 bg-ui-base ring ring-ui-base/5 flex focus:outline-none',
-    container: 'w-full flex flex-col overflow-hidden overflow-y-auto',
-    header: 'flex flex-wrap items-center gap-1 px-4 py-5 pb-0 sm:px-6',
-    body: 'flex-1 overflow-y-auto p-4 sm:p-6',
-    footer: 'flex items-center gap-1.5 p-4 pt-0 sm:px-6',
-    title: 'flex-grow color-ui-base text-xl font-semibold',
-    description: 'w-full color-ui-base/80',
+    overlay: 'fixed inset-0 bg-elevated/75',
+    content: 'fixed bg-default ring ring-default flex focus:outline-none',
+    container: 'w-full flex flex-col gap-4 p-4 overflow-y-auto',
+    header: '',
+    body: 'flex-1',
+    footer: 'flex flex-col gap-1.5',
+    title: 'text-highlighted font-semibold',
+    description: 'mt-1 text-muted text-sm',
     close: 'ms-auto',
   },
   variants: {
     direction: {
       top: {
-        content: 'top-0 mb-24 flex-col-reverse rounded-b-ui-box',
+        content: 'mb-24 flex-col-reverse',
+        handle: 'mb-4',
       },
       bottom: {
-        content: 'bottom-0 mt-24 flex-col rounded-t-ui-box',
+        content: 'mt-24 flex-col',
+        handle: 'mt-4',
       },
       left: {
-        content: 'left-0 flex-row-reverse rounded-r-ui-box',
+        content: 'flex-row-reverse',
+        handle: '!mr-4',
       },
       right: {
-        content: 'right-0 flex-row rounded-l-ui-box',
+        content: 'flex-row',
+        handle: '!ml-4',
       },
     },
     transition: {
@@ -34,7 +39,7 @@ export default ct(/* @unocss-include */{
     },
     inset: {
       true: {
-        content: 'rounded after:hidden',
+        content: 'rounded-lg after:hidden overflow-hidden [--initial-transform:calc(100%+1.5rem)]',
       },
     },
   },
@@ -42,20 +47,29 @@ export default ct(/* @unocss-include */{
     {
       direction: ['top', 'bottom'],
       class: {
-        content: 'inset-x-0 h-auto max-h-[96%]',
+        content: 'h-auto max-h-[96%]',
+        handle: '!w-12 !h-1.5 mx-auto',
       },
     },
     {
       direction: ['left', 'right'],
       class: {
-        content: 'inset-y-0 w-auto max-w-[calc(100%-2rem)]',
+        content: 'w-auto max-w-[calc(100%-2rem)]',
+        handle: '!h-12 !w-1.5 mt-auto mb-auto',
       },
     },
     {
-      direction: ['top'],
+      direction: 'top',
       inset: true,
       class: {
         content: 'inset-x-4 top-4',
+      },
+    },
+    {
+      direction: 'top',
+      inset: false,
+      class: {
+        content: 'inset-x-0 top-0 rounded-b-lg',
       },
     },
     {
@@ -66,10 +80,17 @@ export default ct(/* @unocss-include */{
       },
     },
     {
-      direction: ['bottom'],
+      direction: 'bottom',
       inset: true,
       class: {
         content: 'inset-x-4 bottom-4',
+      },
+    },
+    {
+      direction: 'bottom',
+      inset: false,
+      class: {
+        content: 'inset-x-0 bottom-0 rounded-t-lg',
       },
     },
     {
@@ -80,10 +101,17 @@ export default ct(/* @unocss-include */{
       },
     },
     {
-      direction: ['left'],
+      direction: 'left',
       inset: true,
       class: {
         content: 'inset-y-4 left-4',
+      },
+    },
+    {
+      direction: 'left',
+      inset: false,
+      class: {
+        content: 'inset-y-0 left-0 rounded-r-lg',
       },
     },
     {
@@ -94,10 +122,17 @@ export default ct(/* @unocss-include */{
       },
     },
     {
-      direction: ['right'],
+      direction: 'right',
       inset: true,
       class: {
         content: 'inset-y-4 right-4',
+      },
+    },
+    {
+      direction: 'right',
+      inset: false,
+      class: {
+        content: 'inset-y-0 right-0 rounded-l-lg',
       },
     },
     {

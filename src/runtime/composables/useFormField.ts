@@ -4,9 +4,9 @@ import type { FormInputEvents } from '../types'
 import type { GetObjectField } from '../types/utils'
 import {
   injectFormBus,
+  injectFormField,
   injectFormInputId,
   injectFormInputs,
-  injectFormItem,
   injectFormOptions,
 } from './injections'
 
@@ -14,18 +14,19 @@ interface Props<T> {
   id?: string
   name?: string
   size?: GetObjectField<T, 'size'>
+  color?: GetObjectField<T, 'color'>
   highlight?: boolean
   disabled?: boolean
 }
 
-export function useFormItem<T>(props?: Props<T>, options?: { bind?: boolean, deferInputValidation?: boolean }) {
+export function useFormField<T>(props?: Props<T>, options?: { bind?: boolean, deferInputValidation?: boolean }) {
   const formOptions = injectFormOptions()
   const formBus = injectFormBus()
-  const formItem = injectFormItem()
+  const formField = injectFormField()
   const formInputs = injectFormInputs()
   const inputId = injectFormInputId()
 
-  if (formItem && inputId) {
+  if (formField && inputId) {
     if (options?.bind === false) {
       // Removes for="..." attribute on label for RadioGroup and alike.
       inputId.value = undefined
@@ -35,55 +36,56 @@ export function useFormItem<T>(props?: Props<T>, options?: { bind?: boolean, def
       inputId.value = props?.id
     }
 
-    if (formInputs && formItem.value.name && inputId.value)
-      formInputs.value[formItem.value.name] = { id: inputId.value, pattern: formItem.value.errorPattern }
+    if (formInputs && formField.value.name && inputId.value)
+      formInputs.value[formField.value.name] = { id: inputId.value, pattern: formField.value.errorPattern }
   }
 
   function emitFormEvent(type: FormInputEvents, name?: string, eager?: boolean) {
-    if (formBus && formItem && name)
+    if (formBus && formField && name)
       formBus.emit({ type, name, eager })
   }
 
   function emitFormBlur() {
-    emitFormEvent('blur', formItem?.value.name)
+    emitFormEvent('blur', formField?.value.name)
   }
 
   function emitFormFocus() {
-    emitFormEvent('focus', formItem?.value.name)
+    emitFormEvent('focus', formField?.value.name)
   }
 
   function emitFormChange() {
-    emitFormEvent('change', formItem?.value.name)
+    emitFormEvent('change', formField?.value.name)
   }
 
   const emitFormInput = useDebounceFn(
     () => {
-      emitFormEvent('input', formItem?.value.name, !options?.deferInputValidation || formItem?.value.eagerValidation)
+      emitFormEvent('input', formField?.value.name, !options?.deferInputValidation || formField?.value.eagerValidation)
     },
-    formItem?.value.validateOnInputDelay ?? formOptions?.value.validateOnInputDelay ?? 0,
+    formField?.value.validateOnInputDelay ?? formOptions?.value.validateOnInputDelay ?? 0,
   )
 
   return {
     id: computed(() => props?.id ?? inputId?.value),
-    name: computed(() => props?.name ?? formItem?.value.name),
-    size: computed(() => props?.size ?? formItem?.value.size),
-    highlight: computed(() => formItem?.value.error ? true : props?.highlight),
+    name: computed(() => props?.name ?? formField?.value.name),
+    size: computed(() => props?.size ?? formField?.value.size),
+    color: computed(() => formField?.value.error ? 'error' : props?.color),
+    highlight: computed(() => formField?.value.error ? true : props?.highlight),
     disabled: computed(() => formOptions?.value.disabled || props?.disabled),
     emitFormBlur,
     emitFormInput,
     emitFormChange,
     emitFormFocus,
     ariaAttrs: computed(() => {
-      if (!formItem?.value)
+      if (!formField?.value)
         return
 
       const descriptiveAttrs = ['error' as const, 'hint' as const, 'help' as const, 'description' as const]
-        .filter((type) => formItem?.value?.[type])
-        .map((type) => `${formItem?.value.ariaId}-${type}`) || []
+        .filter((type) => formField?.value?.[type])
+        .map((type) => `${formField?.value.ariaId}-${type}`) || []
 
       return {
         'aria-describedby': descriptiveAttrs.join(' '),
-        'aria-invalid': !!formItem?.value.error,
+        'aria-invalid': !!formField?.value.error,
       }
     }),
   }

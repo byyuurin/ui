@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { FormItemProps } from '@byyuurin/ui'
+import type { FormFieldProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const controls: ControlItems<FormItemProps> = [
+const controls: ControlItems<FormFieldProps> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'label', value: 'Label' },
   { prop: 'description', value: 'Description' },
@@ -16,14 +16,14 @@ const controls: ControlItems<FormItemProps> = [
 <template>
   <ExampleView
     v-slot="attrs"
-    title="FormItem"
+    title="FormField"
     description="A wrapper for form elements that provides validation and error handling."
     :controls="controls"
   >
     <div class="space-y-2">
-      <UFormItem v-bind="attrs">
+      <UFormField v-bind="attrs">
         <UInput />
-      </UFormItem>
+      </UFormField>
     </div>
   </ExampleView>
 </template>

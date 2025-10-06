@@ -3,7 +3,7 @@ import type { AvatarProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<AvatarProps> = [
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'size', value: 'md', options: ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'] },
   { prop: 'icon', value: null, options: [
     { label: 'No icon', value: null },
     'i-mdi-file-image',

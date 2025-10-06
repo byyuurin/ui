@@ -59,7 +59,7 @@ const columns: TableColumn<typeof data.value[number]>[] = [
       failed: 'ui-red',
       refunded: 'ui-gray',
     }
-    return h(Badge, { label: row.original.status, variant: 'soft-outline', class: colors[row.original.status] })
+    return h(Badge, { label: row.original.status, variant: 'subtle', class: colors[row.original.status] })
   } },
 ]
 
