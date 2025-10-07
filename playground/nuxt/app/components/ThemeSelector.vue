@@ -269,7 +269,7 @@ function setCustomTheme() {
 
 <template>
   <UTabs
-    variant="solid"
+    variant="pill"
     :items="[
       { label: 'Samples', slot: 'samples' },
       { label: 'Customize', slot: 'customize' },
@@ -283,7 +283,7 @@ function setCustomTheme() {
           <div
             v-for="theme in themeItems"
             :key="theme.name"
-            class="self-end border-ui-base/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-ui-base transition"
+            class="self-end border-ui-base/20 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none bg-default transition"
             :class="{
               'hover:border-ui-base/40 ring-3 ring-ui-base/80 ring-offset-3 ring-offset-ui-cx': theme.name === currentTheme,
               'cursor-pointer': theme.name !== currentTheme && theme.name !== 'customize',
@@ -291,11 +291,11 @@ function setCustomTheme() {
             :style="Object.fromEntries(resolveThemeAttrs(theme))"
             @click="onOptionClick(theme)"
           >
-            <div class="bg-ui-base color-ui-base w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
+            <div class="bg-default text-default w-full" :class="{ 'pointer-events-none': theme.name !== currentTheme }">
               <div class="min-w-40 grid grid-cols-4 grid-rows-3">
-                <div class="bg-soft-ui-cb/10 col-start-1 row-span-2 row-start-1"></div>
-                <div class="bg-soft-ui-cb/20 col-start-1 row-start-3"></div>
-                <div class="bg-ui-base col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                <div class="bg-neutral/10 col-start-1 row-span-2 row-start-1"></div>
+                <div class="bg-neutral/20 col-start-1 row-start-3"></div>
+                <div class="bg-neutral/80 col-span-3 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
                   <div class="text-xl font-bold">
                     {{ theme.name }}
                   </div>
@@ -309,7 +309,7 @@ function setCustomTheme() {
             <div v-for="colorName in colorOptions" :key="colorName" class="flex aspect-square items-center justify-center rounded">
               <ULink
                 class="size-12 bg-ui-fill color-white font-bold border-ui-base/20 hover:border-ui-base/40 overflow-hidden rounded border outline outline-2 outline-offset-2 outline-transparent select-none transition"
-                :class="[colorName, { 'ring-3 ring-ui-base/80 ring-offset-3 ring-offset-ui-cx': colorName === props.color }]"
+                :class="[colorName, { 'ring-3 ring-accented ring-offset-3 ring-offset-muted': colorName === props.color }]"
                 size="xl"
                 label="A"
                 :title="colorName || `${cssVarsPrefix}-base`"

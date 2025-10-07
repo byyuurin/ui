@@ -19,38 +19,38 @@ const controls: ControlItems<FieldGroupProps> = [
       <div>
         <h2>With Button</h2>
         <UFieldGroup v-bind="attrs">
-          <UButton label="Button" variant="outline" />
-          <UButton variant="outline" icon="i-carbon-search" />
+          <UButton label="Button" />
+          <UButton icon="i-carbon-search" />
         </UFieldGroup>
       </div>
       <div>
         <h2>With Badge</h2>
         <UFieldGroup v-bind="attrs">
-          <UBadge label="Badge" variant="outline" />
-          <UButton variant="outline" icon="i-carbon-search" />
+          <UBadge color="neutral" label="Badge" variant="outline" />
+          <UButton color="neutral" variant="outline" icon="i-carbon-search" />
         </UFieldGroup>
       </div>
       <div>
         <h2>With Input</h2>
         <UFieldGroup v-bind="attrs">
-          <UInput placeholder="Input" />
-          <UButton variant="outline" icon="i-carbon-search" />
+          <UInput color="neutral" placeholder="Input" />
+          <UButton color="neutral" variant="outline" icon="i-carbon-search" />
         </UFieldGroup>
       </div>
       <div>
         <h2>With Tooltip</h2>
         <UFieldGroup v-bind="attrs">
-          <UInput placeholder="Input" />
+          <UInput color="neutral" placeholder="Input" />
           <UTooltip text="Copy to clipboard">
-            <UButton variant="outline" icon="i-carbon-copy" />
+            <UButton color="neutral" variant="outline" icon="i-carbon-copy" />
           </UTooltip>
         </UFieldGroup>
       </div>
       <div>
         <h2>With Select</h2>
         <UFieldGroup v-bind="attrs">
-          <USelect default-value="ON" :options="['ON', 'OFF']" :ui="{ content: 'min-w-25' }" />
-          <UButton variant="outline" icon="i-carbon-save" />
+          <USelect color="neutral" default-value="ON" :options="['ON', 'OFF']" :ui="{ content: 'min-w-25' }" />
+          <UButton color="neutral" variant="outline" icon="i-carbon-save" />
         </UFieldGroup>
       </div>
     </div>

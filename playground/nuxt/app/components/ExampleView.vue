@@ -63,7 +63,7 @@ onMounted(() => {
       <UCard
         :title="props.title"
         :description="props.description"
-        class="top-4 bg-ui-cb/2 backdrop-blur md:sticky"
+        class="top-4 bg-neutral/2 backdrop-blur md:sticky"
       >
         <div
           v-if="props.controls.length > 0"
@@ -73,7 +73,7 @@ onMounted(() => {
             <label class="inline-flex justify-between items-center gap-2 opacity-80">
               <span class="mr-auto">{{ upperFirst((item?.label ?? item?.prop) as string) }}</span>
               <UPopover v-if="item?.description" mode="click" arrow>
-                <UButton color="primary" variant="link" size="xs" icon="i-mdi-help-circle-outline" :ui="{ base: 'p-0' }" />
+                <UButton color="neutral" variant="link" size="xs" icon="i-mdi-help-circle-outline" :ui="{ base: 'p-0' }" />
                 <template #content>
                   <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">{{ item?.description }}</p>
                 </template>
@@ -113,7 +113,7 @@ onMounted(() => {
           </template>
         </div>
       </UCard>
-      <UCard class="h-full bg-ui-cb/2 xl:grid-col-span-2">
+      <UCard class="h-full bg-neutral/2 xl:grid-col-span-2">
         <slot v-bind="attrs"></slot>
       </UCard>
     </div>

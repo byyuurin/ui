@@ -24,8 +24,8 @@ export default ct({
     ],
     /** The thumb to be used in `ScrollAreaScrollbar`. */
     thumb: [
-      'relative flex-1 bg-[--ui-border-accented] rounded cursor-pointer transition-colors',
-      'hover:bg-primary/30 active:bg-primary/50',
+      'relative flex-1 bg-accented opacity-80 rounded cursor-pointer transition',
+      'active:opacity-100',
       'before:content-empty before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-10 before:min-h-10 ',
     ],
     /** The corner where both vertical and horizontal scrollbars meet. */

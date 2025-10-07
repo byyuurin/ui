@@ -30,6 +30,11 @@ export default (options: Required<ModuleOptions>) => ct({
       'top-left': { base: 'top-0 left-0' },
       'bottom-left': { base: 'bottom-0 left-0' },
     },
+    show: {
+      true: {
+        base: 'animate-[scale-in_200ms_ease-out]',
+      },
+    },
     inset: {
       false: '',
     },
@@ -69,5 +74,7 @@ export default (options: Required<ModuleOptions>) => ct({
   ],
   defaultVariants: {
     size: 'md',
+    color: 'primary',
+    position: 'top-right',
   },
 })

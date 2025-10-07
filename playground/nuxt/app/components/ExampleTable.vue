@@ -55,11 +55,11 @@ const columns: TableColumn<typeof data.value[number]>[] = [
   { accessorKey: 'email', header: 'Email' },
   { accessorKey: 'status', header: 'Status', cell: ({ row }) => {
     const colors: Record<string, string> = {
-      paid: 'ui-green',
-      failed: 'ui-red',
-      refunded: 'ui-gray',
+      paid: 'success',
+      failed: 'error',
+      refunded: 'neutral',
     }
-    return h(Badge, { label: row.original.status, variant: 'subtle', class: colors[row.original.status] })
+    return h(Badge, { label: row.original.status, variant: 'subtle', color: colors[row.original.status] })
   } },
 ]
 

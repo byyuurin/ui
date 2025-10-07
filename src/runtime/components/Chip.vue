@@ -23,6 +23,7 @@ export interface ChipProps extends ComponentBaseProps {
   as?: PrimitiveProps['as']
   text?: string | number
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   position?: ThemeVariants['position']
   show?: boolean
   /** When `true`, keep the chip inside the component for rounded elements. */
@@ -62,7 +63,7 @@ const style = computed(() => {
 <template>
   <Primitive
     :as="props.as"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="style.root({ class: [props.ui?.root, props.class] })"
     :data-part="$attrs['data-part'] ?? 'root'"
   >
     <Slot v-bind="$attrs">

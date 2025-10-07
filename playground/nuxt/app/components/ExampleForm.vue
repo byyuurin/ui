@@ -79,15 +79,15 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
         </UFormField>
 
         <UFormField label="Switch" name="switch">
-          <USwitch v-model="state.switch" label="Switch me" class="ui-base" />
+          <USwitch v-model="state.switch" label="Switch me" />
         </UFormField>
 
         <UFormField label="Checkbox" name="checkbox">
-          <UCheckbox v-model="state.checkbox" label="Check me" class="ui-base" />
+          <UCheckbox v-model="state.checkbox" label="Check me" />
         </UFormField>
 
         <UFormField label="Slider" name="slider">
-          <USlider v-model="state.slider" class="ui-base" />
+          <USlider v-model="state.slider" />
         </UFormField>
 
         <UFormField label="Select" name="select">
@@ -107,7 +107,7 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
         </UFormField>
 
         <UFormField label="Radio Group" name="radioGroup">
-          <URadioGroup v-model="state.radioGroup" :options="items" class="ui-base" />
+          <URadioGroup v-model="state.radioGroup" :options="items" />
         </UFormField>
 
         <UFormField label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">

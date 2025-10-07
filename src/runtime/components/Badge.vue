@@ -21,6 +21,7 @@ export interface BadgeProps extends ComponentBaseProps, Omit<UseComponentIconsPr
   as?: PrimitiveProps['as']
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   label?: string
   ui?: ComponentUIProps<typeof theme>
 }

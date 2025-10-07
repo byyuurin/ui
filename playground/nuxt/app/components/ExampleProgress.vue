@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const controls: ControlItems<ProgressProps> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'modelValue', value: 0, min: 0 },
+  { prop: 'modelValue', value: 40, min: 0 },
   { prop: 'max', value: 100, min: 0 },
   { prop: 'status', value: false },
   { prop: 'inverted', value: false },

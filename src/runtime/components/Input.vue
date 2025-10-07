@@ -54,6 +54,7 @@ import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -163,11 +164,12 @@ onMounted(() => {
   >
     <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
       <slot name="leading">
-        <span
+        <Icon
           v-if="isLeading && leadingIconName"
-          :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })"
+          :name="leadingIconName"
+          :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
           data-part="leading-icon"
-        ></span>
+        />
       </slot>
     </span>
 
@@ -191,11 +193,12 @@ onMounted(() => {
 
     <span v-if="isTrailing || slots.trailing" :class="style.trailing({ class: props.ui?.trailing })" data-part="trailing">
       <slot name="trailing">
-        <span
+        <Icon
           v-if="isTrailing && trailingIconName"
-          :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })"
+          :name="trailingIconName"
+          :class="style.trailingIcon({ class: props.ui?.trailingIcon })"
           data-part="trailing-icon"
-        ></span>
+        />
       </slot>
     </span>
   </Primitive>

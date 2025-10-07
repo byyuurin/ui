@@ -53,7 +53,9 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> exte
    */
   descriptionKey?: string
   options?: T[]
+  variant: ThemeVariants['variant']
   size?: ThemeVariants['size']
+  color?: ThemeVariants['color']
   /**
    * The orientation the radio buttons are laid out.
    * @default "vertical"
@@ -165,7 +167,7 @@ function onUpdate(value: any) {
             :id="item.id"
             :value="item.value"
             :disabled="item.disabled"
-            :class="style.base({ class: props.ui?.base })"
+            :class="style.base({ class: props.ui?.base, disabled: item.disabled })"
             data-part="base"
           >
             <RadioGroupIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" force-mount />

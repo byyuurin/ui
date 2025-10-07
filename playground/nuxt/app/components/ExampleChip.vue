@@ -4,7 +4,8 @@ import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<ChipProps> = [
   { prop: 'text', value: '1' },
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'color', value: 'error', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'size', value: '3xl', options: ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'] },
   { prop: 'position', value: 'top-right', options: ['top-left', 'bottom-left', 'top-right', 'bottom-right'] },
   { prop: 'inset', value: false, description: 'When `true`, keep the badge inside the component for rounded elements.' },
   { prop: 'standalone', value: false, description: 'When `true`, render the badge relatively to the parent.' },
@@ -21,7 +22,7 @@ const controls: ControlItems<ChipProps> = [
   >
     <div class="flex flex-wrap gap-4 items-start">
       <UChip v-bind="attrs">
-        <UButton class="ui-base" icon="i-lucide-mail" />
+        <UButton variant="subtle" color="neutral" icon="i-lucide-mail" />
       </UChip>
     </div>
   </ExampleView>

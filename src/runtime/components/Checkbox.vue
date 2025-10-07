@@ -90,7 +90,7 @@ function onUpdate(value: any) {
         data-part="base"
         @update:model-value="onUpdate"
       >
-        <CheckboxIndicator as-child force-mount>
+        <CheckboxIndicator :class="style.indicator({ class: props.ui?.indicator })">
           <Icon
             v-if="modelValue === 'indeterminate'"
             :name="props.indeterminateIcon || appConfig.ui.icons.minus"

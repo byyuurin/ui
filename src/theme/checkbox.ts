@@ -8,7 +8,7 @@ export default (options: Required<ModuleOptions>) => ct({
     root: 'relative flex items-start',
     container: 'flex items-center',
     base: 'rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
-    indicator: 'flex items-center justify-center size-full text-inverted',
+    indicator: 'flex items-center justify-center size-full text-inverted data-[state=checked]:animate-[scale-in_100ms_ease-in-out]',
     icon: 'shrink-0 size-full',
     wrapper: 'w-full',
     label: 'block font-medium text-default',

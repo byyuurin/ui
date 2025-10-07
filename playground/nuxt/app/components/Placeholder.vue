@@ -8,13 +8,8 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <span
-    class="group relative overflow-hidden rounded border border-dashed px-4 flex items-center justify-center border-default"
-  >
-    <svg
-      class="absolute inset-0 size-full stroke-default"
-      fill="none"
-    >
+  <div class="group relative overflow-hidden rounded border border-dashed border-accented opacity-75 px-4 flex items-center justify-center">
+    <svg class="absolute inset-0 size-full stroke-default/80" fill="none">
       <defs>
         <pattern
           id="pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e"
@@ -30,15 +25,17 @@ const props = withDefaults(defineProps<{
       <rect stroke="none" fill="url(#pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e)" width="100%" height="100%" />
     </svg>
 
-    <slot>
-      <span
-        class="relative z-1 w-full"
-        :class="{
-          'text-center': props.labelPosition === 'center',
-          'text-left': props.labelPosition === 'left',
-          'text-right': props.labelPosition === 'right',
-        }"
-      >{{ props.label }}</span>
-    </slot>
-  </span>
+    <div
+      class="relative w-full"
+      :class="{
+        'text-center': props.labelPosition === 'center',
+        'text-left': props.labelPosition === 'left',
+        'text-right': props.labelPosition === 'right',
+      }"
+    >
+      <slot>
+        {{ props.label }}
+      </slot>
+    </div>
+  </div>
 </template>

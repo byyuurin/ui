@@ -10,8 +10,8 @@ export default (options: Required<ModuleOptions>) => ct({
     legend: 'mb-1 block font-medium text-default',
     item: 'flex items-start',
     container: 'flex items-center',
-    base: 'rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
-    indicator: 'flex items-center justify-center size-full after:content-empty after:bg-default after:rounded-full',
+    base: 'rounded-full ring ring-inset ring-accented overflow-hidden transition focus-visible:outline-2 focus-visible:outline-offset-2',
+    indicator: 'flex items-center justify-center size-full rounded-full transition scale-0 data-[state=checked]:scale-65',
     wrapper: 'w-full',
     label: 'block font-medium text-default',
     description: 'text-muted',
@@ -67,7 +67,7 @@ export default (options: Required<ModuleOptions>) => ct({
         base: 'size-3',
         item: 'text-xs',
         container: 'h-4',
-        indicator: 'after:size-1',
+        indicator: '',
       },
       sm: {
         fieldset: 'gap-y-0.5',
@@ -75,7 +75,7 @@ export default (options: Required<ModuleOptions>) => ct({
         base: 'size-3.5',
         item: 'text-xs',
         container: 'h-4',
-        indicator: 'after:size-1',
+        indicator: '',
       },
       md: {
         fieldset: 'gap-y-1',
@@ -83,7 +83,7 @@ export default (options: Required<ModuleOptions>) => ct({
         base: 'size-4',
         item: 'text-sm',
         container: 'h-5',
-        indicator: 'after:size-1.5',
+        indicator: '',
       },
       lg: {
         fieldset: 'gap-y-1',
@@ -91,7 +91,7 @@ export default (options: Required<ModuleOptions>) => ct({
         base: 'size-4.5',
         item: 'text-sm',
         container: 'h-5',
-        indicator: 'after:size-1.5',
+        indicator: '',
       },
       xl: {
         fieldset: 'gap-y-1.5',
@@ -99,13 +99,14 @@ export default (options: Required<ModuleOptions>) => ct({
         base: 'size-5',
         item: 'text-base',
         container: 'h-6',
-        indicator: 'after:size-2',
+        indicator: '',
       },
     },
     disabled: {
       true: {
         base: 'cursor-not-allowed opacity-75',
         label: 'cursor-not-allowed opacity-75',
+        description: 'opacity-75',
       },
     },
     required: {
@@ -162,13 +163,6 @@ export default (options: Required<ModuleOptions>) => ct({
       variant: 'table',
       class: {
         item: 'has-data-[state=checked]:bg-elevated has-data-[state=checked]:border-inverted/50 has-data-[state=checked]:z-[1]',
-      },
-    },
-    {
-      variant: ['card', 'table'],
-      disabled: true,
-      class: {
-        item: 'cursor-not-allowed opacity-75',
       },
     },
   ],

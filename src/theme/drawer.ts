@@ -5,12 +5,12 @@ export default ct({
   parts: {
     overlay: 'fixed inset-0 bg-elevated/75',
     content: 'fixed bg-default ring ring-default flex focus:outline-none',
-    container: 'w-full flex flex-col gap-4 p-4 overflow-y-auto',
-    header: '',
+    container: 'w-full flex flex-col px-4 overflow-y-auto',
+    header: 'bg-default flex flex-wrap items-center gap-1 py-5',
     body: 'flex-1',
     footer: 'flex flex-col gap-1.5',
     title: 'text-highlighted font-semibold',
-    description: 'mt-1 text-muted text-sm',
+    description: 'w-full text-muted text-sm',
     close: 'ms-auto',
   },
   variants: {

@@ -15,6 +15,8 @@ const value = ref()
 
 const controls: ControlItems<RadioGroupProps<typeof options[number]>> = [
   { prop: 'legend', value: 'Text' },
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'variant', value: 'list', options: ['list', 'card', 'table'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'disabled', value: false },

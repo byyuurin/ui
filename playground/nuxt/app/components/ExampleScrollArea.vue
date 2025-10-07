@@ -19,10 +19,10 @@ const controls: ControlItems<ScrollAreaProps> = [
     <div class="flex flex-col gap-4">
       <UScrollArea v-bind="attrs" class="shadow-sm shadow-default border border-default h-55 rounded">
         <div class="grid grid-cols-2 gap-1 w-screen">
-          <Placeholder class="bg-ui-cb/10 h-50" />
-          <Placeholder class="bg-red/10 h-50" />
-          <Placeholder class="bg-green/10 h-50" />
-          <Placeholder class="bg-blue/10 h-50" />
+          <Placeholder class="bg-neutral/10 h-50" />
+          <Placeholder class="bg-error/10 h-50" />
+          <Placeholder class="bg-success/10 h-50" />
+          <Placeholder class="bg-info/10 h-50" />
         </div>
       </UScrollArea>
 
@@ -31,10 +31,10 @@ const controls: ControlItems<ScrollAreaProps> = [
       </UScrollArea>
 
       <UScrollArea v-bind="attrs" class="shadow-sm shadow-default border border-default h-55 rounded">
-        <Placeholder class="bg-ui-cb/10 h-50" />
-        <Placeholder class="bg-red/10 h-50" />
-        <Placeholder class="bg-green/10 h-50" />
-        <Placeholder class="bg-blue/10 h-50" />
+        <Placeholder class="bg-neutral/10 h-50" />
+        <Placeholder class="bg-error/10 h-50" />
+        <Placeholder class="bg-success/10 h-50" />
+        <Placeholder class="bg-info/10 h-50" />
       </UScrollArea>
     </div>
   </ExampleView>

@@ -21,23 +21,23 @@ export default (options: Required<ModuleOptions>) => ct({
     orientation: {
       horizontal: {
         root: 'w-full flex-row',
-        border: 'w-full',
+        border: '',
         container: 'mx-3 whitespace-nowrap',
       },
       vertical: {
         root: 'h-full flex-col',
-        border: 'h-full',
+        border: '',
         container: 'my-2',
       },
     },
     start: {
       true: {
-        border: 'w-auto flex-grow',
+        border: 'flex-grow data-[orientation=horizontal]:w-auto data-[orientation=vertical]:h-auto',
       },
     },
     end: {
       true: {
-        border: 'w-auto flex-grow',
+        border: 'flex-grow data-[orientation=horizontal]:w-auto data-[orientation=vertical]:h-auto',
       },
     },
     size: {
@@ -60,6 +60,18 @@ export default (options: Required<ModuleOptions>) => ct({
     },
   },
   compoundVariants: [
+    {
+      orientation: 'horizontal',
+      start: false,
+      end: false,
+      class: { border: 'w-full' },
+    },
+    {
+      orientation: 'vertical',
+      start: false,
+      end: false,
+      class: { border: 'h-full' },
+    },
     {
       orientation: 'horizontal',
       size: 'xs',
