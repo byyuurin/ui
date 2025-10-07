@@ -1,12 +1,53 @@
 import type { Preset } from '@unocss/core'
 import { colors as twColors } from '@unocss/preset-wind4/colors'
 import type { Theme } from '@unocss/preset-wind4/theme'
+import { parseColor } from '@unocss/preset-wind4/utils'
 import { resolveColors } from './defaults'
 import type { ModuleOptions } from './module'
 
 export type PresetOptions = Pick<(ModuleOptions['theme'] & {}), 'colors'>
 
-const keyframes = {
+export const shortcuts: Preset<Theme>['shortcuts'] = [
+  [
+    /^(?:(text|bg|border|divide|outline|ring-offset|ring|stroke|fill)-)(.+)$/,
+    ([, t = '', c = ''], { theme }) => {
+      const parsed = parseColor(c, theme)
+
+      if (!parsed || !/^(?:default|dimmed|muted|toned|highlighted|inverted|elevated|accented|border|bg)/.test(c))
+        return
+
+      const result = `${t}-[--ui-${t}-${parsed.name}]/${parsed.opacity ?? 100}`
+        .replace('-default', '')
+        .replace('/100', '')
+        .replace(/ui-(?:border|divide|outline|ring-offset|ring|stroke|fill)/, 'ui-border')
+        .replace(/(?:bg-(border)|border-(bg))/, '$1$2')
+
+      return result
+    },
+  ],
+]
+
+export const shortcutsCode = `[
+  [
+    /^(?:(text|bg|border|divide|outline|ring-offset|ring|stroke|fill)-)(.+)$/,
+    ([, t = '', c = ''], { theme }) => {
+      const parsed = parseColor(c, theme)
+
+      if (!parsed || !/^(?:default|dimmed|muted|toned|highlighted|inverted|elevated|accented|border|bg)/.test(c))
+        return
+
+      const result = \`\${t}-[--ui-\${t}-\${parsed.name}]/\${parsed.opacity ?? 100}\`
+        .replace('-default', '')
+        .replace('/100', '')
+        .replace(/ui-(?:border|divide|outline|ring-offset|ring|stroke|fill)/, 'ui-border')
+        .replace(/(?:bg-(border)|border-(bg))/, '$1$2')
+
+      return result
+    },
+  ],
+]`
+
+export const keyframes = {
   'fade-in': '{from {opacity: 0;}to {opacity: 1;}}',
   'fade-out': '{from {opacity: 1;}to {opacity: 0;}}',
   'scale-in': '{from {opacity: 0;scale: 0.95;}to {opacity: 1;scale: 1;}}',
@@ -63,68 +104,19 @@ export function createUnoPreset(options: PresetOptions = {}) {
         keyframes,
       },
     },
-    shortcuts: {
-      // text color
-      'text-default': 'text-[--ui-text]',
-      'text-dimmed': 'text-[--ui-text-dimmed]',
-      'text-muted': 'text-[--ui-text-muted]',
-      'text-toned': 'text-[--ui-text-toned]',
-      'text-highlighted': 'text-[--ui-text-highlighted]',
-      'text-inverted': 'text-[--ui-text-inverted]',
-
-      // background color
-      'bg-default': 'bg-[--ui-bg]',
-      'bg-muted': 'bg-[--ui-bg-muted]',
-      'bg-elevated': 'bg-[--ui-bg-elevated]',
-      'bg-accented': 'bg-[--ui-bg-accented]',
-      'bg-inverted': 'bg-[--ui-bg-inverted]',
-      'bg-border': 'bg-[--ui-border]',
-
-      // border color
-      'border-default': 'border-[--ui-border]',
-      'border-muted': 'border-[--ui-border-muted]',
-      'border-accented': 'border-[--ui-border-accented]',
-      'border-inverted': 'border-[--ui-border-inverted]',
-      'border-bg': 'border-[--ui-bg]',
-
-      // ring color
-      'ring-default': 'ring-[--ui-border]',
-      'ring-muted': 'ring-[--ui-border-muted]',
-      'ring-accented': 'ring-[--ui-border-accented]',
-      'ring-inverted': 'ring-[--ui-border-inverted]',
-      'ring-bg': 'ring-[--ui-bg]',
-
-      // ring offset color
-      'ring-offset-default': 'ring-offset[--ui-border]',
-      'ring-offset-muted': 'ring-offset[--ui-border-muted]',
-      'ring-offset-accented': 'ring-offset[--ui-border-accented]',
-      'ring-offset-inverted': 'ring-offset[--ui-border-inverted]',
-      'ring-offset-bg': 'ring-offset[--ui-bg]',
-
-      // divide color
-      'divide-default': 'divide-[--ui-border]',
-      'divide-muted': 'divide-[--ui-border-muted]',
-      'divide-accented': 'divide-[--ui-border-accented]',
-      'divide-inverted': 'divide-[--ui-border-inverted]',
-      'divide-bg': 'divide-[--ui-bg]',
-
-      // outline color
-      'outline-default': 'outline-[--ui-border]',
-      'outline-inverted': 'outline-[--ui-border-inverted]',
-
-      // stroke color
-      'stroke-default': 'stroke-[--ui-border]',
-      'stroke-inverted': 'stroke-[--ui-border-inverted]',
-
-      // fill color
-      'fill-default': 'fill-[--ui-border]',
-      'fill-inverted': 'fill-[--ui-border-inverted]',
-    },
+    shortcuts,
     safelist: Object.keys(keyframes).map((s) => `keyframes-${s}`),
     preflights: [
       {
         getCSS() {
-          return `:root, .light {
+          return `html {
+  accent-color: var(--ui-text);
+  scrollbar-color: var(--ui-bg-accented) transparent;
+}
+
+:root, .light {
+  --un-default-border-color: var(--ui-border);
+
   --ui-text: var(--ui-color-neutral-700);
   --ui-text-dimmed: var(--ui-color-neutral-400);
   --ui-text-muted: var(--ui-color-neutral-500);

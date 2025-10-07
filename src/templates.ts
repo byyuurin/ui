@@ -11,7 +11,7 @@ import type { AppConfigUI } from './defaults'
 import { neutralColors } from './defaults'
 import type { ModuleOptions } from './module'
 import * as theme from './theme'
-import { createUnoPreset } from './unocss'
+import { createUnoPreset, shortcutsCode } from './unocss'
 
 export function buildTemplates(options: ModuleOptions) {
   return Object.entries(theme).reduce((acc, [key, component]) => {
@@ -67,13 +67,19 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
       write: true,
       getContents() {
         const { preflights, ...unoPreset } = createUnoPreset(options.theme)
-        let content = JSON.stringify(unoPreset, null, 2)
+        let content = JSON.stringify({ ...unoPreset, shortcuts: [] }, null, 2)
+
+        content = content.replace('"shortcuts": []', `"shortcuts": ${shortcutsCode}`)
 
         content = `${content.slice(0, -2)},\n  "preflights": [
     ${preflights.map(({ getCSS }) => `{ getCSS: () => \`${getCSS()}\` }`).join(',\n    ')}
     ]\n}`
 
-        return `export default ()=> (${content})`
+        return `import type { Preset } from '@unocss/core'
+import type { Theme } from '@unocss/preset-wind4'
+import { parseColor } from '@unocss/preset-wind4/utils'
+
+export default ()=> (${content} satisfies Preset<Theme>)`
       },
     })
 
