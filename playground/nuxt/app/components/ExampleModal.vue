@@ -8,7 +8,7 @@ import Placeholder from './Placeholder.vue'
 const controls: ControlItems<ModalProps> = [
   { prop: 'title', value: 'Title', placeholder: 'No Title' },
   { prop: 'description', value: 'description', placeholder: 'No Description' },
-  { prop: 'size', value: 'sm', options: ['sm', 'md', 'lg', 'xl', 'fullscreen'] },
+  { prop: 'fullscreen', value: false },
   { prop: 'dismissible', value: true },
   { prop: 'close', value: true },
   { prop: 'overlay', value: true },
@@ -90,7 +90,7 @@ function openOverlay(props: ModalProps) {
           </template>
 
           <template #description>
-            <Placeholder class="h-8" label="#description" label-position="left" />
+            <Placeholder label="#description" label-position="left" />
           </template>
 
           <template #body>

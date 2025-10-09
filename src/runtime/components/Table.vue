@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { VariantProps } from '@byyuurin/ui-kit'
 import type { CellContext, ColumnDef, ColumnFiltersOptions, ColumnFiltersState, ColumnOrderState, ColumnPinningOptions, ColumnPinningState, ColumnSizingInfoState, ColumnSizingOptions, ColumnSizingState, CoreOptions, ExpandedOptions, ExpandedState, FacetedOptions, GlobalFilterOptions, GroupingOptions, GroupingState, HeaderContext, PaginationOptions, PaginationState, Row, RowData, RowPinningOptions, RowPinningState, RowSelectionOptions, RowSelectionState, SortingOptions, SortingState, Updater, VisibilityOptions, VisibilityState } from '@tanstack/vue-table'
 import type { PrimitiveProps } from 'reka-ui'
 import type { Ref } from 'vue'
@@ -25,6 +26,8 @@ export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 
   renderFallbackValue?: CoreOptions<T>['renderFallbackValue']
 }
 
+type ThemeVariants = VariantProps<typeof theme>
+
 export interface TableProps<T extends TableData> extends ComponentBaseProps, TableOptions<T> {
   /**
    * The element or component this component should render as.
@@ -46,6 +49,14 @@ export interface TableProps<T extends TableData> extends ComponentBaseProps, Tab
   sticky?: boolean
   /** Whether the table should be in loading state. */
   loading?: boolean
+  /**
+   * @default "primary"
+   */
+  loadingColor?: ThemeVariants['loadingColor']
+  /**
+   * @default "carousel"
+   */
+  loadingAnimation?: ThemeVariants['loadingAnimation']
   /**
    * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/global-filtering#table-options)
    * @link [Guide](https://tanstack.com/table/v8/docs/guide/global-filtering)
@@ -290,7 +301,7 @@ defineExpose({
                 </slot>
               </td>
             </tr>
-            <tr v-if="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr, expanded: true })" data-part="tr">
+            <tr v-if="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr })" data-part="tr">
               <td :colspan="row.getAllCells().length" :class="style.td({ class: props.ui?.td })" data-part="td">
                 <slot name="expanded" :row="row"></slot>
               </td>
@@ -299,13 +310,13 @@ defineExpose({
         </template>
 
         <tr v-else-if="props.loading && slots.loading">
-          <td :colspan="columns.length" :class="style.loading({ class: props.ui?.loading })" data-part="loading">
+          <td :colspan="tableApi.getAllLeafColumns().length" :class="style.loading({ class: props.ui?.loading })" data-part="loading">
             <slot name="loading"></slot>
           </td>
         </tr>
 
         <tr v-else :class="style.tr({ class: props.ui?.tr })" data-part="tr">
-          <td :colspan="columns.length" :class="style.empty({ class: props.ui?.empty })" data-part="empty">
+          <td :colspan="tableApi.getAllLeafColumns().length" :class="style.empty({ class: props.ui?.empty })" data-part="empty">
             <slot name="empty">
               {{ props.empty || t('table.noData') }}
             </slot>

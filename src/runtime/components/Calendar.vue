@@ -131,10 +131,10 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
   >
     <Calendar.Header :class="style.header({ class: props.ui?.header })" data-part="header">
       <Calendar.Prev v-if="props.yearControls" :prev-page="date => paginateYear(date, -1)" :aria-label="t('calendar.prevYear')" as-child>
-        <Button :icon="prevYearIcon" :size="props.size" variant="ghost" />
+        <Button :icon="prevYearIcon" :size="props.size" color="neutral" variant="ghost" />
       </Calendar.Prev>
       <Calendar.Prev v-if="props.monthControls" :aria-label="t('calendar.prevMonth')" as-child>
-        <Button :icon="prevMonthIcon" :size="props.size" variant="ghost" />
+        <Button :icon="prevMonthIcon" :size="props.size" color="neutral" variant="ghost" />
       </Calendar.Prev>
 
       <Calendar.Heading v-slot="{ headingValue }" :class="style.heading({ class: props.ui?.heading })" data-part="heading">
@@ -143,10 +143,10 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
         </slot>
       </Calendar.Heading>
       <Calendar.Next v-if="props.monthControls" :aria-label="t('calendar.nextMonth')" as-child>
-        <Button :icon="nextMonthIcon" :size="props.size" variant="ghost" />
+        <Button :icon="nextMonthIcon" :size="props.size" color="neutral" variant="ghost" />
       </Calendar.Next>
       <Calendar.Next v-if="props.yearControls" :next-page="(date) => paginateYear(date, 1)" :aria-label="t('calendar.nextYear')" as-child>
-        <Button :icon="nextYearIcon" :size="props.size" variant="ghost" />
+        <Button :icon="nextYearIcon" :size="props.size" color="neutral" variant="ghost" />
       </Calendar.Next>
     </Calendar.Header>
     <div :class="style.body({ class: props.ui?.body })" data-part="body">

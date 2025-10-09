@@ -5,6 +5,8 @@ import type { ControlItems } from './ExampleView.vue'
 const page = ref(1)
 
 const controls: ControlItems<PaginationProps> = [
+  { prop: 'color', value: 'neutral', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'activeColor', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'variant', value: 'outline', options: ['solid', 'outline', 'soft', 'subtle', 'ghost', 'link'] },
   { prop: 'activeVariant', value: 'solid', options: ['solid', 'outline', 'soft', 'subtle', 'ghost', 'link'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },

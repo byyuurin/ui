@@ -51,6 +51,16 @@ export interface PaginationProps extends ComponentBaseProps, Pick<PaginationRoot
    */
   ellipsisIcon?: string
   /**
+   * The color of the pagination controls.
+   * @default "neutral"
+   */
+  color?: ButtonProps['color']
+  /**
+   * The color of the active pagination control.
+   * @default "primary"
+   */
+  activeColor?: ButtonProps['color']
+  /**
    * The size of the pagination controls.
    * @default "md"
    */
@@ -88,6 +98,7 @@ import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
 const props = withDefaults(defineProps<PaginationProps>(), {
+  color: 'neutral',
   variant: 'outline',
   activeVariant: 'solid',
   showControls: true,
@@ -121,12 +132,12 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ell
     <PaginationList v-slot="{ items }" :class="style.list({ class: props.ui?.list })" data-part="list">
       <PaginationFirst v-if="props.showControls || !!slots.first" :class="style.first({ class: props.ui?.first })" data-part="first" as-child>
         <slot name="first">
-          <Button :variant="props.variant" :size="props.size" :icon="firstIcon" :to="props.to?.(1)" />
+          <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="firstIcon" :to="props.to?.(1)" />
         </slot>
       </PaginationFirst>
       <PaginationPrev v-if="props.showControls || !!slots.prev" :class="style.prev({ class: props.ui?.prev })" data-part="perv" as-child>
         <slot name="prev">
-          <Button :variant="props.variant" :size="props.size" :icon="prevIcon" :to="page > 1 ? props.to?.(page - 1) : undefined" />
+          <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="prevIcon" :to="page > 1 ? props.to?.(page - 1) : undefined" />
         </slot>
       </PaginationPrev>
 
@@ -134,6 +145,7 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ell
         <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" :class="style.item({ class: props.ui?.item })" data-part="item" as-child>
           <slot name="item" v-bind="{ item, index, page, pageCount }">
             <Button
+              :color="props.page === item.value ? props.activeColor : props.color"
               :variant="props.page === item.value ? props.activeVariant : props.variant"
               :size="props.size"
               :label="String(item.value)"
@@ -168,12 +180,12 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ell
 
       <PaginationNext v-if="props.showControls || !!slots.next" :class="style.next({ class: props.ui?.next })" data-part="next" as-child>
         <slot name="next">
-          <Button :variant="props.variant" :size="props.size" :icon="nextIcon" :to="page < pageCount ? props.to?.(page + 1) : undefined" />
+          <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="nextIcon" :to="page < pageCount ? props.to?.(page + 1) : undefined" />
         </slot>
       </PaginationNext>
       <PaginationLast v-if="props.showControls || !!slots.last" :class="style.last({ class: props.ui?.last })" data-part="last" as-child>
         <slot name="last">
-          <Button :variant="props.variant" :size="props.size" :icon="lastIcon" :to="props.to?.(pageCount)" />
+          <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="lastIcon" :to="props.to?.(pageCount)" />
         </slot>
       </PaginationLast>
     </PaginationList>

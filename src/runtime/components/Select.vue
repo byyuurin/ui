@@ -101,7 +101,6 @@ export interface SelectProps<
   multiple?: M & boolean
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
-  underline?: boolean
   ui?: ComponentUIProps<typeof theme>
 }
 </script>

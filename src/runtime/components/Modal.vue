@@ -1,5 +1,4 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import theme from '#build/ui/modal'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
@@ -20,12 +19,9 @@ export interface ModalSlots {
   footer?: any
 }
 
-type ModalVariants = VariantProps<typeof theme>
-
 export interface ModalProps extends ComponentBaseProps, DialogRootProps {
   title?: string
   description?: string
-  size?: ModalVariants['size']
   content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DialogContentEmits>>
   /** @default true */
   portal?: boolean
@@ -33,6 +29,7 @@ export interface ModalProps extends ComponentBaseProps, DialogRootProps {
   overlay?: boolean
   /** @default true */
   transition?: boolean
+  fullscreen?: boolean
   /**
    * When `false`, the modal will not close when clicking outside or pressing escape.
    * @default true
@@ -130,6 +127,7 @@ const style = computed(() => {
                 <slot name="close" :ui="props.ui">
                   <Button
                     variant="ghost"
+                    color="neutral"
                     :icon="props.closeIcon || appConfig.ui.icons.close"
                     v-bind="typeof props.close === 'boolean' ? {} : props.close"
                     :aria-label="t('modal.close')"

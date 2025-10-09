@@ -54,16 +54,18 @@ const columns: TableColumn<typeof data.value[number]>[] = [
   { accessorKey: 'date', header: 'Date' },
   { accessorKey: 'email', header: 'Email' },
   { accessorKey: 'status', header: 'Status', cell: ({ row }) => {
-    const colors: Record<string, string> = {
+    const colors = {
       paid: 'success',
       failed: 'error',
       refunded: 'neutral',
-    }
-    return h(Badge, { label: row.original.status, variant: 'subtle', color: colors[row.original.status] })
+    } as const
+    return h(Badge, { label: row.original.status, variant: 'subtle', color: colors[row.original.status as keyof typeof colors] })
   } },
 ]
 
 const controls: ControlItems<TableProps<typeof data.value[number]>> = [
+  { prop: 'loadingColor', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'loadingAnimation', value: 'carousel', options: ['carousel', 'carousel-inverse', 'swing', 'elastic'] },
   { prop: 'empty', value: '' },
   { prop: 'sticky', value: false },
   { prop: 'loading', value: false },

@@ -19,8 +19,8 @@ const controls: ControlItems<FieldGroupProps> = [
       <div>
         <h2>With Button</h2>
         <UFieldGroup v-bind="attrs">
-          <UButton label="Button" />
-          <UButton icon="i-carbon-search" />
+          <UButton color="neutral" variant="subtle" label="Button" />
+          <UButton color="neutral" variant="subtle" icon="i-carbon-search" />
         </UFieldGroup>
       </div>
       <div>

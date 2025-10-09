@@ -5,16 +5,13 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref<CheckboxProps['defaultValue']>('indeterminate')
 
 const controls: ControlItems<CheckboxProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'label', value: '', placeholder: 'Label' },
   { prop: 'description', value: 'Description' },
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'disabled', value: false },
   { prop: 'required', value: false },
 ]
-
-const ui: CheckboxProps['ui'] = {
-  label: 'after:color-red-600',
-}
 </script>
 
 <template>
@@ -25,10 +22,10 @@ const ui: CheckboxProps['ui'] = {
     :controls="controls"
   >
     <div class="flex flex-col items-start gap-y-8">
-      <UButton label="indeterminate" size="xs" :disabled="value === 'indeterminate'" @click="value = 'indeterminate'" />
+      <UButton label="indeterminate" color="neutral" variant="outline" size="xs" :disabled="value === 'indeterminate'" @click="value = 'indeterminate'" />
       <div class="flex flex-wrap gap-4">
-        <UCheckbox v-model="value" :ui="ui" v-bind="attrs" :label="attrs.label || 'Label'" />
-        <UCheckbox v-model="value" :ui="ui" v-bind="attrs">
+        <UCheckbox v-model="value" v-bind="attrs" :label="attrs.label || 'Label'" />
+        <UCheckbox v-model="value" v-bind="attrs">
           <template #label>
             <Placeholder label="#label" label-position="left" />
           </template>

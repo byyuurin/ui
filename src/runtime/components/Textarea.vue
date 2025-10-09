@@ -29,7 +29,6 @@ export interface TextareaProps extends ComponentBaseProps {
   color?: ThemeVariants['color']
   variant?: ThemeVariants['variant']
   highlight?: boolean
-  underline?: boolean
   required?: boolean
   autofocus?: boolean
   autofocusDelay?: number

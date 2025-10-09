@@ -35,7 +35,6 @@ export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
   variant?: ThemeVariants['variant']
   loading?: boolean
   highlight?: boolean
-  underline?: boolean
   required?: boolean
   autocomplete?: InputHTMLAttributes['autocomplete']
   autofocus?: boolean

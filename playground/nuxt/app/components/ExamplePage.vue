@@ -84,10 +84,9 @@ onMounted(() => {
           direction="right"
           :overlay="false"
           :ui="{
-            header: 'sticky z-1 top-0',
             title: 'text-2xl',
-            content: 'z-1 overflow-x-hidden ring-default ring-8 ring-offset-inverted/50 ring-offset-2',
-            footer: 'sticky bottom-0',
+            content: 'divide-y-0 ring-default ring-8 ring-offset-inverted/50 ring-offset-2',
+            body: 'sm:py-0',
           }"
           :close="{ color: 'neutral' }"
           inset
@@ -97,7 +96,7 @@ onMounted(() => {
             <ThemeSelector v-model="uiTheme" v-model:config="uiConfig" v-model:color="uiColor" class="w-screen max-w-full sm:max-w-screen-sm" />
           </template>
           <template #footer>
-            <div class="w-full flex flex-col gap-4 py-4 bg-default">
+            <div class="w-full flex flex-col gap-4">
               <USelect v-model="lang" :options="Object.entries(locales).map(([value, { name }]) => ({ label: name, value }))" />
               <UButton class="justify-center" label="Close" variant="solid" icon="i-mdi-close-thick" round @click="showDrawer = false" />
             </div>

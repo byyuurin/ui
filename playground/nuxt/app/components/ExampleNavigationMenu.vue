@@ -132,9 +132,10 @@ const items = ref([
 ] satisfies NavigationMenuItem[][])
 
 const controls: ControlItems<NavigationMenuProps<typeof items.value[number]>> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'contentOrientation', value: 'horizontal', options: ['horizontal', 'vertical'], description: 'The orientation of the content. Only works when `orientation` is `horizontal`' },
-  { prop: 'variant', value: 'ghost', options: ['ghost', 'link'] },
+  { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
   { prop: 'arrow', value: false },
   { prop: 'unmountOnHide', value: true },
   { prop: 'collapsed', value: false, description: 'Collapse the navigation menu to only show icons.', warning: 'Only works when `orientation` is `vertical`.' },

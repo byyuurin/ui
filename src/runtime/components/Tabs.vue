@@ -38,6 +38,7 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentBaseP
   items?: T[]
   variant?: ThemeVariants['variant']
   orientation?: ThemeVariants['orientation']
+  color?: ThemeVariants['color']
   size?: ThemeVariants['size']
   /** @default true */
   evenly?: boolean

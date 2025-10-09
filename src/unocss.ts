@@ -72,6 +72,16 @@ export const keyframes = {
   'enter-from-left': '{from{opacity:0;transform:translateX(-200px);}to{opacity:1;transform:translateX(0);}}',
   'exit-to-right': '{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(200px);}}',
   'exit-to-left': '{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-200px);}}',
+  'carousel': '{0%,100% {width: 50%}0% {transform: translateX(-100%)}100% {transform: translateX(200%)}}',
+  'carousel-rtl': '{0%,100% {width: 50%}0% {transform: translateX(100%)}100% {transform: translateX(-200%)}}',
+  'carousel-vertical': '{0%,100% {height: 50%}0% {transform: translateY(-100%)}100% {transform: translateY(200%)}}',
+  'carousel-inverse': '{0%,100% {width: 50%}0% {transform: translateX(200%)}100% {transform: translateX(-100%)}}',
+  'carousel-inverse-rtl': '{0%,100% {width: 50%}0% {transform: translateX(-200%)}100% {transform: translateX(100%)}}',
+  'carousel-inverse-vertical': '{0%,100% {height: 50%}0% {transform: translateY(200%)}100% {transform: translateY(-100%)}}',
+  'swing': '{0%,100% {width: 50%}0%,100% {transform: translateX(-25%)}50% {transform: translateX(125%)}}',
+  'swing-vertical': '{0%,100% {height: 50%}0%,100% {transform: translateY(-25%)}50% {transform: translateY(125%)}}',
+  'elastic': '{0%,100% {width: 50%;margin-left: 25%;}50% {width: 90%;margin-left: 5%;}}',
+  'elastic-vertical': '{0%,100% {height: 50%;margin-top: 25%;}50% {height: 90%;margin-top: 5%;}}',
 }
 
 export function createUnoPreset(options: PresetOptions = {}) {
@@ -82,7 +92,7 @@ export function createUnoPreset(options: PresetOptions = {}) {
   }))
 
   return {
-    name: 'unocss-preset-ui',
+    name: '@byyuurin/ui/uno-preset',
     theme: {
       colors: {
         // theme colors

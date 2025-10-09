@@ -85,6 +85,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
    */
   externalIcon?: boolean | string
   items?: T
+  color?: ThemeVariants['color']
   variant?: ThemeVariants['variant']
   /**
    * The orientation of the menu.

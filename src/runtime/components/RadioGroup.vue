@@ -53,7 +53,7 @@ export interface RadioGroupProps<T extends RadioGroupItem = RadioGroupItem> exte
    */
   descriptionKey?: string
   options?: T[]
-  variant: ThemeVariants['variant']
+  variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
   color?: ThemeVariants['color']
   /**

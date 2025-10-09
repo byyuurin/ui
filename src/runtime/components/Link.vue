@@ -80,7 +80,6 @@ export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
   /** The class to apply when the link is disabled. */
   disableClass?: string
   custom?: boolean
-  underline?: boolean
   /** When `true`, only styles from `class`, `ui.active`, and `ui.inactive` will be applied. */
   raw?: boolean
 }

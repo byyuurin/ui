@@ -91,125 +91,150 @@ export default (options: Required<ModuleOptions>) => ct({
       },
     },
   },
-  compoundVariants: [{
-    inverted: true,
-    orientation: 'horizontal',
-    class: {
-      step: 'text-start',
-      status: 'flex-row-reverse',
+  compoundVariants: [
+    {
+      inverted: true,
+      orientation: 'horizontal',
+      class: {
+        step: 'text-start',
+        status: 'flex-row-reverse',
+      },
     },
-  }, {
-    inverted: true,
-    orientation: 'vertical',
-    class: {
-      steps: 'items-start',
-      status: 'flex-col-reverse',
+    {
+      inverted: true,
+      orientation: 'vertical',
+      class: {
+        steps: 'items-start',
+        status: 'flex-col-reverse',
+      },
     },
-  }, {
-    orientation: 'horizontal',
-    size: '2xs',
-    class: { base: 'h-px' },
-  }, {
-    orientation: 'horizontal',
-    size: 'xs',
-    class: { base: 'h-0.5' },
-  }, {
-    orientation: 'horizontal',
-    size: 'sm',
-    class: { base: 'h-1' },
-  }, {
-    orientation: 'horizontal',
-    size: 'md',
-    class: { base: 'h-2' },
-  }, {
-    orientation: 'horizontal',
-    size: 'lg',
-    class: { base: 'h-3' },
-  }, {
-    orientation: 'horizontal',
-    size: 'xl',
-    class: { base: 'h-4' },
-  }, {
-    orientation: 'horizontal',
-    size: '2xl',
-    class: { base: 'h-5' },
-  }, {
-    orientation: 'vertical',
-    size: '2xs',
-    class: { base: 'w-px' },
-  }, {
-    orientation: 'vertical',
-    size: 'xs',
-    class: { base: 'w-0.5' },
-  }, {
-    orientation: 'vertical',
-    size: 'sm',
-    class: { base: 'w-1' },
-  }, {
-    orientation: 'vertical',
-    size: 'md',
-    class: { base: 'w-2' },
-  }, {
-    orientation: 'vertical',
-    size: 'lg',
-    class: { base: 'w-3' },
-  }, {
-    orientation: 'vertical',
-    size: 'xl',
-    class: { base: 'w-4' },
-  }, {
-    orientation: 'vertical',
-    size: '2xl',
-    class: { base: 'w-5' },
-  }, {
-    orientation: 'horizontal',
-    animation: 'carousel',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] data-[state=indeterminate]:rtl:animate-[carousel-rtl_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: '2xs',
+      class: { base: 'h-px' },
     },
-  }, {
-    orientation: 'vertical',
-    animation: 'carousel',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: 'xs',
+      class: { base: 'h-0.5' },
     },
-  }, {
-    orientation: 'horizontal',
-    animation: 'carousel-inverse',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[carousel-inverse_2s_ease-in-out_infinite] data-[state=indeterminate]:rtl:animate-[carousel-inverse-rtl_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: 'sm',
+      class: { base: 'h-1' },
     },
-  }, {
-    orientation: 'vertical',
-    animation: 'carousel-inverse',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[carousel-inverse-vertical_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: 'md',
+      class: { base: 'h-2' },
     },
-  }, {
-    orientation: 'horizontal',
-    animation: 'swing',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[swing_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: 'lg',
+      class: { base: 'h-3' },
     },
-  }, {
-    orientation: 'vertical',
-    animation: 'swing',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[swing-vertical_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: 'xl',
+      class: { base: 'h-4' },
     },
-  }, {
-    orientation: 'horizontal',
-    animation: 'elastic',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[elastic_2s_ease-in-out_infinite]',
+    {
+      orientation: 'horizontal',
+      size: '2xl',
+      class: { base: 'h-5' },
     },
-  }, {
-    orientation: 'vertical',
-    animation: 'elastic',
-    class: {
-      indicator: 'data-[state=indeterminate]:animate-[elastic-vertical_2s_ease-in-out_infinite]',
+    {
+      orientation: 'vertical',
+      size: '2xs',
+      class: { base: 'w-px' },
     },
-  }],
+    {
+      orientation: 'vertical',
+      size: 'xs',
+      class: { base: 'w-0.5' },
+    },
+    {
+      orientation: 'vertical',
+      size: 'sm',
+      class: { base: 'w-1' },
+    },
+    {
+      orientation: 'vertical',
+      size: 'md',
+      class: { base: 'w-2' },
+    },
+    {
+      orientation: 'vertical',
+      size: 'lg',
+      class: { base: 'w-3' },
+    },
+    {
+      orientation: 'vertical',
+      size: 'xl',
+      class: { base: 'w-4' },
+    },
+    {
+      orientation: 'vertical',
+      size: '2xl',
+      class: { base: 'w-5' },
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'carousel',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite] data-[state=indeterminate]:rtl:animate-[carousel-rtl_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      animation: 'carousel',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'carousel-inverse',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[carousel-inverse_2s_ease-in-out_infinite] data-[state=indeterminate]:rtl:animate-[carousel-inverse-rtl_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      animation: 'carousel-inverse',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[carousel-inverse-vertical_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'swing',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[swing_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      animation: 'swing',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[swing-vertical_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'elastic',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[elastic_2s_ease-in-out_infinite]',
+      },
+    },
+    {
+      orientation: 'vertical',
+      animation: 'elastic',
+      class: {
+        indicator: 'data-[state=indeterminate]:animate-[elastic-vertical_2s_ease-in-out_infinite]',
+      },
+    },
+  ],
   defaultVariants: {
     animation: 'carousel',
     color: 'primary',

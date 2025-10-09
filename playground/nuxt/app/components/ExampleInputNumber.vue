@@ -5,6 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref<number>(0)
 
 const controls: ControlItems<InputNumberProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
@@ -13,7 +14,6 @@ const controls: ControlItems<InputNumberProps> = [
   { prop: 'step', value: 1 },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'disabled', value: false },
-  { prop: 'underline', value: false },
   { prop: 'highlight', value: false },
 ]
 </script>

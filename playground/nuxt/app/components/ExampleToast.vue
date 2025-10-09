@@ -24,6 +24,7 @@ const emit = defineEmits<{
 type ControlInfo = ToastProps & Pick<ToastProviderProps, 'position' | 'duration' | 'expand'> & Pick<ToastState, 'onClick'>
 
 const controls: ControlItems<ControlInfo> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'position', label: 'Toaster.position', value: 'bottom-right', options: ['bottom-center', 'bottom-left', 'bottom-right', 'top-center', 'top-left', 'top-right'] },
   { prop: 'duration', label: 'Toaster.duration', value: 5000, options: [{ label: 'always', value: 0 }, { label: '5s', value: 5000 }, { label: '10s', value: 10000 }, { label: '30s', value: 30000 }] },
   { prop: 'expand', label: 'Toaster.expand', value: true },

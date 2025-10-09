@@ -12,13 +12,13 @@ const options = [
 ]
 
 const controls: ControlItems<SelectProps<typeof options>> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'placeholder', value: 'placeholder', placeholder: 'placeholder' },
   { prop: 'multiple', value: false },
   { prop: 'arrow', value: false },
   { prop: 'highlight', value: false },
-  { prop: 'underline', value: false },
   { prop: 'disabled', value: false },
   { prop: 'loading', value: false },
 ]

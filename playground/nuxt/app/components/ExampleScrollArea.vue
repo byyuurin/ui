@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const controls: ControlItems<ScrollAreaProps> = [
   { prop: 'type', value: 'hover', options: ['auto', 'always', 'hover', 'scroll'] },
   { prop: 'dir', value: 'ltr', options: ['ltr', 'rtl'] },
-  { prop: 'scrollHideDelay', value: 600 },
+  { prop: 'scrollHideDelay', value: 150 },
 ]
 </script>
 

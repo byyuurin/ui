@@ -1,9 +1,7 @@
 import { createCV, cx } from '@byyuurin/ui-kit'
-import { createUnoMerge } from '@byyuurin/uno-merge'
 import { createDefu } from 'defu'
-import config from '#build/uno-merge.config'
+import { unoMerge } from '#build/uno-merge'
 
-export const { merge: unoMerge } = await createUnoMerge(config)
 export const cv = createCV((...classValues) => unoMerge(cx(...classValues)))
 
 const mergeFn = createDefu((obj: any, key, value) => {

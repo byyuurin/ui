@@ -6,6 +6,7 @@ const valueSingle = ref(0)
 const valueMultiple = ref([0, 100])
 
 const controls: ControlItems<SliderProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'min', value: 0 },

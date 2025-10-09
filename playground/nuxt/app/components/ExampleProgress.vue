@@ -3,6 +3,8 @@ import type { ProgressProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<ProgressProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'animation', value: 'carousel', options: ['carousel', 'carousel-inverse', 'swing', 'elastic'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'modelValue', value: 40, min: 0 },

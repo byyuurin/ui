@@ -63,9 +63,12 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
 
   function writeUnoTemplate() {
     templates.push({
-      filename: 'uno-preset.ts',
+      filename: 'uno-merge.ts',
       write: true,
-      getContents() {
+      async getContents() {
+        const { config } = await loadConfig()
+        const configPath = await findPath(['uno.config', 'unocss.config'], { extensions: ['.ts', '.mjs'] })
+
         const { preflights, ...unoPreset } = createUnoPreset(options.theme)
         let content = JSON.stringify({ ...unoPreset, shortcuts: [] }, null, 2)
 
@@ -75,26 +78,13 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
     ${preflights.map(({ getCSS }) => `{ getCSS: () => \`${getCSS()}\` }`).join(',\n    ')}
     ]\n}`
 
-        return `import type { Preset } from '@unocss/core'
-import type { Theme } from '@unocss/preset-wind4'
-import { parseColor } from '@unocss/preset-wind4/utils'
-
-export default ()=> (${content} satisfies Preset<Theme>)`
-      },
-    })
-
-    templates.push({
-      filename: 'uno-merge.config.ts',
-      write: true,
-      async getContents() {
-        const { config } = await loadConfig()
-        const configPath = await findPath(['uno.config', 'unocss.config'], { extensions: ['.ts', '.mjs'] })
-
         const result = [
-          `import type { UserConfig } from '@unocss/core'`,
+          `import { createUnoMerge } from '@byyuurin/uno-merge'`,
+          `import type { Preset, UserConfig } from '@unocss/core'`,
           `import { mergeConfigs } from '@unocss/core'`,
+          `import type { Theme } from '@unocss/preset-wind4'`,
           `import { presetWind4 } from '@unocss/preset-wind4'`,
-          `import ui from '#build/uno-preset'`,
+          `import { parseColor } from '@unocss/preset-wind4/utils'`,
         ]
 
         if (configPath) {
@@ -137,10 +127,18 @@ export default ()=> (${content} satisfies Preset<Theme>)`
 
         result.push(
           ``,
-          `export default mergeConfigs([
-  { presets: [presetWind4(), ui()] },
+          `const ui = ()=> (${content} satisfies Preset<Theme>)`,
+          ``,
+          `export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
+  {
+    presets: [
+      presetWind4(),
+      ui()
+    ]
+  },
   userConfig,
-])`,
+]))
+`,
         )
 
         return result.join('\n')

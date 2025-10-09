@@ -5,9 +5,10 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref(false)
 
 const controls: ControlItems<SwitchProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'label', value: 'Label' },
   { prop: 'description', value: 'Description' },
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'loading', value: false },
   { prop: 'required', value: false },
   { prop: 'disabled', value: false },

@@ -25,9 +25,10 @@ const items = defineItems([
 ])
 
 const controls: ControlItems<TabsProps<typeof items[number]>> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'evenly', value: true },
   { prop: 'content', value: true },
   { prop: 'unmountOnHide', value: true },

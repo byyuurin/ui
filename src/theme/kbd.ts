@@ -4,7 +4,7 @@ import type { VariantsColor } from '../defaults'
 import type { ModuleOptions } from '../module'
 
 export default (options: Required<ModuleOptions>) => ct({
-  base: 'inline-flex items-center justify-center px-1 rounded-sm font-medium font-sans',
+  base: 'inline-flex items-center justify-center p-1 rounded-sm font-medium font-sans',
   variants: {
     color: {
       ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])) as Record<VariantsColor, ''>,
@@ -17,9 +17,9 @@ export default (options: Required<ModuleOptions>) => ct({
       subtle: '',
     },
     size: {
-      sm: 'h-4 min-w-[1rem] text-[0.625rem]',
-      md: 'h-5 min-w-[1.25rem] text-[0.6875rem]',
-      lg: 'h-6 min-w-[1.5rem] text-[0.75rem]',
+      sm: 'h-4 min-w-4 text-[0.5rem]',
+      md: 'h-5 min-w-5 text-[0.75rem]',
+      lg: 'h-6 min-w-6 text-[1rem]',
     },
   },
   compoundVariants: [

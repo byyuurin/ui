@@ -4,6 +4,7 @@ import type { ControlItems } from './ExampleView.vue'
 
 const value = ref<string[]>([])
 const controls: ControlItems<PinInputProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'type', value: 'text', options: ['text', 'number'] },
@@ -11,7 +12,6 @@ const controls: ControlItems<PinInputProps> = [
   { prop: 'placeholder', value: '?' },
   { prop: 'mask', value: false, description: 'When `true`, pin inputs will be treated as password.' },
   { prop: 'disabled', value: false },
-  { prop: 'underline', value: false },
   { prop: 'highlight', value: false },
 ]
 </script>

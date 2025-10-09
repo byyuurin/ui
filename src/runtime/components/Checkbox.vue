@@ -23,6 +23,7 @@ export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProp
   as?: PrimitiveProps['as']
   label?: string
   description?: string
+  color?: ThemeVariants['color']
   size?: ThemeVariants['size']
   /**
    * The icon displayed when checked.

@@ -21,9 +21,8 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
   /** The placeholder text when the input is empty. */
   placeholder?: string
   variant?: ThemeVariants['variant']
-  size?: ThemeVariants['size']
   color?: ThemeVariants['color']
-  underline?: boolean
+  size?: ThemeVariants['size']
   /** Highlight the ring color like a focus state. */
   highlight?: boolean
   /**

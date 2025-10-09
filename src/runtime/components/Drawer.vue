@@ -132,55 +132,54 @@ const style = computed(() => {
         </VisuallyHidden>
 
         <slot name="content">
-          <div :class="style.container({ class: props.ui?.container })" data-part="container">
-            <div
-              v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
-              :class="style.header({ class: props.ui?.header })"
-              data-part="header"
-            >
-              <slot name="header">
-                <DialogTitle
-                  v-if="props.title || slots.title"
-                  :class="style.title({ class: props.ui?.title })"
-                  data-part="title"
-                >
-                  <slot name="title">
-                    {{ props.title }}
-                  </slot>
-                </DialogTitle>
+          <div
+            v-if="slots.header || props.title || slots.title || props.description || slots.description || props.close || slots.close"
+            :class="style.header({ class: props.ui?.header })"
+            data-part="header"
+          >
+            <slot name="header">
+              <DialogTitle
+                v-if="props.title || slots.title"
+                :class="style.title({ class: props.ui?.title })"
+                data-part="title"
+              >
+                <slot name="title">
+                  {{ props.title }}
+                </slot>
+              </DialogTitle>
 
-                <DialogClose v-if="props.close || slots.close" as-child>
-                  <slot name="close" :ui="props.ui">
-                    <Button
-                      variant="ghost"
-                      :icon="props.closeIcon || appConfig.ui.icons.close"
-                      v-bind="typeof props.close === 'boolean' ? {} : props.close"
-                      :aria-label="t('modal.close')"
-                      :class="style.close({ class: props.ui?.close })"
-                      data-part="close"
-                    />
-                  </slot>
-                </DialogClose>
+              <DialogClose v-if="props.close || slots.close" as-child>
+                <slot name="close" :ui="props.ui">
+                  <Button
+                    color="neutral"
+                    variant="ghost"
+                    :icon="props.closeIcon || appConfig.ui.icons.close"
+                    v-bind="typeof props.close === 'boolean' ? {} : props.close"
+                    :aria-label="t('modal.close')"
+                    :class="style.close({ class: props.ui?.close })"
+                    data-part="close"
+                  />
+                </slot>
+              </DialogClose>
 
-                <DialogDescription
-                  v-if="props.description || slots.description"
-                  :class="style.description({ class: props.ui?.description })"
-                  data-part="description"
-                >
-                  <slot name="description">
-                    {{ props.description }}
-                  </slot>
-                </DialogDescription>
-              </slot>
-            </div>
+              <DialogDescription
+                v-if="props.description || slots.description"
+                :class="style.description({ class: props.ui?.description })"
+                data-part="description"
+              >
+                <slot name="description">
+                  {{ props.description }}
+                </slot>
+              </DialogDescription>
+            </slot>
+          </div>
 
-            <div v-if="slots.body" :class="style.body({ class: props.ui?.body })" data-part="body">
-              <slot name="body"></slot>
-            </div>
+          <div v-if="slots.body" :class="style.body({ class: props.ui?.body })" data-part="body">
+            <slot name="body"></slot>
+          </div>
 
-            <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })" data-part="footer">
-              <slot name="footer"></slot>
-            </div>
+          <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })" data-part="footer">
+            <slot name="footer"></slot>
           </div>
         </slot>
       </DialogContent>

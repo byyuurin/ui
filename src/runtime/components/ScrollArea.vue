@@ -16,7 +16,9 @@ import { computed, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { cv, merge } from '../utils/style'
 
-const props = withDefaults(defineProps<ScrollAreaProps>(), {})
+const props = withDefaults(defineProps<ScrollAreaProps>(), {
+  scrollHideDelay: 150,
+})
 const rootRef = ref<InstanceType<typeof ScrollAreaRoot>>()
 const rootProps = reactivePick(props, 'type', 'dir', 'scrollHideDelay')
 

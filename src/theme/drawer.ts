@@ -4,32 +4,27 @@ import { ct } from '@byyuurin/ui-kit'
 export default ct({
   parts: {
     overlay: 'fixed inset-0 bg-elevated/75',
-    content: 'fixed bg-default ring ring-default flex focus:outline-none',
-    container: 'w-full flex flex-col px-4 overflow-y-auto',
-    header: 'bg-default flex flex-wrap items-center gap-1 py-5',
-    body: 'flex-1',
-    footer: 'flex flex-col gap-1.5',
-    title: 'text-highlighted font-semibold',
+    content: 'fixed bg-default divide-y divide-default flex flex-col focus:outline-none',
+    header: 'flex flex-wrap items-center gap-1 p-4 sm:px-6',
+    body: 'flex-1 overflow-y-auto p-4 sm:p-6',
+    footer: 'flex items-center gap-1 p-4 sm:p-6',
+    title: 'flex-grow text-xl text-highlighted font-semibold',
     description: 'w-full text-muted text-sm',
     close: 'ms-auto',
   },
   variants: {
     direction: {
       top: {
-        content: 'mb-24 flex-col-reverse',
-        handle: 'mb-4',
-      },
-      bottom: {
-        content: 'mt-24 flex-col',
-        handle: 'mt-4',
-      },
-      left: {
-        content: 'flex-row-reverse',
-        handle: '!mr-4',
+        content: 'inset-x-0 top-0 max-h-full',
       },
       right: {
-        content: 'flex-row',
-        handle: '!ml-4',
+        content: 'right-0 inset-y-0 w-full max-w-md',
+      },
+      bottom: {
+        content: 'inset-x-0 bottom-0 max-h-full',
+      },
+      left: {
+        content: 'left-0 inset-y-0 w-full max-w-md',
       },
     },
     transition: {
@@ -48,14 +43,12 @@ export default ct({
       direction: ['top', 'bottom'],
       class: {
         content: 'h-auto max-h-[96%]',
-        handle: '!w-12 !h-1.5 mx-auto',
       },
     },
     {
       direction: ['left', 'right'],
       class: {
         content: 'w-auto max-w-[calc(100%-2rem)]',
-        handle: '!h-12 !w-1.5 mt-auto mb-auto',
       },
     },
     {

@@ -4,14 +4,14 @@ import type { ControlItems } from './ExampleView.vue'
 
 const value = ref('')
 const controls: ControlItems<TextareaProps> = [
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
+  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
   { prop: 'rows', value: 3 },
   { prop: 'maxRows', value: 0 },
   { prop: 'autoResize', value: false },
   { prop: 'disabled', value: false },
-  { prop: 'underline', value: false },
   { prop: 'highlight', value: false },
 ]
 </script>

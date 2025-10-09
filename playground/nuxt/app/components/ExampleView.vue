@@ -10,7 +10,7 @@ export type ControlItem<T> = {
     warning?: string
     value: T[Prop] | T[Prop][] | null
     label?: string
-    options?: Array<Required<T>[Prop] | { label: string, value: Required<T>[Prop] | null }>
+    options?: Array<Required<T>[Prop] | (SelectItem & { label: string, value: Required<T>[Prop] | null })>
     placeholder?: string
     min?: number
     max?: number

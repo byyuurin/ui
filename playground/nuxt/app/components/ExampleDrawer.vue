@@ -69,10 +69,6 @@ function openOverlay(props: DrawerProps) {
               </div>
             </Placeholder>
           </template>
-
-          <template #footer>
-            <Placeholder label="#footer" />
-          </template>
         </UDrawer>
 
         <UDrawer v-bind="attrs" v-model:open="slotsExample1">

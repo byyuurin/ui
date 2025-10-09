@@ -5,9 +5,10 @@ import type { ControlItems } from './ExampleView.vue'
 const icon = 'i-carbon-logo-youtube'
 
 const controls: ControlItems<BadgeProps> = [
-  { prop: 'label', value: '', placeholder: 'Text' },
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'subtle'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'label', value: '', placeholder: 'Text' },
 ]
 </script>
 

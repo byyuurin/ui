@@ -111,7 +111,7 @@ defineExpose({
         </slot>
       </ToastDescription>
 
-      <div v-if="props.orientation === 'vertical' && actions?.length" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
+      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
             <Button size="xs" v-bind="action" />
@@ -121,7 +121,7 @@ defineExpose({
     </div>
 
     <div
-      v-if="(props.orientation === 'horizontal' && actions?.length) || props.close || slots.close"
+      v-if="(props.orientation === 'horizontal' && (props.actions?.length || slots.actions)) || props.close || slots.close"
       :class="style.actions({ class: props.ui?.actions })"
       data-part="actions"
     >
@@ -137,7 +137,7 @@ defineExpose({
         <slot name="close" :ui="props.ui">
           <Button
             :icon="props.closeIcon || appConfig.ui.icons.close"
-            size="sm"
+            color="neutral"
             variant="link"
             :aria-label="t('toast.close')"
             v-bind="typeof close === 'object' ? close : undefined"

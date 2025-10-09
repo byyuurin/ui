@@ -34,7 +34,7 @@ export default (options: Required<ModuleOptions>) => ct({
       },
       vertical: {
         root: 'items-start',
-        actions: 'items-start mt-2.5',
+        actions: 'items-start mt-1',
       },
     },
     title: {

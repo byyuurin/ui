@@ -16,6 +16,7 @@ export interface SwitchSlots {
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'as' | 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
+  color?: ThemeVariants['color']
   size?: ThemeVariants['size']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
