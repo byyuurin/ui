@@ -1,5 +1,3 @@
-import { createUIConfig } from '@byyuurin/ui/config'
+import { setup } from '@byyuurin/ui/setup'
 
-export default createUIConfig({
-  ui: {},
-})
+export default setup({})
