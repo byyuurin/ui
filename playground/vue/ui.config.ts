@@ -1,3 +1,5 @@
 import { createUIConfig } from '@byyuurin/ui/config'
 
-export default createUIConfig({})
+export default createUIConfig({
+  ui: {},
+})

@@ -121,7 +121,7 @@ const style = computed(() => {
         <Button
           v-if="props.close"
           :icon="props.closeIcon || appConfig.ui.icons.close"
-          size="md"
+          color="neutral"
           variant="link"
           :aria-label="t('alert.close')"
           v-bind="typeof props.close === 'object' ? props.close : undefined"

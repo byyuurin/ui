@@ -1,3 +1,6 @@
+import type { AppConfig } from '@nuxt/schema'
+import type { AppConfigUI } from '#build/types/ui'
+
 export * from '../components/Accordion.vue'
 export * from '../components/Alert.vue'
 export * from '../components/App.vue'
@@ -45,3 +48,5 @@ export * from '../components/Tooltip.vue'
 export * from './form'
 export * from './locale'
 export * from './style'
+
+export type RuntimeAppConfig = AppConfig & { ui: AppConfigUI }

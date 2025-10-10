@@ -6,7 +6,6 @@ import { createUnplugin } from 'unplugin'
 import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
 import { name as packageName } from '../package.json'
-import type { AppConfigUI } from './defaults'
 import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
 import type { ModuleOptions } from './module'
 import AppConfigPlugin from './plugins/app-config'
@@ -15,6 +14,7 @@ import ComponentImportPlugin from './plugins/components'
 import NuxtEnvironmentPlugin from './plugins/nuxt-environment'
 import PluginsPlugin from './plugins/plugins'
 import TemplatesPlugin from './plugins/templates'
+import type { AppConfigUI } from './setup'
 
 export const runtimeDir = normalize(fileURLToPath(new URL('runtime', import.meta.url)))
 
@@ -38,7 +38,14 @@ export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOp
   options.theme ||= {} as any
   options.theme.colors = resolveColors(options.theme.colors)
 
-  const appConfig = defu({ ui: options.ui }, { ui: getDefaultUIConfig(options.theme.colors) })
+  const appConfig = defu(
+    { ui: {
+      colors: options.ui?.colors,
+      icons: options.ui?.colors,
+      ...options.ui?.components,
+    } },
+    { ui: getDefaultUIConfig(options.theme.colors) },
+  )
 
   return [
     NuxtEnvironmentPlugin(),

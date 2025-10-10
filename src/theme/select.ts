@@ -28,11 +28,11 @@ export default (options: Required<ModuleOptions>) => {
       label: 'font-semibold text-highlighted',
       separator: '-mx-1 my-1 h-px bg-border',
       item: [
-        'group relative w-full flex items-center select-none outline-none before:absolute before:z-[-1] before:inset-px before:rounded-md data-disabled:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
+        'group relative w-full flex items-center select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
         options.theme.transitions && 'transition-colors before:transition-colors',
       ],
       itemLeadingIcon: [
-        'shrink-0 text-dimmed group-data-highlighted:not-group-data-disabled:text-default',
+        'shrink-0 text-dimmed group-data-[highlighted]:group-not-[[data-disabled]]:text-default group-not-[[data-disabled]]:text-default',
         options.theme.transitions && 'transition-colors',
       ],
       itemLeadingAvatar: 'shrink-0',
@@ -108,7 +108,10 @@ export default (options: Required<ModuleOptions>) => {
       ...input.compoundVariants.map((item) => {
         return {
           ...item,
-          class: typeof item.class.base === 'string' ? item.class.base.replace(/focus-visible:/g, 'focus:') : item.class.base,
+          class: {
+            ...item.class,
+            base: typeof item.class.base === 'string' ? item.class.base.replace(/focus-visible:/g, 'focus:') : item.class.base,
+          },
         }
       }) as any,
     ],

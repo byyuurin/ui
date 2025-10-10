@@ -1,8 +1,10 @@
+/* @unocss-include */
+
 import { ct } from '@byyuurin/ui-kit'
 import type { VariantsColor } from '../defaults'
 import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ct(/* @unocss-include */{
+export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: '',
     header: 'flex items-center justify-between',
@@ -15,19 +17,31 @@ export default (options: Required<ModuleOptions>) => ct(/* @unocss-include */{
     headCell: 'rounded-md',
     cell: 'relative text-center',
     cellTrigger: [
-      'm-0.5 relative flex items-center justify-center rounded-full whitespace-nowrap focus-visible:ring-2 focus:outline-none data-[disabled]:text-muted data-[unavailable]:line-through data-[unavailable]:text-muted data-[unavailable]:pointer-events-none data-[selected]:text-inverted data-today:font-semibold data-[outside-view]:text-muted',
+      'm-0.5 relative flex items-center justify-center rounded-full whitespace-nowrap focus-visible:ring-2 focus:outline-none',
+      'data-[today]:font-semibold data-[today]:not-[[data-selected]]:text-highlighted',
+      'data-[unavailable]:line-through data-[unavailable]:pointer-events-none data-[unavailable]:text-muted',
+      'data-[outside-view]:text-muted data-[outside-view]:data-[selected]:text-inverted',
+      'data-[disabled]:text-muted data-[disabled]:bg-opacity-20',
+      'data-[selected]:text-inverted data-[selected]:data-[highlighted]:text-default',
       options.theme.transitions && 'transition',
     ],
   },
+
   variants: {
     color: {
       ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
         headCell: `text-${color}`,
-        cellTrigger: `focus-visible:ring-${color} data-[selected]:bg-${color} data-[today]:not-[[data-selected]]:text-${color} data-[highlighted]:bg-${color}/20 hover:not-[[data-selected]]:bg-${color}/20`,
-      }])) as Record<VariantsColor, { headCell: string, cellTrigger: string }>,
+        cellTrigger: [
+          `focus-visible:ring-${color} data-[selected]:bg-${color} data-[highlighted]:bg-${color}/20`,
+          `hover:not-[[data-selected]]:bg-${color}/20`,
+        ],
+      }])) as Record<VariantsColor, { headCell: string, cellTrigger: string | string[] }>,
       neutral: {
         headCell: 'text-highlighted',
-        cellTrigger: 'focus-visible:ring-inverted data-[selected]:bg-inverted data-[today]:not-[[data-selected]]:text-highlighted data-[highlighted]:bg-inverted/20 hover:not-[[data-selected]]:bg-inverted',
+        cellTrigger: [
+          'focus-visible:ring-inverted data-[selected]:bg-inverted data-[highlighted]:bg-inverted/20',
+          'hover:not-[[data-selected]]:bg-inverted/20',
+        ],
       },
     },
     size: {
@@ -59,6 +73,11 @@ export default (options: Required<ModuleOptions>) => ct(/* @unocss-include */{
         heading: 'text-lg',
         headCell: 'text-lg',
         cellTrigger: 'size-10 text-lg',
+      },
+    },
+    multipleMonths: {
+      true: {
+        cellTrigger: 'not-hover:data-[outside-view]:data-[selected]:bg-default not-hover-data-[outside-view]:data-[selected]:text-muted',
       },
     },
   },

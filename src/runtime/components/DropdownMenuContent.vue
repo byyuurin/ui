@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuContentEmits as RekaDropdownMenuContentEmits, DropdownMenuContentProps as RekaDropdownMenuContentProps } from 'reka-ui'
 import theme from '#build/ui/dropdown-menu'
-import type { ComponentBaseProps, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, RuntimeAppConfig } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, KbdProps, RuntimeAppConfig } from '../types'
 import type { ArrayOrNested, NestedItem } from '../types/utils'
 
 type ExtractItem<T extends ArrayOrNested<any>> = Extract<NestedItem<T>, { slot: string }>
@@ -121,7 +121,7 @@ const style = computed(() => {
               v-for="(kbd, kbdIndex) in item.kbds"
               :key="kbdIndex"
               v-bind="typeof kbd === 'string' ? { value: kbd } : kbd"
-              :size="props.size"
+              :size="((item.ui?.itemTrailingKbdsSize || style.itemTrailingKbdsSize()) as KbdProps['size'])"
             />
           </span>
         </slot>

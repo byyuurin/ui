@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "@byyuurin/ui": "workspace:*",
-    "compodium": "0.1.0-beta.5",
     "nuxt": "^3.19.2"
   }
 }

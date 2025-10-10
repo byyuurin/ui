@@ -7,9 +7,9 @@ import { loadConfig } from '@unocss/config'
 import type { UserShortcuts } from '@unocss/core'
 import type { NuxtTemplate, NuxtTypeTemplate } from 'nuxt/schema'
 import { kebabCase } from 'scule'
-import type { AppConfigUI } from './defaults'
 import { neutralColors } from './defaults'
 import type { ModuleOptions } from './module'
+import type { AppConfigUI } from './setup'
 import * as theme from './theme'
 import { createUnoPreset, shortcutsCode } from './unocss'
 
@@ -40,12 +40,16 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
             const templatePath = fileURLToPath(new URL(`theme/${path ? `${path}/` : ''}${kebabCase(component)}`, import.meta.url))
 
             return [
-              `// @unocss-include\nimport { ct } from '@byyuurin/ui-kit'`,
-              `import template from ${JSON.stringify(templatePath)}`,
-              `const options = ${JSON.stringify(options, null, 2)}`,
+              [
+                `// @unocss-include`,
+                `import type { ModuleOptions } from '@byyuurin/ui'`,
+                `import { ct } from '@byyuurin/ui-kit'`,
+                `import template from ${JSON.stringify(templatePath)}`,
+              ].join('\n'),
+              `const options: ModuleOptions = ${JSON.stringify(options, null, 2)}`,
               `const result = typeof template === 'function' ? (template as Function)(options) : template`,
-              `if (result?.defaultVariants?.color && options.theme?.defaultVariants?.color) result.defaultVariants.color = options.theme.defaultVariants.color`,
-              `if (result?.defaultVariants?.size && options.theme?.defaultVariants?.size) result.defaultVariants.size = options.theme.defaultVariants.size`,
+              `if (result?.defaultVariants?.color && options.theme?.defaultVariants?.color)\n  result.defaultVariants.color = options.theme.defaultVariants.color`,
+              `if (result?.defaultVariants?.size && options.theme?.defaultVariants?.size)\n  result.defaultVariants.size = options.theme.defaultVariants.size`,
               `const theme = ct(${json})`,
               `export default result as typeof theme`,
             ].join('\n\n')

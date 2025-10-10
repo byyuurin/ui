@@ -1,11 +1,10 @@
 import type { colors } from '@unocss/preset-wind4/colors'
-import type * as ui from '#build/ui'
 import type { ModuleOptions } from './module'
-import type { UIConfig } from './runtime/types'
 import { pick } from './runtime/utils'
+import type { AppConfigUI } from './setup'
 import { icons } from './theme/app'
 
-export function getDefaultUIConfig(colors?: string[]): AppConfigUI {
+export function getDefaultUIConfig(colors?: string[]): AppConfigUI<VariantsColor> {
   return {
     colors: pick({
       primary: 'green',
@@ -33,7 +32,6 @@ export const themeSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 export type VariantsSize = typeof themeSizes[number]
 
 export const defaultColors = ['primary', 'secondary', 'success', 'info', 'warning', 'error'] as const
-
 export type VariantsColor = typeof defaultColors[number]
 
 export function resolveColors(colors?: string[]) {
@@ -49,9 +47,3 @@ function pickColorNames<Color extends keyof typeof colors>(colors: Color[]) {
 export const neutralColors = pickColorNames(['slate', 'gray', 'zinc', 'neutral', 'stone', 'light', 'dark'])
 export type NeutralColor = typeof neutralColors[number]
 export type Color = keyof Omit<typeof colors, NeutralColor | 'black' | 'white'> | (string & {})
-
-export type AppConfigIcons = Record<keyof typeof icons | (string & {}), string>
-export type AppConfigUI = {
-  colors?: { [UIThemeColor: string]: Color } & { neutral?: NeutralColor | (string & {}) }
-  icons?: Partial<AppConfigIcons>
-} & UIConfig<typeof ui>

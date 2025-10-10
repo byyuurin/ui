@@ -1,5 +1,5 @@
 <script lang="ts">
-import { parseCssColor } from '@unocss/preset-mini/utils'
+import { parseCssColor } from '@unocss/preset-wind4/utils'
 import { useCloned } from '@vueuse/core'
 
 export const cssVarsPrefix = 'ui'

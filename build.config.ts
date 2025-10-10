@@ -5,7 +5,7 @@ export default defineBuildConfig({
     './src/unplugin',
     './src/vite',
     './src/unocss',
-    './src/config',
+    './src/setup',
   ],
   rollup: {
     replace: {

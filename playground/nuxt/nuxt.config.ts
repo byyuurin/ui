@@ -3,23 +3,37 @@ export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
     '../../src/module',
-    'compodium',
   ],
+
   devtools: { enabled: true },
+
   future: {
     compatibilityVersion: 4,
   },
+
   compatibilityDate: '2024-11-01',
-  compodium: {
-    dir: 'app/compodium',
-    exclude: [
-      'Example*.vue',
-      'Placeholder.vue',
-      'ThemeSelector.vue',
-      '*App.vue',
-      '*Toast.vue',
-      '*Provider.vue',
-      '*Content.vue',
-    ],
+
+  vite: {
+    optimizeDeps: {
+      // prevents reloading page when navigating between components
+      include: [
+        '@internationalized/date',
+        '@vueuse/shared',
+        '@tanstack/vue-table',
+        'reka-ui',
+        'reka-ui/namespaced',
+        'embla-carousel-vue',
+        'embla-carousel-autoplay',
+        'embla-carousel-auto-scroll',
+        'embla-carousel-auto-height',
+        'embla-carousel-class-names',
+        'embla-carousel-fade',
+        'embla-carousel-wheel-gestures',
+        '@unocss/preset-wind4/colors',
+        '@byyuurin/ui-kit',
+        'ufo',
+        'zod',
+      ],
+    },
   },
 })

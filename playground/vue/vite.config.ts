@@ -28,12 +28,48 @@ export default defineConfig({
       },
     }),
   ],
+  optimizeDeps: {
+    // prevents reloading page when navigating between components
+    include: [
+      '@internationalized/date',
+      '@vueuse/shared',
+      '@tanstack/vue-table',
+      'reka-ui',
+      'reka-ui/namespaced',
+      'embla-carousel-vue',
+      'embla-carousel-autoplay',
+      'embla-carousel-auto-scroll',
+      'embla-carousel-auto-height',
+      'embla-carousel-class-names',
+      'embla-carousel-fade',
+      'embla-carousel-wheel-gestures',
+      '@unocss/preset-wind4/colors',
+      '@byyuurin/ui-kit',
+      'ufo',
+      'zod',
+    ],
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-wind4'],
-          libs: ['reka-ui'],
+          unocss: [
+            '@unocss/core',
+            '@unocss/preset-wind4',
+          ],
+          libs: [
+            '@internationalized/date',
+            '@tanstack/vue-table',
+            'reka-ui',
+            'reka-ui/namespaced',
+            'embla-carousel-vue',
+            'embla-carousel-autoplay',
+            'embla-carousel-auto-scroll',
+            'embla-carousel-auto-height',
+            'embla-carousel-class-names',
+            'embla-carousel-fade',
+            'embla-carousel-wheel-gestures',
+          ],
         },
       },
     },

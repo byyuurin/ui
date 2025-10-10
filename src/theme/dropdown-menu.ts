@@ -11,7 +11,7 @@ export default (options: Required<ModuleOptions>) => ct({
     group: 'p-1 isolate',
     label: 'w-full flex items-center font-semibold text-highlighted',
     separator: '-mx-1 my-1 h-px bg-border',
-    item: 'group relative w-full flex items-center select-none outline-none before:absolute before:z-[-1] before:inset-px before:rounded-md data-disabled:cursor-not-allowed data-disabled:opacity-75',
+    item: 'group relative w-full flex items-center select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75',
     itemLeadingIcon: 'shrink-0',
     itemLeadingAvatar: 'shrink-0',
     itemLeadingAvatarSize: '',
@@ -34,11 +34,11 @@ export default (options: Required<ModuleOptions>) => ct({
       },
       false: {
         item: [
-          'text-default data-highlighted:text-highlighted data-[state=open]:text-highlighted data-highlighted:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50',
+          'text-default data-[highlighted]:text-highlighted data-[state=open]:text-highlighted data-[highlighted]:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50',
           options.theme.transitions && 'transition-colors before:transition-colors',
         ],
         itemLeadingIcon: [
-          'text-dimmed group-data-highlighted:text-default group-data-[state=open]:text-default',
+          'text-dimmed group-data-[highlighted]:text-default group-data-[state=open]:text-default',
           options.theme.transitions && 'transition-colors',
         ],
       },

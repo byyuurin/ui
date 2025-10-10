@@ -1,8 +1,4 @@
 import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVScopeMeta } from '@byyuurin/ui-kit'
-import type { AppConfig } from '@nuxt/schema'
-import type { AppConfigUI } from '#build/types/ui'
-
-export type RuntimeAppConfig = AppConfig & { ui: AppConfigUI }
 
 export interface ComponentBaseProps {
   class?: ClassValue

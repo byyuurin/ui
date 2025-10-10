@@ -22,10 +22,6 @@ const controls: ControlItems<RadioGroupProps<typeof options[number]>> = [
   { prop: 'disabled', value: false },
   { prop: 'required', value: false },
 ]
-
-const ui: RadioGroupProps<typeof options[number]>['ui'] = {
-  legend: 'after:color-red-700',
-}
 </script>
 
 <template>
@@ -36,8 +32,8 @@ const ui: RadioGroupProps<typeof options[number]>['ui'] = {
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <URadioGroup v-model="value" v-bind="attrs" :options="options" :ui="ui" />
-      <URadioGroup v-model="value" v-bind="attrs" :options="values" :ui="ui" />
+      <URadioGroup v-model="value" v-bind="attrs" :options="options" />
+      <URadioGroup v-model="value" v-bind="attrs" :options="values" />
     </div>
   </ExampleView>
 </template>

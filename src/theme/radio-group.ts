@@ -10,8 +10,11 @@ export default (options: Required<ModuleOptions>) => ct({
     legend: 'mb-1 block font-medium text-default',
     item: 'flex items-start',
     container: 'flex items-center',
-    base: 'rounded-full ring ring-inset ring-accented overflow-hidden transition focus-visible:outline-2 focus-visible:outline-offset-2',
-    indicator: 'flex items-center justify-center size-full rounded-full transition scale-0 data-[state=checked]:scale-65',
+    base: 'rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2',
+    indicator: [
+      'flex items-center justify-center size-full rounded-full scale-0 data-[state=checked]:scale-65',
+      options.theme.transitions && 'transition-transform',
+    ],
     wrapper: 'w-full',
     label: 'block font-medium text-default',
     description: 'text-muted',

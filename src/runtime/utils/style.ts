@@ -28,6 +28,11 @@ const mergeFn = createDefu((obj: any, key, value) => {
   }
 
   if (typeof obj[key] === 'string' && typeof value === 'string') {
+    if (String(key).endsWith('Size')) {
+      obj[key] = value
+      return true
+    }
+
     if (value.trim())
       obj[key] += ` ${value}`
 

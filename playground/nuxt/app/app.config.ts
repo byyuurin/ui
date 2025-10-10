@@ -1,1 +1,5 @@
-export default defineAppConfig({})
+// @unocss-include
+
+export default defineAppConfig({
+  ui: {},
+})
