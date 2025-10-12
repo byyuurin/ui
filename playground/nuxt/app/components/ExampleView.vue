@@ -63,7 +63,7 @@ onMounted(() => {
       <UCard
         :title="props.title"
         :description="props.description"
-        class="top-16 bg-neutral/2 backdrop-blur md:sticky"
+        class="top-4 bg-neutral/2 backdrop-blur md:sticky"
       >
         <div
           v-if="props.controls.length > 0"

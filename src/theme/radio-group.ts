@@ -22,11 +22,11 @@ export default (options: Required<ModuleOptions>) => ct({
   variants: {
     color: {
       ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
-        base: `focus-visible:outline-${color}`,
+        base: `focus-visible:outline-${color} data-[state=checked]:ring-${color}/50`,
         indicator: `bg-${color}`,
       }])) as Record<VariantsColor, { base: string, indicator: string }>,
       neutral: {
-        base: 'focus-visible:outline-inverted',
+        base: 'focus-visible:outline-inverted data-[state=checked]:ring-[--ui-text]/50',
         indicator: 'bg-inverted',
       },
     },
