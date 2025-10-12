@@ -39,11 +39,14 @@ export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOp
   options.theme.colors = resolveColors(options.theme.colors)
 
   const appConfig = defu(
-    { ui: {
-      colors: options.ui?.colors,
-      icons: options.ui?.colors,
-      ...options.ui?.components,
-    } },
+    {
+      ui: {
+        colors: options.ui?.colors,
+        icons: options.ui?.colors,
+        ...options.ui?.components,
+      },
+      colorMode: options.colorMode,
+    },
     { ui: getDefaultUIConfig(options.theme.colors) },
   )
 

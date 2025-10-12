@@ -67,7 +67,7 @@ onMounted(() => {
   }, { immediate: true })
 })
 
-const modes = [
+const modeOptions = [
   { label: 'light', icon: 'i-lucide-sun' },
   { label: 'dark', icon: 'i-lucide-moon' },
   { label: 'system', icon: 'i-lucide-monitor' },
@@ -76,8 +76,8 @@ const mode = computed({
   get() {
     return colorMode.value
   },
-  set(option) {
-    colorMode.preference = option
+  set(value) {
+    colorMode.preference = value
   },
 })
 </script>
@@ -161,7 +161,7 @@ const mode = computed({
 
         <div class="grid grid-cols-3 gap-1 -mx-2">
           <ThemePickerButton
-            v-for="m in modes"
+            v-for="m in modeOptions"
             :key="m.label"
             v-bind="m"
             :selected="colorMode.preference === m.label"
