@@ -170,6 +170,7 @@ const ellipsisIcon = computed(() => props.ellipsisIcon || appConfig.ui.icons.ell
         >
           <slot name="ellipsis">
             <Button
+              :color="props.color"
               :variant="props.variant"
               :size="props.size"
               :icon="ellipsisIcon"
