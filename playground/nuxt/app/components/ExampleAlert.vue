@@ -29,6 +29,10 @@ const controls: ControlItems<AlertProps> = [
           { label: 'action2', variant: attrs.variant },
         ]"
       />
+      <UAlert
+        v-bind="attrs"
+        :avatar="{ src: 'https://i.pravatar.cc/100' }"
+      />
       <UAlert v-bind="attrs" :actions="[{}]" close>
         <template #leading>
           <Placeholder label="#leading" />

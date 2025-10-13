@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/alert'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 
 export interface AlertEmits {
   'update:open': [value: boolean]
@@ -26,7 +26,8 @@ export interface AlertProps extends ComponentBaseProps {
   as?: PrimitiveProps['as']
   title?: string
   description?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
   color?: ThemeVariants['color']
   variant?: ThemeVariants['variant']
   orientation?: ThemeVariants['orientation']
@@ -56,6 +57,7 @@ import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 
@@ -88,7 +90,19 @@ const style = computed(() => {
     data-part="root"
   >
     <slot name="leading">
-      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
+      <Avatar
+        v-if="props.avatar"
+        :size="((props.ui?.avatarSize || style.avatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="style.avatar({ class: props.ui?.avatar })"
+        data-part="avatar"
+      />
+      <Icon
+        v-else-if="props.icon"
+        :name="props.icon"
+        :class="style.icon({ class: props.ui?.icon })"
+        data-part="icon"
+      />
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">

@@ -2,12 +2,12 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import theme from '#build/ui/toast'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, ProgressProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
 
 export interface ToastEmits extends ToastRootEmits {}
 
 export interface ToastSlots {
-  icon?: (props?: {}) => any
+  leading?: (props?: {}) => any
   title?: (props?: {}) => any
   description?: (props?: {}) => any
   actions?: (props?: {}) => any
@@ -21,7 +21,8 @@ export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'de
   as?: PrimitiveProps['as']
   title?: string
   description?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
   color?: ThemeVariants['color']
   orientation?: ThemeVariants['orientation']
   /**
@@ -53,6 +54,7 @@ import { computed, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 import Progress from './Progress.vue'
@@ -95,8 +97,20 @@ defineExpose({
     data-part="root"
     :style="{ '--height': height }"
   >
-    <slot name="icon">
-      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
+    <slot name="leading">
+      <Avatar
+        v-if="props.avatar"
+        :size="((props.ui?.avatarSize || style.avatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="style.avatar({ class: props.ui?.avatar })"
+        data-part="avatar"
+      />
+      <Icon
+        v-else-if="props.icon"
+        :name="props.icon"
+        :class="style.icon({ class: props.ui?.icon })"
+        data-part="icon"
+      />
     </slot>
 
     <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">

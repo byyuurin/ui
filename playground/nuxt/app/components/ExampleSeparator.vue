@@ -22,6 +22,12 @@ const controls: ControlItems<SeparatorProps> = [
         <USeparator v-bind="attrs" />
       </div>
       <div class="flex items-center justify-center">
+        <USeparator v-bind="attrs" label="" icon="i-carbon:search" />
+      </div>
+      <div class="flex items-center justify-center">
+        <USeparator v-bind="attrs" label="" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
+      </div>
+      <div class="flex items-center justify-center">
         <USeparator v-bind="attrs">
           <Placeholder label="#default" />
         </USeparator>

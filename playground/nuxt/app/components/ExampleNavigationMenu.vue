@@ -121,11 +121,17 @@ const items = ref([
     {
       label: 'GitHub',
       icon: 'i-simple-icons-github',
-      chip: '999',
+      badge: '999',
       href: '#',
       target: '_blank',
       tooltip: {
         text: 'Open in GitHub',
+      },
+    },
+    {
+      label: 'Avatar',
+      avatar: {
+        src: 'https://i.pravatar.cc/100',
       },
     },
   ],

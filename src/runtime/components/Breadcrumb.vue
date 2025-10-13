@@ -1,13 +1,15 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/breadcrumb'
-import type { ComponentBaseProps, ComponentUIProps, LinkProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
 import type { DynamicSlots } from '../types/utils'
 
 export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom' | 'underline'> {
   label?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
   slot?: string
+  ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'link' | 'linkLeadingIcon' | 'linkLeadingAvatar' | 'linkLabel' | 'separator' | 'separatorIcon'>
   [key: string]: any
 }
 
@@ -49,6 +51,7 @@ import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { get, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
@@ -86,7 +89,19 @@ const style = computed(() => {
             >
               <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="item" :index="index">
                 <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="item" :active="index === items!.length - 1" :index="index">
-                  <span v-if="item.icon" :class="style.linkLeadingIcon({ class: [item.icon, props.ui?.linkLeadingIcon] })" data-part="link-leading-icon"></span>
+                  <Icon
+                    v-if="item.icon"
+                    :name="item.icon"
+                    :class="style.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: index === items!.length - 1 })"
+                    data-part="link-leading-icon"
+                  />
+                  <Avatar
+                    v-else-if="item.avatar"
+                    :size="((props.ui?.linkLeadingAvatarSize || style.linkLeadingAvatarSize()) as AvatarProps['size'])"
+                    v-bind="item.avatar"
+                    :class="style.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, props.ui?.linkLeadingAvatar], active: index === items!.length - 1 })"
+                    data-part="link-leading-avatar"
+                  />
                 </slot>
 
                 <span v-if="get(item, props.labelKey) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="style.linkLabel({ class: props.ui?.linkLabel })" data-part="link-label">

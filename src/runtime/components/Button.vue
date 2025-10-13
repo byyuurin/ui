@@ -2,8 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import theme from '#build/ui/button'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { LinkProps } from './Link.vue'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, LinkProps, RuntimeAppConfig } from '../types'
 
 export interface ButtonSlots {
   default?: (props?: {}) => any
@@ -19,6 +18,7 @@ export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps,
   variant?: ThemeVariants['variant']
   size?: ThemeVariants['size']
   color?: ThemeVariants['color']
+  avatarColor?: ThemeVariants['color']
   /** Render the button with equal padding on all sides. */
   square?: boolean
   /** Render the button full width. */
@@ -38,6 +38,7 @@ import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { omit, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 import Link from './Link.vue'
 
@@ -90,14 +91,25 @@ const style = computed(() => {
         :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
         data-part="leading-icon"
       />
+      <Avatar
+        v-else-if="props.avatar"
+        :size="((props.ui?.leadingAvatarSize || style.leadingAvatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="style.leadingAvatar({ class: props.ui?.leadingAvatar, active: props.active })"
+        data-part="leading-avatar"
+      />
     </slot>
-    <span
-      v-if="props.label || slots.default"
-      :class="style.label({ class: props.ui?.label })"
-      data-part="label"
-    >
-      <slot>{{ label }}</slot>
-    </span>
+
+    <slot>
+      <span
+        v-if="props.label || slots.default"
+        :class="style.label({ class: props.ui?.label })"
+        data-part="label"
+      >
+        {{ label }}
+      </span>
+    </slot>
+
     <slot name="trailing">
       <Icon
         v-if="isTrailing && trailingIconName"

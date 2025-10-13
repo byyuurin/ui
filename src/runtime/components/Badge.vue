@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/badge'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface BadgeSlots {
   leading?: (props?: {}) => any
@@ -34,6 +34,7 @@ import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<BadgeProps>(), {
@@ -59,12 +60,26 @@ const style = computed(() => {
 <template>
   <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
     <slot name="leading">
-      <Icon v-if="isLeading && leadingIconName" :name="leadingIconName" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
+      <Icon
+        v-if="isLeading && leadingIconName"
+        :name="leadingIconName"
+        :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
+        data-part="leading-icon"
+      />
+      <Avatar
+        v-else-if="props.avatar"
+        :size="((props.ui?.leadingAvatarSize || style.leadingAvatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="style.leadingAvatar({ class: props.ui?.leadingAvatar })"
+        data-part="leading-avatar"
+      />
     </slot>
 
-    <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
-      <slot>{{ props.label }}</slot>
-    </span>
+    <slot>
+      <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
+        {{ props.label }}
+      </span>
+    </slot>
 
     <slot name="trailing">
       <Icon v-if="isTrailing && trailingIconName" :name="trailingIconName" :class="style.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />

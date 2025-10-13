@@ -2,11 +2,11 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuArrowProps, DropdownMenuContentEmits, DropdownMenuContentProps, DropdownMenuRootEmits, DropdownMenuRootProps } from 'reka-ui'
 import theme from '#build/ui/dropdown-menu'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, KbdProps, LinkProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, IconProps, KbdProps, LinkProps, RuntimeAppConfig } from '../types'
 import type { ArrayOrNested, DynamicSlots, EmitsToProps, MergeTypes, NestedItem } from '../types/utils'
 
 export interface DropdownMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'custom' | 'underline'> {
-  icon?: string
+  icon?: IconProps['name']
   avatar?: AvatarProps
   content?: Omit<DropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DropdownMenuContentEmits>>
   kbds?: Array<string | KbdProps['value']>
@@ -130,7 +130,6 @@ const style = computed(() => {
 
     <DropdownMenuContent
       :class="style.content({ class: [!slots.default && props.class, props.ui?.content] })"
-      data-part="content"
       :ui="props.ui"
       v-bind="contentProps"
       :size="props.size"
@@ -140,6 +139,7 @@ const style = computed(() => {
       :checked-icon="props.checkedIcon"
       :loading-icon="props.loadingIcon"
       :external-icon="props.externalIcon"
+      data-part="content"
     >
       <template v-for="(_, name) in proxySlots" #[name]="slotProps">
         <slot :name="(name as keyof DropdownMenuSlots<T>)" v-bind="slotProps"></slot>

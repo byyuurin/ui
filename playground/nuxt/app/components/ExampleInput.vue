@@ -29,6 +29,7 @@ const controls: ControlItems<InputProps> = [
       <UInput v-bind="attrs" :leading-icon="leadingIcon" />
       <UInput v-bind="attrs" :trailing-icon="trailingIcon" />
       <UInput v-bind="attrs" :icon="leadingIcon" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" />
+      <UInput v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
       <UInput v-bind="attrs">
         <template #leading>
           <Placeholder label="#leading" />

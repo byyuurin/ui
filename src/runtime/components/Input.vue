@@ -4,7 +4,7 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { InputHTMLAttributes } from 'vue'
 import theme from '#build/ui/input'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
 export interface InputEmits {
   'update:modelValue': [payload: string | number]
@@ -53,6 +53,7 @@ import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 
 defineOptions({
@@ -99,7 +100,7 @@ const style = computed(() => {
     size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
     groupOrientation: orientation.value,
-    leading: isLeading.value || !!slots.leading,
+    leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,
   })
 })
@@ -161,7 +162,7 @@ onMounted(() => {
     :class="style.root({ class: [props.class, props.ui?.root] })"
     :data-part="$attrs['data-part'] ?? 'root'"
   >
-    <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
+    <span v-if="isLeading || !!props.avatar || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
       <slot name="leading">
         <Icon
           v-if="isLeading && leadingIconName"
@@ -169,19 +170,26 @@ onMounted(() => {
           :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
           data-part="leading-icon"
         />
+        <Avatar
+          v-else-if="props.avatar"
+          :size="((props.ui?.leadingAvatarSize || style.leadingAvatarSize()) as AvatarProps['size'])"
+          v-bind="props.avatar"
+          :class="style.leadingAvatar({ class: props.ui?.leadingAvatar })"
+          data-part="leading-avatar"
+        />
       </slot>
     </span>
 
     <input
       ref="inputRef"
       :class="style.base({ class: props.ui?.base })"
-      data-part="input"
       :type="props.type"
       :value="modelValue"
       :placeholder="props.placeholder"
       :required="props.required"
       :autocomplete="props.autocomplete"
       v-bind="{ ...$attrs, ...ariaAttrs, id, name, disabled }"
+      data-part="input"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"

@@ -42,6 +42,9 @@ const examples: ControlInfo[] = [
     ui: { icon: 'animate-head-shake animate-count-infinite' },
   },
   {
+    avatar: { src: 'https://i.pravatar.cc/100' },
+  },
+  {
     actions: [
       { class: 'min-w-20 justify-center', label: 'YES' },
       { class: 'min-w-20 justify-center', label: 'NO', variant: 'outline' },

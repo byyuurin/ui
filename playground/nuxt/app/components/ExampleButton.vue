@@ -29,6 +29,7 @@ const controls: ControlItems<ButtonProps> = [
       <UButton v-bind="attrs" :label="attrs.label || 'Text'" />
       <UButton v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
       <UButton v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
     </div>
     <div class="py-4">
       <UButton v-bind="attrs" :label="attrs.label || 'Text'">

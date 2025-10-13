@@ -3,12 +3,14 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SelectArrowProps, SelectContentEmits, SelectContentProps, SelectRootEmits, SelectRootProps } from 'reka-ui'
 import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ChipProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { AcceptableValue, ArrayOrNested, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem } from '../types/utils'
 
 interface SelectItemBase {
   label?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
+  chip?: ChipProps
   /**
    * The option type.
    * @default "option"
@@ -16,6 +18,8 @@ interface SelectItemBase {
   type?: 'label' | 'separator' | 'option'
   value?: AcceptableValue
   disabled?: boolean
+  onSelect?: (e: Event) => void
+  ui?: Pick<ComponentUIProps<typeof theme>, 'label' | 'separator' | 'item' | 'itemLeadingIcon' | 'itemLeadingAvatarSize' | 'itemLeadingAvatar' | 'itemLeadingChipSize' | 'itemLeadingChip' | 'itemLabel' | 'itemTrailing' | 'itemTrailingIcon'>
   [key: string]: any
 }
 
@@ -116,6 +120,8 @@ import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { compare, get, isArrayOfArray } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
+import Chip from './Chip.vue'
 import Icon from './Icon.vue'
 
 defineOptions({
@@ -139,6 +145,11 @@ const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, em
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
+
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
+  trailingIcon: appConfig.ui.icons.chevronDown,
+})))
+
 const style = computed(() => {
   const ui = cv(merge(theme, appConfig.ui.select))
   return ui({
@@ -147,14 +158,10 @@ const style = computed(() => {
     size: fieldGroupSize.value || formFieldSize.value,
     color: color.value,
     highlight: highlight.value,
-    leading: isLeading.value,
-    trailing: isTrailing.value,
+    leading: isLeading.value || !!props.avatar || !!slots.leading,
+    trailing: isTrailing.value || !!slots.trailing,
   })
 })
-
-const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(toRef(() => defu(props, {
-  trailingIcon: appConfig.ui.icons.chevronDown,
-})))
 
 const groups = computed<SelectItem[][]>(
   () => props.options?.length
@@ -211,9 +218,21 @@ function onUpdateOpen(value: boolean) {
     @update:open="onUpdateOpen"
   >
     <SelectTrigger v-bind="{ ...$attrs, ...ariaAttrs, id }" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
-      <span v-if="isLeading || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
+      <span v-if="isLeading || !!props.avatar || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
         <slot name="leading" :model-value="(innerValue as GetModelValue<T, VK, M>)" :open="open" :ui="props.ui">
-          <Icon v-if="isLeading && leadingIconName" :name="leadingIconName" :class="style.leadingIcon({ class: props.ui?.leadingIcon })" data-part="leading-icon" />
+          <Icon
+            v-if="isLeading && leadingIconName"
+            :name="leadingIconName"
+            :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
+            data-part="leading-icon"
+          />
+          <Avatar
+            v-else-if="props.avatar"
+            :size="((props.ui?.itemLeadingChipSize || style.itemLeadingAvatarSize()) as AvatarProps['size'])"
+            v-bind="props.avatar"
+            :class="style.leadingAvatar({ class: props.ui?.leadingAvatar })"
+            data-part="leading-avatar"
+          />
         </slot>
       </span>
 
@@ -254,7 +273,29 @@ function onUpdateOpen(value: boolean) {
               >
                 <slot name="item" :item="(item as NestedItem<T>)" :index="index">
                   <slot name="item-leading" :item="(item as NestedItem<T>)" :index="index">
-                    <Icon v-if="isSelectItem(item) && item.icon" :name="item.icon" :class="style.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })" data-part="item-leading-icon" />
+                    <Icon
+                      v-if="isSelectItem(item) && item.icon"
+                      :name="item.icon"
+                      :class="style.itemLeadingIcon({ class: props.ui?.itemLeadingIcon })"
+                      data-part="item-leading-icon"
+                    />
+                    <Avatar
+                      v-else-if="isSelectItem(item) && item.avatar"
+                      :size="((item.ui?.itemLeadingAvatarSize || style.itemLeadingAvatarSize()) as AvatarProps['size'])"
+                      v-bind="item.avatar"
+                      :class="style.itemLeadingAvatar({ class: [props.ui?.leadingAvatar, item.ui?.itemLeadingAvatar] })"
+                      data-part="item-leading-avatar"
+                    />
+                    <Chip
+                      v-else-if="isSelectItem(item) && item.chip"
+                      :size="((props.ui?.itemLeadingChipSize || style.itemLeadingChipSize()) as ChipProps['size'])"
+                      inset
+                      standalone
+                      v-bind="item.chip"
+                      :class="style.itemLeadingChip({ class: [props.ui?.itemLeadingChip, item.ui?.itemLeadingChip] })"
+                      data-part="item-leading-chip"
+                      :data-chip-size="style.itemLeadingChip({ class: [props.ui?.itemLeadingChip, item.ui?.itemLeadingChip] })"
+                    />
                   </slot>
 
                   <SelectItemText :class="style.itemLabel({ class: props.ui?.itemLabel })" data-part="item-label">

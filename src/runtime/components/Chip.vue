@@ -40,9 +40,9 @@ import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { cv, merge } from '../utils/style'
 
-defineOptions({
-  inheritAttrs: false,
-})
+// defineOptions({
+//   inheritAttrs: false,
+// })
 
 const props = withDefaults(defineProps<ChipProps>(), {
   position: 'top-right',

@@ -12,13 +12,14 @@ const items = defineItems([
   },
   {
     label: 'Tab2',
-    icon: 'i-lucide-user',
+    avatar: { src: 'https://i.pravatar.cc/100' },
     content: 'And, this is the content for Tab2',
     slot: 'tab2' as const,
   },
   {
-    label: 'Tab3 (disabled)',
+    label: 'Tab3',
     icon: 'i-lucide-bell',
+    badge: { label: 'disabled', color: 'error' },
     content: 'Finally, this is the content for Tab3',
     disabled: true,
   },
@@ -48,8 +49,13 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
           <pre>{{ item }}</pre>
         </template>
       </UTabs>
+
       <UTabs v-bind="attrs" :items="[{}]">
         <Placeholder label="#default" />
+
+        <template #list-leading>
+          <Placeholder label="#list-leading" />
+        </template>
 
         <template #leading>
           <Placeholder label="#leading" />
@@ -59,6 +65,10 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
         </template>
         <template #content>
           <Placeholder label="#content / #[slot]" class="h-40" />
+        </template>
+
+        <template #list-trailing>
+          <Placeholder label="#list-trailing" />
         </template>
       </UTabs>
     </div>

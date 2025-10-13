@@ -24,6 +24,7 @@ const controls: ControlItems<BadgeProps> = [
       <UBadge v-bind="attrs" :label="attrs.label || 'Text'" />
       <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
       <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
+      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
     </div>
     <div class="py-4">
       <UBadge v-bind="attrs" :label="attrs.label || 'Text'">

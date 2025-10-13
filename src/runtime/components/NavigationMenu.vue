@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AccordionRootProps, NavigationMenuContentEmits, NavigationMenuContentProps, NavigationMenuRootEmits, NavigationMenuRootProps } from 'reka-ui'
 import theme from '#build/ui/navigation-menu'
-import type { BadgeProps, ComponentBaseProps, ComponentUIProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
+import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
 import type { ArrayOrNested, DynamicSlots, EmitsToProps, MergeTypes, NestedItem } from '../types/utils'
 
 export interface NavigationMenuChildItem extends Omit<NavigationMenuItem, 'children' | 'type'> {
@@ -13,7 +13,8 @@ export interface NavigationMenuChildItem extends Omit<NavigationMenuItem, 'child
 
 export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 'type' | 'raw' | 'custom'> {
   label?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
   /**
    * Display a chip on the item.
    * `{ size: 'xs', variant: 'outline' }`
@@ -142,6 +143,7 @@ import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { get, isArrayOfArray, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Badge from './Badge.vue'
 import Icon from './Icon.vue'
 import Link from './Link.vue'
@@ -216,7 +218,19 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
   <DefineLinkTemplate v-slot="{ item, active, index }">
     <slot :name="((item.slot || 'item') as keyof NavigationMenuSlots<T>)" :item="item" :index="index">
       <slot :name="(`${item.slot || 'item'}-leading` as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index">
-        <Icon v-if="item.icon" :name="item.icon" :class="style.linkLeadingIcon({ class: props.ui?.linkLeadingIcon, active, disabled: !!item.disabled })" data-part="link-leading-icon" />
+        <Avatar
+          v-if="item.avatar"
+          :size="((props.ui?.linkLeadingAvatarSize || style.linkLeadingAvatarSize()) as AvatarProps['size'])"
+          v-bind="item.avatar"
+          :class="style.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active, disabled: item.disabled })"
+          data-part="link-leading-avatar"
+        />
+        <Icon
+          v-else-if="item.icon"
+          :name="item.icon"
+          :class="style.linkLeadingIcon({ class: props.ui?.linkLeadingIcon, active, disabled: !!item.disabled })"
+          data-part="link-leading-icon"
+        />
       </slot>
 
       <span
@@ -246,10 +260,21 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             variant="outline"
             v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: String(item.badge) } : item.badge"
             :class="style.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })"
+            data-part="link-trailing-badge"
           />
 
-          <Icon v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)" :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })" />
-          <Icon v-else-if="item.trailingIcon" :name="item.trailingIcon" :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })" />
+          <Icon
+            v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[(item.slot ? `${item.slot}-content` : 'item-content') as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)"
+            :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown"
+            :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"
+            data-part="link-trailing-icon"
+          />
+          <Icon
+            v-else-if="item.trailingIcon"
+            :name="item.trailingIcon"
+            :class="style.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"
+            data-part="link-trailing-icon"
+          />
         </slot>
       </component>
     </slot>
@@ -303,7 +328,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             <template #content>
               <slot :name="(`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>)" :item="item" :active="active || item.active" :index="index">
                 <ul :class="style.childList({ class: [props.ui?.childList, item.ui?.childList] })" data-part="child-list">
-                  <li :class="style.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })">
+                  <li :class="style.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })" data-part="child-label">
                     {{ get(item, props.labelKey) }}
                   </li>
                   <li v-for="(childItem, childIndex) in item.children" :key="childIndex" :class="style.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })" data-part="child-item">

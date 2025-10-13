@@ -2,7 +2,7 @@
 import type { SelectProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const value = ref('')
+const value = ref('Apple')
 
 const options = [
   ['Apple', 'Banana', 'Blueberry', 'Grapes', 'Pineapple'],
@@ -36,9 +36,11 @@ const controls: ControlItems<SelectProps<typeof options>> = [
       <USelect v-model="value" v-bind="attrs" :options="options" trailing-icon="i-mdi-chevron-double-down" />
       <USelect v-model="value" v-bind="attrs" leading-icon="i-carbon-search" :options="options" />
       <USelect v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :options="options" />
+      <USelect v-model="value" v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100' }" :options="options" />
+
       <USelect v-model="value" v-bind="attrs" :options="options">
         <template #default>
-          <Placeholder class="me-auto" label="#default" />
+          <Placeholder class="mx-auto" label="#default" />
         </template>
         <template #leading>
           <Placeholder label="#leading" />
@@ -52,7 +54,7 @@ const controls: ControlItems<SelectProps<typeof options>> = [
       </USelect>
       <USelect v-model="value" v-bind="attrs" :options="options">
         <template #default>
-          <Placeholder class="me-auto" label="#default" />
+          <Placeholder class="mx-auto" label="#default" />
         </template>
         <template #leading>
           <Placeholder label="#leading" />
