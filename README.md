@@ -12,79 +12,17 @@ https://byyuurin-ui.netlify.app/
 
 ## Installation
 
-```ssh
-pnpm i -D unocss @unocss/reset @byyuurin/ui
+<details>
+<summary>Nuxt</summary>
+
+### Install dependencies
+
+```sh
+pnpm i -D @unocss/nuxt
+pnpm i @byyuurin/ui
 ```
 
-icons
-
-```ssh
-pnpm i -D @iconify-json/[the-collection-you-want]
-```
-
-## Setup
-
-### UnoCSS
-
-```ts
-// uno.config.ts
-import { preset as ui } from '@byyuurin/ui/unocss'
-import { defineConfig, presetWind4 } from 'unocss'
-
-export default defineConfig({
-  presets: [
-    presetWind4(),
-    ui({
-      radius: '0rem', // optional
-      radiusBox: '0rem', // optional
-      radiusButton: '0rem', // optional
-      radiusCheckbox: '0rem', // optional
-      radiusRadio: '0rem', // optional
-      radiusSwitch: '0rem', // optional
-      radiusTabs: '0rem', // optional
-      cb: '#1f2937', // optional
-      cp: '#1f2937', // optional
-      cx: '#ffffff', // optional
-    }),
-  ],
-})
-```
-
-New Rules
-
-- `ui-[color]`
-- `bg-soft-[color]`
-- `bg-soft-[color]/[mix-ratio]`
-
-### Vite
-
-```ts
-// vite.config.ts
-
-import UI from '@byyuurin/ui/vite'
-import Vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [
-    UnoCSS(),
-    Vue(),
-    UI({
-      prefix: 'U', // optional
-      autoImport: {
-        dts: 'src/typed-imports.d.ts',
-        imports: ['vue'],
-      },
-      components: {
-        dts: 'src/typed-components.d.ts',
-      },
-    }),
-  ],
-})
-```
-
-### Nuxt
+### Nuxt setup
 
 ```ts
 // nuxt.config.ts
@@ -94,14 +32,184 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@byyuurin/ui/nuxt',
   ],
-  css: [
-    '@unocss/reset/tailwind.css',
-  ],
   ui: {
-    prefix: 'U', // optional
+    // prefix: 'U',
+    // colorMode: true,
+    // theme: {
+    //   colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+    //   transitions: true,
+    //   defaultVariants: {
+    //     color: 'primary',
+    //     size: 'md',
+    //   },
+    // },
   },
 })
 ```
+
+### UnoCSS setup
+
+```ts
+// uno.config.ts
+import { createUnoPreset } from '@byyuurin/ui/unocss'
+import { defineConfig, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    createUnoPreset({
+      colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+    }),
+  ],
+})
+```
+
+> [!IMPORTANT]
+> The preset colors configuration must be the same as your nuxt configuration
+
+</details>
+
+<details>
+  <summary>Vue</summary>
+
+### Install dependencies
+
+```sh
+pnpm i -D unocss
+pnpm i @byyuurin/ui
+```
+
+Create `ui.config.ts` file for unified management of UI settings:
+
+```ts
+// @unocss-include
+import { setup } from '@byyuurin/ui/setup'
+
+export default setup({
+  // prefix: 'U',
+  // autoImport: {
+  //   dts: 'src/typed-imports.d.ts',
+  //   imports: ['vue'],
+  // },
+  // components: {
+  //   dts: 'src/typed-components.d.ts',
+  // },
+  // colorMode: true,
+  // theme: {
+  //   colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+  //   transitions: true,
+  //   defaultVariants: {
+  //     color: 'primary',
+  //     size: 'md',
+  //   },
+  // },
+  // ui: {
+  //   colors: {
+  //     primary: 'green',
+  //     secondary: 'blue',
+  //     success: 'green',
+  //     info: 'blue',
+  //     warning: 'yellow',
+  //     error: 'red',
+  //     neutral: 'slate',
+  //   },
+  //   icons: {
+  //     close: 'i-lucide-x',
+  //     loading: 'i-lucide-loader-circle',
+  //     check: 'i-lucide-check',
+  //     chevronUp: 'i-lucide-chevron-up',
+  //     chevronDown: 'i-lucide-chevron-down',
+  //     chevronLeft: 'i-lucide-chevron-left',
+  //     chevronRight: 'i-lucide-chevron-right',
+  //     chevronDoubleLeft: 'i-lucide-chevrons-left',
+  //     chevronDoubleRight: 'i-lucide-chevrons-right',
+  //     ellipsis: 'i-lucide-ellipsis',
+  //     plus: 'i-lucide-plus',
+  //     minus: 'i-lucide-minus',
+  //     external: 'i-lucide-arrow-up-right',
+  //   },
+  // },
+})
+```
+
+> [!IMPORTANT]
+> Add `// @unocss-include` to add ui.config.ts to unocss scan files
+
+> [!NOTE]
+> Internally relies on custom alias to resolve the theme types. If you're using TypeScript, you should add an alias to your tsconfig to enable auto-completion in your ui.config.ts.
+
+```jsonc
+// tsconfig.node.json
+
+{
+  "compilerOptions": {
+    "paths": {
+      "#build/ui": [
+        "./node_modules/@byyuurin/ui/.nuxt/ui"
+      ]
+    }
+  }
+}
+```
+
+### Vite setup
+
+```ts
+// vite.config.ts
+import Vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
+import ui from './ui.config'
+
+export default defineConfig({
+  plugins: [
+    UnoCSS(),
+    Vue(),
+    ui.vite(),
+  ],
+})
+```
+
+### UnoCSS setup
+
+```ts
+// uno.config.ts
+import { defineConfig, presetWind4 } from 'unocss'
+import ui from './ui.config'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    ui.uno(),
+  ],
+})
+```
+
+### Install Vue plugin
+
+```ts
+// src/main.ts
+import 'uno.css'
+
+import ui from '@byyuurin/ui/vue-plugin'
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import App from './App.vue'
+
+const app = createApp(App)
+
+const router = createRouter({
+  routes: [],
+  history: createWebHistory(),
+})
+
+app.use(ui)
+app.use(router)
+
+app.mount('#app')
+```
+
+</details>
 
 ## Credits
 

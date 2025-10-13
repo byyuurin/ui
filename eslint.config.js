@@ -30,6 +30,15 @@ export default byyuurin(
   }),
   {
     files: [
+      'playground/vue/tsconfig.json',
+      'playground/vue/tsconfig.*.json',
+    ],
+    rules: {
+      'jsonc/sort-keys': 'off',
+    },
+  },
+  {
+    files: [
       'src/runtime/components/Calendar.vue',
       'src/runtime/components/DropdownMenuContent.vue',
       'src/runtime/components/Popover.vue',

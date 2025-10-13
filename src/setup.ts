@@ -17,10 +17,7 @@ export type AppConfigUI<Colors extends string = VariantsColor> = {
       neutral?: NeutralColor | (string & {})
     }
   icons?: Partial<AppConfigIcons>
-} & {
-  // FIXME: lose ui types
-  components?: ComponentStyle<typeof ui>
-}
+} & ComponentStyle<typeof ui>
 
 interface UIConfig<Color extends string = VariantsColor> extends Omit<ViteUIOptions, 'theme' | 'ui'> {
   theme?: {
