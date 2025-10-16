@@ -87,16 +87,16 @@ export interface SelectProps<
    */
   portal?: boolean
   /**
-   * When `options` is an array of objects, select the field to use as the value.
+   * When `items` is an array of objects, select the field to use as the value.
    * @default "value"
    */
   valueKey?: VK
   /**
-   * When `options` is an array of objects, select the field to use as the label.
+   * When `items` is an array of objects, select the field to use as the label.
    * @default "label"
    */
   labelKey?: VK
-  options?: T
+  items?: T
   /** The value of the Select when initially rendered. Use when you do not need to control the state of the Select. */
   defaultValue?: GetModelValue<T, VK, M> | null
   /** The controlled value of the Select. Can be bind as `v-model`. */
@@ -164,8 +164,8 @@ const style = computed(() => {
 })
 
 const groups = computed<SelectItem[][]>(
-  () => props.options?.length
-    ? isArrayOfArray(props.options) ? props.options : [props.options]
+  () => props.items?.length
+    ? isArrayOfArray(props.items) ? props.items : [props.items]
     : [],
 )
 

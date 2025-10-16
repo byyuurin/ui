@@ -47,4 +47,13 @@ export default byyuurin(
       'vue/component-name-in-template-casing': 'off',
     },
   },
+  {
+    files: [
+      'src/runtime/components/Checkbox.vue',
+      'src/runtime/components/Drawer.vue',
+    ],
+    rules: {
+      'vue/no-template-shadow': 'off',
+    },
+  },
 )

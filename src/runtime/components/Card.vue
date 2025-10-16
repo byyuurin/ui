@@ -3,14 +3,15 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/card'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface CardSlots {
-  default?: (props?: {}) => any
-  content?: (props?: {}) => any
-  header?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  footer?: (props?: {}) => any
+  default: StaticSlot
+  content: StaticSlot
+  header: StaticSlot
+  title: StaticSlot
+  description: StaticSlot
+  footer: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -21,6 +22,7 @@ export interface CardProps extends ComponentBaseProps {
    * @default "div"
    */
   as?: PrimitiveProps['as']
+  /** @default "outline" */
   variant?: ThemeVariants['variant']
   title?: string
   description?: string
@@ -34,29 +36,29 @@ import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { cv, merge } from '../utils/style'
 
-const props = withDefaults(defineProps<CardProps>(), {})
+const props = defineProps<CardProps>()
 const slots = defineSlots<CardSlots>()
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.card))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.card))
+  return styler(props)
 })
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
+  <Primitive :as="props.as" :class="ui.root({ class: [props.class, props.ui?.root] })" data-part="root">
     <slot name="content">
       <div
         v-if="slots.header || props.title || slots.title || props.description || slots.description "
-        :class="style.header({ class: props.ui?.header })"
+        :class="ui.header({ class: props.ui?.header })"
         data-part="header"
       >
         <slot name="header">
           <Primitive
             v-if="props.title || slots.title"
-            :as="slots.title ? undefined : 'h2'"
-            :class="style.title({ class: props.ui?.title })"
+            :as="!!slots.title ? undefined : 'h2'"
+            :class="ui.title({ class: props.ui?.title })"
             data-part="title"
           >
             <slot name="title">
@@ -65,9 +67,9 @@ const style = computed(() => {
           </Primitive>
           <Primitive
             v-if="props.description || slots.description"
-            :as="slots.description ? undefined : 'p'"
+            :as="!!slots.description ? undefined : 'p'"
             :as-child="!!slots.description"
-            :class="style.description({ class: props.ui?.description })"
+            :class="ui.description({ class: props.ui?.description })"
             data-part="description"
           >
             <slot name="description">
@@ -77,11 +79,11 @@ const style = computed(() => {
         </slot>
       </div>
 
-      <div v-if="slots.default" :class="style.body({ class: props.ui?.body })" data-part="body">
+      <div v-if="!!slots.default" :class="ui.body({ class: props.ui?.body })" data-part="body">
         <slot></slot>
       </div>
 
-      <div v-if="slots.footer" :class="style.footer({ class: props.ui?.footer })" data-part="footer">
+      <div v-if="!!slots.footer" :class="ui.footer({ class: props.ui?.footer })" data-part="footer">
         <slot name="footer"></slot>
       </div>
     </slot>

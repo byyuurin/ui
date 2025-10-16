@@ -1,46 +1,53 @@
 <script lang="ts">
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { Messages, ToastProviderProps } from '../types'
-import type { Locale } from '../utils'
+import type { Locale, Messages, ToastProviderProps } from '../types'
 
 export interface AppSlots {
   default: (props?: {}) => any
 }
 
-export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
-  toaster?: ToastProviderProps
+export interface AppProps<T extends Messages = Messages> extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
+  toaster?: ToastProviderProps | null
   tooltip?: TooltipProviderProps
-  locale?: Locale<Messages>
+  locale?: Locale<T>
+  portal?: boolean | string | HTMLElement
 }
 </script>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Messages">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
 import { toRef, useId } from 'vue'
-import { provideLocaleContext } from '../composables/injections'
+import { provideLocaleContext, providePortalTarget } from '../composables/injections'
 import OverlayProvider from './OverlayProvider.vue'
 import ToastProvider from './ToastProvider.vue'
 
-const props = defineProps<AppProps>()
+const props = withDefaults(defineProps<AppProps<T>>(), {
+  portal: 'body',
+})
+
 defineSlots<AppSlots>()
 
 const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
 const tooltipProps = toRef(() => props.tooltip)
 const toastProviderProps = toRef(() => props.toaster)
-const locale = toRef(() => props.locale)
 
+const locale = toRef(() => props.locale)
 provideLocaleContext(locale)
+
+const portal = toRef(() => props.portal)
+providePortalTarget(portal)
 </script>
 
 <template>
-  <ConfigProvider :use-id="useId" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
+  <ConfigProvider :use-id="() => (useId() as string)" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
     <TooltipProvider v-bind="tooltipProps">
       <ToastProvider v-if="props.toaster !== null" v-bind="toastProviderProps">
         <slot></slot>
       </ToastProvider>
       <slot v-else></slot>
+
+      <OverlayProvider />
     </TooltipProvider>
-    <OverlayProvider />
   </ConfigProvider>
 </template>

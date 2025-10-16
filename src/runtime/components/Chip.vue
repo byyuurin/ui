@@ -3,14 +3,15 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/chip'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface ChipEmits {
   'update:show': [payload: boolean]
 }
 
 export interface ChipSlots {
-  default?: (props?: {}) => any
-  content?: (props?: {}) => any
+  default: StaticSlot
+  content: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -21,9 +22,13 @@ export interface ChipProps extends ComponentBaseProps {
    * @default "div"
    */
   as?: PrimitiveProps['as']
+  /** Display some text inside the chip. */
   text?: string | number
+  /** @default "md" */
   size?: ThemeVariants['size']
+  /** @default "primary" */
   color?: ThemeVariants['color']
+  /** @default "top-right" */
   position?: ThemeVariants['position']
   show?: boolean
   /** When `true`, keep the chip inside the component for rounded elements. */
@@ -35,42 +40,44 @@ export interface ChipProps extends ComponentBaseProps {
 </script>
 
 <script setup lang="ts">
+import { useVModel } from '@vueuse/core'
 import { Primitive, Slot } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { useAvatarGroup } from '../composables/useAvatarGroup'
 import { cv, merge } from '../utils/style'
 
-// defineOptions({
-//   inheritAttrs: false,
-// })
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<ChipProps>(), {
-  position: 'top-right',
+  show: true,
 })
 
-defineEmits<ChipEmits>()
+const emit = defineEmits<ChipEmits>()
 defineSlots<ChipSlots>()
 
-const show = defineModel<boolean>('show', { default: true })
+const show = useVModel(props, 'show', emit)
+
+const { size } = useAvatarGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.chip))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.chip))
+  return styler({ ...props, size: size.value })
 })
 </script>
 
 <template>
   <Primitive
     :as="props.as"
-    :class="style.root({ class: [props.ui?.root, props.class] })"
-    :data-part="$attrs['data-part'] ?? 'root'"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    data-part="root"
   >
     <Slot v-bind="$attrs">
       <slot></slot>
     </Slot>
 
-    <span v-if="show" :class="style.base({ class: props.ui?.base })" data-part="base">
+    <span v-if="show" :class="ui.base({ class: props.ui?.base })" data-part="base">
       <slot name="content">
         {{ props.text }}
       </slot>

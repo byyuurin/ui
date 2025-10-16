@@ -1,8 +1,8 @@
+import type { Translator } from '@byyuurin/ui-kit'
 import { createSharedComposable } from '@vueuse/core'
 import { computed, toValue } from 'vue'
 import localeDefault from '../locale/en'
 import { createTranslator } from '../utils'
-import type { Translator } from '../utils/translator'
 import { injectLocaleContext } from './injections'
 
 export const useLocale = createSharedComposable(() => {

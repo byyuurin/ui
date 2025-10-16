@@ -1,3 +1,5 @@
+export type { Locale, LocaleDirection } from '@byyuurin/ui-kit'
+
 export interface Messages {
   alert: {
     close: string
@@ -9,6 +11,7 @@ export interface Messages {
     nextMonth: string
   }
   carousel: {
+    dots: string
     prev: string
     next: string
     goto: string

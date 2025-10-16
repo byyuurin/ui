@@ -2,15 +2,21 @@
 import type { CollapsibleRootEmits, CollapsibleRootProps } from 'reka-ui'
 import theme from '#build/ui/collapsible'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface CollapsibleEmits extends CollapsibleRootEmits {}
 
 export interface CollapsibleSlots {
-  default?: (props: { open: boolean }) => any
-  content?: (props?: {}) => any
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot
 }
 
-export interface CollapsibleProps extends ComponentBaseProps, Pick<CollapsibleRootProps, 'as' | 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
+export interface CollapsibleProps extends ComponentBaseProps, Pick<CollapsibleRootProps, 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: CollapsibleRootProps['as']
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
@@ -31,9 +37,9 @@ const slots = defineSlots<CollapsibleSlots>()
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'disabled', 'unmountOnHide'), emit)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.collapsible))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.collapsible))
+  return styler(props)
 })
 </script>
 
@@ -41,14 +47,14 @@ const style = computed(() => {
   <CollapsibleRoot
     v-slot="{ open }"
     v-bind="rootProps"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
   >
-    <CollapsibleTrigger v-if="slots.default" as-child>
+    <CollapsibleTrigger v-if="!!slots.default" as-child>
       <slot :open="open"></slot>
     </CollapsibleTrigger>
 
-    <CollapsibleContent :class="style.content({ class: props.ui?.content })" data-part="content">
+    <CollapsibleContent :class="ui.content({ class: props.ui?.content })" data-part="content">
       <slot name="content"></slot>
     </CollapsibleContent>
   </CollapsibleRoot>

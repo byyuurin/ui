@@ -9,7 +9,7 @@ export function pickLinkProps(
   const ariaKeys = keys.filter((key) => key.startsWith('aria-')) as Array<`aria-${string}`>
   const dataKeys = keys.filter((key) => key.startsWith('data-')) as Array<`data-${string}`>
 
-  const pickProps: (keyof LinkProps | 'title')[] = [
+  const pickProps: (keyof LinkProps | 'title' | 'onClick')[] = [
     'active',
     'activeClass',
     'ariaCurrentValue',
@@ -33,7 +33,8 @@ export function pickLinkProps(
     'to',
     'type',
     'title',
-  ]
+    'onClick',
+  ] as const
 
   return reactivePick(
     link,

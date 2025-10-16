@@ -14,14 +14,14 @@ const toasterAttrs = ref<Pick<Required<AppProps['toaster'] & object>, 'duration'
 
 <template>
   <UApp :locale="locale" :toaster="toasterAttrs">
-    <div class="absolute inset-0 overflow-hidden h-full flex flex-col">
+    <div class="absolute inset-0 overflow-hidden h-full flex flex-col text-default bg-default">
       <div class="p-2 px-5 flex justify-between items-end gap-1 bg-default border-b border-default">
-        <h1 class="text-2xl text-default font-semibold">
+        <h1 class="text-2xl font-semibold">
           @byyuurin/<span class="text-primary">ui</span>
         </h1>
 
         <UFieldGroup>
-          <USelect v-model="lang" variant="none" :options="Object.entries(locales).map(([value, { name }]) => ({ label: name, value }))" />
+          <USelect v-model="lang" variant="none" :items="Object.entries(locales).map(([value, { name }]) => ({ label: name, value }))" />
           <ThemePicker />
         </UFieldGroup>
       </div>

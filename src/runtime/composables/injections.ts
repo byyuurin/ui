@@ -1,9 +1,21 @@
 import type { UseEventBusReturn } from '@vueuse/core'
 import type { ComputedRef, MaybeRefOrGetter, Ref } from 'vue'
-import type { AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormFieldProps, Messages } from '../types'
+import type { AppProps, AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormFieldProps, Locale, Messages } from '../types'
 import type { GetObjectField } from '../types/utils'
-import type { Locale } from '../utils'
 import { defineInjection } from '../utils'
+
+// App
+export const {
+  InjectionKey: InjectionKeyPortalTarget,
+  inject: injectPortalTarget,
+  provide: providePortalTarget,
+} = defineInjection<Ref<AppProps['portal']>>('ui.portal-target')
+
+export const {
+  InjectionKey: InjectionKeyLocaleContext,
+  inject: injectLocaleContext,
+  provide: provideLocaleContext,
+} = defineInjection<MaybeRefOrGetter<Locale<Messages> | undefined>>('ui.locale-context')
 
 // AvatarGroup
 export type AvatarGroupProvideValue = Pick<AvatarGroupProps, 'size'>
@@ -81,10 +93,3 @@ export const {
   inject: injectFormErrors,
   provide: provideFormErrors,
 } = defineInjection<Ref<FormErrorWithId[]> | null>('ui.form-errors', null)
-
-// Locale
-export const {
-  InjectionKey: InjectionKeyLocaleContext,
-  inject: injectLocaleContext,
-  provide: provideLocaleContext,
-} = defineInjection<MaybeRefOrGetter<Locale<Messages> | undefined>>('ui.locale-context')

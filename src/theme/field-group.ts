@@ -18,7 +18,7 @@ export default ct(/* @unocss-include */{
 })
 
 export const fieldGroupVariant = {
-  groupOrientation: {
+  fieldGroup: {
     horizontal: {
       base: 'not-only-child:first:rounded-e-none not-only-child:last:rounded-s-none not-last:not-first:rounded-none focus-visible:z-[1]',
     },
@@ -29,7 +29,7 @@ export const fieldGroupVariant = {
 }
 
 export const fieldGroupVariantWithRoot = {
-  groupOrientation: {
+  fieldGroup: {
     horizontal: {
       root: 'group has-focus-visible:z-[1]',
       base: 'group-not-only-child:group-first:rounded-e-none group-not-only-child:group-last:rounded-s-none group-not-last:group-not-first:rounded-none',

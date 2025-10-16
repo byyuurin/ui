@@ -5,6 +5,8 @@ import type { ControlItems } from './ExampleView.vue'
 const value = ref<CheckboxProps['defaultValue']>('indeterminate')
 
 const controls: ControlItems<CheckboxProps> = [
+  { prop: 'variant', value: 'list', options: ['list', 'card'] },
+  { prop: 'indicator', value: 'start', options: ['start', 'end', 'hidden'] },
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'label', value: '', placeholder: 'Label' },

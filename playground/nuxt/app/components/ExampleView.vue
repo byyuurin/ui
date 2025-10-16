@@ -89,7 +89,7 @@ onMounted(() => {
             <USelect
               v-if="item?.type === 'select' || item?.options"
               v-model="attrs[item!.prop]"
-              :options="((item.options ?? []) as SelectItem[])"
+              :items="((item.options ?? []) as SelectItem[])"
               :placeholder="item.placeholder"
               :multiple="item.type === 'multiple'"
             />

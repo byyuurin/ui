@@ -3,9 +3,10 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/avatar-group'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface AvatarGroupSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -76,17 +77,17 @@ const hiddenCount = computed(() => {
 })
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.avatarGroup))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.avatarGroup))
+  return styler(props)
 })
 
 provideAvatarGroup(computed(() => props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" :class="style.base({ class: props.ui?.base })" data-part="base" />
-    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" :class="style.base({ class: props.ui?.base })" data-part="base" />
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" :class="ui.base({ class: props.ui?.base })" data-part="base" />
+    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" :class="ui.base({ class: props.ui?.base })" data-part="base" />
   </Primitive>
 </template>

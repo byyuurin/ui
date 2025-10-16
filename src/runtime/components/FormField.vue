@@ -124,9 +124,9 @@ const style = computed(() => {
           {{ error }}
         </slot>
       </p>
-      <p v-else :class="style.help({ class: props.ui?.help })" data-part="help">
+      <p v-else-if="props.help || slots.help" :class="style.help({ class: props.ui?.help })" data-part="help">
         <slot name="help" :help="props.help">
-          {{ help }}
+          {{ props.help }}
         </slot>
       </p>
     </div>

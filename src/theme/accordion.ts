@@ -6,7 +6,7 @@ export default ct({
     root: 'w-full',
     item: 'border-b border-default last:border-b-0',
     header: 'flex',
-    trigger: 'group flex-1 flex items-center gap-1.5 font-medium text-sm py-3.5 focus-visible:outline-primary min-w-0',
+    trigger: 'group flex-1 flex items-center gap-1.5 font-medium text-sm py-3.5 focus-visible:outline-primary min-w-0 cursor-pointer',
     content: [
       'overflow-hidden focus:outline-none',
       'data-[state=open]:animate-[accordion-down_200ms_ease-out]',

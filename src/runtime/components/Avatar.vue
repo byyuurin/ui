@@ -2,10 +2,11 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { AvatarRootProps } from 'reka-ui'
 import theme from '#build/ui/avatar'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface AvatarSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -18,8 +19,9 @@ export interface AvatarProps extends ComponentBaseProps {
   as?: AvatarRootProps['as']
   src?: string
   alt?: string
-  icon?: string
+  icon?: IconProps['name']
   text?: string
+  /** @default "md" */
   size?: ThemeVariants['size']
   style?: string | HTMLElement['style']
   ui?: ComponentUIProps<typeof theme>
@@ -36,12 +38,11 @@ import Icon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<AvatarProps>(), {
-  src: '',
-})
+const props = defineProps<AvatarProps>()
+
+const fallback = computed(() => props.text || (props.alt || '').split(' ').map((word) => word.charAt(0)).join('').slice(0, 2))
 
 const { size } = useAvatarGroup(props)
-const fallback = computed(() => props.text || (props.alt || '').split(' ').map((word) => word.charAt(0)).join('').slice(0, 2))
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const style = computed(() => {
@@ -58,15 +59,21 @@ watch(() => props.src, () => {
   if (error.value)
     error.value = false
 })
+
+function onError() {
+  error.value = true
+}
 </script>
 
 <template>
   <AvatarRoot :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" :data-part="$attrs['data-part'] ?? 'root'" :style="props.style">
     <AvatarImage
+      v-if="props.src && !error"
       :src="props.src"
       :alt="props.alt"
       :class="style.image({ class: props.ui?.image })"
       data-part="image"
+      @error="onError"
     />
 
     <AvatarFallback as-child>

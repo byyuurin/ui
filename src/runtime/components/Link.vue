@@ -101,6 +101,8 @@ defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<LinkProps>(), {
   as: 'button',
   type: 'button',
+  ariaCurrentValue: 'page',
+  active: undefined,
 })
 defineSlots<LinkSlots>()
 
@@ -210,7 +212,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
 
   const link = merge(theme, appConfig.ui.link)
 
-  const ui = cv({
+  const styler = cv({
     ...link,
     variants: {
       ...link.variants,
@@ -224,7 +226,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
     },
   })
 
-  return ui({
+  return styler({
     ...props,
     active,
   }).base()

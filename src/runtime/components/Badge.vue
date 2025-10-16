@@ -4,11 +4,12 @@ import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/badge'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface BadgeSlots {
-  leading?: (props?: {}) => any
-  default?: (props?: {}) => any
-  trailing?: (props?: {}) => any
+  leading: StaticSlot
+  default: StaticSlot
+  trailing: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -19,10 +20,15 @@ export interface BadgeProps extends ComponentBaseProps, Omit<UseComponentIconsPr
    * @default "div"
    */
   as?: PrimitiveProps['as']
+  /** @default "solid" */
   variant?: ThemeVariants['variant']
+  /** @default "md" */
   size?: ThemeVariants['size']
+  /** @default "primary" */
   color?: ThemeVariants['color']
-  label?: string
+  /** Render the badge with equal padding on all sides. */
+  square?: boolean
+  label?: string | number
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
@@ -38,7 +44,7 @@ import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<BadgeProps>(), {
-  variant: 'solid',
+  as: 'span',
 })
 
 const slots = defineSlots<BadgeSlots>()
@@ -47,42 +53,48 @@ const { size, orientation } = useFieldGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.badge))
-  return ui({
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.badge))
+  return styler({
     ...props,
     size: size.value,
-    groupOrientation: orientation.value,
+    fieldGroup: orientation.value,
+    square: props.square || (!slots.default && !props.label),
   })
 })
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
+  <Primitive :as="props.as" :class="ui.base({ class: [props.ui?.base, props.class] })" data-part="base">
     <slot name="leading">
       <Icon
         v-if="isLeading && leadingIconName"
         :name="leadingIconName"
-        :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
+        :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
         data-part="leading-icon"
       />
       <Avatar
         v-else-if="props.avatar"
-        :size="((props.ui?.leadingAvatarSize || style.leadingAvatarSize()) as AvatarProps['size'])"
+        :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
         v-bind="props.avatar"
-        :class="style.leadingAvatar({ class: props.ui?.leadingAvatar })"
+        :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
         data-part="leading-avatar"
       />
     </slot>
 
     <slot>
-      <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
+      <span v-if="props.label != null" :class="ui.label({ class: props.ui?.label })" data-part="label">
         {{ props.label }}
       </span>
     </slot>
 
     <slot name="trailing">
-      <Icon v-if="isTrailing && trailingIconName" :name="trailingIconName" :class="style.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />
+      <Icon
+        v-if="isTrailing && trailingIconName"
+        :name="trailingIconName"
+        :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+        data-part="trailing-icon"
+      />
     </slot>
   </Primitive>
 </template>

@@ -3,19 +3,18 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DateValue } from '@internationalized/date'
 import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui'
 import theme from '#build/ui/calendar'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface CalendarEmits<R extends boolean, M extends boolean> extends Omit<CalendarRootEmits & RangeCalendarRootEmits, 'update:modelValue'> {
   'update:modelValue': [date: CalendarModelValue<R, M>]
 }
 
 export interface CalendarSlots {
-  'heading'?: (props: { value: string }) => any
-  'day'?: (props: Pick<CalendarCellTriggerProps, 'day'>) => any
-  'week-day'?: (props: { day: string }) => any
+  'heading': StaticSlot<{ value: string }>
+  'day': StaticSlot<Pick<CalendarCellTriggerProps, 'day'>>
+  'week-day': StaticSlot<{ day: string }>
 }
-
-type ThemeVariants = VariantProps<typeof theme>
 
 type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
   ? DateRange
@@ -30,27 +29,50 @@ type CalendarModelValue<R extends boolean = false, M extends boolean = false> = 
 type _CalendarRootProps = Omit<CalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
 type _RangeCalendarRootProps = Omit<RangeCalendarRootProps, 'as' | 'asChild' | 'modelValue' | 'defaultValue' | 'dir' | 'locale' | 'calendarLabel' | 'multiple'>
 
+type ThemeVariants = VariantProps<typeof theme>
+
 export interface CalendarProps<R extends boolean = false, M extends boolean = false> extends ComponentBaseProps, _CalendarRootProps, _RangeCalendarRootProps {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: CalendarRootProps['as']
   /**
    * The icon to use for the next year control.
    * @default app.icons.chevronDoubleRight
    */
-  nextYearIcon?: string
+  nextYearIcon?: IconProps['name']
+  /**
+   * Configure the next year button.
+   */
+  nextYear?: ButtonProps
   /**
    * The icon to use for the next month control.
    * @default app.icons.chevronRight
    */
-  nextMonthIcon?: string
+  nextMonthIcon?: IconProps['name']
+  /**
+   * Configure the next month button.
+   */
+  nextMonth?: ButtonProps
   /**
    * The icon to use for the previous year control.
    * @default app.icons.chevronDoubleLeft
    */
-  prevYearIcon?: string
+  prevYearIcon?: IconProps['name']
+  /**
+   * Configure the prev year button.
+   */
+  prevYear?: ButtonProps
   /**
    * The icon to use for the previous month control.
    * @default app.icons.chevronLeft
    */
-  prevMonthIcon?: string
+  prevMonthIcon?: IconProps['name']
+  /**
+   * Configure the prev month button.
+   */
+  prevMonth?: ButtonProps
   /**
    * @default "md"
    */
@@ -95,9 +117,9 @@ const { code: locale, dir, t } = useLocale()
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.calendar))
-  return ui({
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.calendar))
+  return styler({
     ...props,
     multipleMonths: props.numberOfMonths > 1,
   })
@@ -126,63 +148,63 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
     :default-value="(props.defaultValue as DateValue)"
     :locale="locale"
     :dir="dir"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.class, props.ui?.root] })"
     data-part="root"
   >
-    <Calendar.Header :class="style.header({ class: props.ui?.header })" data-part="header">
+    <Calendar.Header :class="ui.header({ class: props.ui?.header })" data-part="header">
       <Calendar.Prev v-if="props.yearControls" :prev-page="date => paginateYear(date, -1)" :aria-label="t('calendar.prevYear')" as-child>
-        <Button :icon="prevYearIcon" :size="props.size" color="neutral" variant="ghost" />
+        <Button :icon="prevYearIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.prevYear" />
       </Calendar.Prev>
       <Calendar.Prev v-if="props.monthControls" :aria-label="t('calendar.prevMonth')" as-child>
-        <Button :icon="prevMonthIcon" :size="props.size" color="neutral" variant="ghost" />
+        <Button :icon="prevMonthIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.prevMonth" />
       </Calendar.Prev>
 
-      <Calendar.Heading v-slot="{ headingValue }" :class="style.heading({ class: props.ui?.heading })" data-part="heading">
+      <Calendar.Heading v-slot="{ headingValue }" :class="ui.heading({ class: props.ui?.heading })" data-part="heading">
         <slot name="heading" :value="headingValue">
           {{ headingValue }}
         </slot>
       </Calendar.Heading>
       <Calendar.Next v-if="props.monthControls" :aria-label="t('calendar.nextMonth')" as-child>
-        <Button :icon="nextMonthIcon" :size="props.size" color="neutral" variant="ghost" />
+        <Button :icon="nextMonthIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.nextMonth" />
       </Calendar.Next>
       <Calendar.Next v-if="props.yearControls" :next-page="(date) => paginateYear(date, 1)" :aria-label="t('calendar.nextYear')" as-child>
-        <Button :icon="nextYearIcon" :size="props.size" color="neutral" variant="ghost" />
+        <Button :icon="nextYearIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.nextYear" />
       </Calendar.Next>
     </Calendar.Header>
-    <div :class="style.body({ class: props.ui?.body })" data-part="body">
+    <div :class="ui.body({ class: props.ui?.body })" data-part="body">
       <Calendar.Grid
         v-for="month in grid"
         :key="month.value.toString()"
-        :class="style.grid({ class: props.ui?.grid })"
+        :class="ui.grid({ class: props.ui?.grid })"
         data-part="grid"
       >
         <Calendar.GridHead>
-          <Calendar.GridRow :class="style.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="grid-week-day-row">
-            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="style.headCell({ class: props.ui?.headCell })" data-part="head-cell">
+          <Calendar.GridRow :class="ui.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="grid-week-day-row">
+            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="ui.headCell({ class: props.ui?.headCell })" data-part="head-cell">
               <slot name="week-day" :day="day">
                 {{ day }}
               </slot>
             </Calendar.HeadCell>
           </Calendar.GridRow>
         </Calendar.GridHead>
-        <Calendar.GridBody :class="style.gridBody({ class: props.ui?.gridBody })" data-part="grid-body">
+        <Calendar.GridBody :class="ui.gridBody({ class: props.ui?.gridBody })" data-part="grid-body">
           <Calendar.GridRow
             v-for="(weekDates, index) in month.rows"
             :key="`weekDates-${index}`"
-            :class="style.gridRow({ class: props.ui?.gridRow })"
+            :class="ui.gridRow({ class: props.ui?.gridRow })"
             data-part="grid-row"
           >
             <Calendar.Cell
               v-for="weekDate in weekDates"
               :key="weekDate.toString()"
               :date="weekDate"
-              :class="style.cell({ class: props.ui?.cell })"
+              :class="ui.cell({ class: props.ui?.cell })"
               data-part="cell"
             >
               <Calendar.CellTrigger
                 :day="weekDate"
                 :month="month.value"
-                :class="style.cellTrigger({ class: props.ui?.cellTrigger })"
+                :class="ui.cellTrigger({ class: props.ui?.cellTrigger })"
                 data-part="cell-trigger"
               >
                 <slot name="day" :day="weekDate">

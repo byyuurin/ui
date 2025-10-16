@@ -14,6 +14,7 @@ export default defineLocale({
       nextMonth: '下個月',
     },
     carousel: {
+      dots: '選擇要顯示的投影片',
       prev: '上一頁',
       next: '下一頁',
       goto: '跳轉到第 {page} 頁',

@@ -6,7 +6,6 @@ import type { Messages } from '../types'
 export * from './form'
 export * from './link'
 export * from './vue'
-export type { Locale } from '@byyuurin/ui-kit'
 export { createTranslator, get, omit, pick, set } from '@byyuurin/ui-kit'
 export { looseToNumber } from '@vue/shared'
 
