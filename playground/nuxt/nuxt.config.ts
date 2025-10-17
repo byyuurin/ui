@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
-    '@byyuurin/ui',
+    '../../src/module',
   ],
 
   devtools: { enabled: true },
