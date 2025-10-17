@@ -11,7 +11,6 @@ import { neutralColors } from './defaults'
 import type { ModuleOptions } from './module'
 import type { AppConfigUI } from './setup'
 import * as theme from './theme'
-import { createUnoPreset, shortcutsCode } from './unocss'
 
 export function buildTemplates(options: ModuleOptions) {
   return Object.entries(theme).reduce((acc, [key, component]) => {
@@ -73,28 +72,12 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
         const { config } = await loadConfig()
         const configPath = await findPath(['uno.config', 'unocss.config'], { extensions: ['.ts', '.mjs'] })
 
-        const { preflights, ...unoPreset } = createUnoPreset(options.theme)
-        let content = JSON.stringify({ ...unoPreset, shortcuts: [] }, null, 2)
-
-        content = content.replace('"shortcuts": []', `"shortcuts": ${shortcutsCode}`)
-
-        content = `${content.slice(0, -2)},\n  "preflights": [
-    ${preflights.map(({ getCSS }) => `{ getCSS: () => \`${getCSS()}\` }`).join(',\n    ')}
-    ]\n}`
-
-        const result = [
-          `import { createUnoMerge } from '@byyuurin/uno-merge'`,
-          `import type { Preset, UserConfig } from '@unocss/core'`,
-          `import { mergeConfigs } from '@unocss/core'`,
-          `import type { Theme } from '@unocss/preset-wind4'`,
-          `import { presetWind4 } from '@unocss/preset-wind4'`,
-          `import { parseColor } from '@unocss/preset-wind4/utils'`,
-        ]
+        const userConfigSource: string[] = []
 
         if (configPath) {
           // only works with Nuxt now
           if (nuxt && isDev) {
-            result.push(
+            userConfigSource.push(
               `import config from ${JSON.stringify(configPath.replace(/\.ts$/, ''))}`,
               ``,
               `const userConfig: UserConfig = { theme: config.theme, shortcuts: config.shortcuts }`,
@@ -116,36 +99,36 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
               })
             }
 
-            result.push(
+            userConfigSource.push(
               ``,
               `const userConfig: UserConfig = ${JSON.stringify({ theme: config.theme, shortcuts }, null, 2)}`,
             )
           }
         }
         else {
-          result.push(
+          userConfigSource.push(
             ``,
             `const userConfig: UserConfig = {}`,
           )
         }
 
-        result.push(
-          ``,
-          `const ui = ()=> (${content} satisfies Preset<Theme>)`,
-          ``,
-          `export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
+        return `import { createUnoMerge } from '@byyuurin/uno-merge'
+import { createUnoPreset } from '@byyuurin/ui/unocss'
+import type { UserConfig } from '@unocss/core'
+import { mergeConfigs } from '@unocss/core'
+import { presetWind4 } from '@unocss/preset-wind4'
+${userConfigSource.join('\n')}
+
+export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
   {
     presets: [
       presetWind4(),
-      ui()
+      createUnoPreset(${JSON.stringify({ colors: options.theme?.colors })})
     ]
   },
   userConfig,
 ]))
-`,
-        )
-
-        return result.join('\n')
+`
       },
     })
   }

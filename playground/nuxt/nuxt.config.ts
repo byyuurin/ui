@@ -1,8 +1,10 @@
+import { resolve } from 'node:path'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
-    '../../src/module',
+    '@byyuurin/ui',
   ],
 
   devtools: { enabled: true },
@@ -14,6 +16,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
 
   vite: {
+    resolve: {
+      alias: {
+        '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
+      },
+    },
     optimizeDeps: {
       // prevents reloading page when navigating between components
       include: [
