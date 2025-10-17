@@ -13,6 +13,7 @@ const controls: ControlItems<SliderProps> = [
   { prop: 'max', value: 100 },
   { prop: 'step', value: 1 },
   { prop: 'minStepsBetweenThumbs', value: 0 },
+  { prop: 'tooltip', value: false },
   { prop: 'inverted', value: false },
   { prop: 'disabled', value: false },
 ]

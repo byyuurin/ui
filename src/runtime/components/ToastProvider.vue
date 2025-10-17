@@ -2,21 +2,20 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { ToastProviderProps as RekaToastProviderProps } from 'reka-ui'
 import theme from '#build/ui/toast-provider'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig, ToastProps } from '../types'
-
-export interface ToastState extends Omit<ToastProps, 'defaultOpen'> {
-  id: string | number
-  onClick?: (toast: ToastState) => void
-}
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface ToasterSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ToastProviderProps extends ComponentBaseProps, Omit<RekaToastProviderProps, 'swipeDirection'> {
-  /** @default "bottom-right" */
+  /**
+   * The position on the screen to display the toasts.
+   * @default "bottom-right"
+   */
   position?: ThemeVariants['position']
   /**
    * Expand the toasts to show multiple toasts at once.
@@ -24,35 +23,50 @@ export interface ToastProviderProps extends ComponentBaseProps, Omit<RekaToastPr
    */
   expand?: boolean
   /**
+   * Whether to show the progress bar on all toasts.
+   * @default true
+   */
+  progress?: boolean
+  /**
    * Render the toaster in a portal.
    * @default true
    */
-  portal?: boolean
+  portal?: boolean | string | HTMLElement
+  /**
+   * Maximum number of toasts to display at once.
+   * @default 5
+   */
+  max?: number
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
-import { ToastPortal, ToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
-import { computed, ref } from 'vue'
+import { ToastPortal, ToastProvider as RekaToastProvider, ToastViewport, useForwardProps } from 'reka-ui'
+import { computed, ref, toRef } from 'vue'
 import { useAppConfig } from '#imports'
+import { provideToastMax } from '../composables/injections'
+import { usePortal } from '../composables/usePortal'
 import { useToast } from '../composables/useToast'
 import { omit } from '../utils'
 import { cv, merge } from '../utils/style'
 import Toast from './Toast.vue'
 
 const props = withDefaults(defineProps<ToastProviderProps>(), {
-  position: 'bottom-right',
   expand: true,
   portal: true,
   duration: 5000,
+  progress: true,
+  max: 5,
 })
 defineSlots<ToasterSlots>()
 
 const providerProps = useForwardProps(reactivePick(props, 'duration', 'label', 'swipeThreshold'))
+const portalProps = usePortal(toRef(() => props.portal))
 
 const { toasts, remove } = useToast()
+provideToastMax(toRef(() => props.max))
 
 const swipeDirection = computed(() => {
   switch (props.position) {
@@ -68,15 +82,13 @@ const swipeDirection = computed(() => {
       return 'left'
   }
 
-  console.warn(`[ToastProvider] Unknown position "${props.position}"`)
-
   return 'right'
 })
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.toastProvider))
-  return ui({
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.toastProvider))
+  return styler({
     ...props,
     swipeDirection: swipeDirection.value,
   })
@@ -94,7 +106,7 @@ const expanded = computed(() => props.expand || hovered.value)
 
 const refs = ref<{ height: number }[]>([])
 
-const height = computed(() => refs.value.reduce((sum, { height }) => sum + height + 16, 0))
+const height = computed(() => refs.value.reduce((acc, { height }) => acc + height + 16, 0))
 const frontHeight = computed(() => refs.value[refs.value.length - 1]?.height || 0)
 
 function getOffset(index: number) {
@@ -103,14 +115,15 @@ function getOffset(index: number) {
 </script>
 
 <template>
-  <ToastProvider :swipe-direction="swipeDirection" v-bind="providerProps">
+  <RekaToastProvider :swipe-direction="swipeDirection" v-bind="providerProps">
     <slot></slot>
 
     <Toast
       v-for="(toast, index) of toasts"
       :key="toast.id"
       ref="refs"
-      v-bind="omit(toast, ['id'])"
+      :progress="props.progress"
+      v-bind="omit(toast, ['id', 'close'])"
       :data-expanded="expanded"
       :data-front="!expanded && index === toasts.length - 1"
       :style="{
@@ -121,16 +134,16 @@ function getOffset(index: number) {
         '--translate': expanded ? 'calc(var(--offset) * var(--translate-factor))' : 'calc(var(--before) * var(--gap))',
         '--transform': 'translateY(var(--translate)) scale(var(--scale))',
       }"
-      :class="style.base()"
+      :class="ui.base({ class: props.ui?.base })"
       data-part="base"
       @update:open="onUpdateOpen($event, toast.id)"
       @click="toast.onClick && toast.onClick(toast)"
     />
 
-    <ToastPortal :disabled="!portal">
+    <ToastPortal v-bind="portalProps">
       <ToastViewport
         :data-expanded="expanded"
-        :class="style.viewport({ class: [props.class, props.ui?.viewport] })"
+        :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
         data-part="viewport"
         :style="{
           '--scale-factor': '0.05',
@@ -143,7 +156,7 @@ function getOffset(index: number) {
         @mouseleave="hovered = false"
       />
     </ToastPortal>
-  </ToastProvider>
+  </RekaToastProvider>
 </template>
 
 <style>

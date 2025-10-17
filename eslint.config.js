@@ -51,6 +51,7 @@ export default byyuurin(
     files: [
       'src/runtime/components/Checkbox.vue',
       'src/runtime/components/Drawer.vue',
+      'src/runtime/components/Modal.vue',
     ],
     rules: {
       'vue/no-template-shadow': 'off',

@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { OverlayComponentState } from '../composables/useOverlay'
+import type { Overlay } from '../composables/useOverlay'
 import { useOverlay } from '../composables/useOverlay'
 
 const { overlays, unmount, close } = useOverlay()
 const mountedOverlays = computed(() => overlays.filter((overlay) => overlay.isMounted))
 
-function onOverlayUnmount(id: OverlayComponentState['id']) {
+function onAfterLeave(id: Overlay['id']) {
   close(id)
   unmount(id)
 }
 
-function onClose(id: OverlayComponentState['id'], value: any) {
+function onClose(id: Overlay['id'], value: any) {
   close(id, value)
 }
 </script>
@@ -22,8 +22,8 @@ function onClose(id: OverlayComponentState['id'], value: any) {
     v-for="overlay in mountedOverlays"
     :key="overlay.id"
     v-bind="overlay.props"
-    v-model:open="overlay.modelValue"
+    v-model:open="overlay.isOpen"
     @close="onClose(overlay.id, $event)"
-    @after-leave="onOverlayUnmount(overlay.id)"
+    @after-leave="onAfterLeave(overlay.id)"
   />
 </template>

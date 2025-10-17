@@ -11,6 +11,8 @@ export interface DrawerEmits extends DialogRootEmits {
   'close-prevent': []
 }
 
+type ThemeVariants = VariantProps<typeof theme>
+
 export interface DrawerSlots {
   default: StaticSlot<{ open: boolean }>
   content: StaticSlot<{ close: () => void }>
@@ -22,8 +24,6 @@ export interface DrawerSlots {
   footer: StaticSlot<{ close: () => void }>
 }
 
-type ThemeVariants = VariantProps<typeof theme>
-
 export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
   title?: string
   description?: string
@@ -34,7 +34,10 @@ export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
    * @default true
    */
   overlay?: boolean
-  /** @default true */
+  /**
+   * Animate the drawer when opening or closing.
+   * @default true
+   */
   transition?: boolean
   /**
    * The direction of the drawer.
@@ -90,7 +93,7 @@ const slots = defineSlots<DrawerSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emit)
 const portalProps = usePortal(toRef(() => props.portal))
-const contentProps = toRef(() => ({
+const contentProps = computed(() => ({
   ...props.content,
   ...(!!slots.content || !!slots.header || (!props.description && !slots.description)) ? { 'aria-describedby': undefined } : {},
 }))

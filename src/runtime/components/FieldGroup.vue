@@ -3,9 +3,10 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/field-group'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface FieldGroupSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
 }
 
 type ThemeVariant = VariantProps<typeof theme>
@@ -16,7 +17,12 @@ export interface FieldGroupProps extends ComponentBaseProps {
    * @default "div"
    */
   as?: PrimitiveProps['as']
+  /** @default "md" */
   size?: ThemeVariant['size']
+  /**
+   * The orientation the buttons are laid out.
+   * @default "horizontal"
+   */
   orientation?: ThemeVariant['orientation']
 }
 </script>
@@ -34,17 +40,20 @@ const props = withDefaults(defineProps<FieldGroupProps>(), {
 
 defineSlots<FieldGroupSlots>()
 
-provideFieldGroup(computed(() => props))
-
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.fieldGroup))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.fieldGroup))
+  return styler(props)
 })
+
+provideFieldGroup(computed(() => ({
+  orientation: props.orientation,
+  size: props.size,
+})))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base()" data-part="base">
+  <Primitive :as="props.as" :class="ui.base({ class: props.class })" data-part="base">
     <slot></slot>
   </Primitive>
 </template>

@@ -21,14 +21,22 @@ import { cv, merge } from '../utils/style'
 const props = withDefaults(defineProps<SkeletonProps>(), {})
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.skeleton))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.skeleton))
+  return styler(props)
 })
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base()" data-part="base">
+  <Primitive
+    :as="props.as"
+    aria-busy="true"
+    aria-label="loading"
+    aria-live="polite"
+    role="alert"
+    :class="ui.base({ class: props.class })"
+    data-part="base"
+  >
     <slot></slot>
   </Primitive>
 </template>

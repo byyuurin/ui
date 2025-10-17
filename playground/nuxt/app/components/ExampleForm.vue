@@ -34,7 +34,9 @@ const schema = z.object({
   pin: z.string().regex(/^\d$/, 'Only numbers').array().length(5),
 })
 
-const state = reactive<Partial<z.input<typeof schema>>>({})
+const state = reactive<Partial<z.input<typeof schema>>>({
+  slider: 0,
+})
 
 const controls: ControlItems<FormProps<typeof state>> = [
   {

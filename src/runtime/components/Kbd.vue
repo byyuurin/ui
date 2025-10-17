@@ -5,9 +5,10 @@ import { computed } from 'vue'
 import theme from '#build/ui/kbd'
 import type { KbdKey } from '../composables/useKbd'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface KbdSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -18,8 +19,11 @@ export interface KbdProps extends ComponentBaseProps {
    * @default "kbd"
    */
   as?: PrimitiveProps['as']
+  /** @default "outline" */
   variant?: ThemeVariants['variant']
+  /** @default "md" */
   size?: ThemeVariants['size']
+  /** @default "neutral" */
   color?: ThemeVariants['color']
   value?: KbdKey | (string & {})
 }
@@ -39,14 +43,14 @@ defineSlots<KbdSlots>()
 
 const { getKbdKey } = useKbd()
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.kbd))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.kbd))
+  return styler(props)
 })
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base()" data-part="base">
+  <Primitive :as="props.as" :class="ui.base({ class: props.class })" data-part="base">
     <slot>{{ getKbdKey(props.value) }}</slot>
   </Primitive>
 </template>

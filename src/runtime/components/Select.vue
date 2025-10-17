@@ -154,7 +154,7 @@ const style = computed(() => {
   const ui = cv(merge(theme, appConfig.ui.select))
   return ui({
     ...props,
-    groupOrientation: orientation.value,
+    fieldGroup: orientation.value,
     size: fieldGroupSize.value || formFieldSize.value,
     color: color.value,
     highlight: highlight.value,

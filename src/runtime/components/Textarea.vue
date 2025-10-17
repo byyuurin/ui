@@ -2,21 +2,28 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/textarea'
-import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { UseComponentIconsProps } from '../composables/useComponentIcons'
+import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ModelModifiers } from '../types/input'
+import type { StaticSlot } from '../types/utils'
 
-export interface TextareaEmits {
-  'update:modelValue': [payload: string]
+type TextareaValue = string | number | null
+
+export interface TextareaEmits<T extends TextareaValue = TextareaValue> {
+  'update:modelValue': [payload: T]
   'blur': [event: FocusEvent]
   'change': [event: Event]
 }
 
 export interface TextareaSlots {
-  default?: (props?: {}) => any
+  default: StaticSlot
+  leading: StaticSlot
+  trailing: StaticSlot
 }
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface TextareaProps extends ComponentBaseProps {
+export interface TextareaProps<T extends TextareaValue = TextareaValue> extends ComponentBaseProps, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -24,10 +31,15 @@ export interface TextareaProps extends ComponentBaseProps {
   as?: PrimitiveProps['as']
   id?: string
   name?: string
+  /** The placeholder text when the textarea is empty. */
   placeholder?: string
+  /** @default "sm" */
   size?: ThemeVariants['size']
+  /** @default "primary" */
   color?: ThemeVariants['color']
+  /** @default "outline" */
   variant?: ThemeVariants['variant']
+  /** Highlight the ring color like a focus state. */
   highlight?: boolean
   required?: boolean
   autofocus?: boolean
@@ -36,89 +48,110 @@ export interface TextareaProps extends ComponentBaseProps {
   rows?: number
   maxRows?: number
   autoResize?: boolean
+  autoResizeDelay?: number
+  modelValue?: T
+  defaultValue?: T
+  modelModifiers?: ModelModifiers
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends TextareaValue">
+import { useVModel } from '@vueuse/core'
 import { Primitive } from 'reka-ui'
-import { computed, nextTick, onMounted, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onMounted, shallowRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
+import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
+import { looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
+import Icon from './Icon.vue'
 
-defineOptions({
-  inheritAttrs: false,
-})
+defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<TextareaProps>(), {
-  variant: 'outline',
+const props = withDefaults(defineProps<TextareaProps<T>>(), {
   rows: 3,
   maxRows: 0,
   autofocusDelay: 0,
+  autoResizeDelay: 0,
 })
 
 const emit = defineEmits<TextareaEmits>()
-defineSlots<TextareaSlots>()
-const [modelValue, modelModifiers] = defineModel<string | number>()
+const slots = defineSlots<TextareaSlots>()
 
-const textareaRef = useTemplateRef('textareaRef')
+const modelValue = useVModel<TextareaProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emit, { defaultValue: props.defaultValue })
 
-const { id, name, size, color, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormField<TextareaProps>(props)
+const { id, name, size, color, highlight, disabled, ariaAttrs, emitFormInput, emitFormChange, emitFormBlur, emitFormFocus } = useFormField<TextareaProps<T>>(props)
+const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props)
+
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.textarea))
-  return ui({
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.textarea))
+  return styler({
     ...props,
     size: size.value,
     color: color.value,
     highlight: highlight.value,
+    leading: isLeading.value || !!props.avatar || !!slots.leading,
+    trailing: isTrailing.value || !!slots.trailing,
   })
 })
 
-function autoFocus() {
-  if (props.autofocus)
-    textareaRef.value?.focus()
-}
+const textareaRef = shallowRef<HTMLTextAreaElement | null>(null)
 
-function updateInput(value: string) {
-  if (modelModifiers.trim)
-    value = value.trim()
+// Custom function to handle the v-model properties
+function updateInput(value: string | null | undefined) {
+  if (props.modelModifiers?.trim)
+    value = value?.trim() ?? null
 
-  modelValue.value = value
+  if (props.modelModifiers?.number)
+    value = looseToNumber(value)
+
+  if (props.modelModifiers?.nullable)
+    value ||= null
+
+  if (props.modelModifiers?.optional)
+    value ||= undefined
+
+  modelValue.value = value as T
   emitFormInput()
 }
 
 function onInput(event: Event) {
   autoResize()
 
-  if (!modelModifiers.lazy)
-    updateInput((event.target as HTMLInputElement).value)
+  if (!props.modelModifiers?.lazy)
+    updateInput((event.target as HTMLTextAreaElement).value)
 }
 
 function onChange(event: Event) {
-  const value = (event.target as HTMLInputElement).value
+  const value = (event.target as HTMLTextAreaElement).value
 
-  if (modelModifiers.lazy)
+  if (props.modelModifiers?.lazy)
     updateInput(value)
 
-  if (modelModifiers.trim)
-    (event.target as HTMLInputElement).value = value.trim()
+  // Update trimmed textarea so that it has same behavior as native textarea
+  // https://github.com/vuejs/core/blob/5ea8a8a4fab4e19a71e123e4d27d051f5e927172/packages/runtime-dom/src/directives/vModel.ts#L63
+  if (props.modelModifiers?.trim)
+    (event.target as HTMLTextAreaElement).value = value.trim()
 
-  emit('change', event)
   emitFormChange()
+  emit('change', event)
 }
 
 function onBlur(event: FocusEvent) {
-  emit('blur', event)
   emitFormBlur()
+  emit('blur', event)
+}
+
+function autoFocus() {
+  if (props.autofocus)
+    textareaRef.value?.focus()
 }
 
 function autoResize() {
-  if (!props.autoResize)
-    return
-
-  if (!textareaRef.value)
+  if (!props.autoResize || !textareaRef.value)
     return
 
   textareaRef.value.rows = props.rows
@@ -132,7 +165,7 @@ function autoResize() {
   const padding = paddingTop + paddingBottom
   const lineHeight = Number.parseInt(styles.lineHeight)
   const { scrollHeight } = textareaRef.value
-  const newRows = Math.ceil((scrollHeight - padding) / lineHeight)
+  const newRows = (scrollHeight - padding) / lineHeight
 
   if (newRows > props.rows)
     textareaRef.value.rows = props.maxRows ? Math.min(newRows, props.maxRows) : newRows
@@ -140,37 +173,47 @@ function autoResize() {
   textareaRef.value.style.overflow = overflow
 }
 
-watch(modelValue, () => {
-  nextTick(autoResize)
+watch(modelValue, () => nextTick(autoResize))
+
+onMounted(() => {
+  setTimeout(() => autoFocus(), props.autofocusDelay)
+  setTimeout(() => autoResize(), props.autoResizeDelay)
 })
 
 defineExpose({
   textareaRef,
 })
-
-onMounted(() => {
-  setTimeout(() => {
-    autoFocus()
-  }, props.autofocusDelay)
-})
 </script>
 
 <template>
-  <Primitive
-    :as="props.as"
-    :aria-disabled="disabled ? true : undefined"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
-    :data-part="$attrs['data-part'] ?? 'root'"
-  >
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <span v-if="isLeading || props.avatar || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })" data-part="leading">
+      <slot name="leading">
+        <Icon
+          v-if="isLeading && leadingIconName"
+          :name="leadingIconName"
+          :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
+          data-part="leading-icon"
+        />
+        <Avatar
+          v-else-if="props.avatar"
+          :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
+          v-bind="props.avatar"
+          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
+          data-part="leading-avatar"
+        />
+      </slot>
+    </span>
+
     <textarea
       ref="textareaRef"
-      :class="style.base({ class: props.ui?.base })"
       data-part="base"
       :value="modelValue"
       :rows="props.rows"
       :placeholder="props.placeholder"
       :required="props.required"
-      v-bind="{ ...$attrs, ...ariaAttrs, id, name, disabled }"
+      v-bind="{ id, name, disabled, ...$attrs, ...ariaAttrs }"
+      :class="ui.base({ class: props.ui?.base })"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
@@ -178,5 +221,16 @@ onMounted(() => {
     ></textarea>
 
     <slot></slot>
+
+    <span v-if="isTrailing || !!slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
+      <slot name="trailing">
+        <Icon
+          v-if="trailingIconName"
+          :name="trailingIconName"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+          data-part="trailing-icon"
+        />
+      </slot>
+    </span>
   </Primitive>
 </template>

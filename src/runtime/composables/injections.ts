@@ -12,6 +12,12 @@ export const {
 } = defineInjection<Ref<AppProps['portal']>>('ui.portal-target')
 
 export const {
+  InjectionKey: InjectionKeyToastMax,
+  inject: injectToastMax,
+  provide: provideToastMax,
+} = defineInjection<Ref<number>>('ui.toast-max')
+
+export const {
   InjectionKey: InjectionKeyLocaleContext,
   inject: injectLocaleContext,
   provide: provideLocaleContext,

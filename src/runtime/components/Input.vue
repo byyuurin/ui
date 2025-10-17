@@ -99,7 +99,7 @@ const style = computed(() => {
     color: color.value,
     size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
-    groupOrientation: orientation.value,
+    fieldGroup: orientation.value,
     leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,
   })

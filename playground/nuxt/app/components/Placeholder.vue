@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="group relative overflow-hidden rounded border border-dashed border-accented opacity-75 px-4 flex items-center justify-center">
+  <span class="group relative overflow-hidden rounded border border-dashed border-accented opacity-75 px-4 flex items-center justify-center">
     <svg class="absolute inset-0 size-full stroke-default/80" fill="none">
       <defs>
         <pattern
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
       <rect stroke="none" fill="url(#pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e)" width="100%" height="100%" />
     </svg>
 
-    <div
+    <span
       class="relative w-full"
       :class="{
         'text-center': props.labelPosition === 'center',
@@ -36,6 +36,6 @@ const props = withDefaults(defineProps<{
       <slot>
         {{ props.label }}
       </slot>
-    </div>
-  </div>
+    </span>
+  </span>
 </template>

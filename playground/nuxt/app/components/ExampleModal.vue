@@ -8,7 +8,7 @@ import Placeholder from './Placeholder.vue'
 const controls: ControlItems<ModalProps> = [
   { prop: 'title', value: 'Title', placeholder: 'No Title' },
   { prop: 'description', value: 'description', placeholder: 'No Description' },
-  { prop: 'fullscreen', value: false },
+  { prop: 'fullscreen', value: false, description: 'When `true`, the modal will take up the full screen.' },
   { prop: 'dismissible', value: true },
   { prop: 'close', value: true },
   { prop: 'overlay', value: true },

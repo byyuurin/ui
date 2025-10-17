@@ -10,18 +10,18 @@ export interface UseComponentIconsProps {
   /** When `true`, the icon will be displayed on the left side. */
   leading?: boolean
   /** Display an icon on the left side. */
-  leadingIcon?: string
+  leadingIcon?: IconProps['name']
   /** When `true`, the icon will be displayed on the right side. */
   trailing?: boolean
   /** Display an icon on the right side. */
-  trailingIcon?: string
+  trailingIcon?: IconProps['name']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
   /**
    * The icon when the `loading` prop is `true`.
    * @default app.icons.loading
    */
-  loadingIcon?: string
+  loadingIcon?: IconProps['name']
 }
 
 export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentIconsProps>) {
