@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import theme from '#build/ui/drawer'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
 export interface DrawerEmits extends DialogRootEmits {
@@ -11,18 +11,18 @@ export interface DrawerEmits extends DialogRootEmits {
   'close-prevent': []
 }
 
-type ThemeVariants = VariantProps<typeof theme>
-
 export interface DrawerSlots {
   default: StaticSlot<{ open: boolean }>
   content: StaticSlot<{ close: () => void }>
   header: StaticSlot<{ close: () => void }>
   title: StaticSlot
   description: StaticSlot
-  close: StaticSlot<{ close: () => void, ui: { [K in keyof Required<ComponentUIProps<typeof theme>>]: (props?: ThemeVariants) => string } }>
+  close: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
   body: StaticSlot<{ close: () => void }>
   footer: StaticSlot<{ close: () => void }>
 }
+
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
   title?: string

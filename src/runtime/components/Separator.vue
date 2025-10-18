@@ -1,27 +1,39 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { SeparatorProps as RekaSeparatorProps } from 'reka-ui'
+import type { SeparatorProps as _SeparatorProps } from 'reka-ui'
 import theme from '#build/ui/separator'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 export interface SeparatorSlots {
-  default?: (props: {}) => any
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface SeparatorProps extends ComponentBaseProps, Pick<RekaSeparatorProps, 'as' | 'decorative'> {
+export interface SeparatorProps extends ComponentBaseProps, Pick<_SeparatorProps, 'decorative'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: _SeparatorProps['as']
+  /**
+   * The orientation of the separator.
+   * @default "horizontal"
+   */
   orientation?: ThemeVariants['orientation']
+  /** @default "neutral" */
   color?: ThemeVariants['color']
+  /** @default "xs" */
   size?: ThemeVariants['size']
+  /** @default "solid" */
   type?: ThemeVariants['type']
   align?: 'start' | 'end' | 'center'
   /** Display a label in the middle. */
   label?: string
-  /**
-   * Display an icon in the middle.
-   */
+  /** Display an icon in the middle. */
   icon?: IconProps['name']
+  /** Display an avatar in the middle. */
   avatar?: AvatarProps
   ui?: ComponentUIProps<typeof theme>
 }
@@ -38,7 +50,7 @@ import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<SeparatorProps>(), {
   orientation: 'horizontal',
-  position: 'center',
+  align: 'center',
 })
 
 const slots = defineSlots<SeparatorSlots>()
@@ -46,41 +58,41 @@ const slots = defineSlots<SeparatorSlots>()
 const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orientation'))
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.separator))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.separator))
+  return styler(props)
 })
 </script>
 
 <template>
-  <Separator v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <div :class="style.border({ class: props.ui?.border, start: props.align === 'start' })" data-part="border"></div>
+  <Separator v-bind="rootProps" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <div :class="ui.border({ class: props.ui?.border, start: props.align === 'start' })" data-part="border"></div>
 
-    <template v-if="props.label || props.icon || props.avatar || slots.default">
-      <div :class="style.container({ class: props.ui?.container })" data-part="container">
-        <slot>
+    <template v-if="props.label || props.icon || props.avatar || !!slots.default">
+      <div :class="ui.container({ class: props.ui?.container })" data-part="container">
+        <slot :ui="ui">
           <span
             v-if="props.label"
-            :class="style.label({ class: props.ui?.label })"
+            :class="ui.label({ class: props.ui?.label })"
             data-part="label"
           >{{ props.label }}</span>
           <Icon
             v-else-if="props.icon"
             :name="props.icon"
-            :class="style.icon({ class: props.ui?.icon })"
+            :class="ui.icon({ class: props.ui?.icon })"
             data-part="icon"
           />
           <Avatar
             v-else-if="props.avatar"
-            :size="((props.ui?.avatarSize || style.avatarSize()) as AvatarProps['size'])"
+            :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
             v-bind="props.avatar"
-            :class="style.avatar({ class: props.ui?.avatar })"
+            :class="ui.avatar({ class: props.ui?.avatar })"
             data-part="avatar"
           />
         </slot>
       </div>
 
-      <div :class="style.border({ class: props.ui?.border, end: props.align === 'end' })" data-part="border"></div>
+      <div :class="ui.border({ class: props.ui?.border, end: props.align === 'end' })" data-part="border"></div>
     </template>
   </Separator>
 </template>

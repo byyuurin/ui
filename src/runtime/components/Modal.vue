@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import theme from '#build/ui/modal'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
 export interface ModalEmits extends DialogRootEmits {
@@ -11,15 +10,13 @@ export interface ModalEmits extends DialogRootEmits {
   'close-prevent': []
 }
 
-type ThemeVariants = VariantProps<typeof theme>
-
 export interface ModalSlots {
   default: StaticSlot<{ open: boolean }>
   content: StaticSlot<{ close: () => void }>
   header: StaticSlot<{ close: () => void }>
   title: StaticSlot
   description: StaticSlot
-  close?: StaticSlot<{ close: () => void, ui: { [K in keyof Required<ComponentUIProps<typeof theme>>]: (props?: ThemeVariants) => string } }>
+  close?: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
   body: StaticSlot<{ close: () => void }>
   footer: StaticSlot<{ close: () => void }>
 }

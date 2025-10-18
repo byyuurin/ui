@@ -45,9 +45,9 @@ const fallback = computed(() => props.text || (props.alt || '').split(' ').map((
 const { size } = useAvatarGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.avatar))
-  return ui({
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.avatar))
+  return styler({
     ...props,
     size: size.value,
   })
@@ -66,19 +66,19 @@ function onError() {
 </script>
 
 <template>
-  <AvatarRoot :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" :data-part="$attrs['data-part'] ?? 'root'" :style="props.style">
+  <AvatarRoot :as="props.as" :class="ui.root({ class: [props.class, props.ui?.root] })" data-part="root" :style="props.style">
     <AvatarImage
       v-if="props.src && !error"
       :src="props.src"
       :alt="props.alt"
-      :class="style.image({ class: props.ui?.image })"
+      :class="ui.image({ class: props.ui?.image })"
       data-part="image"
       @error="onError"
     />
 
     <AvatarFallback as-child>
-      <Icon v-if="props.icon" :name="props.icon" :class="style.icon({ class: props.ui?.icon })" data-part="icon" />
-      <span v-else :class="style.fallback({ class: props.ui?.fallback })" data-part="fallback">{{ fallback || '&nbsp;' }}</span>
+      <Icon v-if="props.icon" :name="props.icon" :class="ui.icon({ class: props.ui?.icon })" data-part="icon" />
+      <span v-else :class="ui.fallback({ class: props.ui?.fallback })" data-part="fallback">{{ fallback || '&nbsp;' }}</span>
     </AvatarFallback>
   </AvatarRoot>
 </template>

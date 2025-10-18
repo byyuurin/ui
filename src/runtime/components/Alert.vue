@@ -2,22 +2,22 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/alert'
-import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
 export interface AlertEmits {
   'update:open': [value: boolean]
 }
 
-type ThemeVariants = VariantProps<typeof theme>
-
 export interface AlertSlots {
   leading: StaticSlot
   title: StaticSlot
   description: StaticSlot
   actions: StaticSlot
-  close: StaticSlot<{ ui: { [K in keyof Required<ComponentUIProps<typeof theme>>]: (props?: ThemeVariants) => string } }>
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
+
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface AlertProps extends ComponentBaseProps {
   /**

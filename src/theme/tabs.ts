@@ -6,10 +6,11 @@ import type { ModuleOptions } from '../module'
 export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'flex items-center gap-2',
-    list: 'relative flex p-1 group',
+    list: 'relative flex p-1',
     indicator: 'absolute transition duration-200',
     trigger: [
-      'group relative inline-flex items-center min-w-0 data-[state=inactive]:text-muted hover:data-[state=inactive]:not-disabled:text-default font-medium rounded-md disabled:cursor-not-allowed disabled:opacity-75',
+      'relative inline-flex items-center min-w-0 font-medium rounded-md disabled:cursor-not-allowed disabled:opacity-75',
+      'data-[state=inactive]:text-muted data-[state=inactive]:not-disabled:cursor-pointer hover:data-[state=inactive]:not-disabled:text-default',
       options.theme.transitions && 'transition-colors',
     ],
     leadingIcon: 'shrink-0',

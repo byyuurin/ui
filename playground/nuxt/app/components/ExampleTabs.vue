@@ -30,7 +30,6 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
-  { prop: 'evenly', value: true },
   { prop: 'content', value: true },
   { prop: 'unmountOnHide', value: true },
 ]
@@ -50,7 +49,7 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
         </template>
       </UTabs>
 
-      <UTabs v-bind="attrs" :items="[{}]">
+      <UTabs v-bind="attrs" :items="[{} as any]">
         <Placeholder label="#default" />
 
         <template #list-leading>

@@ -1,8 +1,16 @@
-import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVScopeMeta } from '@byyuurin/ui-kit'
+import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVScopeMeta, VariantProps } from '@byyuurin/ui-kit'
 
 export interface ComponentBaseProps {
   class?: ClassValue
 }
+
+export type ComponentStyler<T> = T extends { parts: infer P, variants: infer V }
+  ? {
+      [Part in keyof P]?: V extends undefined
+        ? () => string
+        : (props?: VariantProps<T>) => string
+    }
+  : Record<string, never>
 
 export type ComponentUIProps<T> = T extends { parts: infer P }
   ? { [Part in keyof P]?: string }

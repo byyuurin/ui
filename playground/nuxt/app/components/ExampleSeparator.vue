@@ -3,6 +3,9 @@ import type { SeparatorProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<SeparatorProps> = [
+  { prop: 'color', value: 'neutral', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'type', value: 'solid', options: ['solid', 'dashed', 'dotted'] },
+  { prop: 'size', value: 'xs', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'align', value: 'center', options: ['start', 'center', 'end'] },
   { prop: 'label', value: 'Label' },

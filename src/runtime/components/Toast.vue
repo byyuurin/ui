@@ -2,20 +2,20 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import theme from '#build/ui/toast'
-import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot, StringOrVNode } from '../types/utils'
 
 export interface ToastEmits extends ToastRootEmits {}
-
-type ThemeVariants = VariantProps<typeof theme>
 
 export interface ToastSlots {
   leading: StaticSlot
   title: StaticSlot
   description: StaticSlot
   actions: StaticSlot
-  close: StaticSlot<{ ui: { [K in keyof Required<ComponentUIProps<typeof theme>>]: (props?: ThemeVariants) => string } }>
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
+
+type ThemeVariants = VariantProps<typeof theme>
 
 export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
   /**
