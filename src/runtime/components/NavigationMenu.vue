@@ -126,7 +126,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
   /** Display a line next to the active item. */
   highlight?: boolean
   /** @default "primary" */
-  highlightColor: ThemeVariants['color']
+  highlightColor?: ThemeVariants['color']
   /** The content of the menu. */
   content?: Omit<NavigationMenuContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<NavigationMenuContentEmits>>
   /**
