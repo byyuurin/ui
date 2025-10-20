@@ -4,23 +4,27 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { InputHTMLAttributes } from 'vue'
 import theme from '#build/ui/input'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ModelModifiers } from '../types/input'
+import type { AcceptableValue, StaticSlot } from '../types/utils'
 
-export interface InputEmits {
-  'update:modelValue': [payload: string | number]
+export type InputValue = AcceptableValue
+
+export interface InputEmits<T extends InputValue> {
+  'update:modelValue': [payload: T]
   'blur': [event: FocusEvent]
   'change': [event: Event]
 }
 
 export interface InputSlots {
-  leading?: (props?: {}) => any
-  default?: (props?: {}) => any
-  trailing?: (props?: {}) => any
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
+export interface InputProps<T extends InputValue = InputValue> extends ComponentBaseProps, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -29,22 +33,31 @@ export interface InputProps extends ComponentBaseProps, UseComponentIconsProps {
   id?: string
   name?: string
   type?: InputHTMLAttributes['type']
+  /** The placeholder text when the input is empty. */
   placeholder?: string
+  /** @default "primary" */
   color?: ThemeVariants['color']
+  /** @default "md" */
   size?: ThemeVariants['size']
+  /** @default "outline" */
   variant?: ThemeVariants['variant']
   loading?: boolean
+  /** Highlight the ring color like a focus state. */
   highlight?: boolean
   required?: boolean
   autocomplete?: InputHTMLAttributes['autocomplete']
   autofocus?: boolean
   autofocusDelay?: number
   disabled?: boolean
+  defaultValue?: T
+  modelValue?: T
+  modelModifiers?: ModelModifiers
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends InputValue">
+import { useVModel } from '@vueuse/core'
 import { Primitive } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
@@ -56,44 +69,28 @@ import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
 
-defineOptions({
-  inheritAttrs: false,
-})
+defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<InputProps>(), {
+const props = withDefaults(defineProps<InputProps<T>>(), {
   type: 'text',
-  variant: 'outline',
   autocomplete: 'off',
   autofocusDelay: 0,
 })
 
-const emit = defineEmits<InputEmits>()
+const emit = defineEmits<InputEmits<T>>()
 const slots = defineSlots<InputSlots>()
-const [modelValue, modelModifiers] = defineModel<string | number>()
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const modelValue = useVModel<InputProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emit, { defaultValue: props.defaultValue })
 
-const {
-  size: formFieldSize,
-  id,
-  name,
-  color,
-  highlight,
-  disabled,
-  ariaAttrs,
-  emitFormBlur,
-  emitFormInput,
-  emitFormChange,
-  emitFormFocus,
-} = useFormField<InputProps>(props, { deferInputValidation: true })
+const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormInput, emitFormChange, emitFormFocus } = useFormField<InputProps>(props, { deferInputValidation: true })
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.input))
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.input))
 
-  return ui({
+  return styler({
     ...props,
     type: props.type as ThemeVariants['type'],
     color: color.value,
@@ -105,76 +102,80 @@ const style = computed(() => {
   })
 })
 
+const inputRef = ref<HTMLInputElement | null>(null)
+
+// Custom function to handle the v-model properties
+function updateInput(value: string | null | undefined) {
+  if (props.modelModifiers?.trim)
+    value = value?.trim() ?? null
+
+  if (props.modelModifiers?.number)
+    value = looseToNumber(value)
+
+  if (props.modelModifiers?.nullable)
+    value ||= null
+
+  if (props.modelModifiers?.optional)
+    value ||= undefined
+
+  modelValue.value = value as T
+  emitFormInput()
+}
+
+function onInput(event: Event) {
+  if (!props.modelModifiers?.lazy)
+    updateInput((event.target as HTMLTextAreaElement).value)
+}
+
+function onChange(event: Event) {
+  const value = (event.target as HTMLTextAreaElement).value
+
+  if (props.modelModifiers?.lazy)
+    updateInput(value)
+
+  // Update trimmed textarea so that it has same behavior as native textarea
+  // https://github.com/vuejs/core/blob/5ea8a8a4fab4e19a71e123e4d27d051f5e927172/packages/runtime-dom/src/directives/vModel.ts#L63
+  if (props.modelModifiers?.trim)
+    (event.target as HTMLTextAreaElement).value = value.trim()
+
+  emitFormChange()
+  emit('change', event)
+}
+
+function onBlur(event: FocusEvent) {
+  emitFormBlur()
+  emit('blur', event)
+}
+
 function autoFocus() {
   if (props.autofocus)
     inputRef.value?.focus()
 }
 
-function updateInput(value: string) {
-  if (modelModifiers.trim)
-    value = value.trim()
-
-  if (modelModifiers.number || props.type === 'number')
-    value = looseToNumber(value)
-
-  modelValue.value = value
-  emitFormInput()
-}
-
-function onInput(event: Event) {
-  if (!modelModifiers.lazy)
-    updateInput((event.target as HTMLInputElement).value)
-}
-
-function onChange(event: Event) {
-  const value = (event.target as HTMLInputElement).value
-
-  if (modelModifiers.lazy)
-    updateInput(value)
-
-  if (modelModifiers.trim)
-    (event.target as HTMLInputElement).value = value.trim()
-
-  emit('change', event)
-  emitFormChange()
-}
-
-function onBlur(event: FocusEvent) {
-  emit('blur', event)
-  emitFormBlur()
-}
+onMounted(() => {
+  setTimeout(() => autoFocus(), props.autofocusDelay)
+})
 
 defineExpose({
   inputRef,
 })
-
-onMounted(() => {
-  setTimeout(() => {
-    autoFocus()
-  }, props.autofocusDelay)
-})
 </script>
 
 <template>
-  <Primitive
-    :as="as"
-    :aria-disabled="disabled ? true : undefined"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
-    :data-part="$attrs['data-part'] ?? 'root'"
-  >
-    <span v-if="isLeading || !!props.avatar || slots.leading" :class="style.leading({ class: props.ui?.leading })" data-part="leading">
-      <slot name="leading">
+  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <span v-if="isLeading || !!props.avatar || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })" data-part="leading">
+      <slot name="leading" :ui="ui">
         <Icon
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
-          :class="style.leadingIcon({ class: props.ui?.leadingIcon })"
+          :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
           data-part="leading-icon"
         />
         <Avatar
           v-else-if="props.avatar"
-          :size="((props.ui?.leadingAvatarSize || style.leadingAvatarSize()) as AvatarProps['size'])"
+          :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
           v-bind="props.avatar"
-          :class="style.leadingAvatar({ class: props.ui?.leadingAvatar })"
+          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
           data-part="leading-avatar"
         />
       </slot>
@@ -182,28 +183,28 @@ onMounted(() => {
 
     <input
       ref="inputRef"
-      :class="style.base({ class: props.ui?.base })"
       :type="props.type"
       :value="modelValue"
       :placeholder="props.placeholder"
       :required="props.required"
       :autocomplete="props.autocomplete"
-      v-bind="{ ...$attrs, ...ariaAttrs, id, name, disabled }"
-      data-part="input"
+      v-bind="{ id, name, disabled, ...$attrs, ...ariaAttrs }"
+      :class="ui.base({ class: props.ui?.base })"
+      data-part="base"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
       @focus="emitFormFocus"
     />
 
-    <slot></slot>
+    <slot :ui="ui"></slot>
 
-    <span v-if="isTrailing || slots.trailing" :class="style.trailing({ class: props.ui?.trailing })" data-part="trailing">
-      <slot name="trailing">
+    <span v-if="isTrailing || slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
+      <slot name="trailing" :ui="ui">
         <Icon
-          v-if="isTrailing && trailingIconName"
+          v-if="trailingIconName"
           :name="trailingIconName"
-          :class="style.trailingIcon({ class: props.ui?.trailingIcon })"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
           data-part="trailing-icon"
         />
       </slot>

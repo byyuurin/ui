@@ -2,13 +2,13 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import theme from '#build/ui/button'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
 export interface ButtonSlots {
-  default: StaticSlot
-  leading: StaticSlot
-  trailing: StaticSlot
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -128,7 +128,7 @@ const ui = computed(() => {
       })"
       @click="onClickWrapper"
     >
-      <slot name="leading">
+      <slot name="leading" :ui="ui">
         <Icon
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
@@ -144,7 +144,7 @@ const ui = computed(() => {
         />
       </slot>
 
-      <slot>
+      <slot :ui="ui">
         <span
           v-if="props.label != null"
           :class="ui.label({ class: props.ui?.label, active })"
@@ -154,7 +154,7 @@ const ui = computed(() => {
         </span>
       </slot>
 
-      <slot name="trailing">
+      <slot name="trailing" :ui="ui">
         <Icon
           v-if="isTrailing && trailingIconName"
           :name="trailingIconName"

@@ -1,23 +1,24 @@
 <script lang="ts" setup>
-import type { RadioGroupItem, RadioGroupProps } from '@byyuurin/ui'
+import type { RadioGroupProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const values = ['System', 'Light', 'Dark']
 
-const options = values.map((s, i) => ({
+const items = values.map((s, i) => ({
   label: s,
   value: s,
   description: `Description ${s}`,
   disabled: i === 2,
-} satisfies RadioGroupItem))
+}))
 
 const value = ref()
 
-const controls: ControlItems<RadioGroupProps<typeof options[number]>> = [
+const controls: ControlItems<RadioGroupProps<typeof items>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'variant', value: 'list', options: ['list', 'card', 'table'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'indicator', value: 'start', options: ['start', 'end', 'hidden'] },
   { prop: 'legend', value: 'Text' },
   { prop: 'disabled', value: false },
   { prop: 'required', value: false },
@@ -32,8 +33,8 @@ const controls: ControlItems<RadioGroupProps<typeof options[number]>> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <URadioGroup v-model="value" v-bind="attrs" :options="options" />
-      <URadioGroup v-model="value" v-bind="attrs" :options="values" />
+      <URadioGroup v-model="value" v-bind="attrs" :items="items" />
+      <URadioGroup v-model="value" v-bind="attrs" :items="values" />
     </div>
   </ExampleView>
 </template>

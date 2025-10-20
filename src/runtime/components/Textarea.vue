@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/textarea'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
 import type { StaticSlot } from '../types/utils'
 
@@ -16,9 +16,9 @@ export interface TextareaEmits<T extends TextareaValue = TextareaValue> {
 }
 
 export interface TextareaSlots {
-  default: StaticSlot
-  leading: StaticSlot
-  trailing: StaticSlot
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -188,7 +188,7 @@ defineExpose({
 <template>
   <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
     <span v-if="isLeading || props.avatar || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })" data-part="leading">
-      <slot name="leading">
+      <slot name="leading" :ui="ui">
         <Icon
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
@@ -207,23 +207,23 @@ defineExpose({
 
     <textarea
       ref="textareaRef"
-      data-part="base"
       :value="modelValue"
       :rows="props.rows"
       :placeholder="props.placeholder"
       :required="props.required"
       v-bind="{ id, name, disabled, ...$attrs, ...ariaAttrs }"
       :class="ui.base({ class: props.ui?.base })"
+      data-part="base"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
       @focus="emitFormFocus"
     ></textarea>
 
-    <slot></slot>
+    <slot :ui="ui"></slot>
 
     <span v-if="isTrailing || !!slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
-      <slot name="trailing">
+      <slot name="trailing" :ui="ui">
         <Icon
           v-if="trailingIconName"
           :name="trailingIconName"

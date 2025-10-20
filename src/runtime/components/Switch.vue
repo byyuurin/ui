@@ -6,7 +6,8 @@ import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig 
 import type { StaticSlot } from '../types/utils'
 
 export interface SwitchEmits {
-  change: [payload: Event]
+  'change': [payload: Event]
+  'update:modelValue': [payload: boolean]
 }
 
 export interface SwitchSlots {

@@ -3,13 +3,13 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/badge'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
 export interface BadgeSlots {
-  leading: StaticSlot
-  default: StaticSlot
-  trailing: StaticSlot
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -66,7 +66,7 @@ const ui = computed(() => {
 
 <template>
   <Primitive :as="props.as" :class="ui.base({ class: [props.ui?.base, props.class] })" data-part="base">
-    <slot name="leading">
+    <slot name="leading" :ui="ui">
       <Icon
         v-if="isLeading && leadingIconName"
         :name="leadingIconName"
@@ -82,13 +82,13 @@ const ui = computed(() => {
       />
     </slot>
 
-    <slot>
+    <slot :ui="ui">
       <span v-if="props.label != null" :class="ui.label({ class: props.ui?.label })" data-part="label">
         {{ props.label }}
       </span>
     </slot>
 
-    <slot name="trailing">
+    <slot name="trailing" :ui="ui">
       <Icon
         v-if="isTrailing && trailingIconName"
         :name="trailingIconName"

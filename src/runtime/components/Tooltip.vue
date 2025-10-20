@@ -1,14 +1,14 @@
 <script lang="ts">
 import type { TooltipArrowProps, TooltipContentEmits, TooltipContentProps, TooltipRootEmits, TooltipRootProps, TooltipTriggerProps } from 'reka-ui'
 import theme from '#build/ui/tooltip'
-import type { ComponentBaseProps, ComponentUIProps, KbdProps, RuntimeAppConfig } from '../types'
+import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, KbdProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
 export interface TooltipEmits extends TooltipRootEmits {}
 
 export interface TooltipSlots {
   default: StaticSlot<{ open: boolean }>
-  content: StaticSlot
+  content: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 
 export interface TooltipProps extends ComponentBaseProps, TooltipRootProps {
@@ -74,7 +74,7 @@ const ui = computed(() => {
 
     <TooltipPortal v-bind="portalProps">
       <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })" data-part="content">
-        <slot name="content">
+        <slot name="content" :ui="ui">
           <span v-if="props.text" :class="ui.text({ class: props.ui?.text })" data-part="text">{{ props.text }}</span>
 
           <span v-if="props.kbds?.length" :class="ui.kbds({ class: props.ui?.kbds })" data-part="kbds">

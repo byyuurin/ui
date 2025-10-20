@@ -8,7 +8,7 @@ import type { StaticSlot, StringOrVNode } from '../types/utils'
 export interface ToastEmits extends ToastRootEmits {}
 
 export interface ToastSlots {
-  leading: StaticSlot
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
   title: StaticSlot
   description: StaticSlot
   actions: StaticSlot
@@ -116,7 +116,7 @@ defineExpose({
     data-part="root"
     :style="{ '--height': height }"
   >
-    <slot name="leading">
+    <slot name="leading" :ui="ui">
       <Avatar
         v-if="props.avatar"
         :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"

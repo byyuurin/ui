@@ -12,7 +12,7 @@ const items = defineItems([
   { label: 'Avatar', avatar: { src: 'https://i.pravatar.cc/100' }, to: '/' },
 ])
 
-const controls: ControlItems<BreadcrumbProps<BreadcrumbItem>> = []
+const controls: ControlItems<BreadcrumbProps<typeof items>> = []
 </script>
 
 <template>

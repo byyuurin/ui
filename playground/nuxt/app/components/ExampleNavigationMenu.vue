@@ -137,7 +137,7 @@ const items = ref([
   ],
 ] satisfies NavigationMenuItem[][])
 
-const controls: ControlItems<NavigationMenuProps<typeof items.value[number]>> = [
+const controls: ControlItems<NavigationMenuProps<typeof items.value>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'contentOrientation', value: 'horizontal', options: ['horizontal', 'vertical'], description: 'The orientation of the content. Only works when `orientation` is `horizontal`' },
