@@ -9,7 +9,7 @@ export default (options: Required<ModuleOptions>) => ct({
     base: [
       'rounded-md font-medium inline-flex items-center',
       options.theme.transitions && 'transition-colors',
-      'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75',
+      'cursor-pointer disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75',
     ],
     label: 'truncate',
     leadingIcon: 'shrink-0',

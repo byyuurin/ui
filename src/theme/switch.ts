@@ -7,7 +7,7 @@ export default (options: Required<ModuleOptions>) => ct({
   parts: {
     root: 'relative flex items-start',
     base: [
-      'inline-flex items-center shrink-0 rounded-full border-2 border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented',
+      'inline-flex items-center shrink-0 rounded-full border-2 border-transparent cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 data-[state=unchecked]:bg-accented',
       options.theme.transitions && 'transition-colors duration-200',
     ],
     container: 'flex items-center',
@@ -17,7 +17,7 @@ export default (options: Required<ModuleOptions>) => ct({
       options.theme.transitions && 'transition-[color,opacity] duration-200',
     ],
     wrapper: 'ms-2',
-    label: 'block font-medium text-default',
+    label: 'block font-medium text-default cursor-pointer',
     description: 'text-muted',
   },
   variants: {

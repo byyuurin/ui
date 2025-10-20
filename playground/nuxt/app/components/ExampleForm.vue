@@ -93,11 +93,11 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
         </UFormField>
 
         <UFormField label="Select" name="select">
-          <USelect v-model="state.select" class="w-full" :options="items" />
+          <USelect v-model="state.select" class="w-full" :items="items" />
         </UFormField>
 
         <UFormField label="Select (Multiple)" name="selectMultiple">
-          <USelect v-model="state.selectMultiple" class="w-full" :options="items" multiple />
+          <USelect v-model="state.selectMultiple" class="w-full" :items="items" multiple />
         </UFormField>
 
         <UFormField label="Input Number" name="inputNumber">
@@ -109,7 +109,7 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
         </UFormField>
 
         <UFormField label="Radio Group" name="radioGroup">
-          <URadioGroup v-model="state.radioGroup" :options="items" />
+          <URadioGroup v-model="state.radioGroup" :items="items" />
         </UFormField>
 
         <UFormField label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">

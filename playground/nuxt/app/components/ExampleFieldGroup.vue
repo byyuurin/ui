@@ -49,7 +49,7 @@ const controls: ControlItems<FieldGroupProps> = [
       <div>
         <h2>With Select</h2>
         <UFieldGroup v-bind="attrs">
-          <USelect color="neutral" default-value="ON" :options="['ON', 'OFF']" :ui="{ content: 'min-w-25' }" />
+          <USelect color="neutral" default-value="ON" :items="['ON', 'OFF']" :ui="{ content: 'min-w-25' }" />
           <UButton color="neutral" variant="outline" icon="i-carbon-save" />
         </UFieldGroup>
       </div>

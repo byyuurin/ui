@@ -12,7 +12,7 @@ export default (options: Required<ModuleOptions>) => {
       ...input.parts,
       root: undefined,
       base: [
-        'relative group rounded-md inline-flex items-center focus:outline-none disabled:cursor-not-allowed disabled:opacity-75',
+        'relative group rounded-md inline-flex items-center focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-75',
         options.theme.transitions && 'transition-colors',
       ],
       value: 'truncate pointer-events-none',
@@ -28,7 +28,7 @@ export default (options: Required<ModuleOptions>) => {
       label: 'font-semibold text-highlighted',
       separator: '-mx-1 my-1 h-px bg-border',
       item: [
-        'group relative w-full flex items-center select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
+        'group relative w-full flex items-center select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md cursor-pointer data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
         options.theme.transitions && 'transition-colors before:transition-colors',
       ],
       itemLeadingIcon: [
