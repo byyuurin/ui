@@ -14,7 +14,7 @@ const controls: ControlItems<TextareaProps> = [
   { prop: 'rows', value: 3 },
   { prop: 'maxRows', value: 0 },
   { prop: 'loading', value: false },
-  { prop: 'autoResize', value: false },
+  { prop: 'autoresize', value: false },
   { prop: 'disabled', value: false },
   { prop: 'highlight', value: false },
 ]

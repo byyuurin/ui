@@ -83,7 +83,7 @@ const ui = computed(() => {
     </slot>
 
     <slot :ui="ui">
-      <span v-if="props.label != null" :class="ui.label({ class: props.ui?.label })" data-part="label">
+      <span v-if="props.label" :class="ui.label({ class: props.ui?.label })" data-part="label">
         {{ props.label }}
       </span>
     </slot>

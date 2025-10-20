@@ -47,8 +47,8 @@ export interface TextareaProps<T extends TextareaValue = TextareaValue> extends 
   disabled?: boolean
   rows?: number
   maxRows?: number
-  autoResize?: boolean
-  autoResizeDelay?: number
+  autoresize?: boolean
+  autoresizeDelay?: number
   modelValue?: T
   defaultValue?: T
   modelModifiers?: ModelModifiers
@@ -74,7 +74,7 @@ const props = withDefaults(defineProps<TextareaProps<T>>(), {
   rows: 3,
   maxRows: 0,
   autofocusDelay: 0,
-  autoResizeDelay: 0,
+  autoresizeDelay: 0,
 })
 
 const emit = defineEmits<TextareaEmits>()
@@ -151,7 +151,7 @@ function autoFocus() {
 }
 
 function autoResize() {
-  if (!props.autoResize || !textareaRef.value)
+  if (!props.autoresize || !textareaRef.value)
     return
 
   textareaRef.value.rows = props.rows
@@ -177,7 +177,7 @@ watch(modelValue, () => nextTick(autoResize))
 
 onMounted(() => {
   setTimeout(() => autoFocus(), props.autofocusDelay)
-  setTimeout(() => autoResize(), props.autoResizeDelay)
+  setTimeout(() => autoResize(), props.autoresizeDelay)
 })
 
 defineExpose({
