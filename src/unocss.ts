@@ -97,12 +97,7 @@ export function createUnoPreset(options: PresetOptions = {}) {
     preflights: [
       {
         getCSS() {
-          return `html {
-  accent-color: var(--ui-text);
-  scrollbar-color: var(--ui-bg-accented) transparent;
-}
-
-:root, .light {
+          return `:root, .light {
   --un-default-border-color: var(--ui-border);
 
   --ui-text: var(--ui-color-neutral-700);
@@ -124,6 +119,9 @@ export function createUnoPreset(options: PresetOptions = {}) {
   --ui-border-inverted: var(--ui-color-neutral-900);
 
   --ui-radius: 0.25rem;
+
+  accent-color: var(--ui-text);
+  scrollbar-color: var(--ui-border-accented) transparent;
 }
 
 .dark {

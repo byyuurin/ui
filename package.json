@@ -119,10 +119,29 @@
   },
   "peerDependencies": {
     "@unocss/nuxt": ">=66.1.0",
-    "@unocss/preset-wind4": ">=66.1.0"
+    "@unocss/preset-wind4": ">=66.1.0",
+    "superstruct": "^2.0.2"
   },
   "peerDependenciesMeta": {
     "@unocss/nuxt": {
+      "optional": true
+    },
+    "joi": {
+      "optional": true
+    },
+    "superstruct": {
+      "optional": true
+    },
+    "valibot": {
+      "optional": true
+    },
+    "vue-router": {
+      "optional": true
+    },
+    "yup": {
+      "optional": true
+    },
+    "zod": {
       "optional": true
     }
   },
@@ -136,6 +155,7 @@
     "@nuxtjs/color-mode": "^3.5.2",
     "@standard-schema/spec": "^1.0.0",
     "@tanstack/vue-table": "^8.21.3",
+    "@tanstack/vue-virtual": "^3.13.12",
     "@unhead/vue": "^2.0.17",
     "@vue/shared": "^3.5.22",
     "@vueuse/core": "^13.9.0",
@@ -182,6 +202,7 @@
     "lint-staged": "^16.2.3",
     "nuxt": "^3.19.2",
     "simple-git-hooks": "^2.13.1",
+    "superstruct": "^2.0.2",
     "typescript": "^5.9.3",
     "unocss": "^66.5.2",
     "vite": "^7.1.9",

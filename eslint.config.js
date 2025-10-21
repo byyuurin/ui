@@ -57,4 +57,13 @@ export default byyuurin(
       'vue/no-template-shadow': 'off',
     },
   },
+  {
+    files: [
+      'src/runtime/components/Form.vue',
+    ],
+    rules: {
+      'unicorn/no-object-as-default-parameter': 'off',
+      'style/padding-line-between-statements': 'off',
+    },
+  },
 )

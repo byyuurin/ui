@@ -57,6 +57,13 @@ export const {
   provide: provideFormBus,
 } = defineInjection<FormBusProvideValue>('ui.form-bus')
 
+export type FormStateProvideValue = Record<string, any>
+export const {
+  InjectionKey: InjectionKeyFormState,
+  inject: injectFormState,
+  provide: provideFormState,
+} = defineInjection<ComputedRef<FormStateProvideValue>>('ui.form-state')
+
 export interface FormFieldProvideValue<T> {
   name?: string
   size?: GetObjectField<T, 'size'>

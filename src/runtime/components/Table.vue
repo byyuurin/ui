@@ -1,26 +1,62 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { CellContext, ColumnDef, ColumnFiltersOptions, ColumnFiltersState, ColumnOrderState, ColumnPinningOptions, ColumnPinningState, ColumnSizingInfoState, ColumnSizingOptions, ColumnSizingState, CoreOptions, ExpandedOptions, ExpandedState, FacetedOptions, GlobalFilterOptions, GroupingOptions, GroupingState, HeaderContext, PaginationOptions, PaginationState, Row, RowData, RowPinningOptions, RowPinningState, RowSelectionOptions, RowSelectionState, SortingOptions, SortingState, Updater, VisibilityOptions, VisibilityState } from '@tanstack/vue-table'
+import type { Cell, Header, RowData, TableMeta } from '@tanstack/table-core'
+import type { CellContext, ColumnDef, ColumnFiltersOptions, ColumnFiltersState, ColumnOrderState, ColumnPinningOptions, ColumnPinningState, ColumnSizingInfoState, ColumnSizingOptions, ColumnSizingState, CoreOptions, ExpandedOptions, ExpandedState, FacetedOptions, GlobalFilterOptions, GroupingOptions, GroupingState, HeaderContext, PaginationOptions, PaginationState, Row, RowPinningOptions, RowPinningState, RowSelectionOptions, RowSelectionState, SortingOptions, SortingState, Updater, VisibilityOptions, VisibilityState } from '@tanstack/vue-table'
+import type { VirtualizerOptions } from '@tanstack/vue-virtual'
 import type { PrimitiveProps } from 'reka-ui'
-import type { Ref } from 'vue'
+import type { Ref, WatchOptions } from 'vue'
 import theme from '#build/ui/table'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
+
+declare module '@tanstack/table-core' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    class?: {
+      th?: string | ((cell: Header<TData, TValue>) => string)
+      td?: string | ((cell: Cell<TData, TValue>) => string)
+    }
+    style?: {
+      th?: string | Record<string, string> | ((cell: Header<TData, TValue>) => string | Record<string, string>)
+      td?: string | Record<string, string> | ((cell: Cell<TData, TValue>) => string | Record<string, string>)
+    }
+    colspan?: {
+      td?: string | ((cell: Cell<TData, TValue>) => string)
+    }
+    rowspan?: {
+      td?: string | ((cell: Cell<TData, TValue>) => string)
+    }
+  }
+
+  interface TableMeta<TData> {
+    class?: {
+      tr?: string | ((row: Row<TData>) => string)
+    }
+    style?: {
+      tr?: string | Record<string, string> | ((row: Row<TData>) => string | Record<string, string>)
+    }
+  }
+}
 
 type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
+
+type DynamicFooterSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-footer`, (props: HeaderContext<T, unknown>) => any>
 
 type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
 
 export type TableSlots<T> = {
-  expanded?: (props: { row: Row<T> }) => any
-  empty?: any
-  loading?: any
-  caption?: any
-} & DynamicHeaderSlots<T> & DynamicCellSlots<T>
+  'expanded': StaticSlot<{ row: Row<T> }>
+  'empty': StaticSlot
+  'loading': StaticSlot
+  'caption': StaticSlot
+  'body-top': StaticSlot
+  'body-bottom': StaticSlot
+} & DynamicHeaderSlots<T> & DynamicFooterSlots<T> & DynamicCellSlots<T>
 
+export type TableRow<T> = Row<T>
 export type TableData = RowData
-export type TableColumn<T extends TableData, D = unknown> = ColumnDef<T, D> & { title?: string }
+export type TableColumn<T extends TableData, D = unknown> = ColumnDef<T, D>
 
-export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 'data' | 'columns' | 'getCoreRowModel' | 'state' | 'onStateChange' | 'renderFallbackValue'> {
+export interface TableOptions<T extends TableData = TableData> extends Omit<CoreOptions<T>, 'data' | 'columns' | 'getCoreRowModel' | 'state' | 'onStateChange' | 'renderFallbackValue'> {
   state?: CoreOptions<T>['state']
   onStateChange?: CoreOptions<T>['onStateChange']
   renderFallbackValue?: CoreOptions<T>['renderFallbackValue']
@@ -28,7 +64,7 @@ export interface TableOptions<T extends TableData> extends Omit<CoreOptions<T>, 
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface TableProps<T extends TableData> extends ComponentBaseProps, TableOptions<T> {
+export interface TableProps<T extends TableData = TableData> extends ComponentBaseProps, TableOptions<T> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -37,102 +73,152 @@ export interface TableProps<T extends TableData> extends ComponentBaseProps, Tab
   data?: T[]
   columns?: TableColumn<T>[]
   caption?: string
+  meta?: TableMeta<T>
+  /**
+   * Enable virtualization for large datasets.
+   *
+   * Note: when enabled, the divider between rows and sticky properties are not supported.
+   * @default false
+   */
+  virtualize?: boolean | (Partial<Omit<VirtualizerOptions<Element, Element>, 'getScrollElement' | 'count' | 'estimateSize' | 'overscan'>> & {
+    /**
+     * Number of items rendered outside the visible area
+     * @default 12
+     */
+    overscan?: number
+    /**
+     * Estimated size (in px) of each item
+     * @default 65
+     */
+    estimateSize?: number
+  })
   /**
    * The text to display when the table is empty.
    * @default t('table.noData')
    */
   empty?: string
   /**
-   * Whether the table should have a sticky header.
+   * Whether the table should have a sticky header or footer. True for both, 'header' for header only, 'footer' for footer only.
+   *
+   * Note: this prop is not supported when `virtualize` is true.
    * @default false
    */
-  sticky?: boolean
+  sticky?: boolean | 'header' | 'footer'
   /** Whether the table should be in loading state. */
   loading?: boolean
-  /**
-   * @default "primary"
-   */
+  /** @default "primary" */
   loadingColor?: ThemeVariants['loadingColor']
-  /**
-   * @default "carousel"
-   */
+  /** @default "carousel" */
   loadingAnimation?: ThemeVariants['loadingAnimation']
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/global-filtering#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/global-filtering)
+   * Use the `watchOptions` prop to customize reactivity (for ex: disable deep watching for changes in your data or limiting the max traversal depth). This can improve performance by reducing unnecessary re-renders, but it should be used with caution as it may lead to unexpected behavior if not managed properly.
+   * @see [API](https://vuejs.org/api/options-state.html#watch)
+   * @see [Guide](https://vuejs.org/guide/essentials/watchers.html)
+   * @default { deep: true }
+   */
+  watchOptions?: WatchOptions
+  /**
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/global-filtering#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/global-filtering)
    */
   globalFilterOptions?: Omit<GlobalFilterOptions<T>, 'onGlobalFilterChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/column-filtering#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-filtering)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/column-filtering#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/column-filtering)
    */
   columnFiltersOptions?: Omit<ColumnFiltersOptions<T>, 'getFilteredRowModel' | 'onColumnFiltersChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/column-pinning#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-pinning)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/column-pinning#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/column-pinning)
    */
   columnPinningOptions?: Omit<ColumnPinningOptions, 'onColumnPinningChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/column-sizing#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-sizing)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/column-sizing#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/column-sizing)
    */
   columnSizingOptions?: Omit<ColumnSizingOptions, 'onColumnSizingChange' | 'onColumnSizingInfoChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/column-visibility#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-visibility)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/column-visibility#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/column-visibility)
    */
   visibilityOptions?: Omit<VisibilityOptions, 'onColumnVisibilityChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/sorting#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/sorting)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/sorting#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/sorting)
    */
   sortingOptions?: Omit<SortingOptions<T>, 'getSortedRowModel' | 'onSortingChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/grouping#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/grouping)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/grouping#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/grouping)
    */
   groupingOptions?: Omit<GroupingOptions, 'onGroupingChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/expanding#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/expanding)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/expanding#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/expanding)
    */
   expandedOptions?: Omit<ExpandedOptions<T>, 'getExpandedRowModel' | 'onExpandedChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/row-selection#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/row-selection)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/row-selection#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/row-selection)
    */
   rowSelectionOptions?: Omit<RowSelectionOptions<T>, 'onRowSelectionChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/row-pinning#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/row-pinning)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/row-pinning#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/row-pinning)
    */
   rowPinningOptions?: Omit<RowPinningOptions<T>, 'onRowPinningChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/pagination#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/pagination)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/pagination#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/pagination)
    */
   paginationOptions?: Omit<PaginationOptions, 'onPaginationChange'>
   /**
-   * @link [API Docs](https://tanstack.com/table/v8/docs/api/features/column-faceting#table-options)
-   * @link [Guide](https://tanstack.com/table/v8/docs/guide/column-faceting)
+   * @see [API](https://tanstack.com/table/v8/docs/api/features/column-faceting#table-options)
+   * @see [Guide](https://tanstack.com/table/v8/docs/guide/column-faceting)
    */
   facetedOptions?: FacetedOptions<T>
+  onSelect?: (e: Event, row: TableRow<T>) => void
+  onHover?: (e: Event, row: TableRow<T> | null) => void
+  onContextmenu?: ((e: Event, row: TableRow<T>) => void) | Array<((e: Event, row: TableRow<T>) => void)>
   ui?: ComponentUIProps<typeof theme>
 }
 </script>
 
 <script setup lang="ts" generic="T extends TableData">
 import { FlexRender, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
-import { reactiveOmit } from '@vueuse/core'
+import { useVirtualizer } from '@tanstack/vue-virtual'
+import { createReusableTemplate, reactiveOmit } from '@vueuse/core'
+import { defu } from 'defu'
 import { Primitive } from 'reka-ui'
 import { upperFirst } from 'scule'
-import { computed } from 'vue'
+import { computed, ref, toRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
 
-const props = defineProps<TableProps<T>>()
+defineOptions({ inheritAttrs: false })
+
+const props = withDefaults(defineProps<TableProps<T>>(), {
+  watchOptions: () => ({
+    deep: true,
+  }),
+  virtualize: false,
+})
 const slots = defineSlots<TableSlots<T>>()
+
+const [DefineTableTemplate, ReuseTableTemplate] = createReusableTemplate()
+const [DefineRowTemplate, ReuseRowTemplate] = createReusableTemplate<{ row: TableRow<T>, style?: Record<string, string> }>({
+  props: {
+    row: {
+      type: Object,
+      required: true,
+    },
+    style: {
+      type: Object,
+      required: false,
+    },
+  },
+})
 
 const globalFilterState = defineModel<string>('globalFilter', { default: undefined })
 const columnFiltersState = defineModel<ColumnFiltersState>('columnFilters', { default: [] })
@@ -148,18 +234,61 @@ const groupingState = defineModel<GroupingState>('grouping', { default: [] })
 const expandedState = defineModel<ExpandedState>('expanded', { default: {} })
 const paginationState = defineModel<PaginationState>('pagination', { default: {} })
 
-const data = computed(() => props.data ?? [])
+const rootRef = ref<InstanceType<typeof Primitive>>()
+const tableRef = ref<HTMLTableElement | null>(null)
+
+const data = ref(props.data ?? []) as Ref<T[]>
+const meta = computed(() => props.meta ?? {})
 const columns = computed<TableColumn<T>[]>(
-  () =>
-    props.columns ?? Object.keys(data.value[0] ?? {}).map(
-      (accessorKey: string) => ({ accessorKey, header: upperFirst(accessorKey) }),
-    ),
+  () => processColumns(props.columns ?? Object.keys(data.value[0] ?? {})
+    .map((accessorKey: string) => ({ accessorKey, header: upperFirst(accessorKey) }))),
 )
 
+function processColumns(columns: TableColumn<T>[]): TableColumn<T>[] {
+  return columns.map((column) => {
+    const col = { ...column } as TableColumn<T>
+
+    if ('columns' in col && col.columns)
+      col.columns = processColumns(col.columns as TableColumn<T>[])
+
+    if (!col.cell) {
+      col.cell = ({ getValue }) => {
+        const value = getValue()
+
+        if (value === '' || value === null || value === undefined)
+          return '\u00A0'
+
+        return String(value)
+      }
+    }
+
+    return col
+  })
+}
+
+const hasFooter = computed(() => {
+  function hasFooterRecursive(columns: TableColumn<T>[]): boolean {
+    for (const column of columns) {
+      if ('footer' in column)
+        return true
+
+      if ('columns' in column && hasFooterRecursive(column.columns as TableColumn<T>[]))
+        return true
+    }
+
+    return false
+  }
+
+  return hasFooterRecursive(columns.value)
+})
+
 const tableApi = useVueTable({
-  ...reactiveOmit(props, 'data', 'columns', 'caption', 'sticky', 'loading', 'class', 'ui'),
+  ...reactiveOmit(props, 'as', 'data', 'columns', 'virtualize', 'caption', 'sticky', 'loading', 'loadingColor', 'loadingAnimation', 'class', 'ui'),
   data,
-  columns: columns.value,
+  get columns() {
+    return columns.value
+  },
+  meta: meta.value,
   getCoreRowModel: getCoreRowModel(),
 
   ...props.globalFilterOptions,
@@ -244,85 +373,255 @@ const tableApi = useVueTable({
   },
 })
 
+const rows = computed(() => tableApi.getRowModel().rows)
+
+const virtualizerProps = toRef(() => defu(typeof props.virtualize === 'boolean' ? {} : props.virtualize, {
+  estimateSize: 65,
+  overscan: 12,
+}))
+
+const virtualizer = !!props.virtualize && useVirtualizer({
+  ...virtualizerProps.value,
+  get count() {
+    return rows.value.length
+  },
+  getScrollElement: () => rootRef.value?.$el,
+  estimateSize: () => virtualizerProps.value.estimateSize,
+})
+
 function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
   ref.value = typeof updaterOrValue === 'function' ? updaterOrValue(ref.value) : updaterOrValue
 }
 
+function onRowSelect(e: Event, row: TableRow<T>) {
+  if (!props.onSelect)
+    return
+
+  const target = e.target as HTMLElement
+  const isInteractive = target.closest('button') || target.closest('a')
+
+  if (isInteractive)
+    return
+
+  e.preventDefault()
+  e.stopPropagation()
+
+  props.onSelect(e, row)
+}
+
+function onRowHover(e: Event, row: TableRow<T> | null) {
+  if (!props.onHover)
+    return
+
+  props.onHover(e, row)
+}
+
+function onRowContextmenu(e: Event, row: TableRow<T>) {
+  if (!props.onContextmenu)
+    return
+
+  if (Array.isArray(props.onContextmenu))
+    props.onContextmenu.forEach((fn) => fn(e, row))
+  else
+    props.onContextmenu(e, row)
+}
+
+function resolveValue<T, A = undefined>(prop: T | ((arg: A) => T), arg?: A): T | undefined {
+  if (typeof prop === 'function') {
+    // @ts-expect-error: TS can't know if prop is a function here
+    return prop(arg)
+  }
+
+  return prop
+}
+
+watch(() => props.data, () => {
+  data.value = props.data ? [...props.data] : []
+}, props.watchOptions)
+
 const { t } = useLocale()
 const appConfig = useAppConfig() as RuntimeAppConfig
-const style = computed(() => {
-  const ui = cv(merge(theme, appConfig.ui.table))
-  return ui(props)
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.table))
+  return styler({
+    ...props,
+    sticky: props.virtualize ? false : props.sticky,
+    virtualize: !!props.virtualize,
+  })
 })
 
 defineExpose({
+  get $el() {
+    return rootRef.value?.$el
+  },
+  tableRef,
   tableApi,
 })
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <table :class="style.base({ class: props.ui?.base })" data-part="base">
-      <caption v-if="props.caption || slots.caption" :class="style.caption({ class: props.caption })" data-part="caption">
+  <DefineRowTemplate v-slot="{ row, style }">
+    <tr
+      :role="props.onSelect ? 'button' : undefined"
+      :tabindex="props.onSelect ? 0 : undefined"
+      :class="ui.tr({
+        class: [
+          props.ui?.tr,
+          resolveValue(tableApi.options.meta?.class?.tr, row),
+        ],
+      })"
+      :data-selected="row.getIsSelected()"
+      :data-selectable="!!props.onSelect || !!props.onHover || !!props.onContextmenu"
+      :data-expanded="row.getIsExpanded()"
+      data-part="tr"
+      :style="[resolveValue(tableApi.options.meta?.style?.tr, row), style]"
+      @click="onRowSelect($event, row)"
+      @pointerenter="onRowHover($event, row)"
+      @pointerleave="onRowHover($event, null)"
+      @contextmenu="onRowContextmenu($event, row)"
+    >
+      <td
+        v-for="cell in row.getVisibleCells()"
+        :key="cell.id"
+        :colspan="resolveValue(cell.column.columnDef.meta?.colspan?.td, cell)"
+        :rowspan="resolveValue(cell.column.columnDef.meta?.rowspan?.td, cell)"
+        :class="ui.td({
+          class: [
+            props.ui?.td,
+            resolveValue(cell.column.columnDef.meta?.class?.td, cell),
+          ],
+          pinned: !!cell.column.getIsPinned(),
+        })"
+        :data-pinned="cell.column.getIsPinned()"
+        data-part="td"
+        :style="resolveValue(cell.column.columnDef.meta?.style?.td, cell)"
+      >
+        <slot :name="`${cell.column.id}-cell`" v-bind="cell.getContext()">
+          <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+        </slot>
+      </td>
+    </tr>
+
+    <tr v-if="row.getIsExpanded()" :class="ui.tr({ class: props.ui?.tr })" data-part="tr">
+      <td :colspan="row.getAllCells().length" :class="ui.td({ class: props.ui?.td })" data-part="td">
+        <slot name="expanded" :row="row"></slot>
+      </td>
+    </tr>
+  </DefineRowTemplate>
+
+  <DefineTableTemplate>
+    <table ref="tableRef" :class="ui.base({ class: props.ui?.base })" data-part="base">
+      <caption v-if="caption || !!slots.caption" :class="ui.caption({ class: [props.ui?.caption] })" data-part="caption">
         <slot name="caption">
-          {{ props.caption }}
+          {{ caption }}
         </slot>
       </caption>
 
-      <thead :class="style.thead({ class: props.ui?.thead })" data-part="thead">
-        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" :class="style.tr({ class: props.ui?.tr })" data-part="tr">
+      <thead :class="ui.thead({ class: [props.ui?.thead] })" data-part="thead">
+        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" :class="ui.tr({ class: [props.ui?.tr] })" data-part="tr">
           <th
             v-for="header in headerGroup.headers"
             :key="header.id"
             :data-pinned="header.column.getIsPinned()"
-            :class="style.th({ class: props.ui?.th, pinned: !!header.column.getIsPinned() })"
+            :scope="header.colSpan > 1 ? 'colgroup' : 'col'"
+            :colspan="header.colSpan > 1 ? header.colSpan : undefined"
+            :rowspan="header.rowSpan > 1 ? header.rowSpan : undefined"
+            :class="ui.th({
+              class: [
+                props.ui?.th,
+                resolveValue(header.column.columnDef.meta?.class?.th, header),
+              ],
+              pinned: !!header.column.getIsPinned(),
+            })"
             data-part="th"
           >
             <slot :name="`${header.id}-header`" v-bind="header.getContext()">
-              <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext" />
+              <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
             </slot>
           </th>
         </tr>
+
+        <tr :class="ui.separator({ class: [props.ui?.separator] })" data-part="separator"></tr>
       </thead>
 
-      <tbody :class="style.tbody({ class: props.ui?.tbody })" data-part="tbody">
-        <template v-if="tableApi.getRowModel().rows.length > 0">
-          <template v-for="row in tableApi.getRowModel().rows" :key="row.id">
-            <tr :data-selected="row.getIsSelected()" :data-expanded="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr })">
-              <td
-                v-for="cell in row.getVisibleCells()"
-                :key="cell.id"
-                :class="style.td({ class: props.ui?.td, pinned: !!cell.column.getIsPinned() })"
-                data-part="td"
-                :data-pinned="cell.column.getIsPinned()"
-              >
-                <slot :name="`${cell.column.id}-cell`" v-bind="cell.getContext()">
-                  <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                </slot>
-              </td>
-            </tr>
-            <tr v-if="row.getIsExpanded()" :class="style.tr({ class: props.ui?.tr })" data-part="tr">
-              <td :colspan="row.getAllCells().length" :class="style.td({ class: props.ui?.td })" data-part="td">
-                <slot name="expanded" :row="row"></slot>
-              </td>
-            </tr>
+      <tbody :class="ui.tbody({ class: [props.ui?.tbody] })" data-part="tbody">
+        <slot name="body-top"></slot>
+
+        <template v-if="rows.length">
+          <template v-if="virtualizer">
+            <template v-for="(virtualRow, index) in virtualizer.getVirtualItems()" :key="rows[virtualRow.index]?.id">
+              <ReuseRowTemplate
+                :row="rows[virtualRow.index]!"
+                :style="{
+                  height: `${virtualRow.size}px`,
+                  transform: `translateY(${virtualRow.start - index * virtualRow.size}px)`,
+                }"
+              />
+            </template>
+          </template>
+
+          <template v-else>
+            <ReuseRowTemplate v-for="row in rows" :key="row.id" :row="row" />
           </template>
         </template>
 
-        <tr v-else-if="props.loading && slots.loading">
-          <td :colspan="tableApi.getAllLeafColumns().length" :class="style.loading({ class: props.ui?.loading })" data-part="loading">
+        <tr v-else-if="props.loading && !!slots.loading">
+          <td :colspan="tableApi.getAllLeafColumns().length" :class="ui.loading({ class: props.ui?.loading })" data-part="loading">
             <slot name="loading"></slot>
           </td>
         </tr>
 
-        <tr v-else :class="style.tr({ class: props.ui?.tr })" data-part="tr">
-          <td :colspan="tableApi.getAllLeafColumns().length" :class="style.empty({ class: props.ui?.empty })" data-part="empty">
+        <tr v-else>
+          <td :colspan="tableApi.getAllLeafColumns().length" :class="ui.empty({ class: props.ui?.empty })" data-part="empty">
             <slot name="empty">
               {{ props.empty || t('table.noData') }}
             </slot>
           </td>
         </tr>
+
+        <slot name="body-bottom"></slot>
       </tbody>
+
+      <tfoot
+        v-if="hasFooter"
+        :class="ui.tfoot({ class: props.ui?.tfoot })"
+        data-part="tfoot"
+        :style="virtualizer ? {
+          transform: `translateY(${virtualizer.getTotalSize() - virtualizer.getVirtualItems().length * virtualizerProps.estimateSize}px)`,
+        } : undefined"
+      >
+        <tr :class="ui.separator({ class: props.ui?.separator })" data-part="separator"></tr>
+
+        <tr v-for="footerGroup in tableApi.getFooterGroups()" :key="footerGroup.id" :class="ui.tr({ class: props.ui?.tr })" data-part="tr">
+          <th
+            v-for="header in footerGroup.headers"
+            :key="header.id"
+            :data-pinned="header.column.getIsPinned()"
+            :colspan="header.colSpan > 1 ? header.colSpan : undefined"
+            :rowspan="header.rowSpan > 1 ? header.rowSpan : undefined"
+            :class="ui.th({
+              class: [
+                props.ui?.th,
+                resolveValue(header.column.columnDef.meta?.class?.th, header),
+              ],
+              pinned: !!header.column.getIsPinned(),
+            })"
+            data-part="th"
+            :style="resolveValue(header.column.columnDef.meta?.style?.th, header)"
+          >
+            <slot :name="`${header.id}-footer`" v-bind="header.getContext()">
+              <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.footer" :props="header.getContext()" />
+            </slot>
+          </th>
+        </tr>
+      </tfoot>
     </table>
+  </DefineTableTemplate>
+
+  <Primitive ref="rootRef" :as="props.as" v-bind="$attrs" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <div v-if="virtualizer" :style="{ height: `${virtualizer.getTotalSize()}px` }">
+      <ReuseTableTemplate />
+    </div>
+    <ReuseTableTemplate v-else />
   </Primitive>
 </template>

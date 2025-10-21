@@ -132,7 +132,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
   /**
    * The orientation of the content.
    * Only works when `orientation` is `horizontal`.
-   * @default 'horizontal'
+   * @default "horizontal"
    */
   contentOrientation?: ThemeVariants['contentOrientation']
   /**

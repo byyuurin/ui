@@ -3,7 +3,7 @@ import type { PinInputProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const value = ref<string[]>([])
-const controls: ControlItems<PinInputProps> = [
+const controls: ControlItems<PinInputProps<'text' | 'number'>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },

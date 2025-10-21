@@ -22,7 +22,7 @@ const controls: ControlItems<FormFieldProps> = [
   >
     <div class="space-y-2">
       <UFormField v-bind="attrs">
-        <UInput />
+        <UInput class="w-full" />
       </UFormField>
     </div>
   </ExampleView>

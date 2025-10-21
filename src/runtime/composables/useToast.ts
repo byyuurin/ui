@@ -56,7 +56,7 @@ export function useToast() {
       return
 
     toasts.value[index] = {
-      ...toasts.value[index],
+      ...toasts.value[index]!,
       ...toast,
     }
   }
@@ -68,7 +68,7 @@ export function useToast() {
       return
 
     toasts.value[index] = {
-      ...toasts.value[index],
+      ...toasts.value[index]!,
       open: false,
     }
 

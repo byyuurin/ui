@@ -38,7 +38,7 @@ const state = reactive<Partial<z.input<typeof schema>>>({
   slider: 0,
 })
 
-const controls: ControlItems<FormProps<typeof state>> = [
+const controls: ControlItems<FormProps<typeof schema>> = [
   {
     prop: 'validateOn',
     value: ['input', 'change', 'blur'],
