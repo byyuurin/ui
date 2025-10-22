@@ -14,6 +14,7 @@ const controls: ControlItems<AvatarProps> = [
   { prop: 'text', value: '', placeholder: 'No text' },
   { prop: 'alt', value: '', placeholder: 'No alt', warning: 'When no icon or text is provided, the initials of the `alt` prop is used as fallback.' },
   { prop: 'style', value: '' },
+  { prop: 'chip', value: false },
 ]
 </script>
 

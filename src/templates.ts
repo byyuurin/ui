@@ -5,6 +5,7 @@ import { addTemplate, addTypeTemplate, findPath } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import { loadConfig } from '@unocss/config'
 import type { UserShortcuts } from '@unocss/core'
+import { genExport } from 'knitwork'
 import type { NuxtTemplate, NuxtTypeTemplate } from 'nuxt/schema'
 import { kebabCase } from 'scule'
 import { neutralColors } from './defaults'
@@ -178,6 +179,16 @@ declare module '@nuxt/schema' {
 
 export {}
 `
+    },
+  })
+
+  templates.push({
+    filename: 'ui-image-component.ts',
+    write: true,
+    getContents: ({ app }) => {
+      const image = app?.components?.find((c) => c.pascalName === 'NuxtImg' && !/nuxt(?:-nightly)?\/dist\/app/.test(c.filePath))
+
+      return image ? genExport(image.filePath, [{ name: image.export, as: 'default' }]) : 'export default "img"'
     },
   })
 
