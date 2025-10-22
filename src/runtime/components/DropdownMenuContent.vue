@@ -52,6 +52,8 @@ import Kbd from './Kbd.vue'
 import Link from './Link.vue'
 import LinkBase from './LinkBase.vue'
 
+defineOptions({ inheritAttrs: false })
+
 const props = defineProps<DropdownMenuContentProps<T>>()
 const emit = defineEmits<DropdownMenuContentEmits>()
 const slots = defineSlots<DropdownMenuContentSlots<T>>()
@@ -148,7 +150,7 @@ const groups = computed<DropdownMenuItem[][]>(
   </DefineItemTemplate>
 
   <DropdownMenu.Portal v-bind="portalProps">
-    <component :is="(props.sub ? DropdownMenu.SubContent : DropdownMenu.Content)" v-bind="contentProps" :class="props.class">
+    <component :is="(props.sub ? DropdownMenu.SubContent : DropdownMenu.Content)" v-bind="{ ...contentProps, ...$attrs }" :class="props.class">
       <slot name="content-top"></slot>
 
       <div role="presentation" :class="props.ui.viewport({ class: props.uiOverride?.viewport })" data-part="viewport">

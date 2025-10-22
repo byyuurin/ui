@@ -19,31 +19,30 @@ const items = [
       label: 'Profile',
       icon: 'i-lucide-user',
       slot: 'profile' as const,
-      to: '#/profile',
-      color: 'error',
+      to: '/other?path=/profile',
     },
     {
       label: 'Billing',
       icon: 'i-lucide-credit-card',
-      to: '#/billing',
+      to: '/other?path=/billing',
     },
     {
       label: 'Settings',
       icon: 'i-lucide-cog',
       kbds: [','],
-      to: '#/settings',
+      to: '/other?path=/settings',
     },
     {
       label: 'Keyboard shortcuts',
       icon: 'i-lucide-monitor',
-      to: '#/shortcuts',
+      to: '/other?path=/shortcuts',
     },
   ],
   [
     {
       label: 'Team',
       icon: 'i-lucide-users',
-      to: '#/team',
+      to: '/other?path=/team',
     },
     {
       label: 'Invite users',
@@ -98,6 +97,7 @@ const items = [
       icon: 'i-lucide-log-out',
       kbds: ['shift', 'meta', 'q'],
       to: '/other',
+      color: 'error',
     },
   ],
 ] satisfies DropdownMenuItem[][]
