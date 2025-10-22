@@ -28,7 +28,7 @@ export default (options: Required<ModuleOptions>) => {
       label: 'font-semibold text-highlighted',
       separator: '-mx-1 my-1 h-px bg-border',
       item: [
-        'group relative w-full flex items-center select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md cursor-pointer data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
+        'group relative w-full flex items-start select-none outline-none before:content-empty before:absolute before:z-[-1] before:inset-px before:rounded-md cursor-pointer data-[disabled]:cursor-not-allowed data-[disabled]:opacity-75 text-default data-[highlighted]:not-[[data-disabled]]:text-highlighted data-[highlighted]:not-[[data-disabled]]:before:bg-elevated/50',
         options.theme.transitions && 'transition-colors before:transition-colors',
       ],
       itemLeadingIcon: [
@@ -41,7 +41,9 @@ export default (options: Required<ModuleOptions>) => {
       itemLeadingChipSize: '',
       itemTrailing: 'ms-auto inline-flex gap-1.5 items-center',
       itemTrailingIcon: 'shrink-0',
+      itemWrapper: 'flex-1 flex flex-col min-w-0',
       itemLabel: 'truncate',
+      itemDescription: 'truncate text-muted',
     },
     variants: {
       ...input.variants,

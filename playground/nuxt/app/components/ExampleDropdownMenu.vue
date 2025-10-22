@@ -6,10 +6,12 @@ const items = [
   [
     {
       label: 'User Name',
+      description: '...',
       avatar: {
         src: 'https://i.pravatar.cc/100',
       },
       type: 'label',
+      color: 'success',
     },
   ],
   [
@@ -17,26 +19,31 @@ const items = [
       label: 'Profile',
       icon: 'i-lucide-user',
       slot: 'profile' as const,
-      to: '/',
+      to: '#/profile',
+      color: 'error',
     },
     {
       label: 'Billing',
       icon: 'i-lucide-credit-card',
+      to: '#/billing',
     },
     {
       label: 'Settings',
       icon: 'i-lucide-cog',
       kbds: [','],
+      to: '#/settings',
     },
     {
       label: 'Keyboard shortcuts',
       icon: 'i-lucide-monitor',
+      to: '#/shortcuts',
     },
   ],
   [
     {
       label: 'Team',
       icon: 'i-lucide-users',
+      to: '#/team',
     },
     {
       label: 'Invite users',

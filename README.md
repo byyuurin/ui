@@ -33,16 +33,16 @@ export default defineNuxtConfig({
     '@byyuurin/ui/nuxt',
   ],
   ui: {
-    // prefix: 'U',
-    // colorMode: true,
-    // theme: {
-    //   colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
-    //   transitions: true,
-    //   defaultVariants: {
-    //     color: 'primary',
-    //     size: 'md',
-    //   },
-    // },
+    prefix: 'U',
+    colorMode: true,
+    theme: {
+      colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+      transitions: true,
+      defaultVariants: {
+        color: 'primary',
+        size: 'md',
+      },
+    },
   },
 })
 ```
@@ -86,49 +86,48 @@ Create `ui.config.ts` file for unified management of UI settings:
 import { setup } from '@byyuurin/ui/setup'
 
 export default setup({
-  // prefix: 'U',
-  // autoImport: {
-  //   dts: 'src/typed-imports.d.ts',
-  //   imports: ['vue'],
-  // },
-  // components: {
-  //   dts: 'src/typed-components.d.ts',
-  // },
-  // colorMode: true,
-  // theme: {
-  //   colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
-  //   transitions: true,
-  //   defaultVariants: {
-  //     color: 'primary',
-  //     size: 'md',
-  //   },
-  // },
-  // ui: {
-  //   colors: {
-  //     primary: 'green',
-  //     secondary: 'blue',
-  //     success: 'green',
-  //     info: 'blue',
-  //     warning: 'yellow',
-  //     error: 'red',
-  //     neutral: 'slate',
-  //   },
-  //   icons: {
-  //     close: 'i-lucide-x',
-  //     loading: 'i-lucide-loader-circle',
-  //     check: 'i-lucide-check',
-  //     chevronUp: 'i-lucide-chevron-up',
-  //     chevronDown: 'i-lucide-chevron-down',
-  //     chevronLeft: 'i-lucide-chevron-left',
-  //     chevronRight: 'i-lucide-chevron-right',
-  //     chevronDoubleLeft: 'i-lucide-chevrons-left',
-  //     chevronDoubleRight: 'i-lucide-chevrons-right',
-  //     ellipsis: 'i-lucide-ellipsis',
-  //     plus: 'i-lucide-plus',
-  //     minus: 'i-lucide-minus',
-  //     external: 'i-lucide-arrow-up-right',
-  //   },
-  // },
+  prefix: 'U',
+  autoImport: {
+    // ... unplugin-auto-import options
+  },
+  components: {
+    // ... unplugin-vue-components options
+  },
+  colorMode: true,
+  theme: {
+    colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+    transitions: true,
+    defaultVariants: {
+      color: 'primary',
+      size: 'md',
+    },
+  },
+  ui: {
+    colors: {
+      primary: 'green',
+      secondary: 'blue',
+      success: 'green',
+      info: 'blue',
+      warning: 'yellow',
+      error: 'red',
+      neutral: 'slate',
+    },
+    icons: {
+      close: 'i-lucide-x',
+      loading: 'i-lucide-loader-circle',
+      check: 'i-lucide-check',
+      chevronUp: 'i-lucide-chevron-up',
+      chevronDown: 'i-lucide-chevron-down',
+      chevronLeft: 'i-lucide-chevron-left',
+      chevronRight: 'i-lucide-chevron-right',
+      chevronDoubleLeft: 'i-lucide-chevrons-left',
+      chevronDoubleRight: 'i-lucide-chevrons-right',
+      ellipsis: 'i-lucide-ellipsis',
+      plus: 'i-lucide-plus',
+      minus: 'i-lucide-minus',
+      external: 'i-lucide-arrow-up-right',
+    },
+  },
 })
 ```
 

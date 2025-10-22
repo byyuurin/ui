@@ -6,9 +6,9 @@ export interface ComponentBaseProps {
 
 export type ComponentStyler<T> = T extends { parts: infer P, variants: infer V }
   ? {
-      [Part in keyof P]?: V extends undefined
-        ? () => string
-        : (props?: VariantProps<T>) => string
+      [Part in keyof P]: V extends undefined
+        ? (props: { class?: ClassValue }) => string
+        : (props?: VariantProps<T> & { class?: ClassValue }) => string
     }
   : Record<string, never>
 
