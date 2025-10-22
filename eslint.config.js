@@ -4,6 +4,11 @@ import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 export default byyuurin(
   {
     unocss: false,
+    javascript: {
+      overrides: {
+        'no-console': ['error', { allow: ['trace'] }],
+      },
+    },
     vue: {
       overrides: {
         'ts/no-empty-object-type': 'off',
