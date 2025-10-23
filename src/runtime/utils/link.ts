@@ -1,4 +1,5 @@
 import { reactivePick } from '@vueuse/core'
+import { diff, isEqual } from 'ohash/utils'
 import type { LinkProps } from '../types'
 
 export function pickLinkProps(
@@ -9,19 +10,19 @@ export function pickLinkProps(
   const ariaKeys = keys.filter((key) => key.startsWith('aria-')) as Array<`aria-${string}`>
   const dataKeys = keys.filter((key) => key.startsWith('data-')) as Array<`data-${string}`>
 
-  const pickProps: (keyof LinkProps | 'title' | 'onClick')[] = [
+  const pickProps: (keyof LinkProps | 'download' | 'title' | 'onClick')[] = [
     'active',
     'activeClass',
     'ariaCurrentValue',
     'as',
     'disabled',
-    'disableClass',
     'exact',
     'exactActiveClass',
     'exactHash',
     'exactQuery',
     'external',
     'href',
+    'download',
     'inactiveClass',
     'noPrefetch',
     'noRel',
@@ -34,6 +35,8 @@ export function pickLinkProps(
     'type',
     'title',
     'onClick',
+    'title',
+    'onClick',
   ] as const
 
   return reactivePick(
@@ -42,4 +45,18 @@ export function pickLinkProps(
     ...ariaKeys,
     ...dataKeys,
   )
+}
+
+export function isPartiallyEqual(item1: any, item2: any) {
+  const diffedKeys = diff(item1, item2).reduce((filtered, q) => {
+    if (q.type === 'added')
+      filtered.add(q.key)
+
+    return filtered
+  }, new Set<string>())
+
+  const item1Filtered = Object.fromEntries(Object.entries(item1).filter(([key]) => !diffedKeys.has(key)))
+  const item2Filtered = Object.fromEntries(Object.entries(item2).filter(([key]) => !diffedKeys.has(key)))
+
+  return isEqual(item1Filtered, item2Filtered)
 }
