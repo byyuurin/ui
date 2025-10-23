@@ -77,6 +77,10 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.alias['#ui'] = resolve('./runtime')
     nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, getDefaultUIConfig(options.theme.colors))
 
+    // Isolate root node from portaled components
+    nuxt.options.app.rootAttrs ||= {}
+    nuxt.options.app.rootAttrs.class = [nuxt.options.app.rootAttrs.class, 'isolate'].filter(Boolean).join(' ')
+
     async function registerModule(name: string, key: string, options: Record<string, any>) {
       if (hasNuxtModule(name))
         (nuxt.options as any)[key] = defu((nuxt.options as any)[key], options)

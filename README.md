@@ -184,7 +184,7 @@ export default defineConfig({
 })
 ```
 
-### Install Vue plugin
+### Use Vue plugin
 
 ```ts
 // src/main.ts
@@ -208,12 +208,26 @@ app.use(router)
 app.mount('#app')
 ```
 
+## Add the isolate class to your root container
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    ...
+  </head>
+  <body>
+    <div id="app" class="isolate"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+```
+
 </details>
 
 ## Credits
 
 - [UnoCSS](https://github.com/unocss/unocss)
-- [daisyui](https://github.com/saadeghi/daisyui)
 - [@nuxt/ui](https://github.com/nuxt/ui)
 - [Reka UI](https://github.com/unovue/radix-vue)
 - [VueUse](https://github.com/vueuse/vueuse)

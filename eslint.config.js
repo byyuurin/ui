@@ -71,4 +71,10 @@ export default byyuurin(
       'style/padding-line-between-statements': 'off',
     },
   },
+  {
+    files: ['**/*.md/*.html'],
+    rules: {
+      'format/prettier': 'off',
+    },
+  },
 )

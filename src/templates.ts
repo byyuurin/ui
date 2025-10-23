@@ -129,6 +129,9 @@ export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
   },
   userConfig,
 ]))
+
+// @unocss-include
+// isolate
 `
       },
     })
