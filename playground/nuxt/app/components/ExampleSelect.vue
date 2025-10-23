@@ -2,7 +2,7 @@
 import type { SelectProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const value = ref('Apple')
+const value = ref<string | null>(null)
 
 const items = [
   ['Apple', 'Banana', 'Blueberry', 'Grapes', 'Pineapple'],
