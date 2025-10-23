@@ -1,4 +1,4 @@
-import { defineLocale } from '../utils'
+import { defineLocale } from '../utils/locale'
 
 export default defineLocale({
   name: '繁體中文',

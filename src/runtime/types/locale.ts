@@ -1,4 +1,8 @@
-export type { Locale, LocaleDirection } from '@byyuurin/ui-kit'
+import type { Locale as DefineLocale, LocaleDirection } from '@byyuurin/ui-kit'
+
+export type DefineLocaleOptions<M> = DefineLocale<M>
+export type Locale<M> = Required<DefineLocale<M>>
+export type Direction = LocaleDirection
 
 export interface Messages {
   alert: {

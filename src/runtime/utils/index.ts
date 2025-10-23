@@ -1,18 +1,12 @@
-import type { Locale } from '@byyuurin/ui-kit'
 import { get } from '@byyuurin/ui-kit'
 import { isEqual } from 'ohash'
-import type { Messages } from '../types'
 import type { GetItemKeys } from '../types/utils'
 
 export * from './form'
 export * from './link'
 export * from './vue'
-export { createTranslator, get, omit, pick, set } from '@byyuurin/ui-kit'
+export { get, omit, pick, set } from '@byyuurin/ui-kit'
 export { looseToNumber } from '@vue/shared'
-
-export function defineLocale(locale: Locale<Messages>) {
-  return locale
-}
 
 export function compare<T>(
   value?: T,
