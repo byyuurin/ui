@@ -150,6 +150,7 @@
     "@byyuurin/uno-merge": "^0.2.1",
     "@iconify/vue": "^5.0.0",
     "@internationalized/date": "^3.10.0",
+    "@nuxt/fonts": "^0.11.4",
     "@nuxt/icon": "^1.15.0",
     "@nuxt/kit": "^3.19.3",
     "@nuxtjs/color-mode": "^3.5.2",

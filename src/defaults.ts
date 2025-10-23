@@ -21,6 +21,7 @@ export function getDefaultUIConfig(colors?: string[]): AppConfigUI<VariantsColor
 
 export const defaultOptions = {
   prefix: 'U',
+  fonts: true,
   colorMode: true,
   theme: {
     colors: undefined,

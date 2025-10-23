@@ -19,6 +19,12 @@ export interface ModuleOptions {
   prefix?: string
 
   /**
+   * Enable or disable `@nuxt/fonts` module
+   * @default true
+   */
+  fonts?: boolean
+
+  /**
    * Enable or disable `@nuxtjs/color-mode` module
    *
    * @default true
@@ -91,6 +97,14 @@ export default defineNuxtModule<ModuleOptions>({
     await registerModule('@nuxt/icon', 'icon', {
       cssLayer: 'components',
     })
+
+    if (options.fonts) {
+      await registerModule('@nuxt/fonts', 'fonts', {
+        defaults: {
+          weights: [400, 500, 600, 700],
+        },
+      })
+    }
 
     if (options.colorMode) {
       await registerModule('@nuxtjs/color-mode', 'colorMode', {

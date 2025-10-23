@@ -54,6 +54,9 @@ export function createUnoPreset(options: PresetOptions = {}) {
   const preset: Preset<Theme> = {
     name: '@byyuurin/ui/uno-preset',
     theme: {
+      font: {
+        sans: '"Public Sans",sans-serif',
+      },
       colors: {
         // theme colors
         'tw-neutral': twColors.neutral,

@@ -18,7 +18,7 @@ import type { AppConfigUI } from './setup'
 
 export const runtimeDir = normalize(fileURLToPath(new URL('runtime', import.meta.url)))
 
-export interface UIOptions extends ModuleOptions {
+export interface UIOptions extends Omit<ModuleOptions, 'fonts' | 'colorMode'> {
   /** Whether to generate declaration files for auto-imported components. */
   dts?: boolean
   ui?: AppConfigUI
