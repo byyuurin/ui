@@ -48,6 +48,12 @@ const controls: ControlItems<SelectProps<typeof items>> = [
         <template #trailing>
           <Placeholder label="#trailing" />
         </template>
+        <template #content-top>
+          <Placeholder label="#content-top" />
+        </template>
+        <template #content-bottom>
+          <Placeholder label="#content-bottom" />
+        </template>
         <template #item>
           <Placeholder label="#item" />
         </template>
@@ -61,6 +67,12 @@ const controls: ControlItems<SelectProps<typeof items>> = [
         </template>
         <template #trailing>
           <Placeholder label="#trailing" />
+        </template>
+        <template #content-top>
+          <Placeholder label="#content-top" />
+        </template>
+        <template #content-bottom>
+          <Placeholder label="#content-bottom" />
         </template>
         <template #item-label>
           <Placeholder label="#item-label" />

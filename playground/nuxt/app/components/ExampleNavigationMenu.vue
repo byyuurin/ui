@@ -7,7 +7,7 @@ const items = ref([
     {
       label: 'Guide',
       icon: 'i-lucide-book-open',
-      href: '#',
+      href: '/other',
       children: [
         {
           label: 'Introduction',
@@ -39,65 +39,66 @@ const items = ref([
     {
       label: 'Composables',
       icon: 'i-lucide-database',
-      href: '#',
+      href: '/other',
       slot: 'composables',
       children: [
         {
           label: 'useModal',
           icon: 'i-lucide-file-text',
           description: 'Display a modal within your application.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'useToast',
           icon: 'i-lucide-file-text',
           description: 'Display a toast within your application.',
-          href: '#',
+          href: '/other',
         },
       ],
     },
     {
       label: 'Components',
       icon: 'i-lucide-box',
-      href: '#',
+      href: '/other',
       active: true,
       children: [
         {
           label: 'Link',
           icon: 'i-lucide-file-text',
           description: 'Use NuxtLink with superpowers.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Modal',
           icon: 'i-lucide-file-text',
           description: 'Display a modal within your application.',
-          href: '#',
+          href: '/other',
+          disabled: true,
         },
         {
           label: 'NavigationMenu',
           icon: 'i-lucide-file-text',
           description: 'Display a list of links.',
-          href: '#',
+          href: '/other',
           active: true,
         },
         {
           label: 'Pagination',
           icon: 'i-lucide-file-text',
           description: 'Display a list of pages.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Popover',
           icon: 'i-lucide-file-text',
           description: 'Display a non-modal dialog that floats around a trigger element.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Progress',
           icon: 'i-lucide-file-text',
           description: 'Show a horizontal bar to indicate task progression.',
-          href: '#',
+          href: '/other',
           children: [
             {
               label: 'Foo',
@@ -122,7 +123,7 @@ const items = ref([
       label: 'GitHub',
       icon: 'i-simple-icons-github',
       badge: '999',
-      href: '#',
+      href: '/other',
       target: '_blank',
       tooltip: {
         text: 'Open in GitHub',
