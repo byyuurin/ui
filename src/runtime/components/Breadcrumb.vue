@@ -86,34 +86,34 @@ const ui = computed(() => {
             <LinkBase
               v-bind="slotProps"
               as="span"
-              :aria-current="active && (index === items!.length - 1) ? 'page' : undefined"
-              :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
+              :aria-current="(item.active ?? active) && (index === items!.length - 1) ? 'page' : undefined"
+              :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: item.active ?? index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
               data-part="link"
             >
-              <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :active="index === items!.length - 1" :ui="ui">
-                <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :active="index === items!.length - 1" :index="index" :ui="ui">
+              <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :active="item.active ?? index === items!.length - 1" :ui="ui">
+                <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :active="item.active ?? index === items!.length - 1" :index="index" :ui="ui">
                   <Icon
                     v-if="item.icon"
                     :name="item.icon"
-                    :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: index === items!.length - 1 })"
+                    :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: item.active ?? index === items!.length - 1 })"
                     data-part="link-leading-icon"
                   />
                   <Avatar
                     v-else-if="item.avatar"
                     :size="((props.ui?.linkLeadingAvatarSize || ui.linkLeadingAvatarSize()) as AvatarProps['size'])"
                     v-bind="item.avatar"
-                    :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active: index === items!.length - 1 })"
+                    :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active: item.active ?? index === items!.length - 1 })"
                     data-part="link-leading-avatar"
                   />
                 </slot>
 
                 <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="link-label">
-                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractSlotItem<T>)" :active="index === items!.length - 1" :index="index">
+                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractSlotItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey as string) }}
                   </slot>
                 </span>
 
-                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as ExtractSlotItem<T>)" :active="index === items!.length - 1" :index="index"></slot>
+                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as ExtractSlotItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index"></slot>
               </slot>
             </LinkBase>
           </Link>
