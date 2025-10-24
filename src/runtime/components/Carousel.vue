@@ -216,11 +216,11 @@ watch(() => [props.autoplay, props.autoScroll, props.autoHeight, props.className
   emblaApi.value?.reInit(options.value, plugins.value)
 }, { immediate: true })
 
-const [emblaRef, emblaApi] = useEmblaCarousel(options.value, plugins.value)
+const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins)
 
-watch([options, plugins], () => {
+watch(options, () => {
   emblaApi.value?.reInit(options.value, plugins.value)
-})
+}, { flush: 'post' })
 
 function scrollPrev() {
   emblaApi.value?.scrollPrev()
