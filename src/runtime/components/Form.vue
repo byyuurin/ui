@@ -3,15 +3,6 @@ import theme from '#build/ui/form'
 import type { ComponentBaseProps, Form, FormData, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, InferInput, InferOutput, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface FormEmits<S extends FormSchema, T extends boolean = true> {
-  submit: [event: FormSubmitEvent<FormData<S, T>>]
-  error: [event: FormErrorEvent]
-}
-
-export interface FormSlots {
-  default: StaticSlot<{ errors: FormError[], loading: boolean }>
-}
-
 export interface FormProps<S extends FormSchema, T extends boolean = true, N extends boolean = false> extends ComponentBaseProps {
   id?: string | number
   /** Schema to validate the form state. Supports Standard Schema objects, Yup, Joi, and Superstructs. */
@@ -68,6 +59,15 @@ export interface FormProps<S extends FormSchema, T extends boolean = true, N ext
   loadingAuto?: boolean
 
   onSubmit?: ((event: FormSubmitEvent<T>) => void | Promise<void>) | (() => void | Promise<void>)
+}
+
+export interface FormEmits<S extends FormSchema, T extends boolean = true> {
+  submit: [event: FormSubmitEvent<FormData<S, T>>]
+  error: [event: FormErrorEvent]
+}
+
+export interface FormSlots {
+  default: StaticSlot<{ errors: FormError[], loading: boolean }>
 }
 </script>
 

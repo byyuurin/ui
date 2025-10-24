@@ -5,10 +5,6 @@ import theme from '#build/ui/field-group'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface FieldGroupSlots {
-  default: StaticSlot
-}
-
 type ThemeVariant = VariantProps<typeof theme>
 
 export interface FieldGroupProps extends ComponentBaseProps {
@@ -24,6 +20,10 @@ export interface FieldGroupProps extends ComponentBaseProps {
    * @default "horizontal"
    */
   orientation?: ThemeVariant['orientation']
+}
+
+export interface FieldGroupSlots {
+  default: StaticSlot
 }
 </script>
 

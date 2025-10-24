@@ -6,17 +6,6 @@ import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, Runt
 import type { ModelModifiers } from '../types/input'
 import type { StaticSlot } from '../types/utils'
 
-export interface InputNumberEmits {
-  'update:modelValue': [payload: number]
-  'blur': [event: FocusEvent]
-  'change': [payload: Event]
-}
-
-export interface InputNumberSlots {
-  increment: StaticSlot
-  decrement: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRootProps, 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'stepSnapping' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions' | 'disableWheelChange' | 'invertWheelChange' | 'readonly'> {
@@ -73,6 +62,17 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
    */
   locale?: string
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface InputNumberEmits {
+  'update:modelValue': [value: number]
+  'blur': [event: FocusEvent]
+  'change': [event: Event]
+}
+
+export interface InputNumberSlots {
+  increment: StaticSlot
+  decrement: StaticSlot
 }
 </script>
 

@@ -5,10 +5,6 @@ import type { RouteLocationRaw, RouterLinkProps } from 'vue-router'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface LinkSlots {
-  default: StaticSlot<{ active: boolean }>
-}
-
 interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
    * Route Location the link should navigate to when clicked on.
@@ -81,6 +77,10 @@ export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
   custom?: boolean
   /** When `true`, only styles from `class`, `activeClass`, and `inactiveClass` will be applied. */
   raw?: boolean
+}
+
+export interface LinkSlots {
+  default: StaticSlot<{ active: boolean }>
 }
 </script>
 

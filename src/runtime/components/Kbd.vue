@@ -7,10 +7,6 @@ import type { KbdKey } from '../composables/useKbd'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface KbdSlots {
-  default: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface KbdProps extends ComponentBaseProps {
@@ -26,6 +22,10 @@ export interface KbdProps extends ComponentBaseProps {
   /** @default "neutral" */
   color?: ThemeVariants['color']
   value?: KbdKey | (string & {})
+}
+
+export interface KbdSlots {
+  default: StaticSlot
 }
 </script>
 

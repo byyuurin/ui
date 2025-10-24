@@ -5,18 +5,6 @@ import theme from '#build/ui/alert'
 import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface AlertEmits {
-  'update:open': [value: boolean]
-}
-
-export interface AlertSlots {
-  leading: StaticSlot
-  title: StaticSlot
-  description: StaticSlot
-  actions: StaticSlot
-  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface AlertProps extends ComponentBaseProps {
@@ -55,6 +43,18 @@ export interface AlertProps extends ComponentBaseProps {
    */
   closeIcon?: IconProps['name']
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface AlertEmits {
+  'update:open': [open: boolean]
+}
+
+export interface AlertSlots {
+  leading: StaticSlot
+  title: StaticSlot
+  description: StaticSlot
+  actions: StaticSlot
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

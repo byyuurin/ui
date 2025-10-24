@@ -4,27 +4,6 @@ import theme from '#build/ui/pagination'
 import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface PaginationEmits extends PaginationRootEmits {}
-
-export interface PaginationSlots {
-  first: StaticSlot
-  prev: StaticSlot
-  next: StaticSlot
-  last: StaticSlot
-  ellipsis: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  item: StaticSlot<{
-    page: number
-    pageCount: number
-    item: {
-      type: 'ellipsis'
-    } | {
-      type: 'page'
-      value: number
-    }
-    index: number
-  }>
-}
-
 export interface PaginationProps extends ComponentBaseProps, Pick<PaginationRootProps, 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'> {
   /**
    * The element or component this component should render as.
@@ -92,6 +71,27 @@ export interface PaginationProps extends ComponentBaseProps, Pick<PaginationRoot
    */
   to?: (page: number) => ButtonProps['to']
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface PaginationEmits extends PaginationRootEmits {}
+
+export interface PaginationSlots {
+  first: StaticSlot
+  prev: StaticSlot
+  next: StaticSlot
+  last: StaticSlot
+  ellipsis: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  item: StaticSlot<{
+    page: number
+    pageCount: number
+    item: {
+      type: 'ellipsis'
+    } | {
+      type: 'page'
+      value: number
+    }
+    index: number
+  }>
 }
 </script>
 

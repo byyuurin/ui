@@ -3,9 +3,9 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
 import theme from '#build/ui/tabs'
 import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, StaticSlot } from '../types/utils'
+import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
 
-export interface TabsEmits extends TabsRootEmits<string | number> {}
+type ExtractSlotItem<T extends TabsItem> = Extract<NestedItem<T>, { slot: string }>
 
 export interface TabsItem {
   label?: string
@@ -21,17 +21,6 @@ export interface TabsItem {
   ui?: Pick<ComponentUIProps<typeof theme>, 'trigger' | 'leadingIcon' | 'leadingAvatar' | 'leadingAvatarSize' | 'label' | 'trailingBadge' | 'trailingBadgeSize' | 'content'>
   [key: string]: any
 }
-
-type SlotProps<T extends TabsItem> = StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
-
-export type TabsSlots<T extends TabsItem = TabsItem> = {
-  'leading': SlotProps<T>
-  'default': StaticSlot<{ item: T, index: number }>
-  'trailing': SlotProps<T>
-  'content': SlotProps<T>
-  'list-leading': StaticSlot
-  'list-trailing': StaticSlot
-} & DynamicSlots<T, undefined, { index: number, ui: ComponentStyler<typeof theme> }>
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -65,6 +54,17 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentBaseP
   labelKey?: GetItemKeys<T>
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface TabsEmits extends TabsRootEmits<string | number> {}
+
+export type TabsSlots<T extends TabsItem = TabsItem> = {
+  'leading': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'default': StaticSlot<{ item: T, index: number }>
+  'trailing': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'content': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'list-leading': StaticSlot
+  'list-trailing': StaticSlot
+} & DynamicSlots<T, undefined, { index: number, ui: ComponentStyler<typeof theme> }>
 </script>
 
 <script lang="ts" setup generic="T extends TabsItem">
@@ -174,7 +174,7 @@ defineExpose({
         :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
       >
-        <slot :name="((item.slot || 'content') as keyof TabsSlots<T>)" :item="(item as Extract<T, { slot: string }>)" :index="index" :ui="ui">
+        <slot :name="((item.slot || 'content') as 'content')" :item="(item as ExtractSlotItem<T>)" :index="index" :ui="ui">
           {{ item.content }}
         </slot>
       </TabsContent>

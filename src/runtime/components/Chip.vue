@@ -5,15 +5,6 @@ import theme from '#build/ui/chip'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface ChipEmits {
-  'update:show': [payload: boolean]
-}
-
-export interface ChipSlots {
-  default: StaticSlot
-  content: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ChipProps extends ComponentBaseProps {
@@ -36,6 +27,15 @@ export interface ChipProps extends ComponentBaseProps {
   /** When `true`, render the chip relatively to the parent. */
   standalone?: boolean
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ChipEmits {
+  'update:show': [show: boolean]
+}
+
+export interface ChipSlots {
+  default: StaticSlot
+  content: StaticSlot
 }
 </script>
 

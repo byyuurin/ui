@@ -5,23 +5,6 @@ import theme from '#build/ui/drawer'
 import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
-export interface DrawerEmits extends DialogRootEmits {
-  'after-leave': []
-  'after-enter': []
-  'close-prevent': []
-}
-
-export interface DrawerSlots {
-  default: StaticSlot<{ open: boolean }>
-  content: StaticSlot<{ close: () => void }>
-  header: StaticSlot<{ close: () => void }>
-  title: StaticSlot
-  description: StaticSlot
-  close: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
-  body: StaticSlot<{ close: () => void }>
-  footer: StaticSlot<{ close: () => void }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
@@ -66,6 +49,23 @@ export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
    */
   dismissible?: boolean
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface DrawerEmits extends DialogRootEmits {
+  'after-leave': []
+  'after-enter': []
+  'close-prevent': []
+}
+
+export interface DrawerSlots {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot<{ close: () => void }>
+  header: StaticSlot<{ close: () => void }>
+  title: StaticSlot
+  description: StaticSlot
+  close: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
+  body: StaticSlot<{ close: () => void }>
+  footer: StaticSlot<{ close: () => void }>
 }
 </script>
 

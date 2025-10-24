@@ -5,15 +5,6 @@ import theme from '#build/ui/checkbox'
 import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface CheckboxEmits {
-  change: [payload: Event]
-}
-
-export interface CheckboxSlots {
-  label: StaticSlot<{ label?: string }>
-  description: StaticSlot<{ description?: string }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
@@ -44,6 +35,15 @@ export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProp
   indeterminateIcon?: IconProps['name']
   modelValue?: boolean | 'indeterminate'
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface CheckboxEmits {
+  change: [event: Event]
+}
+
+export interface CheckboxSlots {
+  label: StaticSlot<{ label?: string }>
+  description: StaticSlot<{ description?: string }>
 }
 </script>
 

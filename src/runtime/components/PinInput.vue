@@ -7,11 +7,6 @@ import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../
 type PinInputType = 'text' | 'number'
 type PinInputValue<Type extends PinInputType> = [Type] extends ['number'] ? number[] : string[]
 
-export type PinInputEmits<T extends PinInputType = 'text'> = PinInputRootEmits<T> & {
-  change: [payload: Event]
-  blur: [payload: Event]
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface PinInputProps<T extends PinInputType = 'text'> extends ComponentBaseProps, Pick<PinInputRootProps<T>, 'defaultValue' | 'disabled' | 'id' | 'mask' | 'modelValue' | 'name' | 'otp' | 'placeholder' | 'required' | 'type'> {
@@ -35,6 +30,11 @@ export interface PinInputProps<T extends PinInputType = 'text'> extends Componen
   autofocusDelay?: number
   highlight?: boolean
   ui?: ComponentUIProps<typeof theme>
+}
+
+export type PinInputEmits<T extends PinInputType = 'text'> = PinInputRootEmits<T> & {
+  change: [event: Event]
+  blur: [event: Event]
 }
 </script>
 

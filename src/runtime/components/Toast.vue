@@ -5,16 +5,6 @@ import theme from '#build/ui/toast'
 import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot, StringOrVNode } from '../types/utils'
 
-export interface ToastEmits extends ToastRootEmits {}
-
-export interface ToastSlots {
-  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  title: StaticSlot
-  description: StaticSlot
-  actions: StaticSlot
-  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
@@ -53,6 +43,16 @@ export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'de
    */
   progress?: boolean | Pick<ProgressProps, 'color' | 'ui'>
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ToastEmits extends ToastRootEmits {}
+
+export interface ToastSlots {
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  title: StaticSlot
+  description: StaticSlot
+  actions: StaticSlot
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

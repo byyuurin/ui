@@ -2,14 +2,19 @@ import type { AcceptableValue as _AcceptableValue } from 'reka-ui'
 import type { VNode } from 'vue'
 
 export type MaybeArray<T> = T | T[]
+export type Defined<T> = Exclude<T, undefined>
 
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P] | undefined
 }
 
-export type StaticSlot<Props extends Record<string, any> | undefined = undefined> = Props extends Record<string, any>
-  ? (props: Props) => any
-  : (props?: Record<string, never>) => any
+type SlotProps<T> = T extends Record<string, any>
+  ? { [P in keyof T & string]: T[P] extends undefined ? T[P] | undefined : T[P] }
+  : Record<string, never>
+
+export type StaticSlot<P extends Record<string, any> | undefined = undefined> = P extends Record<string, any>
+  ? (props: SlotProps<P>) => any
+  : (props?: SlotProps<undefined>) => any
 
 export type DynamicSlotsKeys<Name extends string | undefined, Suffix extends string | undefined = undefined> = (
   Name extends string
@@ -23,9 +28,7 @@ export type DynamicSlots<
   Suffix extends string | undefined = undefined,
   ExtraProps extends object = Record<string, never>,
 > = {
-  [K in DynamicSlotsKeys<T['slot'], Suffix>]: (
-    props: { item: Extract<T, { slot: K extends `${infer Base}-${Suffix}` ? Base : K }> } & ExtraProps
-  ) => any
+  [K in DynamicSlotsKeys<T['slot'], Suffix>]: StaticSlot<{ item: Extract<T, { slot: K extends `${infer Base}-${Suffix}` ? Base : K }> } & ExtraProps>
 }
 
 export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>

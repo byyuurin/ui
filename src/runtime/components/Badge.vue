@@ -6,12 +6,6 @@ import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface BadgeSlots {
-  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface BadgeProps extends ComponentBaseProps, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
@@ -30,6 +24,12 @@ export interface BadgeProps extends ComponentBaseProps, Omit<UseComponentIconsPr
   square?: boolean
   label?: string | number
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface BadgeSlots {
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

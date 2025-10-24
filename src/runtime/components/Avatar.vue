@@ -5,10 +5,6 @@ import theme from '#build/ui/avatar'
 import type { ChipProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface AvatarSlots {
-  default: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 interface InnerAs {
@@ -31,6 +27,10 @@ export interface AvatarProps extends ComponentBaseProps {
   chip?: boolean | ChipProps
   style?: string | HTMLElement['style']
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface AvatarSlots {
+  default: StaticSlot
 }
 </script>
 

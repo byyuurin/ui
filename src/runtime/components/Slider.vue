@@ -5,11 +5,6 @@ import theme from '#build/ui/slider'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig, TooltipProps } from '../types'
 import type { MaybeArray } from '../types/utils'
 
-export interface SliderEmits {
-  'update:modelValue': [payload: MaybeArray<number>]
-  'change': [payload: Event]
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
@@ -36,6 +31,11 @@ export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, '
   /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
   defaultValue?: number | number[]
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface SliderEmits {
+  'update:modelValue': [value: MaybeArray<number>]
+  'change': [event: Event]
 }
 </script>
 

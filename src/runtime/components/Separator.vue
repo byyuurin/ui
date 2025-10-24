@@ -5,10 +5,6 @@ import theme from '#build/ui/separator'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface SeparatorSlots {
-  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface SeparatorProps extends ComponentBaseProps, Pick<_SeparatorProps, 'decorative'> {
@@ -36,6 +32,10 @@ export interface SeparatorProps extends ComponentBaseProps, Pick<_SeparatorProps
   /** Display an avatar in the middle. */
   avatar?: AvatarProps
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface SeparatorSlots {
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

@@ -4,13 +4,6 @@ import theme from '#build/ui/tooltip'
 import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, KbdProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
-export interface TooltipEmits extends TooltipRootEmits {}
-
-export interface TooltipSlots {
-  default: StaticSlot<{ open: boolean }>
-  content: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 export interface TooltipProps extends ComponentBaseProps, TooltipRootProps {
   /** The text content of the tooltip. */
   text?: string
@@ -35,6 +28,13 @@ export interface TooltipProps extends ComponentBaseProps, TooltipRootProps {
    */
   reference?: TooltipTriggerProps['reference']
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface TooltipEmits extends TooltipRootEmits {}
+
+export interface TooltipSlots {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

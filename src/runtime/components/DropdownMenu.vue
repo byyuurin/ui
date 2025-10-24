@@ -31,26 +31,6 @@ export interface DropdownMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'cust
   [key: string]: any
 }
 
-type SlotProps<T extends DropdownMenuItem> = StaticSlot<{ item: T, active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
-
-export type DropdownMenuSlots<
-  A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
-  T extends NestedItem<A> = NestedItem<A>,
-> = {
-  'default': StaticSlot<{ open: boolean }>
-  'item': SlotProps<T>
-  'item-leading': SlotProps<T>
-  'item-label': StaticSlot<{ item: T, active?: boolean, index: number }>
-  'item-description': StaticSlot<{ item: T, active?: boolean, index: number }>
-  'item-trailing': SlotProps<T>
-  'content-top': StaticSlot
-  'content-bottom': StaticSlot
-}
-& DynamicSlots<MergeTypes<T>, 'label' | 'description', { active?: boolean, index: number }>
-& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing', { active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
-
-export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface DropdownMenuProps<
@@ -104,6 +84,25 @@ export interface DropdownMenuProps<
   disabled?: boolean
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
+
+export type DropdownMenuSlots<
+  A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
+  T extends NestedItem<A> = NestedItem<A>,
+> = {
+  'default': StaticSlot<{ open: boolean }>
+  'item': StaticSlot<{ item: T, active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
+  'item-leading': StaticSlot<{ item: T, active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
+  'item-label': StaticSlot<{ item: T, active?: boolean, index: number }>
+  'item-description': StaticSlot<{ item: T, active?: boolean, index: number }>
+  'item-trailing': StaticSlot<{ item: T, active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
+  'content-top': StaticSlot
+  'content-bottom': StaticSlot
+}
+& DynamicSlots<MergeTypes<T>, 'label' | 'description', { active?: boolean, index: number }>
+& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing', { active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script setup lang="ts" generic="T extends ArrayOrNested<DropdownMenuItem>">

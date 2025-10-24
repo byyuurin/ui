@@ -56,25 +56,6 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
   [key: string]: any
 }
 
-export interface NavigationMenuEmits extends NavigationMenuRootEmits {}
-
-type SlotProps<T extends NavigationMenuItem> = StaticSlot<{ item: T, index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
-
-export type NavigationMenuSlots<
-  A extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>,
-  T extends NestedItem<A> = NestedItem<A>,
-> = {
-  'item': SlotProps<T>
-  'item-leading': SlotProps<T>
-  'item-label': StaticSlot<{ item: T, index: number, active?: boolean }>
-  'item-trailing': SlotProps<T>
-  'item-content': SlotProps<T> & { close?: () => void }
-  'list-leading': StaticSlot
-  'list-trailing': StaticSlot
-}
-& DynamicSlots<MergeTypes<T>, 'label', { index: number, active?: boolean }>
-& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing' | 'content', { index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>> extends
@@ -147,6 +128,26 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
   labelKey?: GetItemKeys<T>
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface NavigationMenuEmits extends NavigationMenuRootEmits {}
+
+type SlotProps<T extends NavigationMenuItem> = StaticSlot<{ item: T, index: number, active: boolean, ui: ComponentStyler<typeof theme> }>
+
+export type NavigationMenuSlots<
+  A extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>,
+  T extends NestedItem<A> = NestedItem<A>,
+> = {
+  'item': SlotProps<T>
+  'item-leading': SlotProps<T>
+  'item-label': StaticSlot<{ item: T, index: number, active: boolean }>
+  'item-trailing': SlotProps<T>
+  'item-content': SlotProps<T> & { close?: () => void }
+  'list-leading': StaticSlot
+  'list-trailing': StaticSlot
+}
+& DynamicSlots<MergeTypes<T>, 'label', { index: number, active: boolean }>
+& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing' | 'content', { index: number, active: boolean, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script setup lang="ts" generic="T extends ArrayOrNested<NavigationMenuItem>">

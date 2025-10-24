@@ -4,23 +4,6 @@ import theme from '#build/ui/modal'
 import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
-export interface ModalEmits extends DialogRootEmits {
-  'after-leave': []
-  'after-enter': []
-  'close-prevent': []
-}
-
-export interface ModalSlots {
-  default: StaticSlot<{ open: boolean }>
-  content: StaticSlot<{ close: () => void }>
-  header: StaticSlot<{ close: () => void }>
-  title: StaticSlot
-  description: StaticSlot
-  close?: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
-  body: StaticSlot<{ close: () => void }>
-  footer: StaticSlot<{ close: () => void }>
-}
-
 export interface ModalProps extends ComponentBaseProps, DialogRootProps {
   title?: string
   description?: string
@@ -59,6 +42,23 @@ export interface ModalProps extends ComponentBaseProps, DialogRootProps {
    */
   dismissible?: boolean
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ModalEmits extends DialogRootEmits {
+  'after-leave': []
+  'after-enter': []
+  'close-prevent': []
+}
+
+export interface ModalSlots {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot<{ close: () => void }>
+  header: StaticSlot<{ close: () => void }>
+  title: StaticSlot
+  description: StaticSlot
+  close?: StaticSlot<{ close: () => void, ui: ComponentStyler<typeof theme> }>
+  body: StaticSlot<{ close: () => void }>
+  footer: StaticSlot<{ close: () => void }>
 }
 </script>
 

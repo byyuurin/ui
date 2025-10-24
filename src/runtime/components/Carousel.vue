@@ -12,23 +12,11 @@ import theme from '#build/ui/carousel'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { AcceptableValue, StaticSlot } from '../types/utils'
 
-export interface CarouselEmits {
-  /**
-   * Emitted when the selected slide changes
-   * @param selectedIndex The index of the selected slide
-   */
-  select: [selectedIndex: number]
-}
-
 export type CarouselValue = AcceptableValue
 export type CarouselItem = AcceptableValue | {
   class?: ComponentBaseProps['class']
   ui?: Pick<ComponentUIProps<typeof theme>, 'item'>
   [key: string]: any
-}
-
-export interface CarouselSlots<T extends CarouselItem = CarouselItem> {
-  default?: StaticSlot<{ item: T, index: number }>
 }
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -106,6 +94,18 @@ export interface CarouselProps<T extends CarouselItem = CarouselItem> extends Co
    */
   wheelGestures?: boolean | WheelGesturesPluginOptions
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface CarouselEmits {
+  /**
+   * Emitted when the selected slide changes
+   * @param selectedIndex The index of the selected slide
+   */
+  select: [selectedIndex: number]
+}
+
+export interface CarouselSlots<T extends CarouselItem = CarouselItem> {
+  default: StaticSlot<{ item: T, index: number }>
 }
 </script>
 

@@ -5,16 +5,6 @@ import theme from '#build/ui/switch'
 import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface SwitchEmits {
-  'change': [payload: Event]
-  'update:modelValue': [payload: boolean]
-}
-
-export interface SwitchSlots {
-  label: StaticSlot<{ label?: string }>
-  description: StaticSlot<{ description?: string }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
@@ -42,6 +32,16 @@ export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, '
   label?: string
   description?: string
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface SwitchEmits {
+  'change': [event: Event]
+  'update:modelValue': [value: boolean]
+}
+
+export interface SwitchSlots {
+  label: StaticSlot<{ label?: string }>
+  description: StaticSlot<{ description?: string }>
 }
 </script>
 

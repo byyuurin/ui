@@ -6,16 +6,6 @@ import theme from '#build/ui/calendar'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface CalendarEmits<R extends boolean, M extends boolean> extends Omit<CalendarRootEmits & RangeCalendarRootEmits, 'update:modelValue'> {
-  'update:modelValue': [date: CalendarModelValue<R, M>]
-}
-
-export interface CalendarSlots {
-  'heading': StaticSlot<{ value: string }>
-  'day': StaticSlot<Pick<CalendarCellTriggerProps, 'day'>>
-  'week-day': StaticSlot<{ day: string }>
-}
-
 type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
   ? DateRange
   : M extends true ? DateValue[] : DateValue
@@ -89,6 +79,16 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   defaultValue?: CalendarDefaultValue<R, M>
   modelValue?: CalendarDefaultValue<R, M>
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface CalendarEmits<R extends boolean, M extends boolean> extends Omit<CalendarRootEmits & RangeCalendarRootEmits, 'update:modelValue'> {
+  'update:modelValue': [date: CalendarModelValue<R, M>]
+}
+
+export interface CalendarSlots {
+  'heading': StaticSlot<{ value: string }>
+  'day': StaticSlot<Pick<CalendarCellTriggerProps, 'day'>>
+  'week-day': StaticSlot<{ day: string }>
 }
 </script>
 

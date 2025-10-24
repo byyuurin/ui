@@ -5,10 +5,6 @@ import theme from '#build/ui/avatar-group'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface AvatarGroupSlots {
-  default: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface AvatarGroupProps extends ComponentBaseProps {
@@ -23,6 +19,10 @@ export interface AvatarGroupProps extends ComponentBaseProps {
    */
   max?: number | string
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface AvatarGroupSlots {
+  default: StaticSlot
 }
 </script>
 

@@ -2,9 +2,9 @@
 import type { AccordionRootEmits, AccordionRootProps, PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/accordion'
 import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, StaticSlot } from '../types/utils'
+import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
 
-export interface AccordionEmits extends AccordionRootEmits {}
+type ExtractSlotItem<T extends AccordionItem> = Extract<NestedItem<T>, { slot: string }>
 
 export interface AccordionItem extends ComponentBaseProps {
   label?: string
@@ -18,16 +18,6 @@ export interface AccordionItem extends ComponentBaseProps {
   ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'header' | 'trigger' | 'leadingIcon' | 'label' | 'trailingIcon' | 'content' | 'body'>
   [key: string]: any
 }
-
-type SlotProps<T extends AccordionItem> = StaticSlot<{ item: T, index: number, open: boolean, ui: ComponentStyler<typeof theme> }>
-
-export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
-  default: SlotProps<T>
-  leading: SlotProps<T>
-  trailing: SlotProps<T>
-  content: SlotProps<T>
-  body: SlotProps<T>
-} & DynamicSlots<T, 'body', { index: number, open: boolean, ui: ComponentStyler<typeof theme> }>
 
 export interface AccordionProps<T extends AccordionItem = AccordionItem> extends ComponentBaseProps, Pick<AccordionRootProps, 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
   /**
@@ -48,6 +38,19 @@ export interface AccordionProps<T extends AccordionItem = AccordionItem> extends
   labelKey?: GetItemKeys<T>
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface AccordionEmits extends AccordionRootEmits {}
+
+type SlotProps<T extends AccordionItem> = StaticSlot<{ item: T, index: number, open: boolean, ui: ComponentStyler<typeof theme> }>
+
+export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
+  default: SlotProps<T>
+  leading: SlotProps<T>
+  trailing: SlotProps<T>
+  content: SlotProps<T>
+  body: SlotProps<T>
+} & DynamicSlots<T, 'body', { index: number, open: boolean, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script setup lang="ts" generic="T extends AccordionItem">
@@ -109,9 +112,9 @@ const ui = computed(() => {
         :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
       >
-        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :open="open" :ui="ui">
+        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as ExtractSlotItem<T>)" :index="index" :open="open" :ui="ui">
           <div :class="ui.body({ class: [props.ui?.body, item.ui?.body] })" data-part="body">
-            <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :open="open" :ui="ui">
+            <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" :item="(item as ExtractSlotItem<T>)" :index="index" :open="open" :ui="ui">
               {{ item.content }}
             </slot>
           </div>

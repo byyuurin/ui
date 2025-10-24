@@ -4,17 +4,7 @@ import theme from '#build/ui/popover'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
-export interface PopoverEmits extends PopoverRootEmits {
-  'close-prevent': []
-}
-
 type PopoverMode = 'click' | 'hover'
-
-export interface PopoverSlots<M extends PopoverMode = PopoverMode> {
-  default: StaticSlot<{ open: boolean }>
-  content: StaticSlot<[M] extends ['hover'] ? undefined : { close: () => void }>
-  anchor: StaticSlot<[M] extends ['hover'] ? undefined : { close: () => void }>
-}
 
 export interface PopoverProps<M extends PopoverMode = PopoverMode> extends ComponentBaseProps, PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
   /**
@@ -49,6 +39,16 @@ export interface PopoverProps<M extends PopoverMode = PopoverMode> extends Compo
    */
   dismissible?: boolean
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface PopoverEmits extends PopoverRootEmits {
+  'close-prevent': []
+}
+
+export interface PopoverSlots<M extends PopoverMode = PopoverMode> {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot<[M] extends ['hover'] ? undefined : { close: () => void }>
+  anchor: StaticSlot<[M] extends ['hover'] ? undefined : { close: () => void }>
 }
 </script>
 

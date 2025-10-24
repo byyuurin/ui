@@ -11,6 +11,8 @@ export default byyuurin(
     },
     vue: {
       overrides: {
+        'vue/block-tag-newline': ['warn', { blocks: { script: { maxEmptyLines: 1 } } }],
+
         'ts/no-empty-object-type': 'off',
         'vue/no-extra-parens': 'off',
         'unicorn/explicit-length-check': 'off',
@@ -57,6 +59,7 @@ export default byyuurin(
       'src/runtime/components/Checkbox.vue',
       'src/runtime/components/Drawer.vue',
       'src/runtime/components/Modal.vue',
+      'src/runtime/components/Select.vue',
     ],
     rules: {
       'vue/no-template-shadow': 'off',

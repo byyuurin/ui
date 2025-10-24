@@ -5,14 +5,6 @@ import theme from '#build/ui/progress'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface ProgressEmits extends ProgressRootEmits {}
-
-export type ProgressSlots = {
-  status: StaticSlot<{ percent?: number }>
-} & {
-  [key: `step-${number}`]: StaticSlot<{ step: string | number }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ProgressProps extends ComponentBaseProps, Pick<ProgressRootProps, 'getValueLabel' | 'getValueText' | 'modelValue'> {
@@ -43,6 +35,15 @@ export interface ProgressProps extends ComponentBaseProps, Pick<ProgressRootProp
   inverted?: boolean
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface ProgressEmits extends ProgressRootEmits {}
+
+export type ProgressSlots = {
+  status: StaticSlot<{ percent?: number }>
+} & {
+  [key: `step-${number}`]: StaticSlot<{ step: string | number }>
+}
+
 </script>
 
 <script setup lang="ts">

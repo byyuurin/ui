@@ -5,12 +5,6 @@ import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface ButtonSlots {
-  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom'> {
@@ -32,6 +26,12 @@ export interface ButtonProps extends ComponentBaseProps, UseComponentIconsProps,
   loadingAuto?: boolean
   onClick?: ((event: MouseEvent) => void | Promise<void>) | Array<((event: MouseEvent) => void | Promise<void>)>
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ButtonSlots {
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

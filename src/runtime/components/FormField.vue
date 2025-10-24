@@ -5,15 +5,6 @@ import theme from '#build/ui/form-field'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface FormFieldSlots {
-  label: StaticSlot<{ label?: string }>
-  hint: StaticSlot<{ hint?: string }>
-  description: StaticSlot<{ description?: string }>
-  help: StaticSlot<{ help?: string }>
-  error: StaticSlot<{ error?: boolean | string }>
-  default: StaticSlot<{ error?: boolean | string }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface FormFieldProps extends ComponentBaseProps {
@@ -44,6 +35,15 @@ export interface FormFieldProps extends ComponentBaseProps {
    */
   validateOnInputDelay?: number
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface FormFieldSlots {
+  label: StaticSlot<{ label?: string }>
+  hint: StaticSlot<{ hint?: string }>
+  description: StaticSlot<{ description?: string }>
+  help: StaticSlot<{ help?: string }>
+  error: StaticSlot<{ error?: boolean | string }>
+  default: StaticSlot<{ error?: boolean | string }>
 }
 </script>
 

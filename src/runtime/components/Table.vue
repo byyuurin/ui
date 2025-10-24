@@ -37,21 +37,6 @@ declare module '@tanstack/table-core' {
   }
 }
 
-type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
-
-type DynamicFooterSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-footer`, (props: HeaderContext<T, unknown>) => any>
-
-type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
-
-export type TableSlots<T> = {
-  'expanded': StaticSlot<{ row: Row<T> }>
-  'empty': StaticSlot
-  'loading': StaticSlot
-  'caption': StaticSlot
-  'body-top': StaticSlot
-  'body-bottom': StaticSlot
-} & DynamicHeaderSlots<T> & DynamicFooterSlots<T> & DynamicCellSlots<T>
-
 export type TableRow<T> = Row<T>
 export type TableData = RowData
 export type TableColumn<T extends TableData, D = unknown> = ColumnDef<T, D>
@@ -182,6 +167,22 @@ export interface TableProps<T extends TableData = TableData> extends ComponentBa
   onContextmenu?: ((e: Event, row: TableRow<T>) => void) | Array<((e: Event, row: TableRow<T>) => void)>
   ui?: ComponentUIProps<typeof theme>
 }
+
+type DynamicHeaderSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-header`, (props: HeaderContext<T, unknown>) => any>
+
+type DynamicFooterSlots<T, K = keyof T> = Record<string, (props: HeaderContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-footer`, (props: HeaderContext<T, unknown>) => any>
+
+type DynamicCellSlots<T, K = keyof T> = Record<string, (props: CellContext<T, unknown>) => any> & Record<`${K extends string ? K : never}-cell`, (props: CellContext<T, unknown>) => any>
+
+export type TableSlots<T> = {
+  'expanded': StaticSlot<{ row: Row<T> }>
+  'empty': StaticSlot
+  'loading': StaticSlot
+  'caption': StaticSlot
+  'body-top': StaticSlot
+  'body-bottom': StaticSlot
+} & DynamicHeaderSlots<T> & DynamicFooterSlots<T> & DynamicCellSlots<T>
+
 </script>
 
 <script setup lang="ts" generic="T extends TableData">

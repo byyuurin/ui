@@ -5,15 +5,6 @@ import theme from '#build/ui/card'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface CardSlots {
-  default: StaticSlot
-  content: StaticSlot
-  header: StaticSlot
-  title: StaticSlot
-  description: StaticSlot
-  footer: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface CardProps extends ComponentBaseProps {
@@ -27,6 +18,15 @@ export interface CardProps extends ComponentBaseProps {
   title?: string
   description?: string
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface CardSlots {
+  default: StaticSlot
+  content: StaticSlot
+  header: StaticSlot
+  title: StaticSlot
+  description: StaticSlot
+  footer: StaticSlot
 }
 </script>
 

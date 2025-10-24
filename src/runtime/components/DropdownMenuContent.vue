@@ -5,18 +5,7 @@ import type theme from '#build/ui/dropdown-menu'
 import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, IconProps, KbdProps, RuntimeAppConfig } from '../types'
 import type { ArrayOrNested, DynamicSlots, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
 
-type ExtractItem<T extends ArrayOrNested<any>> = Extract<NestedItem<T>, { slot: string }>
-
-type DropdownMenuContentSlots<
-  A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
-  T extends NestedItem<A> = NestedItem<A>,
-> = Pick<DropdownMenuSlots<A>, 'item' | 'item-leading' | 'item-label' | 'item-description' | 'item-trailing' | 'content-top' | 'content-bottom'> & {
-  default: StaticSlot
-}
-& DynamicSlots<MergeTypes<T>, 'label' | 'description', { active?: boolean, index: number }>
-& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing', { active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
-
-export interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
+type ExtractSlotItem<T extends ArrayOrNested<any>> = Extract<NestedItem<T>, { slot: string }>
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -33,6 +22,18 @@ export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuIt
   ui: ComponentStyler<typeof theme>
   uiOverride?: ComponentUIProps<typeof theme>
 }
+
+export interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
+
+export type DropdownMenuContentSlots<
+  A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
+  T extends NestedItem<A> = NestedItem<A>,
+> = Pick<DropdownMenuSlots<A>, 'item' | 'item-leading' | 'item-label' | 'item-description' | 'item-trailing' | 'content-top' | 'content-bottom'> & {
+  default: StaticSlot
+}
+& DynamicSlots<MergeTypes<T>, 'label' | 'description', { active: boolean, index: number }>
+& DynamicSlots<MergeTypes<T>, 'leading' | 'trailing', { active: boolean, index: number, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script setup lang="ts" generic="T extends ArrayOrNested<DropdownMenuItem>">
@@ -110,7 +111,7 @@ const groups = computed<DropdownMenuItem[][]>(
           :class="props.ui.itemLabel({ class: [props.uiOverride?.itemLabel, item.ui?.itemLabel], active })"
           data-part="item-label"
         >
-          <slot :name="((`${item.slot || 'item'}-label`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
+          <slot :name="((`${item.slot || 'item'}-label`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
             {{ get(item, props.labelKey as string) }}
           </slot>
 
@@ -123,14 +124,14 @@ const groups = computed<DropdownMenuItem[][]>(
         </span>
 
         <span v-if="get(item, props.descriptionKey as string)" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })" data-part="item-description">
-          <slot :name="((`${item.slot || 'item'}-description`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
+          <slot :name="((`${item.slot || 'item'}-description`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
             {{ get(item, props.descriptionKey as string) }}
           </slot>
         </span>
       </span>
 
       <span :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })" data-part="item-trailing">
-        <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index" :ui="ui">
+        <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index" :ui="ui">
           <Icon v-if="item.children?.length" :name="childrenIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" data-part="item-trailing-icon" />
           <span v-else-if="item.kbds?.length" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })" data-part="item-trailing-kbds">
             <Kbd

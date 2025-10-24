@@ -2,7 +2,9 @@
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/breadcrumb'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, StaticSlot } from '../types/utils'
+import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
+
+type ExtractSlotItem<T extends BreadcrumbItem> = Extract<NestedItem<T>, { slot: string }>
 
 export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
   label?: string
@@ -12,16 +14,6 @@ export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
   ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'link' | 'linkLeadingIcon' | 'linkLeadingAvatar' | 'linkLabel' | 'separator' | 'separatorIcon'>
   [key: string]: any
 }
-
-export type BreadcrumbSlots<T extends BreadcrumbItem = BreadcrumbItem> = {
-  'item': StaticSlot<{ item: T, index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
-  'item-leading': StaticSlot<{ item: T, index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
-  'item-label': StaticSlot<{ item: T, index: number, active?: boolean }>
-  'item-trailing': StaticSlot<{ item: T, index: number, active?: boolean }>
-  'separator': StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-& DynamicSlots<T, 'label' | 'trailing', { index: number, active?: boolean }>
-& DynamicSlots<T, 'leading', { index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
 
 export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> extends ComponentBaseProps {
   /**
@@ -42,6 +34,17 @@ export interface BreadcrumbProps<T extends BreadcrumbItem = BreadcrumbItem> exte
   labelKey?: GetItemKeys<T>
   ui?: ComponentUIProps<typeof theme>
 }
+
+export type BreadcrumbSlots<T extends BreadcrumbItem = BreadcrumbItem> = {
+  'item': StaticSlot<{ item: T, index: number, active: boolean, ui: ComponentStyler<typeof theme> }>
+  'item-leading': StaticSlot<{ item: T, index: number, active: boolean, ui: ComponentStyler<typeof theme> }>
+  'item-label': StaticSlot<{ item: T, index: number, active: boolean }>
+  'item-trailing': StaticSlot<{ item: T, index: number, active: boolean }>
+  'separator': StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+}
+& DynamicSlots<T, 'label' | 'trailing', { index: number, active: boolean }>
+& DynamicSlots<T, 'leading', { index: number, active?: boolean, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script setup lang="ts" generic="T extends BreadcrumbItem">
@@ -105,12 +108,12 @@ const ui = computed(() => {
                 </slot>
 
                 <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="link-label">
-                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as Extract<T, { slot: string; }>)" :active="index === items!.length - 1" :index="index">
+                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractSlotItem<T>)" :active="index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey as string) }}
                   </slot>
                 </span>
 
-                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as Extract<T, { slot: string; }>)" :active="index === items!.length - 1" :index="index"></slot>
+                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as ExtractSlotItem<T>)" :active="index === items!.length - 1" :index="index"></slot>
               </slot>
             </LinkBase>
           </Link>

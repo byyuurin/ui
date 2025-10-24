@@ -4,13 +4,6 @@ import theme from '#build/ui/collapsible'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface CollapsibleEmits extends CollapsibleRootEmits {}
-
-export interface CollapsibleSlots {
-  default: StaticSlot<{ open: boolean }>
-  content: StaticSlot
-}
-
 export interface CollapsibleProps extends ComponentBaseProps, Pick<CollapsibleRootProps, 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
   /**
    * The element or component this component should render as.
@@ -18,6 +11,12 @@ export interface CollapsibleProps extends ComponentBaseProps, Pick<CollapsibleRo
    */
   as?: CollapsibleRootProps['as']
   ui?: ComponentUIProps<typeof theme>
+}
+export interface CollapsibleEmits extends CollapsibleRootEmits {}
+
+export interface CollapsibleSlots {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot
 }
 </script>
 

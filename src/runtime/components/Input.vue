@@ -10,18 +10,6 @@ import type { AcceptableValue, StaticSlot } from '../types/utils'
 
 export type InputValue = AcceptableValue
 
-export interface InputEmits<T extends InputValue> {
-  'update:modelValue': [payload: T]
-  'blur': [event: FocusEvent]
-  'change': [event: Event]
-}
-
-export interface InputSlots {
-  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface InputProps<T extends InputValue = InputValue> extends ComponentBaseProps, UseComponentIconsProps {
@@ -53,6 +41,18 @@ export interface InputProps<T extends InputValue = InputValue> extends Component
   modelValue?: T
   modelModifiers?: ModelModifiers
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface InputEmits<T extends InputValue> {
+  'update:modelValue': [value: T]
+  'blur': [event: FocusEvent]
+  'change': [event: Event]
+}
+
+export interface InputSlots {
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 

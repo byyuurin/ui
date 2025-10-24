@@ -3,33 +3,22 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { RadioGroupItem, RadioGroupRootProps } from 'reka-ui'
 import theme from '#build/ui/radio-group'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { AcceptableValue, GetItemKeys, GetModelValue, MaybeArray, StaticSlot } from '../types/utils'
-
-export interface RadioGroupEmits {
-  'update:modelValue': [payload: string]
-  'change': [payload: Event]
-}
+import type { AcceptableValue, GetItemKeys, GetModelValue, MaybeArray, NestedItem, StaticSlot } from '../types/utils'
 
 export type RadioGroupValue = AcceptableValue
-export type RadioGroupItem = RadioGroupValue | {
+
+interface RadioGroupItemBase {
   label?: string
   description?: string
   disabled?: boolean
   value?: RadioGroupValue
   class?: ComponentBaseProps['class']
   ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'container' | 'base' | 'indicator' | 'wrapper' | 'label' | 'description'>
-  [key: string]: any
 }
+
+export type RadioGroupItem = RadioGroupValue | (RadioGroupItemBase & { [key: string]: any })
 
 type NormalizeItem<T extends RadioGroupItem> = Exclude<T & { id: string, ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'container' | 'base' | 'indicator' | 'wrapper' | 'label' | 'description'> }, RadioGroupValue>
-
-type SlotProps<T extends RadioGroupItem> = StaticSlot<{ item: NormalizeItem<T>, modelValue?: RadioGroupValue }>
-
-export interface RadioGroupSlots<T extends RadioGroupItem[] = RadioGroupItem[]> {
-  legend: StaticSlot
-  label: SlotProps<T[number]>
-  description: SlotProps<T[number]>
-}
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -78,6 +67,19 @@ export interface RadioGroupProps<T extends RadioGroupItem[] = RadioGroupItem[], 
   orientation?: RadioGroupRootProps['orientation']
   ui?: ComponentUIProps<typeof theme>
 }
+
+export interface RadioGroupEmits {
+  'update:modelValue': [value: string]
+  'change': [event: Event]
+}
+
+type SlotProps<T extends RadioGroupItem[]> = StaticSlot<{ item: NormalizeItem<NestedItem<T>>, modelValue?: RadioGroupValue }>
+
+export interface RadioGroupSlots<T extends RadioGroupItem[] = RadioGroupItem[]> {
+  legend: StaticSlot
+  label: SlotProps<T>
+  description: SlotProps<T>
+}
 </script>
 
 <script lang="ts" setup generic="T extends RadioGroupItem[], VK extends GetItemKeys<T> = 'value'">
@@ -115,28 +117,30 @@ const ui = computed(() => {
   })
 })
 
-function normalizeItem(item: RadioGroupItem) {
-  if (item === null) {
+function normalizeItem(item: RadioGroupItem): any {
+  const itemBase: RadioGroupItemBase = {
+    disabled: disabled.value,
+    label: undefined,
+    description: undefined,
+    value: undefined,
+    ui: undefined,
+    class: undefined,
+  }
+
+  if (typeof item === 'object' && item === null) {
     return {
-      disabled: disabled.value,
+      ...itemBase,
       id: `${id}:null`,
-      label: undefined,
-      description: undefined,
-      value: undefined,
-      ui: undefined,
-      class: undefined,
+      value: null,
     }
   }
 
   if (typeof item === 'boolean' || typeof item === 'string' || typeof item === 'number' || typeof item === 'bigint') {
     return {
-      disabled: disabled.value,
+      ...itemBase,
       id: `${id}:${item}`,
       label: String(item),
-      description: undefined,
       value: item,
-      ui: undefined,
-      class: undefined,
     }
   }
 
@@ -145,7 +149,7 @@ function normalizeItem(item: RadioGroupItem) {
   const description = get(item, props.descriptionKey as string)
 
   return {
-    disabled: disabled.value,
+    ...itemBase,
     ...item,
     id: `${id}:${value}`,
     label,
@@ -208,12 +212,12 @@ function onUpdate(value: any) {
 
         <div v-if="(item.label || !!slots.label) || (item.description || !!slots.description)" :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper], disabled: item.disabled })" data-part="wrapper">
           <component :is="(!props.variant || props.variant === 'list') ? Label : 'p'" :for="item.id" :class="ui.label({ class: [props.ui?.label, item.ui?.label], disabled: item.disabled })" data-part="label">
-            <slot name="label" :item="(item as NormalizeItem<T[number]>)" :model-value="(modelValue as RadioGroupValue)">
+            <slot name="label" :item="item" :model-value="(modelValue as RadioGroupValue)">
               {{ item.label }}
             </slot>
           </component>
           <p v-if="item.description || !!slots.description" :class="ui.description({ class: [props.ui?.description, item.ui?.description], disabled: item.disabled })" data-part="description">
-            <slot name="description" :item="(item as NormalizeItem<T[number]>)" :model-value="(modelValue as RadioGroupValue)">
+            <slot name="description" :item="item" :model-value="(modelValue as RadioGroupValue)">
               {{ item.description }}
             </slot>
           </p>

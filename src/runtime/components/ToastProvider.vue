@@ -5,10 +5,6 @@ import theme from '#build/ui/toast-provider'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
-export interface ToasterSlots {
-  default: StaticSlot
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface ToastProviderProps extends ComponentBaseProps, Omit<RekaToastProviderProps, 'swipeDirection'> {
@@ -38,6 +34,10 @@ export interface ToastProviderProps extends ComponentBaseProps, Omit<RekaToastPr
    */
   max?: number
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ToasterSlots {
+  default: StaticSlot
 }
 </script>
 

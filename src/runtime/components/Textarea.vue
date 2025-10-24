@@ -9,18 +9,6 @@ import type { StaticSlot } from '../types/utils'
 
 type TextareaValue = string | number | null
 
-export interface TextareaEmits<T extends TextareaValue = TextareaValue> {
-  'update:modelValue': [payload: T]
-  'blur': [event: FocusEvent]
-  'change': [event: Event]
-}
-
-export interface TextareaSlots {
-  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
-}
-
 type ThemeVariants = VariantProps<typeof theme>
 
 export interface TextareaProps<T extends TextareaValue = TextareaValue> extends ComponentBaseProps, UseComponentIconsProps {
@@ -53,6 +41,18 @@ export interface TextareaProps<T extends TextareaValue = TextareaValue> extends 
   defaultValue?: T
   modelModifiers?: ModelModifiers
   ui?: ComponentUIProps<typeof theme>
+}
+
+export interface TextareaEmits<T extends TextareaValue = TextareaValue> {
+  'update:modelValue': [payload: T]
+  'blur': [event: FocusEvent]
+  'change': [event: Event]
+}
+
+export interface TextareaSlots {
+  default: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  trailing: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 
