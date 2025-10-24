@@ -50,7 +50,7 @@ export interface AlertEmits {
 }
 
 export interface AlertSlots {
-  leading: StaticSlot
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
   title: StaticSlot
   description: StaticSlot
   actions: StaticSlot
@@ -95,7 +95,7 @@ const ui = computed(() => {
     :data-orientation="props.orientation"
     data-part="root"
   >
-    <slot name="leading">
+    <slot name="leading" :ui="ui">
       <Avatar
         v-if="props.avatar"
         :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"

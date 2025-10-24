@@ -44,7 +44,7 @@ export interface AccordionEmits extends AccordionRootEmits {}
 type SlotProps<T extends AccordionItem> = StaticSlot<{ item: T, index: number, open: boolean, ui: ComponentStyler<typeof theme> }>
 
 export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
-  default: SlotProps<T>
+  default: StaticSlot<{ item: T, index: number, open: boolean }>
   leading: SlotProps<T>
   trailing: SlotProps<T>
   content: SlotProps<T>
@@ -98,7 +98,7 @@ const ui = computed(() => {
           </slot>
 
           <span v-if="get(item, props.labelKey as string) || !!slots.default" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })" data-part="label">
-            <slot v-bind="{ item, index, open, ui }">{{ get(item, props.labelKey as string) }}</slot>
+            <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey as string) }}</slot>
           </span>
 
           <slot name="trailing" v-bind="{ item, index, open, ui }">
