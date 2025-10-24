@@ -13,6 +13,8 @@ const controls: ControlItems<InputNumberProps> = [
   { prop: 'max', value: undefined, type: 'number' },
   { prop: 'step', value: 1 },
   { prop: 'placeholder', value: '', placeholder: 'placeholder' },
+  { prop: 'increment', value: true },
+  { prop: 'decrement', value: true },
   { prop: 'disabled', value: false },
   { prop: 'highlight', value: false },
 ]

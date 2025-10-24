@@ -33,7 +33,7 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
    * Configure the increment button. The `color` and `size` are inherited.
    * @default { variant: 'link' }
    */
-  increment?: ButtonProps
+  increment?: boolean | ButtonProps
   /**
    * The icon displayed to increment the value.
    * @default app.icons.plus
@@ -45,7 +45,7 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
    * Configure the decrement button. The `color` and `size` are inherited.
    * @default { variant: 'link' }
    */
-  decrement?: ButtonProps
+  decrement?: boolean | ButtonProps
   /**
    * The icon displayed to decrement the value.
    * @default app.icons.minus
@@ -91,8 +91,8 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<InputNumberProps>(), {
   orientation: 'horizontal',
-  incrementDisabled: false,
-  decrementDisabled: false,
+  increment: true,
+  decrement: true,
 })
 
 const emit = defineEmits<InputNumberEmits>()
@@ -116,6 +116,8 @@ const ui = computed(() => {
     color: color.value,
     highlight: highlight.value,
     fieldGroup: orientation.value,
+    increment: props.orientation === 'vertical' ? (!!props.increment || !!props.decrement) : !!props.increment,
+    decrement: props.orientation === 'vertical' ? false : !!props.decrement,
   })
 })
 
@@ -173,7 +175,7 @@ defineExpose({
       @focus="emitFormFocus"
     />
 
-    <div :class="ui.increment({ class: props.ui?.increment })" data-part="increment">
+    <div v-if="props.increment" :class="ui.increment({ class: props.ui?.increment })" data-part="increment">
       <NumberFieldIncrement :disabled="disabled || incrementDisabled" as-child>
         <slot name="increment">
           <Button
@@ -188,7 +190,7 @@ defineExpose({
       </NumberFieldIncrement>
     </div>
 
-    <div :class="ui.decrement({ class: props.ui?.decrement })" data-part="decrement">
+    <div v-if="props.decrement" :class="ui.decrement({ class: props.ui?.decrement })" data-part="decrement">
       <NumberFieldDecrement :disabled="disabled || decrementDisabled" as-child>
         <slot name="decrement">
           <Button
