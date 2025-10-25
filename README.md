@@ -24,24 +24,16 @@ yarn add @byyuurin/ui
 npm install @byyuurin/ui
 ```
 
-<details>
-<summary>Nuxt</summary>
+### Nuxt
 
-### Install dependencies
-
-```sh
-pnpm i @byyuurin/ui
-```
-
-### Nuxt setup
+1. Add the UI module in your `nuxt.config.ts`:
 
 ```ts
-// nuxt.config.ts
-
 export default defineNuxtConfig({
   modules: [
-    '@byyuurin/ui/nuxt',
+    '@byyuurin/ui',
   ],
+
   ui: {
     prefix: 'U',
     colorMode: true,
@@ -57,10 +49,9 @@ export default defineNuxtConfig({
 })
 ```
 
-### UnoCSS setup
+2. Add UnoCSS preset in your `uno.config.ts`:
 
 ```ts
-// uno.config.ts
 import { createUnoPreset } from '@byyuurin/ui/unocss'
 import { defineConfig, presetWind4 } from 'unocss'
 
@@ -77,19 +68,9 @@ export default defineConfig({
 > [!IMPORTANT]
 > The preset colors configuration must be the same as your nuxt configuration
 
-</details>
+### Vue
 
-<details>
-  <summary>Vue</summary>
-
-### Install dependencies
-
-```sh
-pnpm i -D unocss
-pnpm i @byyuurin/ui
-```
-
-Create `ui.config.ts` file for unified management of UI settings:
+1. Create `ui.config.ts` file for unified management of UI settings:
 
 ```ts
 // @unocss-include
@@ -161,28 +142,26 @@ export default setup({
 }
 ```
 
-### Vite setup
+2. Add the UI Vite plugin in your `vite.config.ts`:
 
 ```ts
-// vite.config.ts
-import Vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
+import vue from '@vitejs/plugin-vue'
+import unocss from 'unocss/vite'
 import { defineConfig } from 'vite'
 import ui from './ui.config'
 
 export default defineConfig({
   plugins: [
-    UnoCSS(),
-    Vue(),
+    unocss(),
+    vue(),
     ui.vite(),
   ],
 })
 ```
 
-### UnoCSS setup
+3. Add UnoCSS preset in your `uno.config.ts`:
 
 ```ts
-// uno.config.ts
 import { defineConfig, presetWind4 } from 'unocss'
 import ui from './ui.config'
 
@@ -194,13 +173,12 @@ export default defineConfig({
 })
 ```
 
-### Use Vue plugin
+4. Add the UI Vue plugin in your `src/main.ts`
 
 ```ts
-// src/main.ts
 import 'uno.css'
 
-import ui from '@byyuurin/ui/vue-plugin'
+import ui from '@byyuurin/ui/vue-plugin' // <---
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
@@ -212,13 +190,13 @@ const router = createRouter({
   history: createWebHistory(),
 })
 
-app.use(ui)
+app.use(ui) // <----
 app.use(router)
 
 app.mount('#app')
 ```
 
-## Add the isolate class to your root container
+5. Add the `isolate` class to your root container
 
 ```html
 <!doctype html>
@@ -232,8 +210,6 @@ app.mount('#app')
   </body>
 </html>
 ```
-
-</details>
 
 ## Credits
 
