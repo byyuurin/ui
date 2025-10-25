@@ -1,4 +1,9 @@
-import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import type { ModuleOptions as NuxtFontsOptions } from '@nuxt/fonts'
+import type { ModuleOptions as NuxtIconOptions } from '@nuxt/icon'
+import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
+import type { ModuleDependencyMeta } from '@nuxt/schema'
+import type { ModuleOptions as NuxtColorModeOptions } from '@nuxtjs/color-mode'
+import type { UnocssNuxtOptions } from '@unocss/nuxt'
 import { defu } from 'defu'
 import { name, version } from '../package.json'
 import type { VariantsColor, VariantsSize } from './defaults'
@@ -63,6 +68,10 @@ export interface ModuleOptions {
   }
 }
 
+type DefineInstallModule<M extends Record<string, any>> = {
+  [MK in keyof M]: ModuleDependencyMeta<M[MK]>
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name,
@@ -73,7 +82,48 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: defaultOptions,
-  async setup(options, nuxt) {
+  moduleDependencies(nuxt) {
+    const ui = defu(nuxt.options.ui ?? {}, defaultOptions)
+
+    const deps: DefineInstallModule<{
+      '@nuxt/icon': NuxtIconOptions
+      '@nuxt/fonts': NuxtFontsOptions
+      '@nuxtjs/color-mode': NuxtColorModeOptions
+      '@unocss/nuxt': UnocssNuxtOptions
+    }> = {
+      '@nuxt/icon': {
+        defaults: {
+          cssLayer: 'components',
+        },
+        optional: false,
+      },
+      '@nuxt/fonts': {
+        defaults: {
+          defaults: {
+            weights: [400, 500, 600, 700],
+          },
+        },
+        optional: ui.fonts === false,
+      },
+      '@nuxtjs/color-mode': {
+        defaults: {
+          classSuffix: '',
+          disableTransition: true,
+        },
+        optional: ui.colorMode === false,
+      },
+      '@unocss/nuxt': {
+        defaults: {
+          preflight: false,
+          wind3: false,
+          wind4: true,
+        },
+      },
+    }
+
+    return deps
+  },
+  setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
     options.theme ||= {}
@@ -86,32 +136,6 @@ export default defineNuxtModule<ModuleOptions>({
     // Isolate root node from portaled components
     nuxt.options.app.rootAttrs ||= {}
     nuxt.options.app.rootAttrs.class = [nuxt.options.app.rootAttrs.class, 'isolate'].filter(Boolean).join(' ')
-
-    async function registerModule(name: string, key: string, options: Record<string, any>) {
-      if (hasNuxtModule(name))
-        (nuxt.options as any)[key] = defu((nuxt.options as any)[key], options)
-      else
-        await installModule(name, defu((nuxt.options as any)[key], options))
-    }
-
-    await registerModule('@nuxt/icon', 'icon', {
-      cssLayer: 'components',
-    })
-
-    if (options.fonts) {
-      await registerModule('@nuxt/fonts', 'fonts', {
-        defaults: {
-          weights: [400, 500, 600, 700],
-        },
-      })
-    }
-
-    if (options.colorMode) {
-      await registerModule('@nuxtjs/color-mode', 'colorMode', {
-        classSuffix: '',
-        disableTransition: true,
-      })
-    }
 
     addPlugin({ src: resolve('./runtime/plugins/colors') })
 

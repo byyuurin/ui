@@ -12,13 +12,24 @@ https://byyuurin-ui.netlify.app/
 
 ## Installation
 
+```bash [pnpm]
+pnpm add @byyuurin/ui
+```
+
+```bash [yarn]
+yarn add @byyuurin/ui
+```
+
+```bash [npm]
+npm install @byyuurin/ui
+```
+
 <details>
 <summary>Nuxt</summary>
 
 ### Install dependencies
 
 ```sh
-pnpm i -D @unocss/nuxt
 pnpm i @byyuurin/ui
 ```
 
@@ -29,7 +40,6 @@ pnpm i @byyuurin/ui
 
 export default defineNuxtConfig({
   modules: [
-    '@unocss/nuxt',
     '@byyuurin/ui/nuxt',
   ],
   ui: {
