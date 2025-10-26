@@ -120,7 +120,12 @@
   "peerDependencies": {
     "@unocss/nuxt": ">=66.1.0",
     "@unocss/preset-wind4": ">=66.1.0",
-    "superstruct": "^2.0.2"
+    "joi": "^18.0.0",
+    "superstruct": "^2.0.2",
+    "valibot": "^1.0.0",
+    "vue-router": "^4.5.0",
+    "yup": "^1.7.0",
+    "zod": "^3.24.0 || ^4.0.0"
   },
   "peerDependenciesMeta": {
     "@unocss/nuxt": {
@@ -152,7 +157,7 @@
     "@internationalized/date": "^3.10.0",
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/icon": "^1.15.0",
-    "@nuxt/kit": "^3.19.3",
+    "@nuxt/kit": "^4.2.0",
     "@nuxtjs/color-mode": "^3.5.2",
     "@standard-schema/spec": "^1.0.0",
     "@tanstack/vue-table": "^8.21.3",
@@ -171,7 +176,7 @@
     "embla-carousel-vue": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.1.0",
     "knitwork": "^1.2.0",
-    "magic-string": "^0.30.19",
+    "magic-string": "^0.30.21",
     "mlly": "^1.8.0",
     "ohash": "^2.0.11",
     "pathe": "^2.0.3",
@@ -180,17 +185,17 @@
     "tinyglobby": "^0.2.15",
     "ufo": "^1.6.1",
     "unplugin": "^2.3.10",
-    "unplugin-auto-import": "^19.3.0",
-    "unplugin-vue-components": "^28.8.0",
-    "vue-component-type-helpers": "^2.2.12",
-    "vue-router": "^4.6.3"
+    "unplugin-auto-import": "^20.2.0",
+    "unplugin-vue-components": "^30.0.0",
+    "vue-component-type-helpers": "^3.1.2"
   },
   "devDependencies": {
     "@byyuurin/eslint-config": "^1.9.0",
+    "@iconify-json/lucide": "^1.2.71",
     "@nuxt/eslint-config": "^1.9.0",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^3.19.3",
-    "@nuxt/test-utils": "^3.19.2",
+    "@nuxt/schema": "^4.2.0",
+    "@nuxt/test-utils": "^3.20.1",
     "@types/node": "^22.18.12",
     "@unocss/core": "^66.5.4",
     "@unocss/preset-wind4": "^66.5.4",
@@ -200,17 +205,17 @@
     "eslint": "^9.38.0",
     "eslint-plugin-format": "1.0.1",
     "esno": "^4.8.0",
-    "lint-staged": "^16.2.5",
-    "nuxt": "^3.19.3",
+    "lint-staged": "^16.2.6",
+    "nuxt": "^4.2.0",
     "simple-git-hooks": "^2.13.1",
     "superstruct": "^2.0.2",
     "typescript": "^5.9.3",
     "unocss": "^66.5.4",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vite-plugin-inspect": "^11.3.3",
     "vitest": "^3.2.4",
     "vue": "^3.5.22",
-    "vue-tsc": "^2.2.12",
+    "vue-tsc": "^3.1.2",
     "zod": "^3.25.76"
   },
   "pnpm": {

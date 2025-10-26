@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "@byyuurin/ui": "workspace:*",
-    "nuxt": "^3.19.2"
+    "nuxt": "^4.2.0"
   }
 }
