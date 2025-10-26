@@ -8,7 +8,8 @@ const items = [
   ['Apple', 'Banana', 'Blueberry', 'Grapes', 'Pineapple'],
   ['Aubergine', 'Broccoli', 'Carrot', 'Courgette', 'Leek'],
   [{ label: 'Others (disabled)', value: 'Others', disabled: true }],
-  [{ label: 'Icon', value: 'Icon', icon: 'i-carbon-user-avatar' }],
+  [{ label: 'Icon', value: 'Icon', icon: 'i-lucide:circle-user-round' }],
+  [{ label: 'Avatar', value: 'Avatar', avatar: { src: 'https://i.pravatar.cc/100?img=5' } }],
 ]
 
 const controls: ControlItems<SelectProps<typeof items>> = [
@@ -33,10 +34,10 @@ const controls: ControlItems<SelectProps<typeof items>> = [
   >
     <div class="flex flex-col gap-4">
       <USelect v-model="value" v-bind="attrs" :items="items" />
-      <USelect v-model="value" v-bind="attrs" :items="items" trailing-icon="i-mdi-chevron-double-down" />
-      <USelect v-model="value" v-bind="attrs" leading-icon="i-carbon-search" :items="items" />
-      <USelect v-model="value" v-bind="attrs" selected-icon="i-carbon-star-filled" :items="items" />
-      <USelect v-model="value" v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100' }" :items="items" />
+      <USelect v-model="value" v-bind="attrs" :items="items" trailing-icon="i-lucide:chevrons-down" />
+      <USelect v-model="value" v-bind="attrs" leading-icon="i-lucide:search" :items="items" />
+      <USelect v-model="value" v-bind="attrs" selected-icon="i-lucide:circle-check" :items="items" />
+      <USelect v-model="value" v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100?img=2' }" :items="items" />
 
       <USelect v-model="value" v-bind="attrs" :items="items">
         <template #default>

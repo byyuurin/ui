@@ -121,7 +121,7 @@ const items = ref([
   [
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       badge: '999',
       href: '/other',
       target: '_blank',
@@ -132,7 +132,7 @@ const items = ref([
     {
       label: 'Avatar',
       avatar: {
-        src: 'https://i.pravatar.cc/100',
+        src: 'https://i.pravatar.cc/100?img=13',
       },
     },
   ],

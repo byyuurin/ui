@@ -46,11 +46,11 @@ const toast = useToast()
 
 const examples: ControlInfo[] = [
   {
-    icon: 'i-carbon-notification',
+    icon: 'i-lucide:bell',
     ui: { icon: 'animate-head-shake animate-count-infinite' },
   },
   {
-    avatar: { src: 'https://i.pravatar.cc/100' },
+    avatar: { src: 'https://i.pravatar.cc/100?img=14' },
   },
   {
     actions: [

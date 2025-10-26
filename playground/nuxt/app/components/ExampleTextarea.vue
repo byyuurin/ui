@@ -2,8 +2,8 @@
 import type { TextareaProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const leadingIcon = 'i-carbon-unlocked'
-const trailingIcon = 'i-carbon-share'
+const leadingIcon = 'i-lucide:lock-open'
+const trailingIcon = 'i-lucide:share-2'
 
 const value = ref('')
 const controls: ControlItems<TextareaProps> = [

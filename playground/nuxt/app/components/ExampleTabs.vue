@@ -12,7 +12,7 @@ const items = defineItems([
   },
   {
     label: 'Tab2',
-    avatar: { src: 'https://i.pravatar.cc/100' },
+    avatar: { src: 'https://i.pravatar.cc/100?img=12' },
     content: 'And, this is the content for Tab2',
     slot: 'tab2' as const,
   },

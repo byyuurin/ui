@@ -2,7 +2,7 @@
 import type { ButtonProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const icon = 'i-carbon-asleep-filled'
+const icon = 'i-lucide:paperclip'
 
 const controls: ControlItems<ButtonProps> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
@@ -26,10 +26,10 @@ const controls: ControlItems<ButtonProps> = [
   >
     <div class="flex flex-wrap items-start gap-4">
       <UButton v-bind="attrs" label="" :icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text only'" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text with leadingIcon'" :leading-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text with icon'" :trailing-icon="icon" />
+      <UButton v-bind="attrs" :label="attrs.label || 'Text with avatar'" :avatar="{ src: 'https://i.pravatar.cc/100?img=3' }" />
     </div>
     <div class="py-4">
       <UButton v-bind="attrs" :label="attrs.label || 'Text'">

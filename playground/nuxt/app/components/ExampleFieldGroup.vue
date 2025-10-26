@@ -20,21 +20,21 @@ const controls: ControlItems<FieldGroupProps> = [
         <h2>With Button</h2>
         <UFieldGroup v-bind="attrs">
           <UButton color="neutral" variant="subtle" label="Button" />
-          <UButton color="neutral" variant="subtle" icon="i-carbon-search" />
+          <UButton color="neutral" variant="subtle" icon="i-lucide:search" />
         </UFieldGroup>
       </div>
       <div>
         <h2>With Badge</h2>
         <UFieldGroup v-bind="attrs">
           <UBadge color="neutral" label="Badge" variant="outline" />
-          <UButton color="neutral" variant="outline" icon="i-carbon-search" />
+          <UButton color="neutral" variant="outline" icon="i-lucide:search" />
         </UFieldGroup>
       </div>
       <div>
         <h2>With Input</h2>
         <UFieldGroup v-bind="attrs">
           <UInput color="neutral" placeholder="Input" />
-          <UButton color="neutral" variant="outline" icon="i-carbon-search" />
+          <UButton color="neutral" variant="outline" icon="i-lucide:search" />
         </UFieldGroup>
       </div>
       <div>
@@ -42,7 +42,7 @@ const controls: ControlItems<FieldGroupProps> = [
         <UFieldGroup v-bind="attrs">
           <UInput color="neutral" placeholder="Input" />
           <UTooltip text="Copy to clipboard">
-            <UButton color="neutral" variant="outline" icon="i-carbon-copy" />
+            <UButton color="neutral" variant="outline" icon="i-lucide:clipboard-copy" />
           </UTooltip>
         </UFieldGroup>
       </div>
@@ -50,7 +50,7 @@ const controls: ControlItems<FieldGroupProps> = [
         <h2>With Select</h2>
         <UFieldGroup v-bind="attrs">
           <USelect color="neutral" default-value="ON" :items="['ON', 'OFF']" :ui="{ content: 'min-w-25' }" />
-          <UButton color="neutral" variant="outline" icon="i-carbon-save" />
+          <UButton color="neutral" variant="outline" icon="i-lucide:save" />
         </UFieldGroup>
       </div>
     </div>

@@ -7,7 +7,7 @@ const items = [
   { label: 'Components', icon: 'i-lucide-box', to: '/' },
   { label: 'Custom', icon: 'i-lucide-plug', to: '/', slot: 'custom' as const },
   { label: 'Breadcrumb', icon: 'i-lucide-link', to: '/', disabled: true },
-  { label: 'Avatar', avatar: { src: 'https://i.pravatar.cc/100' }, to: '/' },
+  { label: 'Avatar', avatar: { src: 'https://i.pravatar.cc/100?img=9' }, to: '/' },
 ] satisfies BreadcrumbItem[]
 
 const controls: ControlItems<BreadcrumbProps<typeof items>> = []

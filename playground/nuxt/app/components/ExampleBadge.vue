@@ -2,7 +2,7 @@
 import type { BadgeProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const icon = 'i-carbon-logo-youtube'
+const icon = 'i-lucide:clock-3'
 
 const controls: ControlItems<BadgeProps> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
@@ -21,10 +21,10 @@ const controls: ControlItems<BadgeProps> = [
   >
     <div class="flex flex-wrap items-start gap-4">
       <UBadge v-bind="attrs" label="" :icon="icon" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :leading-icon="icon" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :trailing-icon="icon" />
-      <UBadge v-bind="attrs" :label="attrs.label || 'Text'" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
+      <UBadge v-bind="attrs" :label="attrs.label || 'Text only'" />
+      <UBadge v-bind="attrs" :label="attrs.label || 'Text with leadingIcon'" :leading-icon="icon" />
+      <UBadge v-bind="attrs" :label="attrs.label || 'Text with icon'" :trailing-icon="icon" />
+      <UBadge v-bind="attrs" :label="attrs.label || 'Text with avatar'" :avatar="{ src: 'https://i.pravatar.cc/100?img=4' }" />
     </div>
     <div class="py-4">
       <UBadge v-bind="attrs" :label="attrs.label || 'Text'">

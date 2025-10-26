@@ -8,7 +8,7 @@ const items = [
       label: 'User Name',
       description: '...',
       avatar: {
-        src: 'https://i.pravatar.cc/100',
+        src: 'https://i.pravatar.cc/100?img=10',
       },
       type: 'label',
       color: 'success',
@@ -75,18 +75,18 @@ const items = [
   [
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       target: '_blank',
       to: 'https://github.com',
     },
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       to: 'https://github.com',
     },
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       to: 'https://github.com',
       disabled: true,
     },

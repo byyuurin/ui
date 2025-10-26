@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <span class="group relative overflow-hidden rounded border border-dashed border-accented opacity-75 px-4 flex items-center justify-center">
+  <span class="group relative overflow-hidden rounded border border-dashed border-accented/80 opacity-75 px-4 flex items-center justify-center">
     <svg class="absolute inset-0 size-full stroke-default/80" fill="none">
       <defs>
         <pattern

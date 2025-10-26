@@ -48,7 +48,7 @@ const columns: TableColumn<typeof data.value[number]>[] = [
   {
     id: 'expand',
     header: '',
-    cell: ({ row }) => h(Button, { size: 'xs', variant: 'ghost', icon: row.getIsExpanded() ? 'i-mdi-minus' : 'i-mdi-plus', onClick: () => row.toggleExpanded() }),
+    cell: ({ row }) => h(Button, { size: 'xs', variant: 'ghost', icon: row.getIsExpanded() ? 'i-lucide-minus' : 'i-lucide-plus', onClick: () => row.toggleExpanded() }),
   },
   { accessorKey: 'id', header: 'ID' },
   { accessorKey: 'date', header: 'Date' },

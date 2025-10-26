@@ -2,8 +2,8 @@
 import type { InputProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const leadingIcon = 'i-carbon-unlocked'
-const trailingIcon = 'i-carbon-share'
+const leadingIcon = 'i-lucide:lock-keyhole'
+const trailingIcon = 'i-lucide:share-2'
 
 const controls: ControlItems<InputProps> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
@@ -29,7 +29,7 @@ const controls: ControlItems<InputProps> = [
       <UInput v-bind="attrs" :leading-icon="leadingIcon" />
       <UInput v-bind="attrs" :trailing-icon="trailingIcon" />
       <UInput v-bind="attrs" :icon="leadingIcon" :leading-icon="leadingIcon" :trailing-icon="trailingIcon" />
-      <UInput v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100' }" />
+      <UInput v-bind="attrs" :avatar="{ src: 'https://i.pravatar.cc/100?img=11' }" />
       <UInput v-bind="attrs">
         <template #leading>
           <Placeholder label="#leading" />

@@ -28,7 +28,7 @@ const ui: SwitchProps['ui'] = {
   >
     <div class="flex flex-wrap gap-4">
       <USwitch v-bind="attrs" v-model="value" :ui="ui" />
-      <USwitch v-bind="attrs" v-model="value" :ui="ui" checked-icon="i-carbon-checkmark" unchecked-icon="i-carbon-close-large" />
+      <USwitch v-bind="attrs" v-model="value" :ui="ui" checked-icon="i-lucide:check" unchecked-icon="i-lucide:x" />
       <USwitch v-bind="attrs" v-model="value" :ui="ui">
         <template #label>
           <Placeholder label="#label" label-position="left" />
