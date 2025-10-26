@@ -68,6 +68,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
    */
   size?: ThemeVariants['size']
   color?: ThemeVariants['color']
+  variant?: ThemeVariants['variant']
   /** Whether or not a range of dates can be selected */
   range?: R & boolean
   /** Whether or not multiple dates can be selected */
@@ -111,7 +112,7 @@ const props = withDefaults(defineProps<CalendarProps<R, M>>(), {
 const emit = defineEmits<CalendarEmits<R, M>>()
 defineSlots<CalendarSlots>()
 
-const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'size', 'monthControls', 'yearControls', 'class', 'ui'), emit)
+const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'size', 'color', 'variant', 'monthControls', 'yearControls', 'class', 'ui'), emit)
 
 const { code: locale, dir, t } = useLocale()
 
@@ -121,7 +122,7 @@ const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.calendar))
   return styler({
     ...props,
-    multipleMonths: props.numberOfMonths > 1,
+    outsideView: props.numberOfMonths === 1,
   })
 })
 
