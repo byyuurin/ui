@@ -56,6 +56,7 @@ import { createUnoPreset } from '@byyuurin/ui/unocss'
 import { defineConfig, presetWind4 } from 'unocss'
 
 export default defineConfig({
+  mergeSelectors: false,
   presets: [
     presetWind4(),
     createUnoPreset({
@@ -166,6 +167,7 @@ import { defineConfig, presetWind4 } from 'unocss'
 import ui from './ui.config'
 
 export default defineConfig({
+  mergeSelectors: false,
   presets: [
     presetWind4(),
     ui.uno(),

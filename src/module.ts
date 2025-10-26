@@ -118,6 +118,10 @@ export default defineNuxtModule<ModuleOptions>({
           wind3: false,
           wind4: true,
         },
+        overrides: {
+          // https://github.com/unocss/unocss/issues/1978#issuecomment-1343789539
+          mergeSelectors: false,
+        },
       },
     }
 
