@@ -64,24 +64,24 @@ export default (options: Required<ModuleOptions>) => ct({
   compoundVariants: [
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'solid',
+      variant: 'solid' as const,
       class: { base: `bg-${color} text-inverted` },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'outline',
+      variant: 'outline' as const,
       class: { base: `text-${color} ring ring-inset ring-${color}/50` },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'soft',
+      variant: 'soft' as const,
       class: { base: `bg-${color}/10 text-${color}` },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'subtle',
+      variant: 'subtle' as const,
       class: { base: `bg-${color}/10 text-${color} ring ring-inset ring-${color}/25` },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'solid',

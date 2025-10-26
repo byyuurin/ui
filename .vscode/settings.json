@@ -42,5 +42,8 @@
     "graphql"
   ],
 
-  "unocss.root": "./playground/nuxt"
+  "unocss.root": [
+    "./",
+    "./playground/nuxt/"
+  ]
 }

@@ -99,11 +99,11 @@ export default (options: Required<ModuleOptions>) => ct({
 
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'card',
+      variant: 'card' as const,
       class: {
         root: `has-data-[state=checked]:border-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'card',

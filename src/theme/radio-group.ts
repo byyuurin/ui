@@ -144,11 +144,11 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'card',
+      variant: 'card' as const,
       class: {
         item: `has-data-[state=checked]:border-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'card',
@@ -158,11 +158,11 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'table',
+      variant: 'table' as const,
       class: {
         item: `has-data-[state=checked]:bg-${color}/10 has-data-[state=checked]:border-${color}/50 has-data-[state=checked]:z-[1]`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'table',

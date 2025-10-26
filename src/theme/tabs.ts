@@ -112,12 +112,12 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'pill',
+      variant: 'pill' as const,
       class: {
         indicator: `bg-${color}`,
         trigger: `data-[state=active]:text-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'pill',
@@ -128,12 +128,12 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'link',
+      variant: 'link' as const,
       class: {
         indicator: `bg-${color}`,
         trigger: `data-[state=active]:text-${color} focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'link',

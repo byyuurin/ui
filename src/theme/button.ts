@@ -93,46 +93,46 @@ export default (options: Required<ModuleOptions>) => ct({
   compoundVariants: [
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'solid',
+      variant: 'solid' as const,
       class: {
         base: `text-inverted bg-${color} hover:bg-${color}/75 active:bg-${color}/75 disabled:bg-${color} aria-disabled:bg-${color} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color}`,
       },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'outline',
+      variant: 'outline' as const,
       class: {
         base: `ring ring-inset ring-${color}/50 text-${color} hover:bg-${color}/10 active:bg-${color}/10 disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent focus:outline-none focus-visible:ring-2 } focus-visible:ring-${color}`,
       },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'soft',
+      variant: 'soft' as const,
       class: {
         base: `text-${color} bg-${color}/10 hover:bg-${color}/15 active:bg-${color}/15 focus:outline-none focus-visible:bg-${color}/15 disabled:bg-${color}/10 aria-disabled:bg-${color}/10`,
       },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'subtle',
+      variant: 'subtle' as const,
       class: {
         base: `text-${color} ring ring-inset ring-${color}/25 bg-${color}/10 hover:bg-${color}/15 active:bg-${color}/15 disabled:bg-${color}/10 aria-disabled:bg-${color}/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-${color}`,
       },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'ghost',
+      variant: 'ghost' as const,
       class: {
         base: `text-${color} hover:bg-${color}/10 active:bg-${color}/10 focus:outline-none focus-visible:bg-${color}/10 disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent`,
       },
-    } as const)),
+    })),
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'link',
+      variant: 'link' as const,
       class: {
         base: `text-${color} hover:text-${color}/75 active:text-${color}/75 disabled:text-${color} aria-disabled:text-${color} focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'solid',

@@ -214,13 +214,13 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'pill',
+      variant: 'pill' as const,
       active: true,
       class: {
         link: `text-${color}`,
         linkLeadingIcon: `text-${color} group-data-[state=open]:text-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'pill',
@@ -268,13 +268,13 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     ...(options.theme.colors || []).map((color: string) => ({
       color: color as VariantsColor,
-      variant: 'link',
+      variant: 'link' as const,
       active: true,
       class: {
         link: `text-${color}`,
         linkLeadingIcon: `text-${color} group-data-[state=open]:text-${color}`,
       },
-    } as const)),
+    })),
     {
       color: 'neutral',
       variant: 'link',
