@@ -23,8 +23,12 @@ export default defineBuildConfig({
   externals: [
     '#build/ui',
     'unconfig',
-    '@unocss/core',
-    '@unocss/config',
     'vite',
+    '@unocss/config',
+    '@unocss/core',
+    '@unocss/preset-wind4',
+    '@unocss/preset-wind4/colors',
+    '@unocss/preset-wind4/utils',
+    '@unocss/rule-utils',
   ],
 })

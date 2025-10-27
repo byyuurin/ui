@@ -24,6 +24,9 @@ yarn add @byyuurin/ui
 npm install @byyuurin/ui
 ```
 
+> [!WARNING]
+> If you're using pnpm, ensure that you either set [`shamefully-hoist=true`](https://pnpm.io/settings#shamefully-hoist) in your `.npmrc` file or install `@byyuurin/ui-kit` in your project's root directory.
+
 ### Nuxt
 
 1. Add the UI module in your `nuxt.config.ts`:

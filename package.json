@@ -118,8 +118,6 @@
     "prepack": "nuxt-module-build build"
   },
   "peerDependencies": {
-    "@unocss/nuxt": ">=66.1.0",
-    "@unocss/preset-wind4": ">=66.1.0",
     "joi": "^18.0.0",
     "superstruct": "^2.0.2",
     "valibot": "^1.0.0",
@@ -128,9 +126,6 @@
     "zod": "^3.24.0 || ^4.0.0"
   },
   "peerDependenciesMeta": {
-    "@unocss/nuxt": {
-      "optional": true
-    },
     "joi": {
       "optional": true
     },
@@ -217,13 +212,6 @@
     "vue": "^3.5.22",
     "vue-tsc": "^3.1.2",
     "zod": "^3.25.76"
-  },
-  "pnpm": {
-    "overrides": {
-      "is-core-module": "npm:@nolyfill/is-core-module@^1.0.39",
-      "isarray": "npm:@nolyfill/isarray@^1.0.44",
-      "safe-buffer": "npm:@nolyfill/safe-buffer@^1.0.44"
-    }
   },
   "resolutions": {
     "@byyuurin/ui": "workspace:*"
