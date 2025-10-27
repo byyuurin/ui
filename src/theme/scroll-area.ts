@@ -11,7 +11,7 @@ export default ct({
       'data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-3 data-[orientation=horizontal]:mx-2',
     ],
     thumb: [
-      'relative flex-1 bg-[--ui-border-accented] opacity-80 rounded cursor-pointer transition',
+      'relative flex-1 bg-[--ui-border-accented] opacity-80 rounded cursor-pointer transition-colors',
       'hover:bg-[--ui-text-dimmed]',
       'before:content-empty before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-10 before:min-h-10 ',
     ],
