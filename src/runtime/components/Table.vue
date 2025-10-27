@@ -95,6 +95,21 @@ export interface TableProps<T extends TableData = TableData> extends ComponentBa
   loadingColor?: ThemeVariants['loadingColor']
   /** @default "carousel" */
   loadingAnimation?: ThemeVariants['loadingAnimation']
+
+  globalFilter?: string
+  columnFilters?: ColumnFiltersState
+  columnOrder?: ColumnOrderState
+  columnVisibility?: VisibilityState
+  columnPinning?: ColumnPinningState
+  columnSizing?: ColumnSizingState
+  columnSizingInfo?: ColumnSizingInfoState
+  rowSelection?: RowSelectionState
+  rowPinning?: RowPinningState
+  sorting?: SortingState
+  grouping?: GroupingState
+  expanded?: ExpandedState
+  pagination?: PaginationState
+
   /**
    * Use the `watchOptions` prop to customize reactivity (for ex: disable deep watching for changes in your data or limiting the max traversal depth). This can improve performance by reducing unnecessary re-renders, but it should be used with caution as it may lead to unexpected behavior if not managed properly.
    * @see [API](https://vuejs.org/api/options-state.html#watch)
