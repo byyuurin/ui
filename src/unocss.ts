@@ -79,17 +79,23 @@ export function createUnoPreset(options: PresetOptions = {}) {
     },
     shortcuts: [
       [
-        /^(?:(text|bg|border|divide|outline|ring-offset|ring|stroke|fill)-)(.+)$/,
+        /^(?:(text|bg|border-[rltbsexy]|border|divide|outline|ring-offset|ring|stroke|fill)-)(.+)$/,
         ([, t = '', c = ''], { theme }) => {
+          if (/^\[.*\]$/.test(c))
+            return
+
           const parsed = parseColor(c, theme)
 
           if (!parsed || !/^(?:default|dimmed|muted|toned|highlighted|inverted|elevated|accented|border|bg)/.test(c))
             return
 
+          if (t.includes(parsed.name))
+            return
+
           const result = `${t}-[--ui-${t}-${parsed.name}]/${parsed.opacity ?? 100}`
             .replace('-default', '')
             .replace('/100', '')
-            .replace(/ui-(?:border|divide|outline|ring-offset|ring|stroke|fill)/, 'ui-border')
+            .replace(/\[--ui-(?:border-[rltbsexy]|border|divide|outline|ring-offset|ring|stroke|fill)(-.+)?\]/, '[--ui-border$1]')
             .replace(/(?:bg-(border)|border-(bg))/, '$1$2')
 
           return result

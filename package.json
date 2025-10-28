@@ -103,7 +103,7 @@
     "vue-plugin.d.ts"
   ],
   "scripts": {
-    "dev": "nuxi dev playground/nuxt --uiDev",
+    "dev": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi dev playground/nuxt --uiDev",
     "dev:build": "nuxi build playground/nuxt",
     "dev:preview": "nuxi preview playground/nuxt",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt && pnpm dev:vue:build",
