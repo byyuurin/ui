@@ -1,4 +1,4 @@
-import type { ClassValue, CVCompoundVariants, CVDefaultVariants, CVScopeMeta, VariantProps } from '@byyuurin/ui-kit'
+import type { ClassProp, ClassValue, CVDefaultVariants, CVParts, CVScopeMeta, CVVariants, MaybeArray, StringToBoolean, VariantProps } from '@byyuurin/ui-kit'
 
 export interface ComponentBaseProps {
   class?: ClassValue
@@ -19,7 +19,7 @@ export type ComponentUIProps<T> = T extends { parts: infer P }
 type UIConfigPartial<T> = {
   [P in keyof T as T[P] extends undefined ? never : P]?: T[P] extends Array<infer V>
     ? V extends string
-      ? V extends '' ? '' : V
+      ? V extends '' ? '' : string
       : V[]
     : T[P] extends object
       ? UIConfigPartial<T[P]>
@@ -28,10 +28,18 @@ type UIConfigPartial<T> = {
         : T[P]
 }
 
-type _Variants<T> = T & Record<string, never>
+type PartsName<P extends CVParts, B extends ClassValue> = B extends undefined ? keyof P : keyof P | 'base'
+
+type PartsClassValue<S extends CVParts, B extends ClassValue> = {
+  [K in PartsName<S, B>]?: string;
+}
+
+type CVCompoundVariants<V extends CVVariants<P>, P extends CVParts, B extends ClassValue> = Array<{
+  [K in keyof V]?: MaybeArray<StringToBoolean<keyof V[K]>>;
+} & (P extends undefined ? ClassProp<PartsClassValue<P, B> | string> : ClassProp<PartsClassValue<P, B>>)>
 
 export type UIConfig<Themes extends Record<string, any>> = {
   [Component in keyof Themes]?: Themes[Component] extends CVScopeMeta<infer V, any, any, infer B, infer P>
-    ? UIConfigPartial<CVScopeMeta<_Variants<V>, CVCompoundVariants<_Variants<V>, P, B>, CVDefaultVariants<_Variants<V>, P>, B, P>>
+    ? UIConfigPartial<CVScopeMeta<V, CVCompoundVariants<V, P, B>, CVDefaultVariants<V, P>, B, P>>
     : never
 }
