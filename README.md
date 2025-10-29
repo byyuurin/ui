@@ -59,7 +59,6 @@ import { createUnoPreset } from '@byyuurin/ui/unocss'
 import { defineConfig, presetWind4 } from 'unocss'
 
 export default defineConfig({
-  mergeSelectors: false,
   presets: [
     presetWind4(),
     createUnoPreset({
@@ -149,16 +148,17 @@ export default setup({
 2. Add the UI Vite plugin in your `vite.config.ts`:
 
 ```ts
+import ui from '@byyuurin/ui/vite' // <---
 import vue from '@vitejs/plugin-vue'
 import unocss from 'unocss/vite'
 import { defineConfig } from 'vite'
-import ui from './ui.config'
+import uiConfig from './ui.config' // <---
 
 export default defineConfig({
   plugins: [
     unocss(),
     vue(),
-    ui.vite(),
+    ui(uiConfig.vite), // <---
   ],
 })
 ```
@@ -166,14 +166,14 @@ export default defineConfig({
 3. Add UnoCSS preset in your `uno.config.ts`:
 
 ```ts
+import { createUnoPreset } from '@byyuurin/ui/unocss' // <---
 import { defineConfig, presetWind4 } from 'unocss'
-import ui from './ui.config'
+import uiConfig from './ui.config' // <---
 
 export default defineConfig({
-  mergeSelectors: false,
   presets: [
     presetWind4(),
-    ui.uno(),
+    createUnoPreset(uiConfig.uno), // <---
   ],
 })
 ```

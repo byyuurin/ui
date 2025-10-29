@@ -1,11 +1,12 @@
+import { createUnoPreset } from '@byyuurin/ui/unocss'
 import { defineConfig, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss'
-import ui from './ui.config'
+import uiConfig from './ui.config'
 
 export default defineConfig({
   mergeSelectors: false,
   presets: [
     presetWind4(),
-    ui.uno(),
+    createUnoPreset(uiConfig.uno),
   ],
   transformers: [
     transformerDirectives(),

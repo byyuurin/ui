@@ -1,12 +1,9 @@
-import { defu } from 'defu'
 import type * as ui from '#build/ui'
 import type { Color, NeutralColor, VariantsColor, VariantsSize } from './defaults'
 import type { UIConfig as ComponentStyle } from './runtime/types/style'
 import type { icons } from './theme/app'
 import type { PresetOptions } from './unocss'
-import { createUnoPreset } from './unocss'
-import type { UIOptions as ViteUIOptions } from './vite'
-import vite from './vite'
+import type { UIOptions } from './vite'
 
 export type AppConfigIcons = Record<keyof typeof icons | (string & {}), string>
 
@@ -19,7 +16,7 @@ export type AppConfigUI<Colors extends string = VariantsColor> = {
   icons?: Partial<AppConfigIcons>
 } & ComponentStyle<typeof ui>
 
-interface UIConfig<Color extends string = VariantsColor> extends Omit<ViteUIOptions, 'theme' | 'ui'> {
+interface UIConfig<Color extends string = VariantsColor> extends Omit<UIOptions, 'theme' | 'ui'> {
   theme?: {
     /**
      * Define the color aliases available for components
@@ -51,8 +48,13 @@ interface UIConfig<Color extends string = VariantsColor> extends Omit<ViteUIOpti
 }
 
 export function setup<Color extends string = VariantsColor>(defaults: UIConfig<Color> = {}) {
+  const uno: PresetOptions = {
+    colors: defaults.theme?.colors,
+  }
+  const vite: UIOptions = defaults
+
   return {
-    uno: (options?: PresetOptions) => createUnoPreset(options ?? defaults.theme),
-    vite: (options?: UIConfig<Color>) => vite((defu(options, defaults)) as ViteUIOptions),
+    uno,
+    vite,
   }
 }
