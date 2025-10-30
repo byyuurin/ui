@@ -45,7 +45,7 @@ export function useState<T>(key: string, init: () => T): Ref<T> {
 export function useNuxtApp() {
   return {
     isHydrating: true,
-    payload: { serverRendered: false },
+    payload: { serverRendered: import.meta.env.SSR || false },
   }
 }
 
