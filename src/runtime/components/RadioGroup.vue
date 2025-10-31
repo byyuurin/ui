@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { RadioGroupItem, RadioGroupRootProps } from 'reka-ui'
+import type { RadioGroupItem, RadioGroupRootEmits, RadioGroupRootProps } from 'reka-ui'
 import theme from '#build/ui/radio-group'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { AcceptableValue, GetItemKeys, GetModelValue, MaybeArray, NestedItem, StaticSlot } from '../types/utils'
+import type { AcceptableValue, GetItemKeys, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem, StaticSlot } from '../types/utils'
 
 export type RadioGroupValue = AcceptableValue
 
@@ -68,10 +68,9 @@ export interface RadioGroupProps<T extends RadioGroupItem[] = RadioGroupItem[], 
   ui?: ComponentUIProps<typeof theme>
 }
 
-export interface RadioGroupEmits {
-  'update:modelValue': [value: string]
-  'change': [event: Event]
-}
+export type RadioGroupEmits<T extends RadioGroupItem[] = RadioGroupItem[], VK extends GetItemKeys<T> = 'value'> = Omit<RadioGroupRootEmits, 'update:modelValue'> & {
+  change: [event: Event]
+} & GetModelValueEmits<T, VK, false>
 
 type SlotProps<T extends RadioGroupItem[]> = StaticSlot<{ item: NormalizeItem<NestedItem<T>>, modelValue?: RadioGroupValue }>
 
@@ -98,7 +97,7 @@ const props = withDefaults(defineProps<RadioGroupProps<T, VK>>(), {
   orientation: 'vertical',
 })
 
-const emit = defineEmits<RadioGroupEmits>()
+const emit = defineEmits<RadioGroupEmits<T, VK>>()
 const slots = defineSlots<RadioGroupSlots<T>>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'loop', 'required'), emit)
