@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { CheckboxRootProps, PrimitiveProps } from 'reka-ui'
+import type { CheckboxRootEmits, CheckboxRootProps, PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/checkbox'
 import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
@@ -37,7 +37,7 @@ export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProp
   ui?: ComponentUIProps<typeof theme>
 }
 
-export interface CheckboxEmits {
+export type CheckboxEmits = CheckboxRootEmits & {
   change: [event: Event]
 }
 
