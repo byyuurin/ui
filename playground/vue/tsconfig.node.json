@@ -23,9 +23,7 @@
     "noUncheckedSideEffectImports": true,
 
     "paths": {
-      "#build/ui": [
-        "./node_modules/@byyuurin/ui/.nuxt/ui"
-      ]
+      "#build/*": ["./node_modules/.nuxt/*"]
     }
   },
   "include": ["vite.config.ts"]

@@ -13,9 +13,6 @@
   },
   "bugs": "https://github.com/byyuurin/ui/issues",
   "keywords": [],
-  "imports": {
-    "#build/ui/*": "./.nuxt/ui/*.ts"
-  },
   "exports": {
     ".": {
       "types": "./dist/module.d.mts",
@@ -98,7 +95,6 @@
     }
   },
   "files": [
-    ".nuxt/ui",
     "dist",
     "vue-plugin.d.ts"
   ],

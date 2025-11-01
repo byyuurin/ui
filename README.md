@@ -137,9 +137,7 @@ export default setup({
 {
   "compilerOptions": {
     "paths": {
-      "#build/ui": [
-        "./node_modules/@byyuurin/ui/.nuxt/ui"
-      ]
+      "#build/*": ["./node_modules/.nuxt/*"]
     }
   }
 }
