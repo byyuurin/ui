@@ -2,7 +2,7 @@
 import type { InputNumberProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const value = ref<number>(0)
+const value = ref<number | null>(null)
 
 const controls: ControlItems<InputNumberProps> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },

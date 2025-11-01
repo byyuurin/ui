@@ -2,9 +2,7 @@
 import type { TabsItem, TabsProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const defineItems = <T extends TabsItem>(items: T[]) => items
-
-const items = defineItems([
+const items = [
   {
     label: 'Tab1',
     icon: 'i-lucide-blocks',
@@ -23,7 +21,7 @@ const items = defineItems([
     content: 'Finally, this is the content for Tab3',
     disabled: true,
   },
-])
+] satisfies TabsItem[]
 
 const controls: ControlItems<TabsProps<typeof items[number]>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
