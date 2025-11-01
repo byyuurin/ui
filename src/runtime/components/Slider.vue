@@ -7,7 +7,7 @@ import type { MaybeArray } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
+export interface SliderProps<T extends MaybeArray<number> = MaybeArray<number>> extends ComponentBaseProps, Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -27,19 +27,19 @@ export interface SliderProps extends ComponentBaseProps, Pick<SliderRootProps, '
    * @default false
    */
   tooltip?: boolean | TooltipProps
-  modelValue?: number | number[]
+  modelValue?: T
   /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
-  defaultValue?: number | number[]
+  defaultValue?: T
   ui?: ComponentUIProps<typeof theme>
 }
 
-export interface SliderEmits {
-  'update:modelValue': [value: MaybeArray<number>]
+export interface SliderEmits<T extends MaybeArray<number>> {
+  'update:modelValue': [value: T]
   'change': [event: Event]
 }
 </script>
 
-<script setup lang="ts" generic="T extends number | number[]">
+<script setup lang="ts" generic="T extends MaybeArray<number>">
 import { reactivePick, useVModel } from '@vueuse/core'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
@@ -48,24 +48,24 @@ import { useFormField } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 import Tooltip from './Tooltip.vue'
 
-const props = withDefaults(defineProps<SliderProps>(), {
+const props = withDefaults(defineProps<SliderProps<T>>(), {
   orientation: 'horizontal',
   min: 0,
   max: 100,
   step: 1,
 })
 
-const emit = defineEmits<SliderEmits>()
+const emit = defineEmits<SliderEmits<T>>()
 
-const modelValue = useVModel(props, 'modelValue', emit)
+const modelValue = useVModel<SliderProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emit)
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'orientation', 'min', 'max', 'step', 'minStepsBetweenThumbs', 'inverted'), emit)
+const rootProps = useForwardPropsEmits(reactivePick(props as SliderProps<number[]>, 'as', 'min', 'max', 'step', 'minStepsBetweenThumbs', 'inverted'), emit)
 
 const defaultSliderValue = computed(() => {
   if (typeof props.defaultValue === 'number')
     return [props.defaultValue]
 
-  return props.defaultValue
+  return props.defaultValue as number[] | undefined
 })
 
 const sliderValue = computed({
@@ -82,7 +82,7 @@ const sliderValue = computed({
 
 const thumbs = computed(() => sliderValue.value?.length ?? 1)
 
-const { id, name, size, color, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<SliderProps>(props)
+const { id, name, size, color, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<SliderProps<T>>(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.slider))
