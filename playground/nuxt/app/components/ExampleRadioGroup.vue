@@ -11,7 +11,7 @@ const items = values.map((s, i) => ({
   disabled: i === 2,
 }))
 
-const value = ref()
+const value = ref<string | null>(null)
 
 const controls: ControlItems<RadioGroupProps<typeof items>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
@@ -36,5 +36,6 @@ const controls: ControlItems<RadioGroupProps<typeof items>> = [
       <URadioGroup v-model="value" v-bind="attrs" :items="items" />
       <URadioGroup v-model="value" v-bind="attrs" :items="values" />
     </div>
+    <UButton class="mt-10" label="Reset" :disabled="value === null" @click="value = null" />
   </ExampleView>
 </template>

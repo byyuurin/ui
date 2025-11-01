@@ -86,5 +86,6 @@ const controls: ControlItems<SelectProps<typeof items>> = [
         </template>
       </USelect>
     </div>
+    <UButton class="mt-10" label="Reset" :disabled="value === null" @click="value = null" />
   </ExampleView>
 </template>

@@ -57,9 +57,9 @@ export interface RadioGroupProps<T extends RadioGroupItem[] = RadioGroupItem[], 
   descriptionKey?: GetItemKeys<T>
   items?: T
   /** The controlled value of the RadioGroup. Can be bind as `v-model`. */
-  modelValue?: GetModelValue<T, VK, false>
+  modelValue?: GetModelValue<T, VK, false> | null
   /** The value of the RadioGroup when initially rendered. Use when you do not need to control the state of the RadioGroup. */
-  defaultValue?: GetModelValue<T, VK, false>
+  defaultValue?: GetModelValue<T, VK, false> | null
   /**
    * The orientation the radio buttons are laid out.
    * @default "vertical"
