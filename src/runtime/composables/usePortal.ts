@@ -1,5 +1,12 @@
 import { computed, type Ref } from 'vue'
-import { injectPortalTarget } from './injections'
+import type { AppProps } from '../types'
+import { defineInjection } from '../utils'
+
+export const {
+  InjectionKey: InjectionKeyPortalTarget,
+  inject: injectPortalTarget,
+  provide: providePortalTarget,
+} = defineInjection<Ref<AppProps['portal']>>('ui.portal-target')
 
 export function usePortal(portal: Ref<boolean | string | HTMLElement | undefined>) {
   const globalPortal = injectPortalTarget()

@@ -19,7 +19,8 @@ export interface AppSlots {
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
 import { toRef, useId } from 'vue'
-import { provideLocaleContext, providePortalTarget } from '../composables/injections'
+import { provideLocaleContext } from '../composables/useLocale'
+import { providePortalTarget } from '../composables/usePortal'
 import OverlayProvider from './OverlayProvider.vue'
 import ToastProvider from './ToastProvider.vue'
 

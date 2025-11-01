@@ -31,7 +31,7 @@ export interface FieldGroupSlots {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { provideFieldGroup } from '../composables/injections'
+import { provideFieldGroup } from '../composables/useFieldGroup'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<FieldGroupProps>(), {

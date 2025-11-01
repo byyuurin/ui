@@ -51,7 +51,7 @@ export interface FormFieldSlots {
 import { Label, Primitive } from 'reka-ui'
 import { computed, ref, useId, watch } from 'vue'
 import { useAppConfig } from '#imports'
-import { injectFormErrors, injectFormInputs, provideFormField, provideFormInputId } from '../composables/injections'
+import { injectFormErrors, injectFormInputs, provideFormField, provideFormInputId } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 
 const props = defineProps<FormFieldProps>()

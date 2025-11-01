@@ -1,14 +1,77 @@
+import type { UseEventBusReturn } from '@vueuse/core'
 import { useDebounceFn } from '@vueuse/core'
+import type { ComputedRef, Ref } from 'vue'
 import { computed } from 'vue'
-import type { FormInputEvents } from '../types'
-import type { GetObjectField } from '../types/utils'
-import {
-  injectFormBus,
-  injectFormField,
-  injectFormInputId,
-  injectFormInputs,
-  injectFormOptions,
-} from './injections'
+import type { FormErrorWithId, FormEvent, FormFieldProps, FormInputEvents } from '../types'
+import type { GetObjectField, MaybeNull } from '../types/utils'
+import { defineInjection } from '../utils'
+
+export interface FormOptionsProvideValue {
+  disabled: boolean
+  validateOnInputDelay: number
+}
+export const {
+  InjectionKey: InjectionKeyFormOptions,
+  inject: injectFormOptions,
+  provide: provideFormOptions,
+} = defineInjection<ComputedRef<FormOptionsProvideValue>>('ui.form-options')
+
+export type FormBusProvideValue = UseEventBusReturn<FormEvent<any>, string>
+export const {
+  InjectionKey: InjectionKeyFormBus,
+  inject: injectFormBus,
+  provide: provideFormBus,
+} = defineInjection<FormBusProvideValue>('ui.form-bus')
+
+export type FormStateProvideValue = Record<string, any>
+export const {
+  InjectionKey: InjectionKeyFormState,
+  inject: injectFormState,
+  provide: provideFormState,
+} = defineInjection<ComputedRef<FormStateProvideValue>>('ui.form-state')
+
+export interface FormFieldProvideValue<T> {
+  name?: string
+  size?: GetObjectField<T, 'size'>
+  error?: string | boolean
+  eagerValidation?: boolean
+  validateOnInputDelay?: number
+  errorPattern?: RegExp
+  hint?: string
+  help?: string
+  description?: string
+  ariaId: string
+}
+export const {
+  InjectionKey: InjectionKeyFormField,
+  inject: injectFormField,
+  provide: provideFormField,
+} = defineInjection<ComputedRef<FormFieldProvideValue<FormFieldProps>>>('ui.form-field')
+
+export const {
+  InjectionKey: InjectionKeyFormInputId,
+  inject: injectFormInputId,
+  provide: provideFormInputId,
+} = defineInjection<Ref<string | undefined>>('ui.form-input-id')
+
+export type FormInputsProvideValue = Record<string, { id?: string, pattern?: RegExp }>
+export const {
+  InjectionKey: InjectionKeyFormInputs,
+  inject: injectFormInputs,
+  provide: provideFormInputs,
+} = defineInjection<Ref<FormInputsProvideValue>>('ui.form-inputs')
+
+export const {
+  InjectionKey: InjectionKeyFormLoading,
+  inject: injectFormLoading,
+  provide: provideFormLoading,
+} = defineInjection<Readonly<Ref<boolean>>>('ui.form-loading')
+
+export const {
+  InjectionKey: InjectionKeyFormErrors,
+  inject: injectFormErrors,
+  provide: provideFormErrors,
+} = defineInjection<MaybeNull<Ref<FormErrorWithId[]>>>('ui.form-errors', null)
 
 interface Props<T> {
   id?: string

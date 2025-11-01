@@ -30,7 +30,7 @@ export interface AvatarGroupSlots {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { provideAvatarGroup } from '../composables/injections'
+import { provideAvatarGroup } from '../composables/useAvatarGroup'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 

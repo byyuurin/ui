@@ -1,8 +1,15 @@
+import type { Ref } from 'vue'
 import { nextTick, shallowRef } from 'vue'
 import { useState } from '#imports'
 import type { ToastEmits, ToastProps } from '../types'
 import type { EmitsToProps } from '../types/utils'
-import { injectToastMax } from './injections'
+import { defineInjection } from '../utils'
+
+export const {
+  InjectionKey: InjectionKeyToastMax,
+  inject: injectToastMax,
+  provide: provideToastMax,
+} = defineInjection<Ref<number>>('ui.toast-max')
 
 export interface Toast extends Omit<ToastProps, 'defaultOpen'>, EmitsToProps<ToastEmits> {
   id: string | number

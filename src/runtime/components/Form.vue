@@ -75,7 +75,7 @@ export interface FormSlots {
 import { useEventBus } from '@vueuse/core'
 import { computed, nextTick, onMounted, onUnmounted, reactive, readonly, ref, shallowRef, useId } from 'vue'
 import { useAppConfig } from '#imports'
-import { injectFormBus, injectFormState, provideFormBus, provideFormErrors, provideFormInputs, provideFormLoading, provideFormOptions, provideFormState } from '../composables/injections'
+import { injectFormBus, injectFormState, provideFormBus, provideFormErrors, provideFormInputs, provideFormLoading, provideFormOptions, provideFormState } from '../composables/useFormField'
 import { FormValidationException } from '../types/form'
 import { getAtPath, setAtPath, validateSchema } from '../utils/form'
 import { cv, merge } from '../utils/style'
