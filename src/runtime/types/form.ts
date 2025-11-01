@@ -1,7 +1,7 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec'
 import type { Struct as SuperstructSchema } from 'superstruct'
 import type { ComputedRef, DeepReadonly, Ref } from 'vue'
-import type { GetObjectField } from './utils'
+import type { GetObjectField, MaybeNull } from './utils'
 
 export interface Form<S extends FormSchema> {
   validate: <T extends boolean>(opts?: { name?: keyof FormData<S, false> | (keyof FormData<S, false>)[], silent?: boolean, nested?: boolean, transform?: T }) => Promise<FormData<S, T> | false>
@@ -102,7 +102,7 @@ export interface FormFieldInjectedOptions<T> {
 
 export interface ValidateReturnSchema<T> {
   result: T
-  errors: FormError[] | null
+  errors: MaybeNull<FormError[]>
 }
 
 // eslint-disable-next-line unicorn/custom-error-definition

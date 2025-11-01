@@ -4,7 +4,7 @@ import type { SelectArrowProps, SelectContentEmits, SelectContentProps, SelectRo
 import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ChipProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { AcceptableValue, ArrayOrNested, Defined, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem, StaticSlot } from '../types/utils'
+import type { AcceptableValue, ArrayOrNested, Defined, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, MaybeNull, NestedItem, StaticSlot } from '../types/utils'
 
 export type SelectValue = Exclude<AcceptableValue, boolean>
 
@@ -85,9 +85,9 @@ export interface SelectProps<
   descriptionKey?: GetItemKeys<T>
   items?: T
   /** The value of the Select when initially rendered. Use when you do not need to control the state of the Select. */
-  defaultValue?: GetModelValue<T, VK, M> | null
+  defaultValue?: MaybeNull<GetModelValue<T, VK, M>>
   /** The controlled value of the Select. Can be bind as `v-model`. */
-  modelValue?: GetModelValue<T, VK, M> | null
+  modelValue?: MaybeNull<GetModelValue<T, VK, M>>
   /** Whether multiple options can be selected or not. */
   multiple?: M & boolean
   /** Highlight the ring color like a focus state. */
@@ -109,9 +109,9 @@ export interface SelectSlots<
   M extends boolean = false,
   T extends NestedItem<A> = NestedItem<A>,
 > {
-  'leading': StaticSlot<{ modelValue?: GetModelValue<A, VK, M> | null, open: boolean, ui: ComponentStyler<typeof theme> }>
-  'default': StaticSlot<{ modelValue?: GetModelValue<A, VK, M> | null, open: boolean, ui: ComponentStyler<typeof theme> }>
-  'trailing': StaticSlot<{ modelValue?: GetModelValue<A, VK, M> | null, open: boolean, ui: ComponentStyler<typeof theme> }>
+  'leading': StaticSlot<{ modelValue?: MaybeNull<GetModelValue<A, VK, M>>, open: boolean, ui: ComponentStyler<typeof theme> }>
+  'default': StaticSlot<{ modelValue?: MaybeNull<GetModelValue<A, VK, M>>, open: boolean, ui: ComponentStyler<typeof theme> }>
+  'trailing': StaticSlot<{ modelValue?: MaybeNull<GetModelValue<A, VK, M>>, open: boolean, ui: ComponentStyler<typeof theme> }>
   'item': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
   'item-leading': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
   'item-label': StaticSlot<{ item: T, index: number }>
@@ -204,7 +204,7 @@ function displayValue(value?: MaybeArray<GetItemValue<T, VK>>): string | undefin
   })
 }
 
-const triggerRef = shallowRef<InstanceType<typeof SelectTrigger> | null>(null)
+const triggerRef = shallowRef<MaybeNull<InstanceType<typeof SelectTrigger>>>(null)
 
 function autoFocus() {
   if (props.autofocus) {

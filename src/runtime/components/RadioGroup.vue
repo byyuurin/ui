@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { RadioGroupItem, RadioGroupRootEmits, RadioGroupRootProps } from 'reka-ui'
 import theme from '#build/ui/radio-group'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { AcceptableValue, GetItemKeys, GetModelValue, GetModelValueEmits, MaybeArray, NestedItem, StaticSlot } from '../types/utils'
+import type { AcceptableValue, GetItemKeys, GetModelValue, GetModelValueEmits, MaybeArray, MaybeNull, NestedItem, StaticSlot } from '../types/utils'
 
 export type RadioGroupValue = AcceptableValue
 
@@ -57,9 +57,9 @@ export interface RadioGroupProps<T extends RadioGroupItem[] = RadioGroupItem[], 
   descriptionKey?: GetItemKeys<T>
   items?: T
   /** The controlled value of the RadioGroup. Can be bind as `v-model`. */
-  modelValue?: GetModelValue<T, VK, false> | null
+  modelValue?: MaybeNull<GetModelValue<T, VK, false>>
   /** The value of the RadioGroup when initially rendered. Use when you do not need to control the state of the RadioGroup. */
-  defaultValue?: GetModelValue<T, VK, false> | null
+  defaultValue?: MaybeNull<GetModelValue<T, VK, false>>
   /**
    * The orientation the radio buttons are laid out.
    * @default "vertical"

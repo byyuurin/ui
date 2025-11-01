@@ -6,7 +6,7 @@ import theme from '#build/ui/input'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
-import type { AcceptableValue, StaticSlot } from '../types/utils'
+import type { AcceptableValue, MaybeNull, Nullable, StaticSlot } from '../types/utils'
 
 export type InputValue = AcceptableValue
 
@@ -102,10 +102,10 @@ const ui = computed(() => {
   })
 })
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const inputRef = ref<MaybeNull<HTMLInputElement>>(null)
 
 // Custom function to handle the v-model properties
-function updateInput(value: string | null | undefined) {
+function updateInput(value: Nullable<string>) {
   if (props.modelModifiers?.trim)
     value = value?.trim() ?? null
 

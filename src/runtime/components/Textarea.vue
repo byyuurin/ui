@@ -5,9 +5,9 @@ import theme from '#build/ui/textarea'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
-import type { StaticSlot } from '../types/utils'
+import type { MaybeNull, Nullable, StaticSlot } from '../types/utils'
 
-type TextareaValue = string | number | null
+type TextareaValue = MaybeNull<string | number>
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -98,10 +98,10 @@ const ui = computed(() => {
   })
 })
 
-const textareaRef = shallowRef<HTMLTextAreaElement | null>(null)
+const textareaRef = shallowRef<MaybeNull<HTMLTextAreaElement>>(null)
 
 // Custom function to handle the v-model properties
-function updateInput(value: string | null | undefined) {
+function updateInput(value: Nullable<string>) {
   if (props.modelModifiers?.trim)
     value = value?.trim() ?? null
 

@@ -4,14 +4,14 @@ import type { DateValue } from '@internationalized/date'
 import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui'
 import theme from '#build/ui/calendar'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { StaticSlot } from '../types/utils'
+import type { MaybeNull, StaticSlot } from '../types/utils'
 
 type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
   ? DateRange
   : M extends true ? DateValue[] : DateValue
 
 type CalendarModelValue<R extends boolean = false, M extends boolean = false> = R extends true
-  ? (DateRange | null)
+  ? MaybeNull<DateRange>
   : M extends true
     ? (DateValue[] | undefined)
     : (DateValue | undefined)

@@ -1,7 +1,7 @@
 import type { UseEventBusReturn } from '@vueuse/core'
 import type { ComputedRef, MaybeRefOrGetter, Ref } from 'vue'
 import type { AppProps, AvatarGroupProps, FieldGroupProps, FormErrorWithId, FormEvent, FormFieldProps, Locale, Messages } from '../types'
-import type { GetObjectField } from '../types/utils'
+import type { GetObjectField, MaybeNull } from '../types/utils'
 import { defineInjection } from '../utils'
 
 // App
@@ -105,4 +105,4 @@ export const {
   InjectionKey: InjectionKeyFormErrors,
   inject: injectFormErrors,
   provide: provideFormErrors,
-} = defineInjection<Ref<FormErrorWithId[]> | null>('ui.form-errors', null)
+} = defineInjection<MaybeNull<Ref<FormErrorWithId[]>>>('ui.form-errors', null)

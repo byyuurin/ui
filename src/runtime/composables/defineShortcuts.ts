@@ -2,6 +2,7 @@
 import { useActiveElement, useDebounceFn, useEventListener } from '@vueuse/core'
 import type { MaybeRef } from 'vue'
 import { computed, ref, toValue } from 'vue'
+import type { Nullable } from '../types/utils'
 import { useKbd } from './useKbd'
 
 type Handler = (e?: any) => void
@@ -12,7 +13,7 @@ export interface ShortcutConfig {
 }
 
 export interface ShortcutsConfig {
-  [key: string]: ShortcutConfig | Handler | false | null | undefined
+  [key: string]: Nullable<ShortcutConfig | Handler | false>
 }
 
 export interface ShortcutsOptions {

@@ -1,6 +1,6 @@
 import { get } from '@byyuurin/ui-kit'
 import { isEqual } from 'ohash'
-import type { GetItemKeys } from '../types/utils'
+import type { GetItemKeys, Nullable } from '../types/utils'
 
 export * from './form'
 export * from './link'
@@ -61,7 +61,7 @@ export function isEmpty(value: unknown): boolean {
 
 export function getDisplayValue<T extends Array<any>, V>(
   items: T,
-  value: V | undefined | null,
+  value: Nullable<V>,
   options: {
     valueKey?: GetItemKeys<T>
     labelKey?: GetItemKeys<T>

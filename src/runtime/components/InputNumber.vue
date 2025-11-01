@@ -4,7 +4,7 @@ import type { NumberFieldRootProps } from 'reka-ui'
 import theme from '#build/ui/input-number'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
-import type { StaticSlot } from '../types/utils'
+import type { MaybeNull, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -124,7 +124,7 @@ const ui = computed(() => {
 const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.plus : appConfig.ui.icons.chevronUp))
 const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.minus : appConfig.ui.icons.chevronDown))
 
-const inputRef = ref<InstanceType<typeof NumberFieldInput> | null>(null)
+const inputRef = ref<MaybeNull<InstanceType<typeof NumberFieldInput>>>(null)
 
 function onUpdate(value: number | undefined) {
   if (props.modelModifiers?.optional)

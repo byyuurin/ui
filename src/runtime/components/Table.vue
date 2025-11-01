@@ -7,7 +7,7 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { Ref, WatchOptions } from 'vue'
 import theme from '#build/ui/table'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { StaticSlot } from '../types/utils'
+import type { MaybeNull, StaticSlot } from '../types/utils'
 
 declare module '@tanstack/table-core' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -178,7 +178,7 @@ export interface TableProps<T extends TableData = TableData> extends ComponentBa
    */
   facetedOptions?: FacetedOptions<T>
   onSelect?: (e: Event, row: TableRow<T>) => void
-  onHover?: (e: Event, row: TableRow<T> | null) => void
+  onHover?: (e: Event, row: MaybeNull<TableRow<T>>) => void
   onContextmenu?: ((e: Event, row: TableRow<T>) => void) | Array<((e: Event, row: TableRow<T>) => void)>
   ui?: ComponentUIProps<typeof theme>
 }
@@ -207,7 +207,7 @@ import { createReusableTemplate, reactiveOmit } from '@vueuse/core'
 import { defu } from 'defu'
 import { Primitive } from 'reka-ui'
 import { upperFirst } from 'scule'
-import { computed, ref, toRef, watch } from 'vue'
+import { computed, ref, shallowRef, toRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { cv, merge } from '../utils/style'
@@ -250,8 +250,8 @@ const groupingState = defineModel<GroupingState>('grouping', { default: [] })
 const expandedState = defineModel<ExpandedState>('expanded', { default: {} })
 const paginationState = defineModel<PaginationState>('pagination', { default: {} })
 
-const rootRef = ref<InstanceType<typeof Primitive>>()
-const tableRef = ref<HTMLTableElement | null>(null)
+const rootRef = shallowRef<InstanceType<typeof Primitive>>()
+const tableRef = shallowRef<MaybeNull<HTMLTableElement>>(null)
 
 const data = ref(props.data ?? []) as Ref<T[]>
 const meta = computed(() => props.meta ?? {})
@@ -425,7 +425,7 @@ function onRowSelect(e: Event, row: TableRow<T>) {
   props.onSelect(e, row)
 }
 
-function onRowHover(e: Event, row: TableRow<T> | null) {
+function onRowHover(e: Event, row: MaybeNull<TableRow<T>>) {
   if (!props.onHover)
     return
 

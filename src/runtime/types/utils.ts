@@ -1,7 +1,10 @@
 import type { AcceptableValue as _AcceptableValue } from 'reka-ui'
 import type { VNode } from 'vue'
 
+export type Nullable<T> = T | null | undefined
+export type MaybeNull<T> = T | null
 export type MaybeArray<T> = T | T[]
+
 export type Defined<T> = Exclude<T, undefined>
 
 export type DeepPartial<T> = {

@@ -1,7 +1,7 @@
 <script lang="ts">
 import theme from '#build/ui/form'
 import type { ComponentBaseProps, Form, FormData, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, InferInput, InferOutput, RuntimeAppConfig } from '../types'
-import type { StaticSlot } from '../types/utils'
+import type { MaybeNull, StaticSlot } from '../types/utils'
 
 export interface FormProps<S extends FormSchema, T extends boolean = true, N extends boolean = false> extends ComponentBaseProps {
   id?: string | number
@@ -172,7 +172,7 @@ function resolveErrorIds(errs: FormError[]): FormErrorWithId[] {
   }))
 }
 
-const transformedState = ref<O | null>(null)
+const transformedState = ref<MaybeNull<O>>(null)
 
 async function getErrors(): Promise<FormErrorWithId[]> {
   let errs = props.validate ? (await props.validate(props.state)) ?? [] : []

@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
 import type { LinkProps } from '../types'
+import type { MaybeNull } from '../types/utils'
 
 export interface LinkBaseProps {
   /**
@@ -14,8 +15,8 @@ export interface LinkBaseProps {
   onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
   href?: string
   navigate?: (e: MouseEvent) => void
-  target?: LinkProps['target'] | null
-  rel?: LinkProps['rel'] | null
+  target?: MaybeNull<LinkProps['target']>
+  rel?: MaybeNull<LinkProps['rel']>
   active?: boolean
   isExternal?: boolean
 }
