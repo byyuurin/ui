@@ -42,13 +42,13 @@ export interface FormProps<S extends FormSchema, T extends boolean = true, N ext
    * If true, schema transformations will be applied to the state on submit.
    * @default true
    */
-  transform?: T
+  transform?: T & boolean
 
   /**
    * If true, this form will attach to its parent Form and validate at the same time.
    * @default false
    */
-  nested?: N
+  nested?: N & boolean
 
   /**
    * When `true`, all form elements will be disabled on `@submit` event.
@@ -86,7 +86,7 @@ type O = InferOutput<S>
 const props = withDefaults(defineProps<FormProps<S, T, N>>(), {
   validateOn: () => ['input', 'blur', 'change'],
   validateOnInputDelay: 300,
-  transform: () => true as T,
+  transform: true as never,
   loadingAuto: true,
 })
 
@@ -97,12 +97,9 @@ const formId = props.id ?? useId()
 
 const bus = useEventBus<FormEvent<I>>(`form-${formId}`)
 
-// The comparison with '' is needed because vue is not casting boolean correctly without
-// explicitly setting the prop to true (`:nested="true" works, but `nested` returns '')
-const isNested = props.nested?.toString() === '' || props.nested === true
-const parentBus = isNested && injectFormBus()
+const parentBus = props.nested && injectFormBus()
 
-const parentState = isNested ? injectFormState() : undefined
+const parentState = props.nested ? injectFormState() : undefined
 const state = computed(() => {
   if (parentState?.value)
     return props.name ? getAtPath(parentState.value, props.name) : parentState.value
