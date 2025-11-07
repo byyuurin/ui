@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@vue/tsconfig": "^0.8.1",
-    "unocss": "^66.5.4",
+    "unocss": "^66.5.5",
     "unplugin-vue-router": "^0.12.0"
   }
 }
