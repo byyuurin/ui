@@ -3,6 +3,9 @@ import type { SeparatorProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<SeparatorProps> = [
+  { prop: 'color', value: 'neutral', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'type', value: 'solid', options: ['solid', 'dashed', 'dotted'] },
+  { prop: 'size', value: 'xs', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'align', value: 'center', options: ['start', 'center', 'end'] },
   { prop: 'label', value: 'Label' },
@@ -20,6 +23,12 @@ const controls: ControlItems<SeparatorProps> = [
     <div class="flex gap-4 justify-evenly h-70" :class="{ 'flex-col': attrs.orientation === 'horizontal' }">
       <div class="flex items-center justify-center">
         <USeparator v-bind="attrs" />
+      </div>
+      <div class="flex items-center justify-center">
+        <USeparator v-bind="attrs" label="" icon="i-lucide:activity" />
+      </div>
+      <div class="flex items-center justify-center">
+        <USeparator v-bind="attrs" label="" :avatar="{ src: 'https://i.pravatar.cc/100?img=7' }" />
       </div>
       <div class="flex items-center justify-center">
         <USeparator v-bind="attrs">

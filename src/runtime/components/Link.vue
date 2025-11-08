@@ -2,12 +2,8 @@
 import type { PrimitiveProps } from 'reka-ui'
 import type { ButtonHTMLAttributes } from 'vue'
 import type { RouteLocationRaw, RouterLinkProps } from 'vue-router'
-import type { link } from '../theme'
-import type { ComponentAttrs } from '../types'
-
-export interface LinkSlots {
-  default?: (props: { active: boolean }) => any
-}
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
 interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
@@ -25,11 +21,11 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
    * Where to display the linked URL, as the name for a browsing context.
    */
-  target?: '_blank' | '_parent' | '_self' | '_top' | (string & {}) | null
+  target?: '_blank' | '_parent' | '_self' | '_top' | (string & {})
   /**
    * A rel attribute value to apply on the link. Defaults to "noopener noreferrer" for external links.
    */
-  rel?: 'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc' | (string & {}) | null
+  rel?: 'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc' | (string & {})
   /**
    * If set to true, no rel attribute will be added to the link
    */
@@ -55,7 +51,7 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   noPrefetch?: boolean
 }
 
-export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, NuxtLinkProps {
+export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
   /**
    * The element or component this component should render as when not a link.
    * @default "button"
@@ -72,29 +68,31 @@ export interface LinkProps extends Omit<ComponentAttrs<typeof link>, 'ui'>, Nuxt
   active?: boolean
   /** Will only be active if the current route is an exact match. */
   exact?: boolean
-  /** Will only be active if the current route query is an exact match. */
+  /** Allows controlling how the current route query sets the link as active. */
   exactQuery?: boolean | 'partial'
   /** Will only be active if the current route hash is an exact match. */
   exactHash?: boolean
   /** The class to apply when the link is inactive. */
   inactiveClass?: string
-  /** The class to apply when the link is disabled. */
-  disableClass?: string
   custom?: boolean
-  underline?: boolean
-  /** When `true`, only styles from `class`, `ui.active`, and `ui.inactive` will be applied. */
+  /** When `true`, only styles from `class`, `activeClass`, and `inactiveClass` will be applied. */
   raw?: boolean
+}
+
+export interface LinkSlots {
+  default: StaticSlot<{ active: boolean }>
 }
 </script>
 
 <script setup lang="ts">
-import { reactiveOmit } from '@vueuse/core'
-import { diff, isEqual } from 'ohash/utils'
+import { reactiveOmit, reactivePick } from '@vueuse/core'
+import { isEqual } from 'ohash/utils'
 import { useForwardProps } from 'reka-ui'
-import { hasProtocol } from 'ufo'
-import { computed, getCurrentInstance, resolveComponent } from 'vue'
-import { useNuxtApp, useRoute } from '#imports'
-import { useTheme } from '../composables/useTheme'
+import { computed } from 'vue'
+import theme from '#build/ui/link'
+import { useAppConfig, useRoute } from '#imports'
+import { isPartiallyEqual } from '../utils/link'
+import { cv, merge } from '../utils/style'
 import LinkBase from './LinkBase.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -102,94 +100,31 @@ defineOptions({ inheritAttrs: false })
 const props = withDefaults(defineProps<LinkProps>(), {
   as: 'button',
   type: 'button',
+  ariaCurrentValue: 'page',
+  active: undefined,
 })
 defineSlots<LinkSlots>()
 
-// Check if vue-router is available by checking for the injection key
-const hasRouter = computed(() => {
-  const app = getCurrentInstance()?.appContext.app
-  return !!(app?.config?.globalProperties?.$router)
-})
+const route = useRoute()
 
-const nuxtApp = useNuxtApp()
-const hasNuxtLink = !!nuxtApp.$router
+const inheritProps = useForwardProps(reactivePick(props, 'as', 'type', 'disabled'))
+const nuxtLinkProps = useForwardProps(reactiveOmit(props, 'as', 'type', 'disabled', 'active', 'exact', 'exactQuery', 'exactHash', 'activeClass', 'inactiveClass', 'to', 'href', 'raw', 'custom', 'class'))
 
-const linkComponent = computed(() => ({
-  NuxtLink: nuxtApp.$router ? resolveComponent('NuxtLink') : null,
-  RouterLink: hasRouter.value ? resolveComponent('RouterLink') : null,
-}))
-
-// Only try to get route if router exists
-const route = computed(() => {
-  if (!hasRouter.value)
-    return null
-
-  try {
-    return useRoute()
-  }
-  catch {
-    return null
-  }
-})
-
-const linkProps = useForwardProps(reactiveOmit(
-  props,
-  'as',
-  'type',
-  'disabled',
-  'active',
-  'exact',
-  'exactQuery',
-  'exactHash',
-  'activeClass',
-  'inactiveClass',
-  'raw',
-  'class',
-  ...(hasNuxtLink ? [] : ['to'] as const),
-))
-
-function isPartiallyEqual(item1: any, item2: any) {
-  const diffedKeys = diff(item1, item2).reduce((filtered, q) => {
-    if (q.type === 'added')
-      filtered.add(q.key)
-
-    return filtered
-  }, new Set<string>())
-
-  const item1Filtered = Object.fromEntries(Object.entries(item1).filter(([key]) => !diffedKeys.has(key)))
-  const item2Filtered = Object.fromEntries(Object.entries(item2).filter(([key]) => !diffedKeys.has(key)))
-
-  return isEqual(item1Filtered, item2Filtered)
-}
-
-const isExternalLink = computed(() => {
-  const to = props.to || props.href
-
-  if (!to)
-    return false
-
-  if (props.target === '_blank')
-    return true
-
-  return typeof to === 'string' && hasProtocol(to, { acceptRelative: true })
-})
+const to = computed(() => props.to ?? props.href)
 
 function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
   if (props.active !== undefined)
     return props.active
 
-  if (isExternalLink.value || !props.to)
-    return false
-
   if (props.exactQuery === 'partial') {
-    if (!isPartiallyEqual(linkRoute?.query, route.value?.query))
+    if (!isPartiallyEqual(linkRoute.query, route.query))
       return false
   }
-  else if (props.exactQuery === true && !isEqual(linkRoute?.query, route.value?.query)) {
+  else if (props.exactQuery === true && !isEqual(linkRoute.query, route.query)) {
     return false
   }
 
-  if (props.exactHash && linkRoute?.hash !== route.value?.hash)
+  if (props.exactHash && linkRoute.hash !== route.hash)
     return false
 
   if (props.exact && isExactActive)
@@ -201,145 +136,52 @@ function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
   return false
 }
 
-const { theme, createStyler } = useTheme()
+const appConfig = useAppConfig() as RuntimeAppConfig
 
-function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
-  const { link } = theme.value
+const ui = computed(() => {
+  const link = merge(theme, {
+    ...appConfig.ui.link,
+    variants: {
+      ...appConfig.ui.link?.variants,
+      active: {
+        true: [appConfig.ui.link?.variants?.active?.true, props.activeClass].filter(Boolean).join(' '),
+        false: [appConfig.ui.link?.variants?.active?.false, props.inactiveClass].filter(Boolean).join(' '),
+      },
+    },
+  })
+
+  return cv(link)()
+})
+
+function resolveLinkClass({ route, isActive, isExactActive }: any) {
   const active = isLinkActive({ route, isActive, isExactActive })
 
   if (props.raw)
     return [props.class, active ? props.activeClass : props.inactiveClass]
 
-  const styler = createStyler({
-    ...link,
-    variants: {
-      ...link.variants,
-      active: {
-        true: [link.variants.active.true, props.activeClass],
-        false: [link.variants.active.false, props.inactiveClass],
-      },
-      disabled: {
-        true: [link.variants.disabled.true, props.disableClass],
-      },
-    },
-  })
-
-  return styler({ ...props, active }).base()
+  return ui.value.base({ ...props, active })
 }
 </script>
 
 <template>
-  <template v-if="hasRouter">
-    <component
-      :is="linkComponent.NuxtLink"
-      v-if="hasNuxtLink"
-      v-slot="{ href, navigate, route: linkRoute, rel, target, isExternal, isActive, isExactActive }"
-      v-bind="linkProps"
-      :href="to ? undefined : href"
-      custom
-    >
-      <template v-if="custom">
-        <slot
-          v-bind="{
-            ...$attrs,
-            as,
-            type,
-            disabled,
-            href,
-            navigate,
-            rel,
-            target,
-            isExternal,
-            active: isLinkActive({ route: linkRoute, isActive, isExactActive }),
-          }"
-        >
-          {{ props.label }}
-        </slot>
-      </template>
-      <LinkBase
-        v-else
+  <NuxtLink
+    v-slot="{ href, navigate, route: linkRoute, rel, target, isExternal, isActive, isExactActive }"
+    v-bind="nuxtLinkProps"
+    :to="to"
+    custom
+  >
+    <template v-if="custom">
+      <slot
         v-bind="{
           ...$attrs,
-          as,
-          type,
-          disabled,
+          ...(props.exact && isExactActive ? { 'aria-current': props.ariaCurrentValue } : {}),
+          ...inheritProps,
           href,
           navigate,
           rel,
           target,
           isExternal,
-        }"
-        :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
-        :data-part="$attrs['data-part'] ?? 'base'"
-      >
-        <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
-          {{ props.label }}
-        </slot>
-      </LinkBase>
-    </component>
-    <component
-      :is="linkComponent.RouterLink"
-      v-else
-      v-slot="{ href, navigate, route: linkRoute, isActive, isExactActive }"
-      v-bind="linkProps"
-      :to="isExternalLink ? '#' : to || '#'"
-      custom
-    >
-      <template v-if="custom">
-        <slot
-          v-bind="{
-            ...$attrs,
-            ...isExternalLink
-              ? {
-                href: to || props.href,
-                target: props.target,
-              }
-              : {
-                href: to ? href : undefined,
-                target: undefined,
-              },
-            as,
-            type,
-            disabled,
-            navigate,
-            active: isLinkActive({ route: linkRoute, isActive, isExactActive }),
-            isExternal: isExternalLink,
-          }"
-        >
-          {{ props.label }}
-        </slot>
-      </template>
-      <LinkBase
-        v-else
-        v-bind="{
-          ...$attrs,
-          as,
-          type,
-          disabled,
-          href: to ? href : undefined,
-          navigate,
-        }"
-        :is-external="isExternalLink"
-        :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
-        :data-part="$attrs['data-part'] ?? 'base'"
-      >
-        <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
-          {{ props.label }}
-        </slot>
-      </LinkBase>
-    </component>
-  </template>
-  <template v-else>
-    <template v-if="props.custom">
-      <slot
-        v-bind="{
-          ...$attrs,
-          as,
-          type,
-          disabled,
-          href: to || href,
-          target: target || (isExternalLink ? '_blank' : undefined),
-          active: false,
+          active: isLinkActive({ route: linkRoute, isActive, isExactActive }),
         }"
       >
         {{ props.label }}
@@ -349,19 +191,19 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
       v-else
       v-bind="{
         ...$attrs,
-        as,
-        type,
-        disabled,
-        href: ((typeof to === 'string' ? to : href) as string),
-        target: target || (isExternalLink ? '_blank' : undefined),
+        ...(props.exact && isExactActive ? { 'aria-current': props.ariaCurrentValue } : {}),
+        ...inheritProps,
+        href,
+        navigate,
+        rel,
+        target,
+        isExternal,
       }"
-      :is-external="isExternalLink"
-      :class="resolveLinkClass()"
-      :data-part="$attrs['data-part'] ?? 'base'"
+      :class="resolveLinkClass({ route: linkRoute, isActive, isExactActive })"
     >
-      <slot :active="false">
+      <slot :active="isLinkActive({ route: linkRoute, isActive, isExactActive })">
         {{ props.label }}
       </slot>
     </LinkBase>
-  </template>
+  </NuxtLink>
 </template>

@@ -1,29 +1,28 @@
 <script lang="ts" setup>
-import type { RadioGroupItem, RadioGroupProps } from '@byyuurin/ui'
+import type { RadioGroupProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const values = ['System', 'Light', 'Dark']
 
-const options = values.map((s, i) => ({
+const items = values.map((s, i) => ({
   label: s,
   value: s,
   description: `Description ${s}`,
   disabled: i === 2,
-} satisfies RadioGroupItem))
+}))
 
-const value = ref()
+const value = ref<string | null>(null)
 
-const controls: ControlItems<RadioGroupProps<typeof options[number]>> = [
-  { prop: 'legend', value: 'Text' },
+const controls: ControlItems<RadioGroupProps<typeof items>> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'variant', value: 'list', options: ['list', 'card', 'table'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'indicator', value: 'start', options: ['start', 'end', 'hidden'] },
+  { prop: 'legend', value: 'Text' },
   { prop: 'disabled', value: false },
   { prop: 'required', value: false },
 ]
-
-const ui: RadioGroupProps<typeof options[number]>['ui'] = {
-  legend: 'after:color-red-700',
-}
 </script>
 
 <template>
@@ -34,8 +33,9 @@ const ui: RadioGroupProps<typeof options[number]>['ui'] = {
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <URadioGroup v-model="value" v-bind="attrs" :options="options" :ui="ui" />
-      <URadioGroup v-model="value" v-bind="attrs" :options="values" :ui="ui" />
+      <URadioGroup v-model="value" v-bind="attrs" :items="items" />
+      <URadioGroup v-model="value" v-bind="attrs" :items="values" />
     </div>
+    <UButton class="mt-10" label="Reset" :disabled="value === null" @click="value = null" />
   </ExampleView>
 </template>

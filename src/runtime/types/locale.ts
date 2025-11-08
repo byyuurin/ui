@@ -1,3 +1,9 @@
+import type { Locale as DefineLocale, LocaleDirection } from '@byyuurin/ui-kit'
+
+export type DefineLocaleOptions<M> = DefineLocale<M>
+export type Locale<M> = Required<DefineLocale<M>>
+export type Direction = LocaleDirection
+
 export interface Messages {
   alert: {
     close: string
@@ -9,6 +15,7 @@ export interface Messages {
     nextMonth: string
   }
   carousel: {
+    dots: string
     prev: string
     next: string
     goto: string

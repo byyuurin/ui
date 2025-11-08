@@ -1,45 +1,47 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
-import type { tabs } from '../theme'
-import type { ComponentAttrs, DynamicSlots } from '../types'
+import theme from '#build/ui/tabs'
+import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
 
-export interface TabsEmits extends TabsRootEmits<string | number> {}
+type ExtractSlotItem<T extends TabsItem> = Extract<NestedItem<T>, { slot: string }>
 
 export interface TabsItem {
   label?: string
-  icon?: string
+  icon?: IconProps['name']
+  avatar?: AvatarProps
+  /** Display a badge on the item. */
+  badge?: string | number | BadgeProps
   slot?: string
   content?: string
   /** A unique value for the tab item. Defaults to the index. */
   value?: string | number
   disabled?: boolean
+  ui?: Pick<ComponentUIProps<typeof theme>, 'trigger' | 'leadingIcon' | 'leadingAvatar' | 'leadingAvatarSize' | 'label' | 'trailingBadge' | 'trailingBadgeSize' | 'content'>
   [key: string]: any
 }
 
-type SlotProps<T extends TabsItem> = (props: { item: T, index: number }) => any
+type ThemeVariants = VariantProps<typeof theme>
 
-export type TabsSlots<T extends TabsItem = TabsItem> = {
-  leading?: SlotProps<T>
-  default?: SlotProps<T>
-  trailing?: SlotProps<T>
-  content?: SlotProps<T>
-} & DynamicSlots<T, undefined, SlotProps<T>>
-
-type TabsVariants = VariantProps<typeof tabs>
-
-export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs<typeof tabs>, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
+export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentBaseProps, Pick<TabsRootProps<string | number>, 'defaultValue' | 'modelValue' | 'activationMode' | 'unmountOnHide'> {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: TabsRootProps<string | number>['as']
   items?: T[]
-  variant?: TabsVariants['variant']
-  orientation?: TabsVariants['orientation']
-  size?: TabsVariants['size']
-  /** @default true */
-  evenly?: boolean
+  /** @default "pill" */
+  variant?: ThemeVariants['variant']
+  /**
+   * The orientation of the tabs.
+   * @default "horizontal"
+   */
+  orientation?: ThemeVariants['orientation']
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "md" */
+  size?: ThemeVariants['size']
   /**
    * The content of the tabs, can be disabled to prevent rendering the content.
    * @default true
@@ -49,69 +51,130 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends ComponentAttrs
    * The key used to get the label from the item.
    * @default "label"
    */
-  labelKey?: string
+  labelKey?: GetItemKeys<T>
+  ui?: ComponentUIProps<typeof theme>
 }
+
+export interface TabsEmits extends TabsRootEmits<string | number> {}
+
+export type TabsSlots<T extends TabsItem = TabsItem> = {
+  'leading': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'default': StaticSlot<{ item: T, index: number }>
+  'trailing': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'content': StaticSlot<{ item: T, index: number, ui: ComponentStyler<typeof theme> }>
+  'list-leading': StaticSlot
+  'list-trailing': StaticSlot
+} & DynamicSlots<T, undefined, { index: number, ui: ComponentStyler<typeof theme> }>
 </script>
 
 <script lang="ts" setup generic="T extends TabsItem">
 import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
-import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import type { ComponentPublicInstance } from 'vue'
+import { computed, ref } from 'vue'
+import { useAppConfig } from '#imports'
 import { get } from '../utils'
+import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
+import Badge from './Badge.vue'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<TabsProps<T>>(), {
-  defaultValue: '0',
-  variant: 'solid',
-  orientation: 'horizontal',
-  evenly: true,
   content: true,
+  unmountOnHide: true,
+  defaultValue: '0',
+  orientation: 'horizontal',
   labelKey: 'label',
 })
 
 const emit = defineEmits<TabsEmits>()
 const slots = defineSlots<TabsSlots<T>>()
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'activationMode', 'unmountOnHide'), emit)
+const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'unmountOnHide'), emit)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('tabs', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.tabs))
+  return styler(props)
+})
+
+const triggersRef = ref<ComponentPublicInstance[]>([])
+
+defineExpose({
+  triggersRef,
+})
 </script>
 
 <template>
-  <TabsRoot v-bind="rootProps" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <TabsList :class="style.list({ class: props.ui?.list })" data-part="list">
-      <TabsIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" />
+  <TabsRoot
+    v-bind="rootProps"
+    :model-value="props.modelValue"
+    :default-value="props.defaultValue"
+    :orientation="props.orientation"
+    :activation-mode="props.activationMode"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    data-part="root"
+  >
+    <TabsList :class="ui.list({ class: props.ui?.list })" data-part="list">
+      <TabsIndicator :class="ui.indicator({ class: props.ui?.indicator })" data-part="indicator" />
+
+      <slot name="list-leading">
+      </slot>
 
       <TabsTrigger
         v-for="(item, index) of items"
+        :ref="(el) => (triggersRef[index] = el as ComponentPublicInstance)"
         :key="index"
-        :value="item.value || String(index)"
+        :value="item.value ?? String(index)"
         :disabled="item.disabled"
-        :class="style.trigger({ class: props.ui?.trigger })"
+        :class="ui.trigger({ class: [props.ui?.trigger, item.ui?.trigger] })"
         data-part="trigger"
       >
-        <slot name="leading" :item="item" :index="index">
-          <span v-if="item.icon" :class="style.leadingIcon({ class: [item.icon, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
+        <slot name="leading" :item="item" :index="index" :ui="ui">
+          <Icon
+            v-if="item.icon"
+            :name="item.icon"
+            :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })"
+            data-part="leading-icon"
+          />
+          <Avatar
+            v-else-if="item.avatar"
+            :size="((item.ui?.leadingAvatarSize || props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
+            v-bind="item.avatar"
+            :class="ui.leadingAvatar({ class: [props.ui?.leadingAvatar, item.ui?.leadingAvatar] })"
+            data-part="leading-avatar"
+          />
         </slot>
 
-        <span v-if="get(item, props.labelKey) || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
-          <slot :item="item" :index="index">{{ get(item, props.labelKey) }}</slot>
+        <span v-if="get(item, props.labelKey as string) || !!slots.default" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })" data-part="label">
+          <slot :item="item" :index="index">{{ get(item, props.labelKey as string) }}</slot>
         </span>
 
-        <slot name="trailing" :item="item" :index="index"></slot>
+        <slot name="trailing" :item="item" :index="index" :ui="ui">
+          <Badge
+            v-if="item.badge !== undefined"
+            color="neutral"
+            variant="outline"
+            :size="((item.ui?.trailingBadgeSize || props.ui?.trailingBadgeSize || ui.trailingBadgeSize()) as BadgeProps['size'])"
+            v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: item.badge } : item.badge"
+            :class="ui.trailingBadge({ class: [props.ui?.trailingBadge, item.ui?.trailingBadge] })"
+            data-part="trailing-badge"
+          />
+        </slot>
       </TabsTrigger>
+
+      <slot name="list-trailing"></slot>
     </TabsList>
 
     <template v-if="props.content">
       <TabsContent
         v-for="(item, index) of items"
         :key="index"
-        :value="item.value || String(index)"
-        :class="style.content({ class: props.ui?.content })"
+        :value="item.value ?? String(index)"
+        :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
       >
-        <slot :name="((item.slot || 'content') as keyof TabsSlots<T>)" :item="(item as Extract<T, { slot: string }>)" :index="index">
+        <slot :name="((item.slot || 'content') as 'content')" :item="(item as ExtractSlotItem<T>)" :index="index" :ui="ui">
           {{ item.content }}
         </slot>
       </TabsContent>

@@ -1,66 +1,86 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { chip } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/chip'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface ChipSlots {
-  leading?: (props?: {}) => any
-  default?: (props?: {}) => any
-  trailing?: (props?: {}) => any
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-type ChipVariants = VariantProps<typeof chip>
-
-export interface ChipProps extends ComponentAttrs<typeof chip>, Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+export interface ChipProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  variant?: ChipVariants['variant']
-  size?: ChipVariants['size']
-  label?: string
+  /** Display some text inside the chip. */
+  text?: string | number
+  /** @default "md" */
+  size?: ThemeVariants['size']
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "top-right" */
+  position?: ThemeVariants['position']
+  show?: boolean
+  /** When `true`, keep the chip inside the component for rounded elements. */
+  inset?: boolean
+  /** When `true`, render the chip relatively to the parent. */
+  standalone?: boolean
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ChipEmits {
+  'update:show': [show: boolean]
+}
+
+export interface ChipSlots {
+  default: StaticSlot
+  content: StaticSlot
 }
 </script>
 
 <script setup lang="ts">
-import { Primitive } from 'reka-ui'
+import { useVModel } from '@vueuse/core'
+import { Primitive, Slot } from 'reka-ui'
 import { computed } from 'vue'
-import { useButtonGroup } from '../composables/useButtonGroup'
-import { useComponentIcons } from '../composables/useComponentIcons'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { useAvatarGroup } from '../composables/useAvatarGroup'
+import { cv, merge } from '../utils/style'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<ChipProps>(), {
-  variant: 'solid',
+  show: true,
 })
 
-const slots = defineSlots<ChipSlots>()
+const emit = defineEmits<ChipEmits>()
+defineSlots<ChipSlots>()
 
-const { size, orientation } = useButtonGroup(props)
-const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponentIcons(props)
+const show = useVModel(props, 'show', emit)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('chip', {
-  ...props,
-  size: size.value,
-  groupOrientation: orientation.value,
-}))
+const { size } = useAvatarGroup(props)
+
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.chip))
+  return styler({ ...props, size: size.value })
+})
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base({ class: [props.class, props.ui?.base] })" data-part="base">
-    <slot name="leading">
-      <span v-if="isLeading && leadingIconName" :class="style.leadingIcon({ class: [leadingIconName, props.ui?.leadingIcon] })" data-part="leading-icon"></span>
-    </slot>
+  <Primitive
+    :as="props.as"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    data-part="root"
+  >
+    <Slot v-bind="$attrs">
+      <slot></slot>
+    </Slot>
 
-    <span v-if="props.label || slots.default" :class="style.label({ class: props.ui?.label })" data-part="label">
-      <slot>{{ props.label }}</slot>
+    <span v-if="show" :class="ui.base({ class: props.ui?.base })" data-part="base">
+      <slot name="content">
+        {{ props.text }}
+      </slot>
     </span>
-
-    <slot name="trailing">
-      <span v-if="isTrailing && trailingIconName" :class="style.trailingIcon({ class: [trailingIconName, props.ui?.trailingIcon] })" data-part="trailing-icon"></span>
-    </slot>
   </Primitive>
 </template>

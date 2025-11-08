@@ -1,0 +1,15 @@
+export const icons = {
+  close: 'i-lucide-x',
+  loading: 'i-lucide-loader-circle',
+  check: 'i-lucide-check',
+  chevronUp: 'i-lucide-chevron-up',
+  chevronDown: 'i-lucide-chevron-down',
+  chevronLeft: 'i-lucide-chevron-left',
+  chevronRight: 'i-lucide-chevron-right',
+  chevronDoubleLeft: 'i-lucide-chevrons-left',
+  chevronDoubleRight: 'i-lucide-chevrons-right',
+  ellipsis: 'i-lucide-ellipsis',
+  plus: 'i-lucide-plus',
+  minus: 'i-lucide-minus',
+  external: 'i-lucide-arrow-up-right',
+}

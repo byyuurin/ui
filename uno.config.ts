@@ -1,15 +1,3 @@
-import { defineConfig, presetIcons, presetWind3, transformerDirectives } from 'unocss'
-import { preset as ui } from './src/unocss'
+import config from './playground/nuxt/uno.config'
 
-export default defineConfig({
-  presets: [
-    presetWind3(),
-    presetIcons({
-      cdn: 'https://esm.sh/',
-    }),
-    ui(),
-  ],
-  transformers: [
-    transformerDirectives(),
-  ],
-})
+export default config

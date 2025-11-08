@@ -29,8 +29,9 @@ const kbdKeys = [
 ]
 
 const controls: ControlItems<KbdProps> = [
-  { prop: 'variant', value: 'outline', options: ['solid', 'outline', 'soft', 'soft-outline'] },
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'color', value: 'neutral', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
+  { prop: 'variant', value: 'outline', options: ['solid', 'outline', 'soft', 'subtle'] },
+  { prop: 'size', value: 'md', options: ['sm', 'md', 'lg'] },
   { prop: 'value', value: 'meta', options: kbdKeys },
 ]
 </script>

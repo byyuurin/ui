@@ -1,4 +1,4 @@
-import { defineLocale } from '../utils'
+import { defineLocale } from '../utils/locale'
 
 export default defineLocale({
   name: 'English',
@@ -14,6 +14,7 @@ export default defineLocale({
       nextMonth: 'Next month',
     },
     carousel: {
+      dots: 'Choose slide to display',
       prev: 'Prev',
       next: 'Next',
       goto: 'Go to slide {page}',

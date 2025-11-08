@@ -1,28 +1,26 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
-import type { toast } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/toast'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot, StringOrVNode } from '../types/utils'
 
-export interface ToastEmits extends ToastRootEmits {}
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface ToastSlots {
-  icon?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  actions?: (props?: {}) => any
-  close?: (props: { ui: ComponentAttrs<typeof toast>['ui'] }) => any
-}
-
-type ToastVariants = VariantProps<typeof toast>
-
-export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
-  /** @default "li" */
+export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
+  /**
+   * The element or component this component should render as.
+   * @default "li"
+   */
   as?: PrimitiveProps['as']
-  title?: string
-  description?: string
-  icon?: string
-  orientation?: ToastVariants['orientation']
+  title?: StringOrVNode
+  description?: StringOrVNode
+  icon?: IconProps['name']
+  avatar?: AvatarProps
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "vertical" */
+  orientation?: ThemeVariants['orientation']
   /**
    * Display a list of actions:
    * - under the title and description when orientation is `vertical`
@@ -33,23 +31,47 @@ export interface ToastProps extends ComponentAttrs<typeof toast>, Pick<ToastRoot
    * Display a close button to dismiss the toast.
    * @default true
    */
-  close?: ButtonProps | boolean
-  /** @default app.icons.close */
-  closeIcon?: string
+  close?: boolean | Partial<ButtonProps>
+  /**
+   * The icon displayed in the close button.
+   * @default app.icons.close
+   */
+  closeIcon?: IconProps['name']
+  /**
+   * Display a progress bar showing the toast's remaining duration.
+   * @default true
+   */
+  progress?: boolean | Pick<ProgressProps, 'color' | 'ui'>
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export interface ToastEmits extends ToastRootEmits {}
+
+export interface ToastSlots {
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  title: StaticSlot
+  description: StaticSlot
+  actions: StaticSlot
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 
 <script setup lang="ts">
-import { reactivePick, useElementBounding } from '@vueuse/core'
+import { reactivePick } from '@vueuse/core'
 import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useForwardPropsEmits } from 'reka-ui'
-import { computed, ref } from 'vue'
+import { computed, nextTick, onMounted, shallowRef } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Button from './Button.vue'
+import Icon from './Icon.vue'
+import Progress from './Progress.vue'
 
 const props = withDefaults(defineProps<ToastProps>(), {
   orientation: 'vertical',
   close: true,
+  progress: true,
 })
 
 const emit = defineEmits<ToastEmits>()
@@ -57,15 +79,27 @@ const slots = defineSlots<ToastSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'duration', 'type'), emit)
 
-const el = ref<InstanceType<typeof ToastRoot>>()
-const { height } = useElementBounding(() => el.value?.$el.getBoundingClientRect ? el.value.$el : undefined)
-
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('toast', {
-  ...props,
-  title: !!(props.title || slots.title),
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.toast))
+  return styler({
+    ...props,
+    title: !!props.title || !!slots.title,
+  })
+})
+
+const el = shallowRef()
+const height = shallowRef(0)
+
+onMounted(() => {
+  if (!el.value)
+    return
+
+  nextTick(() => {
+    height.value = el.value?.$el?.getBoundingClientRect()?.height
+  })
+})
 
 defineExpose({
   height,
@@ -75,59 +109,81 @@ defineExpose({
 <template>
   <ToastRoot
     ref="el"
-    v-slot="{ remaining, duration }"
+    v-slot="{ remaining, duration, open }"
     v-bind="rootProps"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :data-orientation="props.orientation"
     data-part="root"
     :style="{ '--height': height }"
   >
-    <slot name="icon">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+    <slot name="leading" :ui="ui">
+      <Avatar
+        v-if="props.avatar"
+        :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="ui.avatar({ class: props.ui?.avatar })"
+        data-part="avatar"
+      />
+      <Icon
+        v-else-if="props.icon"
+        :name="props.icon"
+        :class="ui.icon({ class: props.ui?.icon })"
+        data-part="icon"
+      />
     </slot>
 
-    <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <ToastTitle v-if="props.title || !!slots.title" :class="style.title({ class: props.ui?.title })" data-part="title">
+    <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <ToastTitle v-if="props.title || !!slots.title" :class="ui.title({ class: props.ui?.title })" data-part="title">
         <slot name="title">
-          {{ props.title }}
+          <component :is="props.title()" v-if="typeof props.title === 'function'" />
+          <component :is="props.title" v-else-if="typeof props.title === 'object'" />
+          <template v-else>
+            {{ props.title }}
+          </template>
         </slot>
       </ToastTitle>
-      <ToastDescription v-if="props.description || !!slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
+      <ToastDescription v-if="props.description || !!slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
         <slot name="description">
-          {{ props.description }}
+          <component :is="props.description()" v-if="typeof props.description === 'function'" />
+          <component :is="props.description" v-else-if="typeof props.description === 'object'" />
+          <template v-else>
+            {{ props.description }}
+          </template>
         </slot>
       </ToastDescription>
 
-      <div v-if="props.orientation === 'vertical' && actions?.length" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
+      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" :class="ui.actions({ class: props.ui?.actions })" data-part="actions">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
-            <Button size="xs" v-bind="action" />
+            <Button size="xs" :color="props.color" v-bind="action" />
           </ToastAction>
         </slot>
       </div>
     </div>
 
     <div
-      v-if="(props.orientation === 'horizontal' && actions?.length) || props.close || slots.close"
-      :class="style.actions({ class: props.ui?.actions })"
+      v-if="(props.orientation === 'horizontal' && (props.actions?.length || !!slots.actions)) || props.close"
+      :class="ui.actions({ class: props.ui?.actions })"
       data-part="actions"
     >
       <template v-if="props.orientation === 'horizontal'">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
-            <Button size="xs" v-bind="action" />
+            <Button size="xs" :color="props.color" v-bind="action" />
           </ToastAction>
         </slot>
       </template>
 
-      <ToastClose v-if="props.close || slots.close" as-child>
-        <slot name="close" :ui="props.ui">
+      <ToastClose v-if="props.close || !!slots.close" as-child>
+        <slot name="close" :ui="ui">
           <Button
-            :icon="props.closeIcon || theme.app.icons.close"
-            size="sm"
+            v-if="props.close"
+            :icon="props.closeIcon || appConfig.ui.icons.close"
+            color="neutral"
             variant="link"
             :aria-label="t('toast.close')"
-            v-bind="typeof close === 'object' ? close : undefined"
-            :class="style.close({ class: props.ui?.close })"
+            v-bind="typeof props.close === 'object' ? props.close : {}"
+            :class="ui.close({ class: props.ui?.close })"
             data-part="close"
             @click.stop
           />
@@ -135,6 +191,13 @@ defineExpose({
       </ToastClose>
     </div>
 
-    <div v-if="remaining >= 0 && duration" :class="style.progress({ class: props.ui?.progress })" data-part="progress" :style="{ width: `${remaining / duration * 100}%` }"></div>
+    <Progress
+      v-if="props.progress && open && remaining >= 0 && duration"
+      :model-value="remaining / duration * 100"
+      :color="props.color"
+      v-bind="(typeof props.progress === 'object' ? props.progress : {})"
+      size="sm"
+      :class="ui.progress({ class: props.ui?.progress })"
+    />
   </ToastRoot>
 </template>

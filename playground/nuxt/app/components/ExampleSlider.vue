@@ -6,12 +6,14 @@ const valueSingle = ref(0)
 const valueMultiple = ref([0, 100])
 
 const controls: ControlItems<SliderProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'min', value: 0 },
   { prop: 'max', value: 100 },
   { prop: 'step', value: 1 },
   { prop: 'minStepsBetweenThumbs', value: 0 },
+  { prop: 'tooltip', value: false },
   { prop: 'inverted', value: false },
   { prop: 'disabled', value: false },
 ]

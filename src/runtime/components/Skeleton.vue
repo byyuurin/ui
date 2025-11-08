@@ -1,9 +1,9 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import type { skeleton } from '../theme'
-import type { ComponentAttrs } from '../types'
+import { useAppConfig } from '#imports'
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
 
-export interface SkeletonProps extends Omit<ComponentAttrs<typeof skeleton>, 'ui'> {
+export interface SkeletonProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -15,16 +15,28 @@ export interface SkeletonProps extends Omit<ComponentAttrs<typeof skeleton>, 'ui
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import theme from '#build/ui/skeleton'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<SkeletonProps>(), {})
 
-const { generateStyle } = useTheme()
-const styler = computed(() => generateStyle('skeleton', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.skeleton))
+  return styler(props)
+})
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="styler" data-part="base">
+  <Primitive
+    :as="props.as"
+    aria-busy="true"
+    aria-label="loading"
+    aria-live="polite"
+    role="alert"
+    :class="ui.base({ class: props.class })"
+    data-part="base"
+  >
     <slot></slot>
   </Primitive>
 </template>

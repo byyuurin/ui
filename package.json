@@ -2,7 +2,7 @@
   "name": "@byyuurin/ui",
   "type": "module",
   "version": "0.0.11",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.20.0",
   "description": "",
   "author": "Yuurin <byyuurin@gmail.com>",
   "license": "MIT",
@@ -13,75 +13,149 @@
   },
   "bugs": "https://github.com/byyuurin/ui/issues",
   "keywords": [],
-  "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/runtime/index.d.ts",
-      "default": "./dist/runtime/index.js"
-    },
-    "./unplugin": {
-      "types": "./dist/unplugin.d.mts",
-      "default": "./dist/unplugin.mjs"
-    },
-    "./vite": {
-      "types": "./dist/vite.d.mts",
-      "default": "./dist/vite.mjs"
-    },
-    "./nuxt": {
       "types": "./dist/module.d.mts",
-      "default": "./dist/module.mjs"
+      "import": "./dist/module.mjs"
+    },
+    "./setup": {
+      "types": "./dist/setup.d.mts",
+      "import": "./dist/setup.mjs"
     },
     "./unocss": {
       "types": "./dist/unocss.d.mts",
-      "default": "./dist/unocss.mjs"
+      "import": "./dist/unocss.mjs"
     },
-    "./runtime/index": {
-      "types": "./dist/runtime/index.d.ts",
-      "default": "./dist/runtime/index.js"
+    "./unplugin": {
+      "types": "./dist/unplugin.d.mts",
+      "import": "./dist/unplugin.mjs"
+    },
+    "./vue-plugin": {
+      "types": "./vue-plugin.d.ts"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.mts",
+      "import": "./dist/vite.mjs"
     },
     "./runtime/*": "./dist/runtime/*",
+    "./components/*": "./dist/runtime/components/*",
+    "./composables/*": "./dist/runtime/composables/*",
+    "./utils": {
+      "types": "./dist/runtime/utils/index.d.ts",
+      "import": "./dist/runtime/utils/index.js"
+    },
     "./utils/*": {
       "types": "./dist/runtime/utils/*.d.ts",
-      "default": "./dist/runtime/utils/*.js"
+      "import": "./dist/runtime/utils/*.js"
     },
     "./locale": {
       "types": "./dist/runtime/locale/index.d.ts",
-      "default": "./dist/runtime/locale/index.js"
+      "import": "./dist/runtime/locale/index.js"
     }
   },
-  "main": "dist/runtime/index.js",
-  "module": "dist/runtime/index.js",
-  "types": "dist/runtime/index.d.ts",
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/module.d.mts"
+      ],
+      "setup": [
+        "./dist/setup.d.mts"
+      ],
+      "unocss": [
+        "./dist/unocss.d.mts"
+      ],
+      "unplugin": [
+        "./dist/unplugin.d.mts"
+      ],
+      "vue-plugin": [
+        "./vue-plugin.d.ts"
+      ],
+      "vite": [
+        "./dist/vite.d.mts"
+      ],
+      "runtime/*": [
+        "./dist/runtime/*"
+      ],
+      "components/*": [
+        "./dist/runtime/components/*"
+      ],
+      "composables/*": [
+        "./dist/runtime/composables/*"
+      ],
+      "utils": [
+        "./dist/runtime/utils/index.d.ts"
+      ],
+      "utils/*": [
+        "./dist/runtime/utils/*.d.ts"
+      ],
+      "locale": [
+        "./dist/runtime/locale/index.d.ts"
+      ]
+    }
+  },
   "files": [
-    "*.d.ts",
-    "dist"
+    "dist",
+    "vue-plugin.d.ts"
   ],
   "scripts": {
-    "dev": "nuxi dev playground/nuxt",
+    "dev": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi dev playground/nuxt --uiDev",
     "dev:build": "nuxi build playground/nuxt",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt",
-    "dev:vue": "pnpm --filter \"./playground/vue\" run dev",
-    "lint": "eslint .",
+    "dev:preview": "nuxi preview playground/nuxt",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground/nuxt && pnpm dev:vue:build",
+    "dev:vue": "pnpm --filter \"./playground/vue\" dev -- --uiDev",
+    "dev:vue:build": "pnpm --filter \"./playground/vue\" build",
+    "dev:vue:preview": "pnpm --filter \"./playground/vue\" preview",
     "release": "bumpp && pnpm publish",
-    "start": "esno src/index.ts",
+    "lint": "eslint .",
     "test": "vitest",
     "test:types": "vue-tsc --noEmit && nuxi typecheck playground/nuxt",
     "prepare": "simple-git-hooks",
     "prepack": "nuxt-module-build build"
   },
   "peerDependencies": {
-    "@unocss/core": ">=66.1.0",
-    "@unocss/preset-wind3": ">=66.1.0"
+    "joi": "^18.0.0",
+    "superstruct": "^2.0.2",
+    "valibot": "^1.0.0",
+    "vue-router": "^4.5.0",
+    "yup": "^1.7.0",
+    "zod": "^3.24.0 || ^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "joi": {
+      "optional": true
+    },
+    "superstruct": {
+      "optional": true
+    },
+    "valibot": {
+      "optional": true
+    },
+    "vue-router": {
+      "optional": true
+    },
+    "yup": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
   },
   "dependencies": {
-    "@byyuurin/ui-kit": "^0.7.0",
-    "@byyuurin/uno-merge": "^0.2.0",
-    "@internationalized/date": "^3.9.0",
-    "@nuxt/kit": "^3.19.2",
+    "@byyuurin/ui-kit": "^0.7.2",
+    "@byyuurin/uno-merge": "^0.2.1",
+    "@iconify/vue": "^5.0.0",
+    "@internationalized/date": "^3.10.0",
+    "@nuxt/fonts": "^0.11.4",
+    "@nuxt/icon": "^1.15.0",
+    "@nuxt/kit": "^4.2.1",
+    "@nuxtjs/color-mode": "^3.5.2",
     "@standard-schema/spec": "^1.0.0",
     "@tanstack/vue-table": "^8.21.3",
-    "@unocss/preset-mini": "^66.5.2",
-    "@vue/shared": "^3.5.22",
+    "@tanstack/vue-virtual": "^3.13.12",
+    "@unhead/vue": "^2.0.19",
+    "@unocss/nuxt": "^66.5.5",
+    "@vue/shared": "^3.5.24",
     "@vueuse/core": "^13.9.0",
     "defu": "^6.1.4",
     "embla-carousel": "^8.6.0",
@@ -92,54 +166,48 @@
     "embla-carousel-fade": "^8.6.0",
     "embla-carousel-vue": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.1.0",
-    "magic-string": "^0.30.19",
+    "knitwork": "^1.2.0",
+    "magic-string": "^0.30.21",
     "mlly": "^1.8.0",
     "ohash": "^2.0.11",
     "pathe": "^2.0.3",
-    "reka-ui": "^2.5.0",
+    "reka-ui": "^2.6.0",
     "scule": "^1.3.0",
     "tinyglobby": "^0.2.15",
     "ufo": "^1.6.1",
     "unplugin": "^2.3.10",
-    "unplugin-auto-import": "^19.3.0",
-    "unplugin-vue-components": "^28.8.0",
-    "vue-component-type-helpers": "^2.2.12",
-    "vue-router": "^4.5.1"
+    "unplugin-auto-import": "^20.2.0",
+    "unplugin-vue-components": "^30.0.0",
+    "vue-component-type-helpers": "^3.1.3"
   },
   "devDependencies": {
-    "@antfu/ni": "^25.0.0",
     "@byyuurin/eslint-config": "^1.9.0",
-    "@nuxt/eslint-config": "^1.9.0",
+    "@iconify-json/lucide": "^1.2.72",
+    "@nuxt/eslint-config": "^1.10.0",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^3.19.2",
-    "@nuxt/test-utils": "^3.19.2",
-    "@types/node": "^22.18.6",
-    "@unocss/core": "^66.5.2",
-    "@unocss/preset-wind3": "^66.5.2",
-    "@unocss/reset": "^66.5.2",
+    "@nuxt/schema": "^4.2.1",
+    "@nuxt/test-utils": "^3.20.1",
+    "@types/node": "^22.19.0",
+    "@unocss/core": "^66.5.5",
+    "@unocss/preset-wind4": "^66.5.5",
+    "@unocss/reset": "^66.5.5",
     "@vitejs/plugin-vue": "^6.0.1",
-    "bumpp": "^10.2.3",
-    "eslint": "^9.36.0",
+    "bumpp": "^10.3.1",
+    "eslint": "^9.39.1",
     "eslint-plugin-format": "1.0.1",
     "esno": "^4.8.0",
-    "lint-staged": "^16.2.0",
-    "nuxt": "^3.19.2",
+    "lint-staged": "^16.2.6",
+    "nuxt": "^4.2.1",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.2",
-    "unocss": "^66.5.2",
-    "vite": "^7.1.7",
+    "superstruct": "^2.0.2",
+    "typescript": "^5.9.3",
+    "unocss": "^66.5.5",
+    "vite": "^7.2.2",
     "vite-plugin-inspect": "^11.3.3",
     "vitest": "^3.2.4",
-    "vue": "^3.5.22",
-    "vue-tsc": "^2.2.12",
+    "vue": "^3.5.24",
+    "vue-tsc": "^3.1.3",
     "zod": "^3.25.76"
-  },
-  "pnpm": {
-    "overrides": {
-      "is-core-module": "npm:@nolyfill/is-core-module@^1.0.39",
-      "isarray": "npm:@nolyfill/isarray@^1.0.44",
-      "safe-buffer": "npm:@nolyfill/safe-buffer@^1.0.44"
-    }
   },
   "resolutions": {
     "@byyuurin/ui": "workspace:*"

@@ -3,8 +3,9 @@ import type { AlertProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<AlertProps> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'orientation', value: 'vertical', options: ['horizontal', 'vertical'] },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline'] },
+  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'subtle'] },
   { prop: 'title', value: 'Title' },
   { prop: 'description', value: 'Description' },
   { prop: 'close', value: false },
@@ -22,11 +23,15 @@ const controls: ControlItems<AlertProps> = [
       <UAlert v-bind="attrs" />
       <UAlert
         v-bind="attrs"
-        icon="i-carbon-notification"
+        icon="i-lucide:bell"
         :actions="[
           { label: 'action1', variant: attrs.variant },
           { label: 'action2', variant: attrs.variant },
         ]"
+      />
+      <UAlert
+        v-bind="attrs"
+        :avatar="{ src: 'https://i.pravatar.cc/100?img=8' }"
       />
       <UAlert v-bind="attrs" :actions="[{}]" close>
         <template #leading>

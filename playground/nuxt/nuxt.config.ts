@@ -3,37 +3,46 @@ import { resolve } from 'node:path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@unocss/nuxt',
     '../../src/module',
-    'compodium',
   ],
+
   devtools: { enabled: true },
-  css: [
-    '@unocss/reset/tailwind.css',
-  ],
-  future: {
-    compatibilityVersion: 4,
-  },
+
   compatibilityDate: '2024-11-01',
+
   vite: {
     resolve: {
       alias: {
         '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
-        '@byyuurin/ui/locale': resolve(__dirname, '../../src/runtime/locale/index.ts'),
-        '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
       },
     },
-  },
-  compodium: {
-    dir: 'app/compodium',
-    exclude: [
-      'Example*.vue',
-      'Placeholder.vue',
-      'ThemeSelector.vue',
-      '*App.vue',
-      '*Toast.vue',
-      '*Provider.vue',
-      '*Content.vue',
-    ],
+    optimizeDeps: {
+      // prevents reloading page when navigating between components
+      include: [
+        '@internationalized/date',
+        '@vueuse/shared',
+        '@tanstack/vue-table',
+        '@tanstack/vue-virtual',
+        'reka-ui',
+        'reka-ui/namespaced',
+        'embla-carousel-vue',
+        'embla-carousel-autoplay',
+        'embla-carousel-auto-scroll',
+        'embla-carousel-auto-height',
+        'embla-carousel-class-names',
+        'embla-carousel-fade',
+        'embla-carousel-wheel-gestures',
+        'unocss',
+        '@byyuurin/ui-kit',
+        '@byyuurin/uno-merge',
+        '@unocss-core',
+        '@unocss/preset-wind4',
+        '@unocss/preset-wind4/colors',
+        '@unocss/preset-wind4/utils',
+        '@byyuurin/ui-kit',
+        'ufo',
+        'zod',
+      ],
+    },
   },
 })

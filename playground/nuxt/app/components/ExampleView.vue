@@ -10,7 +10,7 @@ export type ControlItem<T> = {
     warning?: string
     value: T[Prop] | T[Prop][] | null
     label?: string
-    options?: Array<Required<T>[Prop] | { label: string, value: Required<T>[Prop] | null }>
+    options?: Array<Required<T>[Prop] | (SelectItem & { label: string, value: Required<T>[Prop] | null })>
     placeholder?: string
     min?: number
     max?: number
@@ -63,33 +63,37 @@ onMounted(() => {
       <UCard
         :title="props.title"
         :description="props.description"
-        class="top-4 bg-ui-cb/2 backdrop-blur md:sticky"
+        class="top-4 bg-neutral/2 backdrop-blur md:sticky"
       >
         <div
           v-if="props.controls.length > 0"
-          class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded-ui-box"
+          class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded"
         >
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
-            <label class="inline-flex justify-between items-center gap-2 opacity-80">
+            <div class="inline-flex justify-between items-center gap-2 opacity-80">
               <span class="mr-auto">{{ upperFirst((item?.label ?? item?.prop) as string) }}</span>
               <UPopover v-if="item?.description" mode="click" arrow>
-                <UButton class="ui-primary" variant="link" size="xs" icon="i-mdi-help-circle-outline" :ui="{ base: 'p-0' }" />
+                <UButton color="neutral" variant="link" size="xs" icon="i-lucide:circle-question-mark" :ui="{ base: 'p-0' }" />
                 <template #content>
-                  <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">{{ item?.description }}</p>
+                  <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">
+                    {{ item?.description }}
+                  </p>
                 </template>
               </UPopover>
               <UPopover v-if="item?.warning" mode="click" arrow>
-                <UButton class="ui-orange" variant="link" size="xs" icon="i-mdi-alert-decagram" :ui="{ base: 'p-0' }" />
+                <UButton color="warning" variant="link" size="xs" icon="i-lucide:circle-alert" :ui="{ base: 'p-0' }" />
                 <template #content>
-                  <p class="text-sm p-2 px-3 max-w-md">{{ item?.warning }}</p>
+                  <p class="text-sm p-2 px-3 max-w-md">
+                    {{ item?.warning }}
+                  </p>
                 </template>
               </UPopover>
-            </label>
+            </div>
 
             <USelect
               v-if="item?.type === 'select' || item?.options"
               v-model="attrs[item!.prop]"
-              :options="((item.options ?? []) as SelectItem[])"
+              :items="((item.options ?? []) as SelectItem[])"
               :placeholder="item.placeholder"
               :multiple="item.type === 'multiple'"
             />
@@ -113,7 +117,7 @@ onMounted(() => {
           </template>
         </div>
       </UCard>
-      <UCard class="h-full bg-ui-cb/2 xl:grid-col-span-2">
+      <UCard class="h-full bg-neutral/2 xl:grid-col-span-2">
         <slot v-bind="attrs"></slot>
       </UCard>
     </div>

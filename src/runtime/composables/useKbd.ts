@@ -36,7 +36,7 @@ export const kbdKeysMap = {
 export type KbdKey = keyof typeof kbdKeysMap
 export type KbdKeySpecific = keyof KbdKeysSpecificMap
 
-export const useKbd = createSharedComposable(() => {
+function _useKbd() {
   const macOS = computed(() => import.meta.client && navigator && navigator.userAgent && navigator.userAgent.match(/Macintosh;/))
   const kbdKeysSpecificMap = reactive<KbdKeysSpecificMap>({
     meta: ' ',
@@ -64,4 +64,6 @@ export const useKbd = createSharedComposable(() => {
     macOS,
     getKbdKey,
   }
-})
+}
+
+export const useKbd = /* @__PURE__ */ createSharedComposable(_useKbd)

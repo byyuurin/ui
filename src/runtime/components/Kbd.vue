@@ -2,32 +2,38 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import { computed } from 'vue'
+import theme from '#build/ui/kbd'
 import type { KbdKey } from '../composables/useKbd'
-import type { kbd } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface KbdSlots {
-  default?: (props?: {}) => any
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-type KbdVariants = VariantProps<typeof kbd>
-
-export interface KbdProps extends Omit<ComponentAttrs<typeof kbd>, 'ui'> {
+export interface KbdProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "kbd"
    */
   as?: PrimitiveProps['as']
-  variant?: KbdVariants['variant']
-  size?: KbdVariants['size']
+  /** @default "outline" */
+  variant?: ThemeVariants['variant']
+  /** @default "md" */
+  size?: ThemeVariants['size']
+  /** @default "neutral" */
+  color?: ThemeVariants['color']
   value?: KbdKey | (string & {})
+}
+
+export interface KbdSlots {
+  default: StaticSlot
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
+import { useAppConfig } from '#imports'
 import { useKbd } from '../composables/useKbd'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<KbdProps>(), {
   as: 'kbd',
@@ -36,12 +42,15 @@ const props = withDefaults(defineProps<KbdProps>(), {
 defineSlots<KbdSlots>()
 
 const { getKbdKey } = useKbd()
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('kbd', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.kbd))
+  return styler(props)
+})
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.base()" data-part="base">
+  <Primitive :as="props.as" :class="ui.base({ class: props.class })" data-part="base">
     <slot>{{ getKbdKey(props.value) }}</slot>
   </Primitive>
 </template>

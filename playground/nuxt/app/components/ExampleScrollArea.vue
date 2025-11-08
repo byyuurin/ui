@@ -5,7 +5,7 @@ import type { ControlItems } from './ExampleView.vue'
 const controls: ControlItems<ScrollAreaProps> = [
   { prop: 'type', value: 'hover', options: ['auto', 'always', 'hover', 'scroll'] },
   { prop: 'dir', value: 'ltr', options: ['ltr', 'rtl'] },
-  { prop: 'scrollHideDelay', value: 600 },
+  { prop: 'scrollHideDelay', value: 150 },
 ]
 </script>
 
@@ -17,24 +17,24 @@ const controls: ControlItems<ScrollAreaProps> = [
     :controls="controls"
   >
     <div class="flex flex-col gap-4">
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
+      <UScrollArea v-bind="attrs" class="border border-default h-55 rounded">
         <div class="grid grid-cols-2 gap-1 w-screen">
-          <Placeholder class="bg-ui-cb/10 h-50" />
-          <Placeholder class="bg-red/10 h-50" />
-          <Placeholder class="bg-green/10 h-50" />
-          <Placeholder class="bg-blue/10 h-50" />
+          <Placeholder class="bg-neutral/10 h-50" />
+          <Placeholder class="bg-error/10 h-50" />
+          <Placeholder class="bg-success/10 h-50" />
+          <Placeholder class="bg-info/10 h-50" />
         </div>
       </UScrollArea>
 
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
+      <UScrollArea v-bind="attrs" class="border border-default h-55 rounded">
         <Placeholder class="h-50 w-screen" />
       </UScrollArea>
 
-      <UScrollArea v-bind="attrs" class="shadow-sm shadow-ui-base/10 border border-ui-base/10 h-55 rounded-ui-base">
-        <Placeholder class="bg-ui-cb/10 h-50" />
-        <Placeholder class="bg-red/10 h-50" />
-        <Placeholder class="bg-green/10 h-50" />
-        <Placeholder class="bg-blue/10 h-50" />
+      <UScrollArea v-bind="attrs" class="border border-default h-55 rounded">
+        <Placeholder class="bg-neutral/10 h-50" />
+        <Placeholder class="bg-error/10 h-50" />
+        <Placeholder class="bg-success/10 h-50" />
+        <Placeholder class="bg-info/10 h-50" />
       </UScrollArea>
     </div>
   </ExampleView>

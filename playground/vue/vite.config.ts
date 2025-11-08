@@ -1,10 +1,11 @@
 import { resolve } from 'node:path'
+import ui from '@byyuurin/ui/vite'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
-import UI from '../../src/vite'
+import uiConfig from './ui.config'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,34 +16,62 @@ export default defineConfig({
       dts: 'src/typed-routes.d.ts',
     }),
     Vue(),
-    UI({
-      autoImport: {
-        dts: 'src/typed-imports.d.ts',
-        imports: ['vue', 'vue-router'],
-      },
-      components: {
-        dts: 'src/typed-components.d.ts',
-        dirs: [
-          'src/components',
-          '../nuxt/app/components',
-        ],
-      },
-    }),
+    ui(uiConfig.vite),
   ],
   resolve: {
     alias: {
       '@byyuurin/ui/unocss': resolve(__dirname, '../../src/unocss.ts'),
-      '@byyuurin/ui/locale': resolve(__dirname, '../../src/runtime/locale/index.ts'),
-      '@byyuurin/ui': resolve(__dirname, '../../src/runtime/index.ts'),
     },
+  },
+  optimizeDeps: {
+    // prevents reloading page when navigating between components
+    include: [
+      '@internationalized/date',
+      '@vueuse/shared',
+      '@tanstack/vue-table',
+      '@tanstack/vue-virtual',
+      'reka-ui',
+      'reka-ui/namespaced',
+      'embla-carousel-vue',
+      'embla-carousel-autoplay',
+      'embla-carousel-auto-scroll',
+      'embla-carousel-auto-height',
+      'embla-carousel-class-names',
+      'embla-carousel-fade',
+      'embla-carousel-wheel-gestures',
+      'unocss',
+      '@byyuurin/ui-kit',
+      '@byyuurin/uno-merge',
+      '@unocss-core',
+      '@unocss/preset-wind4',
+      '@unocss/preset-wind4/colors',
+      '@unocss/preset-wind4/utils',
+      '@byyuurin/ui-kit',
+      'ufo',
+      'zod',
+    ],
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          unocss: ['@unocss/core', '@unocss/preset-mini', '@unocss/preset-uno'],
-          libs: ['reka-ui'],
-          ui: ['@byyuurin/ui'],
+          unocss: [
+            '@unocss/core',
+            '@unocss/preset-wind4',
+          ],
+          libs: [
+            '@internationalized/date',
+            '@tanstack/vue-table',
+            'reka-ui',
+            'reka-ui/namespaced',
+            'embla-carousel-vue',
+            'embla-carousel-autoplay',
+            'embla-carousel-auto-scroll',
+            'embla-carousel-auto-height',
+            'embla-carousel-class-names',
+            'embla-carousel-fade',
+            'embla-carousel-wheel-gestures',
+          ],
         },
       },
     },

@@ -12,104 +12,216 @@ https://byyuurin-ui.netlify.app/
 
 ## Installation
 
-```ssh
-pnpm i -D unocss @unocss/reset @byyuurin/ui
+```bash [pnpm]
+pnpm add @byyuurin/ui
 ```
 
-icons
-
-```ssh
-pnpm i -D @iconify-json/[the-collection-you-want]
+```bash [yarn]
+yarn add @byyuurin/ui
 ```
 
-## Setup
-
-### UnoCSS
-
-```ts
-// uno.config.ts
-import { preset as ui } from '@byyuurin/ui/unocss'
-import { defineConfig, presetIcons, presetWind3 } from 'unocss'
-
-export default defineConfig({
-  presets: [
-    presetWind3(),
-    presetIcons({
-      cdn: 'https://esm.sh/', // OR install @iconify-json/[the-collection-you-want]
-    }),
-    ui({
-      radius: '0rem', // optional
-      radiusBox: '0rem', // optional
-      radiusButton: '0rem', // optional
-      radiusCheckbox: '0rem', // optional
-      radiusRadio: '0rem', // optional
-      radiusSwitch: '0rem', // optional
-      radiusTabs: '0rem', // optional
-      cb: '#1f2937', // optional
-      cp: '#1f2937', // optional
-      cx: '#ffffff', // optional
-    }),
-  ],
-})
+```bash [npm]
+npm install @byyuurin/ui
 ```
 
-New Rules
-
-- `ui-[color]`
-- `bg-soft-[color]`
-- `bg-soft-[color]/[mix-ratio]`
-
-### Vite
-
-```ts
-// vite.config.ts
-
-import UI from '@byyuurin/ui/vite'
-import Vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [
-    UnoCSS(),
-    Vue(),
-    UI({
-      prefix: 'U', // optional
-      autoImport: {
-        dts: 'src/typed-imports.d.ts',
-        imports: ['vue'],
-      },
-      components: {
-        dts: 'src/typed-components.d.ts',
-      },
-    }),
-  ],
-})
-```
+> [!WARNING]
+> If you're using pnpm, ensure that you either set [`shamefully-hoist=true`](https://pnpm.io/settings#shamefully-hoist) in your `.npmrc` file or install `@byyuurin/ui-kit` in your project's root directory.
 
 ### Nuxt
 
-```ts
-// nuxt.config.ts
+1. Add the UI module in your `nuxt.config.ts`:
 
+```ts
 export default defineNuxtConfig({
   modules: [
-    '@unocss/nuxt',
-    '@byyuurin/ui/nuxt',
+    '@byyuurin/ui',
   ],
-  css: [
-    '@unocss/reset/tailwind.css',
-  ],
+
   ui: {
-    prefix: 'U', // optional
+    prefix: 'U',
+    colorMode: true,
+    theme: {
+      colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+      transitions: true,
+      defaultVariants: {
+        color: 'primary',
+        size: 'md',
+      },
+    },
   },
 })
+```
+
+2. Add UnoCSS preset in your `uno.config.ts`:
+
+```ts
+import { createUnoPreset } from '@byyuurin/ui/unocss'
+import { defineConfig, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    createUnoPreset({
+      colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+    }),
+  ],
+})
+```
+
+> [!IMPORTANT]
+> The preset colors configuration must be the same as your nuxt configuration
+
+### Vue
+
+1. Create `ui.config.ts` file for unified management of UI settings:
+
+```ts
+// @unocss-include
+import { setup } from '@byyuurin/ui/setup'
+
+export default setup({
+  prefix: 'U',
+  autoImport: {
+    // ... unplugin-auto-import options
+  },
+  components: {
+    // ... unplugin-vue-components options
+  },
+  colorMode: true,
+  theme: {
+    colors: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+    transitions: true,
+    defaultVariants: {
+      color: 'primary',
+      size: 'md',
+    },
+  },
+  ui: {
+    colors: {
+      primary: 'green',
+      secondary: 'blue',
+      success: 'green',
+      info: 'blue',
+      warning: 'yellow',
+      error: 'red',
+      neutral: 'slate',
+    },
+    icons: {
+      close: 'i-lucide-x',
+      loading: 'i-lucide-loader-circle',
+      check: 'i-lucide-check',
+      chevronUp: 'i-lucide-chevron-up',
+      chevronDown: 'i-lucide-chevron-down',
+      chevronLeft: 'i-lucide-chevron-left',
+      chevronRight: 'i-lucide-chevron-right',
+      chevronDoubleLeft: 'i-lucide-chevrons-left',
+      chevronDoubleRight: 'i-lucide-chevrons-right',
+      ellipsis: 'i-lucide-ellipsis',
+      plus: 'i-lucide-plus',
+      minus: 'i-lucide-minus',
+      external: 'i-lucide-arrow-up-right',
+    },
+  },
+})
+```
+
+> [!IMPORTANT]
+> Add `// @unocss-include` to add ui.config.ts to unocss scan files
+
+> [!NOTE]
+> Internally relies on custom alias to resolve the theme types. If you're using TypeScript, you should add an alias to your tsconfig to enable auto-completion in your ui.config.ts.
+
+```jsonc
+// tsconfig.node.json
+
+{
+  "compilerOptions": {
+    "paths": {
+      "#build/*": ["./node_modules/.nuxt/*"]
+    }
+  }
+}
+```
+
+2. Add the UI Vite plugin in your `vite.config.ts`:
+
+```ts
+import ui from '@byyuurin/ui/vite' // <---
+import vue from '@vitejs/plugin-vue'
+import unocss from 'unocss/vite'
+import { defineConfig } from 'vite'
+import uiConfig from './ui.config' // <---
+
+export default defineConfig({
+  plugins: [
+    unocss(),
+    vue(),
+    ui(uiConfig.vite), // <---
+  ],
+})
+```
+
+3. Add UnoCSS preset in your `uno.config.ts`:
+
+```ts
+import { createUnoPreset } from '@byyuurin/ui/unocss' // <---
+import { defineConfig, presetWebFonts, presetWind4 } from 'unocss'
+import uiConfig from './ui.config' // <---
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    createUnoPreset(uiConfig.uno), // <---
+    presetWebFonts({
+      fonts: {
+        sans: { provider: 'google', name: 'Public Sans', weights: [400, 500, 600, 700] },
+      },
+    }),
+  ],
+})
+```
+
+4. Add the UI Vue plugin in your `src/main.ts`
+
+```ts
+import 'uno.css'
+
+import ui from '@byyuurin/ui/vue-plugin' // <---
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import App from './App.vue'
+
+const app = createApp(App)
+
+const router = createRouter({
+  routes: [],
+  history: createWebHistory(),
+})
+
+app.use(ui) // <----
+app.use(router)
+
+app.mount('#app')
+```
+
+5. Add the `isolate` class to your root container
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    ...
+  </head>
+  <body>
+    <div id="app" class="isolate"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
 ```
 
 ## Credits
 
 - [UnoCSS](https://github.com/unocss/unocss)
-- [daisyui](https://github.com/saadeghi/daisyui)
 - [@nuxt/ui](https://github.com/nuxt/ui)
 - [Reka UI](https://github.com/unovue/radix-vue)
 - [VueUse](https://github.com/vueuse/vueuse)

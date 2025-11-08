@@ -2,9 +2,7 @@
 import type { AccordionItem, AccordionProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const defineItems = <T extends AccordionItem>(items: T[]) => items
-
-const items = defineItems([
+const items = [
   {
     label: 'Getting Started',
     icon: 'i-lucide-info',
@@ -42,7 +40,7 @@ const items = defineItems([
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.',
     slot: 'custom' as const,
   },
-])
+] satisfies AccordionItem[]
 
 const controls: ControlItems<AccordionProps<typeof items[number]>> = [
   { prop: 'type', value: 'single', options: ['single', 'multiple'] },

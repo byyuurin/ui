@@ -1,16 +1,22 @@
 <script lang="ts">
 import type { CollapsibleRootEmits, CollapsibleRootProps } from 'reka-ui'
-import type { collapsible } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/collapsible'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
+export interface CollapsibleProps extends ComponentBaseProps, Pick<CollapsibleRootProps, 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
+  /**
+   * The element or component this component should render as.
+   * @default "div"
+   */
+  as?: CollapsibleRootProps['as']
+  ui?: ComponentUIProps<typeof theme>
+}
 export interface CollapsibleEmits extends CollapsibleRootEmits {}
 
 export interface CollapsibleSlots {
-  default?: (props: { open: boolean }) => any
-  content?: (props?: {}) => any
-}
-
-export interface CollapsibleProps extends ComponentAttrs<typeof collapsible>, Pick<CollapsibleRootProps, 'as' | 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
+  default: StaticSlot<{ open: boolean }>
+  content: StaticSlot
 }
 </script>
 
@@ -18,7 +24,8 @@ export interface CollapsibleProps extends ComponentAttrs<typeof collapsible>, Pi
 import { reactivePick } from '@vueuse/core'
 import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<CollapsibleProps>(), {
   unmountOnHide: true,
@@ -28,22 +35,25 @@ const slots = defineSlots<CollapsibleSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'disabled', 'unmountOnHide'), emit)
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('collapsible', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.collapsible))
+  return styler(props)
+})
 </script>
 
 <template>
   <CollapsibleRoot
     v-slot="{ open }"
     v-bind="rootProps"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
   >
-    <CollapsibleTrigger v-if="slots.default" as-child>
+    <CollapsibleTrigger v-if="!!slots.default" as-child>
       <slot :open="open"></slot>
     </CollapsibleTrigger>
 
-    <CollapsibleContent :class="style.content({ class: props.ui?.content })" data-part="content">
+    <CollapsibleContent :class="ui.content({ class: props.ui?.content })" data-part="content">
       <slot name="content"></slot>
     </CollapsibleContent>
   </CollapsibleRoot>

@@ -1,63 +1,73 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ProgressRootEmits, ProgressRootProps } from 'reka-ui'
-import type { progress } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/progress'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface ProgressEmits extends ProgressRootEmits {}
+type ThemeVariants = VariantProps<typeof theme>
 
-export type ProgressSlots = {
-  status?: (props: { percent?: number }) => any
-} & {
-  [key: `step-${number}`]: (props: { step: string | number }) => any
-}
-
-type ProgressVariants = VariantProps<typeof progress>
-
-export interface ProgressProps extends ComponentAttrs<typeof progress>, Pick<ProgressRootProps, 'getValueLabel' | 'modelValue'> {
+export interface ProgressProps extends ComponentBaseProps, Pick<ProgressRootProps, 'getValueLabel' | 'getValueText' | 'modelValue'> {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  /** The maximum progress value. */
-  max?: number | string[]
-  /**
-   * @default "md"
-   */
-  size?: ProgressVariants['size']
+  /** @default "md" */
+  size?: ThemeVariants['size']
+  /** @default "primary" */
+  color?: ThemeVariants['color']
   /**
    * The orientation of the progress bar.
    * @default "horizontal"
    */
-  orientation?: ProgressVariants['orientation']
+  orientation?: ThemeVariants['orientation']
+  /**
+   * The animation of the progress bar.
+   * @default "carousel"
+   */
+  animation?: ThemeVariants['animation']
+  /** The maximum progress value. */
+  max?: number | Array<any>
   /** Display the current progress value. */
   status?: boolean
   /** Whether the progress is visually inverted. */
   inverted?: boolean
+  ui?: ComponentUIProps<typeof theme>
 }
+
+export interface ProgressEmits extends ProgressRootEmits {}
+
+export type ProgressSlots = {
+  status: StaticSlot<{ percent?: number }>
+} & {
+  [key: `step-${number}`]: StaticSlot<{ step: string | number }>
+}
+
 </script>
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { Primitive, ProgressIndicator, ProgressRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ProgressProps>(), {
+  inverted: false,
   modelValue: null,
   orientation: 'horizontal',
 })
 const emit = defineEmits<ProgressEmits>()
 const slots = defineSlots<ProgressSlots>()
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'getValueLabel', 'modelValue'), emit)
+const rootProps = useForwardPropsEmits(reactivePick(props, 'getValueLabel', 'getValueText', 'modelValue'), emit)
 
-const isIndeterminate = computed(() => rootProps.value.modelValue === null || Number.isNaN(+rootProps.value.modelValue))
+const isIndeterminate = computed(() => rootProps.value.modelValue === null)
 const hasSteps = computed(() => Array.isArray(props.max))
 
-const max = computed(() => {
+const realMax = computed(() => {
   if (isIndeterminate.value || !props.max)
     return
 
@@ -74,18 +84,15 @@ const percent = computed(() => {
   if (rootProps.value.modelValue! < 0)
     return 0
 
-  const _max = max.value ?? 100
+  const max = realMax.value ?? 100
 
-  if (rootProps.value.modelValue! > _max)
+  if (rootProps.value.modelValue! > max)
     return 100
 
-  return Math.round((rootProps.value.modelValue! / _max) * 100)
+  return Math.round((rootProps.value.modelValue! / max) * 100)
 })
 
 const { dir } = useLocale()
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('progress', props))
-
 const indicatorStyle = computed(() => {
   if (percent.value === undefined)
     return
@@ -100,9 +107,10 @@ const indicatorStyle = computed(() => {
 })
 
 const statusStyle = computed(() => {
-  return {
-    [props.orientation === 'vertical' ? 'height' : 'width']: percent.value ? `${percent.value}%` : 'fit-content',
-  }
+  const value = `${Math.max(percent.value ?? 0, 0)}%`
+  return props.orientation === 'vertical'
+    ? { height: value }
+    : { width: value }
 })
 
 function isActive(index: number) {
@@ -114,7 +122,7 @@ function isFirst(index: number) {
 }
 
 function isLast(index: number) {
-  return index === max.value
+  return index === realMax.value
 }
 
 function stepVariant(index: number | string) {
@@ -131,11 +139,17 @@ function stepVariant(index: number | string) {
 
   return 'other'
 }
+
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.progress))
+  return styler(props)
+})
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.wrapper({ class: [props.class, props.ui?.wrapper] })" data-part="wrapper">
-    <div v-if="!isIndeterminate && (props.status || slots.status)" :class="style.status({ class: props.ui?.status })" data-part="status" :style="statusStyle">
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" :data-orientation="orientation" data-part="root">
+    <div v-if="!isIndeterminate && (props.status || !!slots.status)" :class="ui.status({ class: props.ui?.status })" data-part="status" :style="statusStyle">
       <slot name="status" :percent="percent">
         {{ percent }}%
       </slot>
@@ -143,17 +157,16 @@ function stepVariant(index: number | string) {
 
     <ProgressRoot
       v-bind="rootProps"
-      :model-value="Number.isNaN(rootProps.modelValue) ? null : rootProps.modelValue"
-      :max="max"
-      :class="style.root({ class: props.ui?.root })"
-      data-part="root"
+      :max="realMax"
+      :class="ui.base({ class: props.ui?.base })"
+      data-part="base"
       style="transform: translateZ(0)"
     >
-      <ProgressIndicator :class="style.indicator({ class: props.ui?.indicator })" data-part="indicator" :style="indicatorStyle" />
+      <ProgressIndicator :class="ui.indicator({ class: props.ui?.indicator })" data-part="indicator" :style="indicatorStyle" />
     </ProgressRoot>
 
-    <div v-if="hasSteps" :class="style.steps({ class: props.ui?.steps })" data-part="steps">
-      <div v-for="(step, index) in props.max" :key="index" :class="style.step({ class: props.ui?.step, step: stepVariant(index) })" data-part="step">
+    <div v-if="hasSteps" :class="ui.steps({ class: props.ui?.steps })" data-part="steps">
+      <div v-for="(step, index) in props.max" :key="index" :class="ui.step({ class: props.ui?.step, step: stepVariant(index) })" data-part="step">
         <slot :name="`step-${index}`" :step="step">
           {{ step }}
         </slot>

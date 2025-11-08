@@ -8,17 +8,8 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <span
-    class="group relative overflow-hidden rounded-ui-base border border-dashed px-4 flex items-center justify-center border-[--color]"
-    :style="{
-      '--base': 'color-mix(in srgb,rgb(var(--ui-cb)),rgb(var(--ui-cx)))',
-      '--color': 'color-mix(in srgb,var(--base) 30%,transparent)',
-    }"
-  >
-    <svg
-      class="absolute inset-0 size-full stroke-[--color]"
-      fill="none"
-    >
+  <span class="group relative overflow-hidden rounded border border-dashed border-accented/80 opacity-75 px-4 flex items-center justify-center">
+    <svg class="absolute inset-0 size-full stroke-default/80" fill="none">
       <defs>
         <pattern
           id="pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e"
@@ -34,15 +25,17 @@ const props = withDefaults(defineProps<{
       <rect stroke="none" fill="url(#pattern-5c1e4f0e-62d5-498b-8ff0-cf77bb448c8e)" width="100%" height="100%" />
     </svg>
 
-    <slot>
-      <span
-        class="w-full"
-        :class="{
-          'text-center': props.labelPosition === 'center',
-          'text-left': props.labelPosition === 'left',
-          'text-right': props.labelPosition === 'right',
-        }"
-      >{{ props.label }}</span>
-    </slot>
+    <span
+      class="relative w-full"
+      :class="{
+        'text-center': props.labelPosition === 'center',
+        'text-left': props.labelPosition === 'left',
+        'text-right': props.labelPosition === 'right',
+      }"
+    >
+      <slot>
+        {{ props.label }}
+      </slot>
+    </span>
   </span>
 </template>

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import type { ModalProps } from '@byyuurin/ui'
-import { Button, Modal } from '@byyuurin/ui'
+import Button from '@byyuurin/ui/components/Button.vue'
+import Modal from '@byyuurin/ui/components/Modal.vue'
 import type { ControlItems } from './ExampleView.vue'
 import Placeholder from './Placeholder.vue'
 
 const controls: ControlItems<ModalProps> = [
   { prop: 'title', value: 'Title', placeholder: 'No Title' },
   { prop: 'description', value: 'description', placeholder: 'No Description' },
-  { prop: 'size', value: 'sm', options: ['sm', 'md', 'lg', 'xl', 'fullscreen'] },
+  { prop: 'fullscreen', value: false, description: 'When `true`, the modal will take up the full screen.' },
   { prop: 'dismissible', value: true },
   { prop: 'close', value: true },
   { prop: 'overlay', value: true },
@@ -89,7 +90,7 @@ function openOverlay(props: ModalProps) {
           </template>
 
           <template #description>
-            <Placeholder class="h-8" label="#description" label-position="left" />
+            <Placeholder label="#description" label-position="left" />
           </template>
 
           <template #body>

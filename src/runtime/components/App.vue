@@ -1,33 +1,31 @@
 <script lang="ts">
-import type { UserConfig } from '@unocss/core'
 import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
-import type { Messages, ThemeExtension, ToastProviderProps } from '../types'
-import type { Locale } from '../utils'
+import type { Locale, Messages, ToastProviderProps } from '../types'
+import type { MaybeNull, StaticSlot } from '../types/utils'
 
-export interface AppSlots {
-  default: (props?: {}) => any
+export interface AppProps<T extends Messages = Messages> extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
+  toaster?: MaybeNull<ToastProviderProps>
+  tooltip?: TooltipProviderProps
+  locale?: Locale<T>
+  portal?: boolean | string | HTMLElement
 }
 
-export interface AppProps extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
-  unoConfig?: UserConfig
-  ui?: ThemeExtension
-  toaster?: ToastProviderProps
-  tooltip?: TooltipProviderProps
-  locale?: Locale<Messages>
+export interface AppSlots {
+  default: StaticSlot
 }
 </script>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Messages">
 import { reactivePick } from '@vueuse/core'
 import { ConfigProvider, TooltipProvider, useForwardProps } from 'reka-ui'
 import { toRef, useId } from 'vue'
-import { provideLocaleContext, provideThemeExtension, provideUnoConfig } from '../app/injections'
+import { provideLocaleContext } from '../composables/useLocale'
+import { providePortalTarget } from '../composables/usePortal'
 import OverlayProvider from './OverlayProvider.vue'
 import ToastProvider from './ToastProvider.vue'
 
-const props = withDefaults(defineProps<AppProps>(), {
-  unoConfig: () => ({}),
-  ui: () => ({}),
+const props = withDefaults(defineProps<AppProps<T>>(), {
+  portal: 'body',
 })
 
 defineSlots<AppSlots>()
@@ -36,21 +34,22 @@ const configProviderProps = useForwardProps(reactivePick(props, 'scrollBody'))
 const tooltipProps = toRef(() => props.tooltip)
 const toastProviderProps = toRef(() => props.toaster)
 
-provideUnoConfig(() => props.unoConfig)
-provideThemeExtension(() => props.ui)
-
 const locale = toRef(() => props.locale)
 provideLocaleContext(locale)
+
+const portal = toRef(() => props.portal)
+providePortalTarget(portal)
 </script>
 
 <template>
-  <ConfigProvider :use-id="useId" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
+  <ConfigProvider :use-id="() => (useId() as string)" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
     <TooltipProvider v-bind="tooltipProps">
       <ToastProvider v-if="props.toaster !== null" v-bind="toastProviderProps">
         <slot></slot>
       </ToastProvider>
       <slot v-else></slot>
+
+      <OverlayProvider />
     </TooltipProvider>
-    <OverlayProvider />
   </ConfigProvider>
 </template>

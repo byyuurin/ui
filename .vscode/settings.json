@@ -40,5 +40,10 @@
     "vue",
     "gql",
     "graphql"
+  ],
+
+  "unocss.root": [
+    "./",
+    "./playground/nuxt/"
   ]
 }

@@ -7,7 +7,7 @@ const items = ref([
     {
       label: 'Guide',
       icon: 'i-lucide-book-open',
-      href: '#',
+      href: '/other',
       children: [
         {
           label: 'Introduction',
@@ -39,65 +39,66 @@ const items = ref([
     {
       label: 'Composables',
       icon: 'i-lucide-database',
-      href: '#',
+      href: '/other',
       slot: 'composables',
       children: [
         {
           label: 'useModal',
           icon: 'i-lucide-file-text',
           description: 'Display a modal within your application.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'useToast',
           icon: 'i-lucide-file-text',
           description: 'Display a toast within your application.',
-          href: '#',
+          href: '/other',
         },
       ],
     },
     {
       label: 'Components',
       icon: 'i-lucide-box',
-      href: '#',
+      href: '/other',
       active: true,
       children: [
         {
           label: 'Link',
           icon: 'i-lucide-file-text',
           description: 'Use NuxtLink with superpowers.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Modal',
           icon: 'i-lucide-file-text',
           description: 'Display a modal within your application.',
-          href: '#',
+          href: '/other',
+          disabled: true,
         },
         {
           label: 'NavigationMenu',
           icon: 'i-lucide-file-text',
           description: 'Display a list of links.',
-          href: '#',
+          href: '/other',
           active: true,
         },
         {
           label: 'Pagination',
           icon: 'i-lucide-file-text',
           description: 'Display a list of pages.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Popover',
           icon: 'i-lucide-file-text',
           description: 'Display a non-modal dialog that floats around a trigger element.',
-          href: '#',
+          href: '/other',
         },
         {
           label: 'Progress',
           icon: 'i-lucide-file-text',
           description: 'Show a horizontal bar to indicate task progression.',
-          href: '#',
+          href: '/other',
           children: [
             {
               label: 'Foo',
@@ -120,21 +121,28 @@ const items = ref([
   [
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
-      chip: '999',
-      href: '#',
+      icon: 'i-lucide:github',
+      badge: '999',
+      href: '/other',
       target: '_blank',
       tooltip: {
         text: 'Open in GitHub',
       },
     },
+    {
+      label: 'Avatar',
+      avatar: {
+        src: 'https://i.pravatar.cc/100?img=13',
+      },
+    },
   ],
 ] satisfies NavigationMenuItem[][])
 
-const controls: ControlItems<NavigationMenuProps<typeof items.value[number]>> = [
+const controls: ControlItems<NavigationMenuProps<typeof items.value>> = [
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'error', 'info', 'warning', 'neutral'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'contentOrientation', value: 'horizontal', options: ['horizontal', 'vertical'], description: 'The orientation of the content. Only works when `orientation` is `horizontal`' },
-  { prop: 'variant', value: 'ghost', options: ['ghost', 'link'] },
+  { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
   { prop: 'arrow', value: false },
   { prop: 'unmountOnHide', value: true },
   { prop: 'collapsed', value: false, description: 'Collapse the navigation menu to only show icons.', warning: 'Only works when `orientation` is `vertical`.' },
@@ -165,10 +173,10 @@ const controls: ControlItems<NavigationMenuProps<typeof items.value[number]>> = 
             <ul>
               <li v-for="child in item.children" :key="child.label">
                 <ULink class="text-sm text-left rounded-md p-3 transition-colors hover:bg-soft-ui-fill/5">
-                  <p class="font-medium color-ui-cb">
+                  <p class="font-medium text-default">
                     {{ child.label }}
                   </p>
-                  <p class="color-ui-cb/50 line-clamp-2">
+                  <p class="text-default line-clamp-2">
                     {{ child.description }}
                   </p>
                 </ULink>

@@ -1,11 +1,19 @@
+import type { Translator } from '@byyuurin/ui-kit'
 import { createSharedComposable } from '@vueuse/core'
+import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
-import { injectLocaleContext } from '../app/injections'
 import localeDefault from '../locale/en'
-import { createTranslator } from '../utils'
-import type { Translator } from '../utils/translator'
+import type { Locale, Messages } from '../types'
+import { defineInjection } from '../utils'
+import { createTranslator } from '../utils/locale'
 
-export const useLocale = createSharedComposable(() => {
+export const {
+  InjectionKey: InjectionKeyLocaleContext,
+  inject: injectLocaleContext,
+  provide: provideLocaleContext,
+} = defineInjection<MaybeRefOrGetter<Locale<Messages> | undefined>>('ui.locale-context')
+
+function _useLocale() {
   const _locale = injectLocaleContext()
   const locale = computed(() => toValue(_locale) ?? localeDefault)
   const lang = computed(() => locale.value.name)
@@ -16,11 +24,7 @@ export const useLocale = createSharedComposable(() => {
     return createTranslator(toValue(locale))(path, options)
   }
 
-  return {
-    locale,
-    lang,
-    code,
-    dir,
-    t,
-  }
-})
+  return { locale, lang, code, dir, t }
+}
+
+export const useLocale = /* @__PURE__ */ import.meta.client ? createSharedComposable(_useLocale) : _useLocale

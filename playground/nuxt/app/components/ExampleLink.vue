@@ -6,7 +6,6 @@ const controls: ControlItems<LinkProps> = [
   { prop: 'label', value: 'Github' },
   { prop: 'href', value: 'https://github.com/' },
   { prop: 'target', value: null, options: [{ label: 'none', value: null }, '_blank', '_parent', '_self', '_top'] },
-  { prop: 'underline', value: false },
   { prop: 'active', value: false },
   { prop: 'disabled', value: false },
   { prop: 'raw', value: false },

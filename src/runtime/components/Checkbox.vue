@@ -1,21 +1,13 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
-import type { CheckboxRootProps, PrimitiveProps } from 'reka-ui'
-import type { checkbox } from '../theme'
-import type { ComponentAttrs } from '../types'
+import type { CheckboxRootEmits, CheckboxRootProps, PrimitiveProps } from 'reka-ui'
+import theme from '#build/ui/checkbox'
+import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface CheckboxEmits {
-  change: [payload: Event]
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface CheckboxSlots {
-  label?: (props: { label?: string }) => any
-  description?: (props: { description?: string }) => any
-}
-
-type CheckboxVariants = VariantProps<typeof checkbox>
-
-export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
+export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -23,26 +15,48 @@ export interface CheckboxProps extends ComponentAttrs<typeof checkbox>, Pick<Che
   as?: PrimitiveProps['as']
   label?: string
   description?: string
-  size?: CheckboxVariants['size']
+  /** @default "list" */
+  variant?: ThemeVariants['variant']
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "md" */
+  size?: ThemeVariants['size']
+  /** @default "start" */
+  indicator?: ThemeVariants['indicator']
   /**
    * The icon displayed when checked.
    * @default app.icons.check
    */
-  icon?: string
+  icon?: IconProps['name']
   /**
    * The icon displayed when the checkbox is indeterminate.
-   * @default app.icons.indeterminate
+   * @default app.icons.minus
    */
-  indeterminateIcon?: string
+  indeterminateIcon?: IconProps['name']
+  modelValue?: boolean | 'indeterminate'
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export type CheckboxEmits = CheckboxRootEmits & {
+  change: [event: Event]
+}
+
+export interface CheckboxSlots {
+  label: StaticSlot<{ label?: string }>
+  description: StaticSlot<{ description?: string }>
 }
 </script>
 
 <script lang="ts" setup>
-import { reactivePick } from '@vueuse/core'
+import { reactivePick, useVModel } from '@vueuse/core'
 import { CheckboxIndicator, CheckboxRoot, Label, Primitive, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
-import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { useFormField } from '../composables/useFormField'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   required: false,
@@ -51,18 +65,21 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
 const emit = defineEmits<CheckboxEmits>()
 const slots = defineSlots<CheckboxSlots>()
 
-const innerValue = defineModel<boolean | 'indeterminate'>({ default: undefined })
+const modelValue = useVModel(props, 'modelValue', emit)
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<CheckboxProps>(props)
+const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<CheckboxProps>(props)
 const id = _id.value ?? useId()
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('checkbox', {
-  ...props,
-  size: size.value,
-  disabled: disabled.value,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.checkbox))
+  return styler({
+    ...props,
+    size: size.value,
+    disabled: disabled.value,
+  })
+})
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
@@ -74,31 +91,46 @@ function onUpdate(value: any) {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <div :class="style.container({ class: props.ui?.container })" data-part="container">
+  <Primitive :as="(!props.variant || props.variant === 'list') ? props.as : Label" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <div :class="ui.container({ class: props.ui?.container })" data-part="container">
       <CheckboxRoot
-        v-slot="{ modelValue }"
-        v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
-        v-model="innerValue"
-        :class="style.base({ class: props.ui?.base })"
+        v-bind="{ id, ...rootProps, ...$attrs, ...ariaAttrs, name, disabled }"
+        v-model="modelValue"
+        :class="ui.base({ class: props.ui?.base })"
         data-part="base"
         @update:model-value="onUpdate"
       >
-        <CheckboxIndicator as-child force-mount>
-          <span
-            v-if="modelValue === 'indeterminate'"
-            :class="style.icon({ class: [props.indeterminateIcon || theme.app.icons.indeterminate, props.ui?.icon] })"
-            data-part="icon"
-          ></span>
-          <span v-else :class="style.icon({ class: [props.icon, theme.app.icons.check, props.ui?.icon] })" data-part="icon"></span>
-        </CheckboxIndicator>
+        <template #default="{ modelValue }">
+          <CheckboxIndicator :class="ui.indicator({ class: props.ui?.indicator })" data-part="indicator">
+            <Icon
+              v-if="modelValue === 'indeterminate'"
+              :name="props.indeterminateIcon || appConfig.ui.icons.minus"
+              :class="ui.icon({ class: props.ui?.icon })"
+              data-part="icon"
+            />
+            <Icon
+              v-else
+              :name="props.icon || appConfig.ui.icons.check"
+              :class="ui.icon({ class: props.ui?.icon })"
+              data-part="icon"
+            />
+          </CheckboxIndicator>
+        </template>
       </CheckboxRoot>
     </div>
-    <div v-if="props.label || slots.label || props.description || slots.description" :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <Label v-if="props.label || slots.label" :for="id" :class="style.label({ class: props.ui?.label })" data-part="label">
-        <slot name="label" :label="props.label">{{ props.label }}</slot>
-      </Label>
-      <p v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
+    <div v-if="props.label || !!slots.label || props.description || !!slots.description" :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <component
+        :is="(!props.variant || props.variant === 'list') ? Label : 'p'"
+        v-if="props.label || !!slots.label"
+        :for="id"
+        :class="ui.label({ class: props.ui?.label })"
+        data-part="label"
+      >
+        <slot name="label" :label="props.label">
+          {{ props.label }}
+        </slot>
+      </component>
+      <p v-if="props.description || !!slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>

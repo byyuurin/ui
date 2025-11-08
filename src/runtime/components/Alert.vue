@@ -1,24 +1,13 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { alert } from '../theme'
-import type { ButtonProps, ComponentAttrs } from '../types'
+import theme from '#build/ui/alert'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface AlertEmits {
-  'update:open': [value: boolean]
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface AlertSlots {
-  leading?: (props?: {}) => any
-  title?: (props?: {}) => any
-  description?: (props?: {}) => any
-  actions?: (props?: {}) => any
-  close?: (props: { ui: ComponentAttrs<typeof alert>['ui'] }) => any
-}
-
-type AlertVariants = VariantProps<typeof alert>
-
-export interface AlertProps extends ComponentAttrs<typeof alert> {
+export interface AlertProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -26,9 +15,17 @@ export interface AlertProps extends ComponentAttrs<typeof alert> {
   as?: PrimitiveProps['as']
   title?: string
   description?: string
-  icon?: string
-  variant?: AlertVariants['variant']
-  orientation?: AlertVariants['orientation']
+  icon?: IconProps['name']
+  avatar?: AvatarProps
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "solid" */
+  variant?: ThemeVariants['variant']
+  /**
+   * The orientation between the content and the actions.
+   * @default "vertical"
+   */
+  orientation?: ThemeVariants['orientation']
   /**
    * Display a list of actions:
    * - under the title and description when orientation is `vertical`
@@ -39,24 +36,39 @@ export interface AlertProps extends ComponentAttrs<typeof alert> {
    * Display a close button to dismiss the alert.
    * @default false
    */
-  close?: ButtonProps | boolean
+  close?: boolean | Partial<ButtonProps>
   /**
    * The icon displayed in the close button.
    * @default app.icons.close
    */
-  closeIcon?: string
+  closeIcon?: IconProps['name']
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export interface AlertEmits {
+  'update:open': [open: boolean]
+}
+
+export interface AlertSlots {
+  leading: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
+  title: StaticSlot
+  description: StaticSlot
+  actions: StaticSlot
+  close: StaticSlot<{ ui: ComponentStyler<typeof theme> }>
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
+import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { useTheme } from '../composables/useTheme'
+import { cv, merge } from '../utils/style'
+import Avatar from './Avatar.vue'
 import Button from './Button.vue'
+import Icon from './Icon.vue'
 
 const props = withDefaults(defineProps<AlertProps>(), {
-  variant: 'solid',
   orientation: 'vertical',
 })
 
@@ -64,59 +76,76 @@ const emit = defineEmits<AlertEmits>()
 const slots = defineSlots<AlertSlots>()
 
 const { t } = useLocale()
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('alert', {
-  ...props,
-  title: !!props.title || !!slots.title,
-}))
+
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.alert))
+
+  return styler({
+    ...props,
+    title: !!props.title || !!slots.title,
+  })
+})
 </script>
 
 <template>
   <Primitive
     :as="props.as"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :data-orientation="props.orientation"
     data-part="root"
   >
-    <slot name="leading">
-      <span v-if="props.icon" :class="style.icon({ class: [props.icon, props.ui?.icon] })" data-part="icon"></span>
+    <slot name="leading" :ui="ui">
+      <Avatar
+        v-if="props.avatar"
+        :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
+        v-bind="props.avatar"
+        :class="ui.avatar({ class: props.ui?.avatar })"
+        data-part="avatar"
+      />
+      <Icon
+        v-else-if="props.icon"
+        :name="props.icon"
+        :class="ui.icon({ class: props.ui?.icon })"
+        data-part="icon"
+      />
     </slot>
 
-    <div :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <div v-if="props.title || slots.title" :class="style.title({ class: props.ui?.title })" data-part="title">
+    <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <div v-if="props.title || slots.title" :class="ui.title({ class: props.ui?.title })" data-part="title">
         <slot name="title">
           {{ props.title }}
         </slot>
       </div>
-      <div v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
+      <div v-if="props.description || slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
         <slot name="description">
           {{ props.description }}
         </slot>
       </div>
 
-      <div v-if="props.orientation === 'vertical' && props.actions?.length" :class="style.actions({ class: props.ui?.actions })" data-part="actions">
+      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" :class="ui.actions({ class: props.ui?.actions })" data-part="actions">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
         </slot>
       </div>
     </div>
 
-    <div v-if="(props.orientation === 'horizontal' && props.actions?.length) || props.close" :class="style.actions({ class: props.ui?.actions, orientation: 'horizontal' })" data-part="actions">
-      <template v-if="props.orientation === 'horizontal' && props.actions?.length">
+    <div v-if="(props.orientation === 'horizontal' && (props.actions?.length || slots.actions)) || props.close" :class="ui.actions({ class: props.ui?.actions, orientation: 'horizontal' })" data-part="actions">
+      <template v-if="props.orientation === 'horizontal' && (props.actions?.length || slots.actions)">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
         </slot>
       </template>
 
-      <slot name="close" :ui="props.ui">
+      <slot name="close" :ui="ui">
         <Button
           v-if="props.close"
-          :icon="props.closeIcon || theme.app.icons.close"
-          size="md"
+          :icon="props.closeIcon || appConfig.ui.icons.close"
+          color="neutral"
           variant="link"
           :aria-label="t('alert.close')"
-          v-bind="typeof props.close === 'object' ? props.close : undefined"
-          :class="style.close({ class: props.ui?.close })"
+          v-bind="typeof props.close === 'object' ? props.close as Partial<ButtonProps> : {}"
+          :class="ui.close({ class: props.ui?.close })"
           data-part="close"
           @click="emit('update:open', false)"
         />

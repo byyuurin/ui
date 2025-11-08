@@ -1,34 +1,37 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { avatarGroup } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/avatar-group'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface AvatarGroupSlots {
-  default?: (props?: {}) => any
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-type AvatarGroupVariants = VariantProps<typeof avatarGroup>
-
-export interface AvatarGroupProps extends ComponentAttrs<typeof avatarGroup> {
+export interface AvatarGroupProps extends ComponentBaseProps {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: PrimitiveProps['as']
-  size?: AvatarGroupVariants['size']
+  size?: ThemeVariants['size']
   /**
    * The maximum number of avatars to display.
    */
   max?: number | string
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export interface AvatarGroupSlots {
+  default: StaticSlot
 }
 </script>
 
 <script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
-import { provideAvatarGroup } from '../app/injections'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { provideAvatarGroup } from '../composables/useAvatarGroup'
+import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 
 const props = defineProps<AvatarGroupProps>()
@@ -73,15 +76,18 @@ const hiddenCount = computed(() => {
   return children.value.length - visibleAvatars.value.length
 })
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('avatarGroup', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.avatarGroup))
+  return styler(props)
+})
 
 provideAvatarGroup(computed(() => props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" :class="style.base({ class: props.ui?.base })" data-part="base" />
-    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" :class="style.base({ class: props.ui?.base })" data-part="base" />
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" :class="ui.base({ class: props.ui?.base })" data-part="base" />
+    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" :class="ui.base({ class: props.ui?.base })" data-part="base" />
   </Primitive>
 </template>

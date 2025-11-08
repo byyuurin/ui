@@ -1,7 +1,42 @@
 import type { StandardSchemaV1 } from '@standard-schema/spec'
-import type { FormExpose } from './components'
+import type { Struct as SuperstructSchema } from 'superstruct'
+import type { ComputedRef, DeepReadonly, Ref } from 'vue'
+import type { GetObjectField, MaybeNull } from './utils'
 
-export type FormSchema<_T> = StandardSchemaV1
+export interface Form<S extends FormSchema> {
+  validate: <T extends boolean>(opts?: { name?: keyof FormData<S, false> | (keyof FormData<S, false>)[], silent?: boolean, nested?: boolean, transform?: T }) => Promise<FormData<S, T> | false>
+  clear: (path?: keyof FormData<S, false> | string | RegExp) => void
+  errors: Ref<FormError[]>
+  setErrors: (errs: FormError[], name?: keyof FormData<S, false> | string | RegExp) => void
+  getErrors: (name?: keyof FormData<S, false> | string | RegExp) => FormError[]
+  submit: () => Promise<void>
+  disabled: ComputedRef<boolean>
+  dirty: ComputedRef<boolean>
+  loading: Ref<boolean>
+
+  dirtyFields: ReadonlySet<DeepReadonly<keyof FormData<S, false>>>
+  touchedFields: ReadonlySet<DeepReadonly<keyof FormData<S, false>>>
+  blurredFields: ReadonlySet<DeepReadonly<keyof FormData<S, false>>>
+}
+
+export type FormSchema<I extends object = object, O extends object = I>
+  = | SuperstructSchema<any, any>
+    | StandardSchemaV1<I, O>
+
+// Define a utility type to infer the input type based on the schema type
+export type InferInput<Schema> = Schema extends StandardSchemaV1 ? StandardSchemaV1.InferInput<Schema>
+  : Schema extends SuperstructSchema<infer I, any> ? I
+    : Schema extends StandardSchemaV1 ? StandardSchemaV1.InferInput<Schema>
+      : never
+
+// Define a utility type to infer the output type based on the schema type
+export type InferOutput<Schema> = Schema extends StandardSchemaV1 ? StandardSchemaV1.InferOutput<Schema>
+  : Schema extends SuperstructSchema<infer O, any> ? O
+    : never
+
+export type FormData<S extends FormSchema, T extends boolean = true> = T extends true ? InferOutput<S> : InferInput<S>
+
+export type FormInputEvents = 'input' | 'blur' | 'change' | 'focus'
 
 export interface FormError<P extends string = string> {
   name?: P
@@ -12,16 +47,23 @@ export interface FormErrorWithId extends FormError {
   id?: string
 }
 
-export type FormInputEvents = 'input' | 'blur' | 'change' | 'focus'
+export type FormSubmitEvent<T> = SubmitEvent & { data: T }
+
+export interface FormValidationError {
+  errors: FormErrorWithId[]
+  children?: FormErrorWithId[]
+}
+
+export type FormErrorEvent = SubmitEvent & FormValidationError
 
 export type FormEventType = FormInputEvents
 
-export type FormSubmitEvent<T> = SubmitEvent & { data: T }
-
-export interface FormChildAttachEvent {
+export interface FormChildAttachEvent<S extends FormSchema> {
   type: 'attach'
   formId: string | number
-  validate: FormExpose<any>['validate']
+  validate: Form<any>['validate']
+  name?: string
+  api: Form<S>
 }
 
 export interface FormChildDetachEvent {
@@ -35,26 +77,44 @@ export interface FormInputEvent<T extends object> {
   eager?: boolean
 }
 
-export type FormEvent<T extends object> =
-  | FormInputEvent<T>
-  | FormChildAttachEvent
-  | FormChildDetachEvent
+export type FormEvent<T extends object>
+  = | FormInputEvent<T>
+    | FormChildAttachEvent<any>
+    | FormChildDetachEvent
 
-export interface FormValidationError {
-  errors: FormErrorWithId[]
-  children?: FormValidationError[]
+export interface FormInjectedOptions {
+  disabled?: boolean
+  validateOnInputDelay?: number
 }
 
-export type FormErrorEvent = SubmitEvent & FormValidationError
+export interface FormFieldInjectedOptions<T> {
+  name?: string
+  size?: GetObjectField<T, 'size'>
+  error?: string | boolean
+  eagerValidation?: boolean
+  validateOnInputDelay?: number
+  errorPattern?: RegExp
+  hint?: string
+  description?: string
+  help?: string
+  ariaId: string
+}
 
 export interface ValidateReturnSchema<T> {
   result: T
-  errors: FormError[] | null
+  errors: MaybeNull<FormError[]>
 }
 
-export interface FormValidateOptions<T extends object> {
-  name?: keyof T | (keyof T)[]
-  silent?: boolean
-  nested?: boolean
-  transform?: boolean
+// eslint-disable-next-line unicorn/custom-error-definition
+export class FormValidationException extends Error {
+  formId: string | number
+  errors: FormErrorWithId[]
+
+  // eslint-disable-next-line unicorn/custom-error-definition
+  constructor(formId: string | number, errors: FormErrorWithId[]) {
+    super('Form validation exception')
+    this.formId = formId
+    this.errors = errors
+    Object.setPrototypeOf(this, FormValidationException.prototype)
+  }
 }

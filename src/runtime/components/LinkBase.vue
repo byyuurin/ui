@@ -1,5 +1,7 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
+import type { LinkProps } from '../types'
+import type { MaybeNull } from '../types/utils'
 
 export interface LinkBaseProps {
   /**
@@ -7,13 +9,15 @@ export interface LinkBaseProps {
    * @default "button"
    */
   as?: PrimitiveProps['as']
+  /** @default "button" */
   type?: string
   disabled?: boolean
   onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
   href?: string
   navigate?: (e: MouseEvent) => void
-  rel?: string
-  target?: string
+  target?: MaybeNull<LinkProps['target']>
+  rel?: MaybeNull<LinkProps['rel']>
+  active?: boolean
   isExternal?: boolean
 }
 </script>
@@ -27,38 +31,19 @@ const props = withDefaults(defineProps<LinkBaseProps>(), {
   type: 'button',
 })
 
-const wrapperProps = computed(() => {
-  const { href, rel, target, disabled } = props
+const linkProps = computed(() => {
+  const { as, type, href, rel, target, disabled } = props
 
-  const baseProps = {
-    rel,
-    target,
+  if (href) {
+    return disabled
+      ? { as: 'a', ariaDisabled: 'true', role: 'link', tabindex: -1, rel, target }
+      : { as: 'a', href, rel, target }
   }
 
-  if (props.href) {
-    return {
-      ...baseProps,
-      'as': 'a',
-      'href': disabled ? undefined : href,
-      'aria-disabled': disabled ? 'true' : undefined,
-      'role': disabled ? 'link' : undefined,
-      'tabindex': disabled ? -1 : undefined,
-    }
-  }
+  if (as === 'button')
+    return { as, type, disabled, rel, target }
 
-  if (props.as === 'button') {
-    return {
-      ...baseProps,
-      as: props.as,
-      type: props.type,
-      disabled,
-    }
-  }
-
-  return {
-    ...baseProps,
-    as: props.as,
-  }
+  return { as, rel, target }
 })
 
 function onClickWrapper(e: MouseEvent) {
@@ -79,10 +64,7 @@ function onClickWrapper(e: MouseEvent) {
 </script>
 
 <template>
-  <Primitive
-    v-bind="wrapperProps"
-    @click="onClickWrapper"
-  >
+  <Primitive v-bind="linkProps" @click="onClickWrapper">
     <slot></slot>
   </Primitive>
 </template>

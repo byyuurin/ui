@@ -1,9 +1,20 @@
-import { defineConfig } from 'unocss'
-import config from '../../uno.config'
+import { createUnoPreset } from '@byyuurin/ui/unocss'
+import { defineConfig, presetWebFonts, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss'
+import uiConfig from './ui.config'
 
 export default defineConfig({
-  ...config,
-  configDeps: [
-    '../../uno.config',
+  mergeSelectors: false,
+  presets: [
+    presetWind4(),
+    createUnoPreset(uiConfig.uno),
+    presetWebFonts({
+      fonts: {
+        sans: { provider: 'google', name: 'Public Sans', weights: [400, 500, 600, 700] },
+      },
+    }),
+  ],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup(),
   ],
 })

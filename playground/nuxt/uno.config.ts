@@ -1,9 +1,13 @@
-import { defineConfig } from 'unocss'
-import config from '../../uno.config'
+import { defineConfig, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss'
+import { createUnoPreset } from '../../src/unocss'
 
 export default defineConfig({
-  ...config,
-  configDeps: [
-    '../../uno.config',
+  presets: [
+    presetWind4(),
+    createUnoPreset(),
+  ],
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup(),
   ],
 })

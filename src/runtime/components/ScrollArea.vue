@@ -1,24 +1,31 @@
 <script lang="ts">
 import type { ScrollAreaRootProps } from 'reka-ui'
-import type { scrollArea } from '../theme'
-import { transitionProps } from '../theme/scroll-area'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/scroll-area'
+import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
-export interface ScrollAreaProps extends ComponentAttrs<typeof scrollArea>, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {}
+export interface ScrollAreaProps extends ComponentBaseProps, Pick<ScrollAreaRootProps, 'type' | 'dir' | 'scrollHideDelay'> {
+  ui?: ComponentUIProps<typeof theme>
+}
 </script>
 
 <script setup lang="ts">
 import { reactivePick } from '@vueuse/core'
 import { ScrollAreaCorner, ScrollAreaRoot, ScrollAreaScrollbar, ScrollAreaThumb, ScrollAreaViewport } from 'reka-ui'
 import { computed, ref } from 'vue'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { cv, merge } from '../utils/style'
 
-const props = withDefaults(defineProps<ScrollAreaProps>(), {})
+const props = withDefaults(defineProps<ScrollAreaProps>(), {
+  scrollHideDelay: 150,
+})
 const rootRef = ref<InstanceType<typeof ScrollAreaRoot>>()
 const rootProps = reactivePick(props, 'type', 'dir', 'scrollHideDelay')
 
-const { generateStyle } = useTheme()
-const style = computed(() => generateStyle('scrollArea', props))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.scrollArea))
+  return styler(props)
+})
 
 defineExpose({
   scrollTop,
@@ -38,35 +45,33 @@ function scrollTopLeft() {
   <ScrollAreaRoot
     ref="rootRef"
     v-bind="rootProps"
-    :class="style.root({ class: [props.class, props.ui?.root] })"
+    :class="ui.root({ class: [props.class, props.ui?.root] })"
     data-part="root"
   >
-    <ScrollAreaViewport :class="style.viewport({ class: props.ui?.viewport })" data-part="viewport">
+    <ScrollAreaViewport :class="ui.viewport({ class: props.ui?.viewport })" data-part="viewport">
       <slot></slot>
     </ScrollAreaViewport>
 
-    <TransitionGroup v-bind="transitionProps">
-      <ScrollAreaScrollbar
-        key="scrollbar-horizontal"
-        orientation="horizontal"
-        :class="style.scrollbar({ class: props.ui?.scrollbar })"
-        data-part="scrollbar"
-      >
-        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb" />
-      </ScrollAreaScrollbar>
-      <ScrollAreaScrollbar
-        key="scrollbar-vertical"
-        orientation="vertical"
-        :class="style.scrollbar({ class: props.ui?.scrollbar })"
-        data-part="scrollbar"
-      >
-        <ScrollAreaThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb" />
-      </ScrollAreaScrollbar>
-      <ScrollAreaCorner
-        key="corner"
-        :class="style.corner({ class: props.ui?.corner })"
-        data-part="corner"
-      />
-    </TransitionGroup>
+    <ScrollAreaScrollbar
+      key="scrollbar-horizontal"
+      orientation="horizontal"
+      :class="ui.scrollbar({ class: props.ui?.scrollbar })"
+      data-part="scrollbar"
+    >
+      <ScrollAreaThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb" />
+    </ScrollAreaScrollbar>
+    <ScrollAreaScrollbar
+      key="scrollbar-vertical"
+      orientation="vertical"
+      :class="ui.scrollbar({ class: props.ui?.scrollbar })"
+      data-part="scrollbar"
+    >
+      <ScrollAreaThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb" />
+    </ScrollAreaScrollbar>
+    <ScrollAreaCorner
+      key="corner"
+      :class="ui.corner({ class: props.ui?.corner })"
+      data-part="corner"
+    />
   </ScrollAreaRoot>
 </template>

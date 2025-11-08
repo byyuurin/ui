@@ -1,11 +1,4 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@byyuurin/ui/unocss": ["../../src/unocss.ts"],
-      "@byyuurin/ui/locale": ["../../src/runtime/locale/index.ts"],
-      "@byyuurin/ui": ["../../src/runtime/index.ts"]
-    }
-  }
+  "extends": "./.nuxt/tsconfig.json"
 }

@@ -6,10 +6,12 @@ const items = [
   [
     {
       label: 'User Name',
+      description: '...',
       avatar: {
-        src: 'https://i.pravatar.cc/100',
+        src: 'https://i.pravatar.cc/100?img=10',
       },
       type: 'label',
+      color: 'success',
     },
   ],
   [
@@ -17,26 +19,30 @@ const items = [
       label: 'Profile',
       icon: 'i-lucide-user',
       slot: 'profile' as const,
-      to: '/',
+      to: '/other?path=/profile',
     },
     {
       label: 'Billing',
       icon: 'i-lucide-credit-card',
+      to: '/other?path=/billing',
     },
     {
       label: 'Settings',
       icon: 'i-lucide-cog',
       kbds: [','],
+      to: '/other?path=/settings',
     },
     {
       label: 'Keyboard shortcuts',
       icon: 'i-lucide-monitor',
+      to: '/other?path=/shortcuts',
     },
   ],
   [
     {
       label: 'Team',
       icon: 'i-lucide-users',
+      to: '/other?path=/team',
     },
     {
       label: 'Invite users',
@@ -69,18 +75,18 @@ const items = [
   [
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       target: '_blank',
       to: 'https://github.com',
     },
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       to: 'https://github.com',
     },
     {
       label: 'GitHub',
-      icon: 'i-simple-icons-github',
+      icon: 'i-lucide:github',
       to: 'https://github.com',
       disabled: true,
     },
@@ -91,6 +97,7 @@ const items = [
       icon: 'i-lucide-log-out',
       kbds: ['shift', 'meta', 'q'],
       to: '/other',
+      color: 'error',
     },
   ],
 ] satisfies DropdownMenuItem[][]

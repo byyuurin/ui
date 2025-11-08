@@ -3,7 +3,7 @@ import type { AvatarGroupProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<AvatarGroupProps> = [
-  { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'size', value: 'md', options: ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'] },
   { prop: 'max', value: 9 },
 ]
 </script>

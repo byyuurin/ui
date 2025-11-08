@@ -2,9 +2,7 @@
 import type { TabsItem, TabsProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
-const defineItems = <T extends TabsItem>(items: T[]) => items
-
-const items = defineItems([
+const items = [
   {
     label: 'Tab1',
     icon: 'i-lucide-blocks',
@@ -12,23 +10,24 @@ const items = defineItems([
   },
   {
     label: 'Tab2',
-    icon: 'i-lucide-user',
+    avatar: { src: 'https://i.pravatar.cc/100?img=12' },
     content: 'And, this is the content for Tab2',
     slot: 'tab2' as const,
   },
   {
-    label: 'Tab3 (disabled)',
+    label: 'Tab3',
     icon: 'i-lucide-bell',
+    badge: { label: 'disabled', color: 'error' },
     content: 'Finally, this is the content for Tab3',
     disabled: true,
   },
-])
+] satisfies TabsItem[]
 
 const controls: ControlItems<TabsProps<typeof items[number]>> = [
-  { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
-  { prop: 'variant', value: 'solid', options: ['solid', 'outline', 'soft', 'soft-outline', 'link'] },
+  { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-  { prop: 'evenly', value: true },
+  { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
+  { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
   { prop: 'content', value: true },
   { prop: 'unmountOnHide', value: true },
 ]
@@ -47,8 +46,13 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
           <pre>{{ item }}</pre>
         </template>
       </UTabs>
-      <UTabs v-bind="attrs" :items="[{}]">
+
+      <UTabs v-bind="attrs" :items="[{} as any]">
         <Placeholder label="#default" />
+
+        <template #list-leading>
+          <Placeholder label="#list-leading" />
+        </template>
 
         <template #leading>
           <Placeholder label="#leading" />
@@ -58,6 +62,10 @@ const controls: ControlItems<TabsProps<typeof items[number]>> = [
         </template>
         <template #content>
           <Placeholder label="#content / #[slot]" class="h-40" />
+        </template>
+
+        <template #list-trailing>
+          <Placeholder label="#list-trailing" />
         </template>
       </UTabs>
     </div>

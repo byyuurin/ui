@@ -1,28 +1,31 @@
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
-import { useTheme } from './useTheme'
+import { useAppConfig } from '#imports'
+import type { AvatarProps, IconProps, RuntimeAppConfig } from '../types'
 
 export interface UseComponentIconsProps {
   /** Display an icon based on the `leading` and `trailing` props. */
-  icon?: string
+  icon?: IconProps['name']
+  /** Display an avatar on the left side. */
+  avatar?: AvatarProps
   /** When `true`, the icon will be displayed on the left side. */
   leading?: boolean
   /** Display an icon on the left side. */
-  leadingIcon?: string
+  leadingIcon?: IconProps['name']
   /** When `true`, the icon will be displayed on the right side. */
   trailing?: boolean
   /** Display an icon on the right side. */
-  trailingIcon?: string
+  trailingIcon?: IconProps['name']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
   /**
    * The icon when the `loading` prop is `true`.
    * @default app.icons.loading
    */
-  loadingIcon?: string
+  loadingIcon?: IconProps['name']
 }
 
 export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentIconsProps>) {
-  const { theme } = useTheme()
+  const appConfig = useAppConfig() as RuntimeAppConfig
 
   const props = computed(() => toValue(componentProps))
 
@@ -31,13 +34,13 @@ export function useComponentIcons(componentProps: MaybeRefOrGetter<UseComponentI
 
   const leadingIconName = computed(() => {
     if (props.value.loading)
-      return props.value.loadingIcon || theme.value.app.icons.loading
+      return props.value.loadingIcon || appConfig.ui.icons.loading
 
     return props.value.leadingIcon || props.value.icon
   })
   const trailingIconName = computed(() => {
     if (props.value.loading && !isLeading.value)
-      return props.value.loadingIcon || theme.value.app.icons.loading
+      return props.value.loadingIcon || appConfig.ui.icons.loading
 
     return props.value.trailingIcon || props.value.icon
   })

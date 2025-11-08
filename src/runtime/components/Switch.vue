@@ -1,63 +1,84 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SwitchRootProps } from 'reka-ui'
-import type { switch as _switch } from '../theme'
-import type { ComponentAttrs } from '../types'
+import theme from '#build/ui/switch'
+import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { StaticSlot } from '../types/utils'
 
-export interface SwitchEmits {
-  change: [payload: Event]
-}
+type ThemeVariants = VariantProps<typeof theme>
 
-export interface SwitchSlots {
-  label?: (props: { label?: string }) => any
-  description?: (props: { description?: string }) => any
-}
-
-type SwitchVariants = VariantProps<typeof _switch>
-
-export interface SwitchProps extends ComponentAttrs<typeof _switch>, Pick<SwitchRootProps, 'as' | 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
-  size?: SwitchVariants['size']
+export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
+  /**
+   * The element or component this component should render as.
+   *  @default "div"
+   */
+  as?: SwitchRootProps['as']
+  /** @default "primary" */
+  color?: ThemeVariants['color']
+  /** @default "md" */
+  size?: ThemeVariants['size']
   /** When `true`, the loading icon will be displayed. */
   loading?: boolean
   /**
    * The icon when the `loading` prop is `true`.
    * @default app.icons.loading
    */
-  loadingIcon?: string
+  loadingIcon?: IconProps['name']
   /** Display an icon when the switch is checked. */
-  checkedIcon?: string
+  checkedIcon?: IconProps['name']
   /** Display an icon when the switch is unchecked. */
-  uncheckedIcon?: string
+  uncheckedIcon?: IconProps['name']
+  modelValue?: boolean
   label?: string
   description?: string
+  ui?: ComponentUIProps<typeof theme>
+}
+
+export interface SwitchEmits {
+  'change': [event: Event]
+  'update:modelValue': [value: boolean]
+}
+
+export interface SwitchSlots {
+  label: StaticSlot<{ label?: string }>
+  description: StaticSlot<{ description?: string }>
 }
 </script>
 
 <script lang="ts" setup>
-import { reactivePick } from '@vueuse/core'
+import { reactivePick, useVModel } from '@vueuse/core'
 import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka-ui'
 import { computed, useId } from 'vue'
-import { useFormItem } from '../composables/useFormItem'
-import { useTheme } from '../composables/useTheme'
+import { useAppConfig } from '#imports'
+import { useFormField } from '../composables/useFormField'
+import { cv, merge } from '../utils/style'
+import Icon from './Icon.vue'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<SwitchProps>(), {})
 const emit = defineEmits<SwitchEmits>()
 const slots = defineSlots<SwitchSlots>()
-const modelValue = defineModel<boolean>({ default: undefined })
+
+const modelValue = useVModel(props, 'modelValue', emit)
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormItem<SwitchProps>(props)
+const { id: _id, name, size, color, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<SwitchProps>(props)
 const id = _id.value ?? useId()
 
-const { theme, generateStyle } = useTheme()
-const style = computed(() => generateStyle('switch', {
-  ...props,
-  size: size.value,
-  disabled: disabled.value,
-  checked: false,
-  unchecked: false,
-}))
+const appConfig = useAppConfig() as RuntimeAppConfig
+const ui = computed(() => {
+  const styler = cv(merge(theme, appConfig.ui.switch))
+  return styler({
+    ...props,
+    size: size.value,
+    color: color.value,
+    disabled: disabled.value || props.loading,
+    checked: false,
+    unchecked: false,
+  })
+})
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
@@ -70,30 +91,30 @@ function onUpdate(value: any) {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="style.root({ class: [props.class, props.ui?.root] })" data-part="root">
-    <div :class="style.container({ class: props.ui?.container })" data-part="container">
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+    <div :class="ui.container({ class: props.ui?.container })" data-part="container">
       <SwitchRoot
-        v-bind="{ ...rootProps, ...ariaAttrs, id, name }"
+        v-bind="{ id, ...rootProps, ...ariaAttrs, name }"
         v-model="modelValue"
         :disabled="disabled || props.loading"
-        :class="style.base({ class: props.ui?.base })"
+        :class="ui.base({ class: props.ui?.base })"
         data-part="base"
         @update:model-value="onUpdate"
       >
-        <SwitchThumb :class="style.thumb({ class: props.ui?.thumb })" data-part="thumb">
-          <span v-if="props.loading" :class="style.icon({ class: [theme.app.icons.loading, props.ui?.icon], checked: true, unchecked: true })" data-part="icon"></span>
+        <SwitchThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb">
+          <Icon v-if="props.loading" :name="props.loadingIcon || appConfig.ui.icons.loading" :class="ui.icon({ class: props.ui?.icon, checked: true, unchecked: true })" data-part="icon" />
           <template v-else>
-            <span v-if="props.checkedIcon" :class="style.icon({ class: [props.checkedIcon, props.ui?.icon], checked: true })" data-part="icon"></span>
-            <span v-if="props.uncheckedIcon" :class="style.icon({ class: [props.uncheckedIcon, props.ui?.icon], unchecked: true })" data-part="icon"></span>
+            <Icon v-if="props.checkedIcon" :name="props.checkedIcon" :class="ui.icon({ class: props.ui?.icon, checked: true })" data-part="icon" />
+            <Icon v-if="props.uncheckedIcon" :name="props.uncheckedIcon" :class="ui.icon({ class: props.ui?.icon, unchecked: true })" data-part="icon" />
           </template>
         </SwitchThumb>
       </SwitchRoot>
     </div>
-    <div v-if="props.label || slots.label || props.description || slots.description" :class="style.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <Label v-if="props.label || slots.label" :for="id" :class="style.label({ class: props.ui?.label })" data-part="label">
+    <div v-if="(props.label || !!slots.label) || (props.description || !!slots.description)" :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+      <Label v-if="props.label || !!slots.label" :for="id" :class="ui.label({ class: props.ui?.label })" data-part="label">
         <slot name="label" :label="props.label">{{ props.label }}</slot>
       </Label>
-      <p v-if="props.description || slots.description" :class="style.description({ class: props.ui?.description })" data-part="description">
+      <p v-if="props.description || !!slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>

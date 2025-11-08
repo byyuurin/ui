@@ -34,9 +34,11 @@ const schema = z.object({
   pin: z.string().regex(/^\d$/, 'Only numbers').array().length(5),
 })
 
-const state = reactive<Partial<z.input<typeof schema>>>({})
+const state = reactive<Partial<z.input<typeof schema>>>({
+  slider: 0,
+})
 
-const controls: ControlItems<FormProps<typeof state>> = [
+const controls: ControlItems<FormProps<typeof schema>> = [
   {
     prop: 'validateOn',
     value: ['input', 'change', 'blur'],
@@ -74,45 +76,45 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
         :state="state"
         @submit="onSubmit"
       >
-        <UFormItem label="Input" name="input">
+        <UFormField label="Input" name="input">
           <UInput v-model="state.input" class="w-full" />
-        </UFormItem>
+        </UFormField>
 
-        <UFormItem label="Switch" name="switch">
-          <USwitch v-model="state.switch" label="Switch me" class="ui-base" />
-        </UFormItem>
+        <UFormField label="Switch" name="switch">
+          <USwitch v-model="state.switch" label="Switch me" />
+        </UFormField>
 
-        <UFormItem label="Checkbox" name="checkbox">
-          <UCheckbox v-model="state.checkbox" label="Check me" class="ui-base" />
-        </UFormItem>
+        <UFormField label="Checkbox" name="checkbox">
+          <UCheckbox v-model="state.checkbox" label="Check me" />
+        </UFormField>
 
-        <UFormItem label="Slider" name="slider">
-          <USlider v-model="state.slider" class="ui-base" />
-        </UFormItem>
+        <UFormField label="Slider" name="slider">
+          <USlider v-model="state.slider" />
+        </UFormField>
 
-        <UFormItem label="Select" name="select">
-          <USelect v-model="state.select" class="w-full" :options="items" />
-        </UFormItem>
+        <UFormField label="Select" name="select">
+          <USelect v-model="state.select" class="w-full" :items="items" />
+        </UFormField>
 
-        <UFormItem label="Select (Multiple)" name="selectMultiple">
-          <USelect v-model="state.selectMultiple" class="w-full" :options="items" multiple />
-        </UFormItem>
+        <UFormField label="Select (Multiple)" name="selectMultiple">
+          <USelect v-model="state.selectMultiple" class="w-full" :items="items" multiple />
+        </UFormField>
 
-        <UFormItem label="Input Number" name="inputNumber">
+        <UFormField label="Input Number" name="inputNumber">
           <UInputNumber v-model="state.inputNumber" class="w-full" />
-        </UFormItem>
+        </UFormField>
 
-        <UFormItem label="Textarea" name="textarea">
+        <UFormField label="Textarea" name="textarea">
           <UTextarea v-model="state.textarea" class="w-full" />
-        </UFormItem>
+        </UFormField>
 
-        <UFormItem label="Radio Group" name="radioGroup">
-          <URadioGroup v-model="state.radioGroup" :options="items" class="ui-base" />
-        </UFormItem>
+        <UFormField label="Radio Group" name="radioGroup">
+          <URadioGroup v-model="state.radioGroup" :items="items" />
+        </UFormField>
 
-        <UFormItem label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">
+        <UFormField label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">
           <UPinInput v-model="state.pin" />
-        </UFormItem>
+        </UFormField>
 
         <div class="grid-col-span-3 flex gap-2 items-start">
           <UButton type="submit" label="Submit" />

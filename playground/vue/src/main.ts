@@ -1,6 +1,6 @@
-import '@unocss/reset/tailwind.css'
 import 'uno.css'
 
+import ui from '@byyuurin/ui/vue-plugin'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
@@ -11,4 +11,4 @@ const router = createRouter({
   history: createWebHistory(),
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(ui).use(router).mount('#app')

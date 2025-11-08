@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TableColumn, TableProps } from '@byyuurin/ui'
-import { Button, Chip } from '@byyuurin/ui'
+import Badge from '@byyuurin/ui/components/Badge.vue'
+import Button from '@byyuurin/ui/components/Button.vue'
 import type { ControlItems } from './ExampleView.vue'
 
 const isEmpty = shallowRef(false)
@@ -47,22 +48,24 @@ const columns: TableColumn<typeof data.value[number]>[] = [
   {
     id: 'expand',
     header: '',
-    cell: ({ row }) => h(Button, { size: 'xs', variant: 'ghost', icon: row.getIsExpanded() ? 'i-mdi-minus' : 'i-mdi-plus', onClick: () => row.toggleExpanded() }),
+    cell: ({ row }) => h(Button, { size: 'xs', variant: 'ghost', icon: row.getIsExpanded() ? 'i-lucide-minus' : 'i-lucide-plus', onClick: () => row.toggleExpanded() }),
   },
   { accessorKey: 'id', header: 'ID' },
   { accessorKey: 'date', header: 'Date' },
   { accessorKey: 'email', header: 'Email' },
   { accessorKey: 'status', header: 'Status', cell: ({ row }) => {
-    const colors: Record<string, string> = {
-      paid: 'ui-green',
-      failed: 'ui-red',
-      refunded: 'ui-gray',
-    }
-    return h(Chip, { label: row.original.status, variant: 'soft-outline', class: colors[row.original.status] })
+    const colors = {
+      paid: 'success',
+      failed: 'error',
+      refunded: 'neutral',
+    } as const
+    return h(Badge, { label: row.original.status, variant: 'subtle', color: colors[row.original.status as keyof typeof colors] })
   } },
 ]
 
 const controls: ControlItems<TableProps<typeof data.value[number]>> = [
+  { prop: 'loadingColor', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
+  { prop: 'loadingAnimation', value: 'carousel', options: ['carousel', 'carousel-inverse', 'swing', 'elastic'] },
   { prop: 'empty', value: '' },
   { prop: 'sticky', value: false },
   { prop: 'loading', value: false },
