@@ -90,6 +90,7 @@ const ui = computed(() => {
     ...props,
     size: size.value,
     color: color.value,
+    disabled: disabled.value,
   })
 })
 
