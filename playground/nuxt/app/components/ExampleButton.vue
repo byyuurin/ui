@@ -15,6 +15,20 @@ const controls: ControlItems<ButtonProps> = [
   { prop: 'disabled', value: false },
   { prop: 'loading', value: false },
 ]
+
+function toBindProps(attrs: ButtonProps) {
+  const cloned = { ...attrs }
+
+  try {
+    if (!/^https?:\/\/.+$/.test(cloned.href as string))
+      throw new Error('Invalid URL')
+  }
+  catch {
+    cloned.href = undefined
+  }
+
+  return cloned
+}
 </script>
 
 <template>
@@ -25,14 +39,14 @@ const controls: ControlItems<ButtonProps> = [
     :controls="controls"
   >
     <div class="flex flex-wrap items-start gap-4">
-      <UButton v-bind="attrs" label="" :icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text only'" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text with leadingIcon'" :leading-icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text with icon'" :trailing-icon="icon" />
-      <UButton v-bind="attrs" :label="attrs.label || 'Text with avatar'" :avatar="{ src: 'https://i.pravatar.cc/100?img=3' }" />
+      <UButton v-bind="toBindProps(attrs)" label="" :icon="icon" />
+      <UButton v-bind="toBindProps(attrs)" :label="attrs.label || 'Text only'" />
+      <UButton v-bind="toBindProps(attrs)" :label="attrs.label || 'Text with leadingIcon'" :leading-icon="icon" />
+      <UButton v-bind="toBindProps(attrs)" :label="attrs.label || 'Text with icon'" :trailing-icon="icon" />
+      <UButton v-bind="toBindProps(attrs)" :label="attrs.label || 'Text with avatar'" :avatar="{ src: 'https://i.pravatar.cc/100?img=3' }" />
     </div>
     <div class="py-4">
-      <UButton v-bind="attrs" :label="attrs.label || 'Text'">
+      <UButton v-bind="toBindProps(attrs)" :label="attrs.label || 'Text'">
         <template #leading>
           <Placeholder label="#leading" />
         </template>

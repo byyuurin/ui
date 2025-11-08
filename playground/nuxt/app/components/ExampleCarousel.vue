@@ -10,7 +10,7 @@ const items = Array.from({ length: 15 }, (_, i) => ({
 const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
   { prop: 'align', value: 'center', options: ['center', 'start', 'end'] },
-  { prop: 'slidesToScroll', value: 1, options: [{ label: 'ON (auto)', value: 'auto' }, { label: 'OFF (1)', value: 1 }] },
+  { prop: 'slidesToScroll', value: 1, options: [{ label: 'auto', value: 'auto' }, { label: '1', value: 1 }], description: 'Group slides together. \nDrag interactions, dot navigation, and previous/next buttons are mapped to group slides into the given number, which has to be an integer. \nSet it to `auto` if you want Embla to group slides automatically.' },
   { prop: 'arrows', value: false, description: 'Display prev and next buttons to scroll the carousel.' },
   { prop: 'dots', value: false, description: 'Display dots to scroll to a specific slide.' },
   { prop: 'skipSnaps', value: false, description: 'Allow the carousel to skip scroll snaps if it\'s dragged vigorously.\nNote that this option will be ignored if the `dragFree` option is set to true.' },

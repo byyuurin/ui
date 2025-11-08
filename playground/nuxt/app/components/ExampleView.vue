@@ -70,21 +70,25 @@ onMounted(() => {
           class="grid grid-cols-[auto_1fr] items-center gap-2 gap-x-4 rounded"
         >
           <template v-for="(item, y) in props.controls" :key="item?.prop || y">
-            <label class="inline-flex justify-between items-center gap-2 opacity-80">
+            <div class="inline-flex justify-between items-center gap-2 opacity-80">
               <span class="mr-auto">{{ upperFirst((item?.label ?? item?.prop) as string) }}</span>
               <UPopover v-if="item?.description" mode="click" arrow>
                 <UButton color="neutral" variant="link" size="xs" icon="i-lucide:circle-question-mark" :ui="{ base: 'p-0' }" />
                 <template #content>
-                  <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">{{ item?.description }}</p>
+                  <p class="text-sm p-2 px-3 max-w-[calc(100vw-30px)] whitespace-pre-wrap">
+                    {{ item?.description }}
+                  </p>
                 </template>
               </UPopover>
               <UPopover v-if="item?.warning" mode="click" arrow>
                 <UButton color="warning" variant="link" size="xs" icon="i-lucide:circle-alert" :ui="{ base: 'p-0' }" />
                 <template #content>
-                  <p class="text-sm p-2 px-3 max-w-md">{{ item?.warning }}</p>
+                  <p class="text-sm p-2 px-3 max-w-md">
+                    {{ item?.warning }}
+                  </p>
                 </template>
               </UPopover>
-            </label>
+            </div>
 
             <USelect
               v-if="item?.type === 'select' || item?.options"
