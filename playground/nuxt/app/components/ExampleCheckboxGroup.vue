@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import type { RadioGroupProps } from '@byyuurin/ui'
+<script setup lang="ts">
+import type { CheckboxGroupProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const values = ['System', 'Light', 'Dark']
@@ -11,9 +11,9 @@ const items = values.map((s, i) => ({
   disabled: i === 2,
 }))
 
-const value = ref<string | null>(null)
+const value = ref<string[]>([])
 
-const controls: ControlItems<RadioGroupProps<typeof items>> = [
+const controls: ControlItems<CheckboxGroupProps<typeof items>> = [
   { prop: 'color', value: 'primary', options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] },
   { prop: 'variant', value: 'list', options: ['list', 'card', 'table'] },
   { prop: 'orientation', value: 'horizontal', options: ['horizontal', 'vertical'] },
@@ -26,17 +26,12 @@ const controls: ControlItems<RadioGroupProps<typeof items>> = [
 </script>
 
 <template>
-  <ExampleView
-    v-slot="attrs"
-    title="RadioGroup"
-    description="A set of radio buttons to select a single option from a list."
-    :controls="controls"
-  >
+  <ExampleView v-slot="attrs" title="CheckboxGroup" description="A set of checklist buttons to select multiple option from a list." :controls="controls">
     <div class="flex flex-col items-start gap-4">
-      <URadioGroup v-model="value" v-bind="attrs" :items="items" />
-      <URadioGroup v-model="value" v-bind="attrs" :items="values" />
+      <UCheckboxGroup v-bind="attrs" v-model="value" :items="items" />
+      <UCheckboxGroup v-bind="attrs" v-model="value" :items="values" />
 
-      <URadioGroup v-model="value" v-bind="attrs" :items="items">
+      <UCheckboxGroup v-bind="attrs" v-model="value" :items="items">
         <template #legend>
           <Placeholder label="#legend" />
         </template>
@@ -46,8 +41,7 @@ const controls: ControlItems<RadioGroupProps<typeof items>> = [
         <template #description>
           <Placeholder label="#description" />
         </template>
-      </URadioGroup>
+      </UCheckboxGroup>
     </div>
-    <UButton class="mt-10" label="Reset" :disabled="value === null" @click="value = null" />
   </ExampleView>
 </template>

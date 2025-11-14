@@ -62,6 +62,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   required: false,
   disabled: false,
 })
+
 const emit = defineEmits<CheckboxEmits>()
 const slots = defineSlots<CheckboxSlots>()
 
@@ -91,7 +92,7 @@ function onUpdate(value: any) {
 </script>
 
 <template>
-  <Primitive :as="(!props.variant || props.variant === 'list') ? props.as : Label" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <Primitive :as="(props.variant && props.variant !== 'list') ? Label : props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
     <div :class="ui.container({ class: props.ui?.container })" data-part="container">
       <CheckboxRoot
         v-bind="{ id, ...rootProps, ...$attrs, ...ariaAttrs, name, disabled }"

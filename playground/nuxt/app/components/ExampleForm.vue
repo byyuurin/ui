@@ -29,6 +29,9 @@ const schema = z.object({
   checkbox: z.boolean().refine((value) => value === true, {
     message: 'Check me',
   }),
+  checkboxGroup: z.string().array().refine((value) => value.includes('option-2'), {
+    message: 'Select Option 2',
+  }),
   radioGroup: z.string().refine((value) => value === 'option-2', {
     message: 'Select Option 2',
   }),
@@ -38,6 +41,7 @@ const schema = z.object({
 const state = reactive<Partial<z.input<typeof schema>>>({
   slider: 0,
   inputTags: [],
+  checkboxGroup: [],
 })
 
 const controls: ControlItems<FormProps<typeof schema>> = [
@@ -112,6 +116,10 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
 
         <UFormField label="Slider" name="slider">
           <USlider v-model="state.slider" />
+        </UFormField>
+
+        <UFormField label="Checkbox Group" name="checkboxGroup">
+          <UCheckboxGroup v-model="state.checkboxGroup" :items="items" />
         </UFormField>
 
         <UFormField label="Radio Group" name="radioGroup">

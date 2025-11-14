@@ -116,6 +116,7 @@ const ui = computed(() => {
   })
 })
 
+// TODO: item type
 function normalizeItem(item: RadioGroupItem): any {
   const itemBase: RadioGroupItemBase = {
     disabled: disabled.value,

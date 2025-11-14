@@ -57,6 +57,7 @@ export default byyuurin(
   {
     files: [
       'src/runtime/components/Checkbox.vue',
+      'src/runtime/components/CheckboxGroup.vue',
       'src/runtime/components/Drawer.vue',
       'src/runtime/components/Modal.vue',
       'src/runtime/components/Select.vue',
