@@ -14,6 +14,7 @@ const items = [
 const schema = z.object({
   input: z.string().min(10),
   inputNumber: z.number().min(10),
+  inputTags: z.string().array().min(1),
   textarea: z.string().min(10),
   select: z.string().refine((value) => value === 'option-2', {
     message: 'Select Option 2',
@@ -36,6 +37,7 @@ const schema = z.object({
 
 const state = reactive<Partial<z.input<typeof schema>>>({
   slider: 0,
+  inputTags: [],
 })
 
 const controls: ControlItems<FormProps<typeof schema>> = [
@@ -80,16 +82,12 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
           <UInput v-model="state.input" class="w-full" />
         </UFormField>
 
-        <UFormField label="Switch" name="switch">
-          <USwitch v-model="state.switch" label="Switch me" />
+        <UFormField label="Input Number" name="inputNumber">
+          <UInputNumber v-model="state.inputNumber" class="w-full" />
         </UFormField>
 
-        <UFormField label="Checkbox" name="checkbox">
-          <UCheckbox v-model="state.checkbox" label="Check me" />
-        </UFormField>
-
-        <UFormField label="Slider" name="slider">
-          <USlider v-model="state.slider" />
+        <UFormField label="Input Tags" name="inputTags">
+          <UInputTags v-model="state.inputTags" class="w-full" />
         </UFormField>
 
         <UFormField label="Select" name="select">
@@ -100,12 +98,20 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
           <USelect v-model="state.selectMultiple" class="w-full" :items="items" multiple />
         </UFormField>
 
-        <UFormField label="Input Number" name="inputNumber">
-          <UInputNumber v-model="state.inputNumber" class="w-full" />
-        </UFormField>
-
         <UFormField label="Textarea" name="textarea">
           <UTextarea v-model="state.textarea" class="w-full" />
+        </UFormField>
+
+        <UFormField label="Switch" name="switch">
+          <USwitch v-model="state.switch" label="Switch me" />
+        </UFormField>
+
+        <UFormField label="Checkbox" name="checkbox">
+          <UCheckbox v-model="state.checkbox" label="Check me" />
+        </UFormField>
+
+        <UFormField label="Slider" name="slider">
+          <USlider v-model="state.slider" />
         </UFormField>
 
         <UFormField label="Radio Group" name="radioGroup">
