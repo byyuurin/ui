@@ -115,7 +115,7 @@ const ui = computed(() => {
 <template>
   <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
     <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <div v-if="props.label || !!slots.label" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })" data-part="label-wrapper">
+      <div v-if="props.label || !!slots.label" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })" data-part="labelWrapper">
         <Label :for="id" :class="ui.label({ class: props.ui?.label })" data-part="label">
           <slot name="label" :label="props.label">
             {{ props.label }}

@@ -94,7 +94,7 @@ const ui = computed(() => {
       <AccordionHeader as="div" :class="ui.header({ class: [props.ui?.header, item.ui?.header] })" data-part="header">
         <AccordionTrigger :class="ui.trigger({ class: [props.ui?.trigger, item.ui?.trigger], disabled: item.disabled })" data-part="trigger">
           <slot name="leading" v-bind="{ item, index, open, ui }">
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })" data-part="leading-icon" />
+            <Icon v-if="item.icon" :name="item.icon" :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })" data-part="leadingIcon" />
           </slot>
 
           <span v-if="get(item, props.labelKey as string) || !!slots.default" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })" data-part="label">
@@ -102,7 +102,7 @@ const ui = computed(() => {
           </span>
 
           <slot name="trailing" v-bind="{ item, index, open, ui }">
-            <Icon :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="ui.trailingIcon({ class: [props.ui?.trailingIcon, item.ui?.trailingIcon] })" data-part="trailing-icon" />
+            <Icon :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="ui.trailingIcon({ class: [props.ui?.trailingIcon, item.ui?.trailingIcon] })" data-part="trailingIcon" />
           </slot>
         </AccordionTrigger>
       </AccordionHeader>

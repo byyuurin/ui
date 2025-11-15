@@ -96,18 +96,18 @@ const ui = computed(() => {
                     v-if="item.icon"
                     :name="item.icon"
                     :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: item.active ?? index === items!.length - 1 })"
-                    data-part="link-leading-icon"
+                    data-part="linkLeadingIcon"
                   />
                   <Avatar
                     v-else-if="item.avatar"
                     :size="((props.ui?.linkLeadingAvatarSize || ui.linkLeadingAvatarSize()) as AvatarProps['size'])"
                     v-bind="item.avatar"
                     :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active: item.active ?? index === items!.length - 1 })"
-                    data-part="link-leading-avatar"
+                    data-part="linkLeadingAvatar"
                   />
                 </slot>
 
-                <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="link-label">
+                <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="linkLabel">
                   <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractSlotItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey as string) }}
                   </slot>
@@ -121,7 +121,7 @@ const ui = computed(() => {
 
         <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator] })" data-part="separator">
           <slot name="separator" :ui="ui">
-            <Icon :name="separatorIcon" :class="ui.separatorIcon({ class: [props.ui?.separatorIcon, item.ui?.separatorIcon] })" data-part="separator-icon" />
+            <Icon :name="separatorIcon" :class="ui.separatorIcon({ class: [props.ui?.separatorIcon, item.ui?.separatorIcon] })" data-part="separatorIcon" />
           </slot>
         </li>
       </template>

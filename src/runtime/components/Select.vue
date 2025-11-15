@@ -272,14 +272,14 @@ defineExpose({
             v-if="isLeading && leadingIconName"
             :name="leadingIconName"
             :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
-            data-part="leading-icon"
+            data-part="leadingIcon"
           />
           <Avatar
             v-else-if="props.avatar"
             :size="((props.ui?.itemLeadingChipSize || ui.itemLeadingAvatarSize()) as AvatarProps['size'])"
             v-bind="props.avatar"
             :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
-            data-part="leading-avatar"
+            data-part="leadingAvatar"
           />
         </slot>
       </span>
@@ -298,7 +298,7 @@ defineExpose({
 
       <span v-if="isTrailing || !!slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
         <slot name="trailing" :model-value="(modelValue as Defined<GetModelValue<T, VK, M>>)" :open="open" :ui="ui">
-          <Icon v-if="trailingIconName" :name="trailingIconName" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailing-icon" />
+          <Icon v-if="trailingIconName" :name="trailingIconName" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailingIcon" />
         </slot>
       </span>
     </SelectTrigger>
@@ -330,14 +330,14 @@ defineExpose({
                       v-if="isSelectItem(item) && item.icon"
                       :name="item.icon"
                       :class="ui.itemLeadingIcon({ class: [props.ui?.itemLeadingIcon, item.ui?.itemLeadingIcon] })"
-                      data-part="item-leading-icon"
+                      data-part="itemLeadingIcon"
                     />
                     <Avatar
                       v-else-if="isSelectItem(item) && item.avatar"
                       :size="((item.ui?.itemLeadingAvatarSize || props.ui?.itemLeadingAvatarSize || ui.itemLeadingAvatarSize()) as AvatarProps['size'])"
                       v-bind="item.avatar"
                       :class="ui.itemLeadingAvatar({ class: [props.ui?.leadingAvatar, item.ui?.itemLeadingAvatar] })"
-                      data-part="item-leading-avatar"
+                      data-part="itemLeadingAvatar"
                     />
                     <Chip
                       v-else-if="isSelectItem(item) && item.chip"
@@ -346,12 +346,12 @@ defineExpose({
                       standalone
                       v-bind="item.chip"
                       :class="ui.itemLeadingChip({ class: [props.ui?.itemLeadingChip, item.ui?.itemLeadingChip] })"
-                      data-part="item-leading-chip"
+                      data-part="itemLeadingChip"
                     />
                   </slot>
 
-                  <span :class="ui.itemWrapper({ class: [props.ui?.itemWrapper, ...isSelectItem(item) ? [item.ui?.itemWrapper] : []] })" data-part="item-wrapper">
-                    <SelectItemText :class="ui.itemLabel({ class: [props.ui?.itemLabel, isSelectItem(item) && item.ui?.itemLabel] })" data-part="item-label">
+                  <span :class="ui.itemWrapper({ class: [props.ui?.itemWrapper, ...isSelectItem(item) ? [item.ui?.itemWrapper] : []] })" data-part="itemWrapper">
+                    <SelectItemText :class="ui.itemLabel({ class: [props.ui?.itemLabel, isSelectItem(item) && item.ui?.itemLabel] })" data-part="itemLabel">
                       <slot name="item-label" :item="(item as Defined<NestedItem<T>>)" :index="index">
                         {{ isSelectItem(item) ? get(item, props.labelKey as string) : item }}
                       </slot>
@@ -360,7 +360,7 @@ defineExpose({
                     <span
                       v-if="isSelectItem(item) && get(item, props.descriptionKey as string) || !!slots['item-description']"
                       :class="ui.itemDescription({ class: [props.ui?.itemDescription, ...isSelectItem(item) ? [item.ui?.itemDescription] : []] })"
-                      data-part="item-description"
+                      data-part="itemDescription"
                     >
                       <slot name="item-description" :item="(item as Defined<NestedItem<T>>)" :index="index">
                         {{ isSelectItem(item) ? get(item, props.descriptionKey as string) : '' }}
@@ -368,11 +368,11 @@ defineExpose({
                     </span>
                   </span>
 
-                  <span :class="ui.itemTrailing({ class: [props.ui?.itemTrailing, isSelectItem(item) && item.ui?.itemTrailing] })" data-part="item-trailing">
+                  <span :class="ui.itemTrailing({ class: [props.ui?.itemTrailing, isSelectItem(item) && item.ui?.itemTrailing] })" data-part="itemTrailing">
                     <slot name="item-trailing" :item="(item as Defined<NestedItem<T>>)" :index="index" :ui="ui"></slot>
 
                     <SelectItemIndicator as-child>
-                      <Icon :name="props.selectedIcon || appConfig.ui.icons.check" :class="ui.itemTrailingIcon({ class: [props.ui?.itemTrailingIcon, isSelectItem(item) && item.ui?.itemTrailingIcon] })" data-part="item-trailing-icon" />
+                      <Icon :name="props.selectedIcon || appConfig.ui.icons.check" :class="ui.itemTrailingIcon({ class: [props.ui?.itemTrailingIcon, isSelectItem(item) && item.ui?.itemTrailingIcon] })" data-part="itemTrailingIcon" />
                     </SelectItemIndicator>
                   </span>
                 </slot>

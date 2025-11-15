@@ -248,20 +248,20 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           :size="((item.ui?.linkLeadingAvatarSize || props.ui?.linkLeadingAvatarSize || ui.linkLeadingAvatarSize()) as AvatarProps['size'])"
           v-bind="item.avatar"
           :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active, disabled: item.disabled })"
-          data-part="link-leading-avatar"
+          data-part="linkLeadingAvatar"
         />
         <Icon
           v-else-if="item.icon"
           :name="item.icon"
           :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active, disabled: !!item.disabled })"
-          data-part="link-leading-icon"
+          data-part="linkLeadingIcon"
         />
       </slot>
 
       <span
         v-if="(!props.collapsed || props.orientation !== 'vertical') && (get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof NavigationMenuSlots<T>)])"
         :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })"
-        data-part="link-label"
+        data-part="linkLabel"
       >
         <slot :name="(`${item.slot || 'item'}-label` as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index">
           {{ get(item, props.labelKey as string) }}
@@ -271,7 +271,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           v-if="item.target === '_blank' && props.externalIcon !== false"
           :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external"
           :class="ui.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, item.ui?.linkLabelExternalIcon], active })"
-          data-part="link-label-external-icon"
+          data-part="linkLabelExternalIcon"
         />
       </span>
 
@@ -280,7 +280,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
         v-if="(!props.collapsed || props.orientation !== 'vertical') && (item.badge !== undefined || (orientation === 'horizontal' && (item.children?.length || !!slots[`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[`${item.slot || 'item'}-trailing` as keyof NavigationMenuSlots<T>])"
         as="span"
         :class="ui.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })"
-        data-part="link-trailing"
+        data-part="linkTrailing"
         @click.stop.prevent
       >
         <slot :name="(`${item.slot || 'item'}-trailing` as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index" :ui="ui">
@@ -291,20 +291,20 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             :size="((item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.linkTrailingBadgeSize()) as BadgeProps['size'])"
             v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: item.badge } : item.badge"
             :class="ui.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })"
-            data-part="link-trailing-badge"
+            data-part="linkTrailingBadge"
           />
 
           <Icon
             v-if="(orientation === 'horizontal' && (item.children?.length || !!slots[`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length)"
             :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown"
             :class="ui.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"
-            data-part="link-trailing-icon"
+            data-part="linkTrailingIcon"
           />
           <Icon
             v-else-if="item.trailingIcon"
             :name="item.trailingIcon"
             :class="ui.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon], active })"
-            data-part="link-trailing-icon"
+            data-part="linkTrailingIcon"
           />
         </slot>
       </component>
@@ -358,20 +358,20 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
 
             <template #content="{ close }">
               <slot :name="(`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>)" :item="item" :active="active || item.active" :index="index" :ui="ui" :close="close">
-                <ul :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })" data-part="child-list">
-                  <li :class="ui.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })" data-part="child-label">
+                <ul :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })" data-part="childList">
+                  <li :class="ui.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })" data-part="childLabel">
                     {{ get(item, props.labelKey as string) }}
                   </li>
-                  <li v-for="(childItem, childIndex) in item.children" :key="childIndex" :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })" data-part="child-item">
+                  <li v-for="(childItem, childIndex) in item.children" :key="childIndex" :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })" data-part="childItem">
                     <Link v-slot="{ active: childActive, ...childSlotProps }" v-bind="pickLinkProps(childItem)" custom>
                       <NavigationMenuLink :active="childActive" as-child @select="childItem.onSelect">
-                        <LinkBase v-bind="childSlotProps" :class="ui.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="child-link">
-                          <Icon v-if="childItem.icon" :name="childItem.icon" :class="ui.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon" />
+                        <LinkBase v-bind="childSlotProps" :class="ui.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="childLink">
+                          <Icon v-if="childItem.icon" :name="childItem.icon" :class="ui.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="childLinkIcon" />
 
-                          <span :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="child-link-label">
+                          <span :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="childLinkLabel">
                             {{ get(childItem, props.labelKey as string) }}
 
-                            <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon" />
+                            <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="childLinkLabelExternalIcon" />
                           </span>
                         </LinkBase>
                       </NavigationMenuLink>
@@ -398,20 +398,20 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           data-part="content"
         >
           <slot :name="(`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>)" :item="item" :active="active" :index="index" :ui="ui">
-            <ul :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })" data-part="child-list">
-              <li v-for="(childItem, childIndex) in item.children" :key="childIndex" :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })" data-part="child-item">
+            <ul :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })" data-part="childList">
+              <li v-for="(childItem, childIndex) in item.children" :key="childIndex" :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })" data-part="childItem">
                 <Link v-slot="{ active: childActive, ...childSlotProps }" v-bind="pickLinkProps(childItem)" custom>
                   <NavigationMenuLink :active="childActive" as-child @select="childItem.onSelect">
-                    <LinkBase v-bind="childSlotProps" :class="ui.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="child-link">
-                      <Icon v-if="childItem.icon" :name="childItem.icon" :class="ui.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="child-link-icon" />
+                    <LinkBase v-bind="childSlotProps" :class="ui.childLink({ class: [props.ui?.childLink, item.ui?.childLink, childItem.class], active: childActive })" data-part="childLink">
+                      <Icon v-if="childItem.icon" :name="childItem.icon" :class="ui.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" data-part="childLinkIcon" />
 
-                      <div :class="ui.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })" data-part="child-link-wrapper">
-                        <p :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="child-link-label">
+                      <div :class="ui.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })" data-part="childLinkWrapper">
+                        <p :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })" data-part="childLinkLabel">
                           {{ get(childItem, props.labelKey as string) }}
 
-                          <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="child-link-label-external-icon" />
+                          <Icon v-if="childItem.target === '_blank' && props.externalIcon !== false" :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" data-part="childLinkLabelExternalIcon" />
                         </p>
-                        <p v-if="childItem.description" :class="ui.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })" data-part="child-link-description">
+                        <p v-if="childItem.description" :class="ui.childLinkDescription({ class: [props.ui?.childLinkDescription, item.ui?.childLinkDescription], active: childActive })" data-part="childLinkDescription">
                           {{ childItem.description }}
                         </p>
                       </div>
@@ -429,7 +429,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           v-bind="({ ...accordionProps, defaultValue: getAccordionDefaultValue(item.children, level + 1) } as AccordionRootProps)"
           as="ul"
           :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })"
-          data-part="child-list"
+          data-part="childList"
         >
           <ReuseItemTemplate
             v-for="(childItem, childIndex) in item.children"
@@ -438,7 +438,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             :index="childIndex"
             :level="level + 1"
             :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })"
-            data-part="child-item"
+            data-part="childItem"
           />
         </AccordionRoot>
       </AccordionContent>
@@ -469,7 +469,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
 
     <slot name="list-trailing"></slot>
 
-    <div v-if="props.orientation === 'horizontal'" :class="ui.viewportWrapper({ class: props.ui?.viewportWrapper })" data-part="viewport-wrapper">
+    <div v-if="props.orientation === 'horizontal'" :class="ui.viewportWrapper({ class: props.ui?.viewportWrapper })" data-part="viewportWrapper">
       <NavigationMenuIndicator v-if="props.arrow" :class="ui.indicator({ class: props.ui?.indicator })" data-part="indicator">
         <div :class="ui.arrow({ class: props.ui?.arrow })" data-part="arrow"></div>
       </NavigationMenuIndicator>

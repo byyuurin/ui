@@ -84,32 +84,32 @@ const groups = computed<DropdownMenuItem[][]>(
           v-if="item.loading"
           :name="loadingIcon || appConfig.ui.icons.loading"
           :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, loading: true })"
-          data-part="item-leading-icon"
+          data-part="itemLeadingIcon"
         />
         <Icon
           v-else-if="item.icon"
           :name="item.icon"
           :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, active })"
-          data-part="item-leading-icon"
+          data-part="itemLeadingIcon"
         />
         <Avatar
           v-else-if="item.avatar"
           v-bind="item.avatar"
           :size="item.avatar.size || props.size"
           :class="props.ui.itemLeadingAvatar({ class: [props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })"
-          data-part="item-leading-avatar"
+          data-part="itemLeadingAvatar"
         />
       </slot>
 
       <span
         v-if="(get(item, props.labelKey as string) || !!slots[`${item.slot || 'item'}-label` as keyof DropdownMenuSlots<T>]) || (get(item, props.descriptionKey as string) || !!slots[`${item.slot || 'item'}-description` as keyof DropdownMenuSlots<T>])"
         :class="props.ui.itemWrapper({ class: [props.uiOverride?.itemWrapper, item.ui?.itemWrapper] })"
-        data-part="item-wrapper"
+        data-part="itemWrapper"
       >
         <span
           v-if="get(item, props.labelKey as string) || !!slots[`${item.slot || 'item'}-label` as keyof DropdownMenuContentSlots<T>]"
           :class="props.ui.itemLabel({ class: [props.uiOverride?.itemLabel, item.ui?.itemLabel], active })"
-          data-part="item-label"
+          data-part="itemLabel"
         >
           <slot :name="((`${item.slot || 'item'}-label`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
             {{ get(item, props.labelKey as string) }}
@@ -119,21 +119,21 @@ const groups = computed<DropdownMenuItem[][]>(
             v-if="item.target === '_blank' && props.externalIcon !== false"
             :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external"
             :class="props.ui.itemLabelExternalIcon({ class: [props.uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item.color, active })"
-            data-part="item-label-external-icon"
+            data-part="itemLabelExternalIcon"
           />
         </span>
 
-        <span v-if="get(item, props.descriptionKey as string)" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })" data-part="item-description">
+        <span v-if="get(item, props.descriptionKey as string)" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })" data-part="itemDescription">
           <slot :name="((`${item.slot || 'item'}-description`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
             {{ get(item, props.descriptionKey as string) }}
           </slot>
         </span>
       </span>
 
-      <span :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })" data-part="item-trailing">
+      <span :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })" data-part="itemTrailing">
         <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index" :ui="ui">
-          <Icon v-if="item.children?.length" :name="childrenIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" data-part="item-trailing-icon" />
-          <span v-else-if="item.kbds?.length" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })" data-part="item-trailing-kbds">
+          <Icon v-if="item.children?.length" :name="childrenIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" data-part="itemTrailingIcon" />
+          <span v-else-if="item.kbds?.length" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })" data-part="itemTrailingKbds">
             <Kbd
               v-for="(kbd, kbdIndex) in item.kbds"
               :key="kbdIndex"
@@ -144,7 +144,7 @@ const groups = computed<DropdownMenuItem[][]>(
         </slot>
 
         <DropdownMenu.ItemIndicator as-child>
-          <Icon :name="props.checkedIcon || appConfig.ui.icons.check" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color })" data-part="item-trailing-icon" />
+          <Icon :name="props.checkedIcon || appConfig.ui.icons.check" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color })" data-part="itemTrailingIcon" />
         </DropdownMenu.ItemIndicator>
       </span>
     </slot>

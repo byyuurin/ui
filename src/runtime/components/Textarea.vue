@@ -193,14 +193,14 @@ defineExpose({
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
           :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
-          data-part="leading-icon"
+          data-part="leadingIcon"
         />
         <Avatar
           v-else-if="props.avatar"
           :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
           v-bind="props.avatar"
           :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
-          data-part="leading-avatar"
+          data-part="leadingAvatar"
         />
       </slot>
     </span>
@@ -228,7 +228,7 @@ defineExpose({
           v-if="trailingIconName"
           :name="trailingIconName"
           :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
-          data-part="trailing-icon"
+          data-part="trailingIcon"
         />
       </slot>
     </span>

@@ -135,14 +135,14 @@ defineExpose({
             v-if="item.icon"
             :name="item.icon"
             :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })"
-            data-part="leading-icon"
+            data-part="leadingIcon"
           />
           <Avatar
             v-else-if="item.avatar"
             :size="((item.ui?.leadingAvatarSize || props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
             v-bind="item.avatar"
             :class="ui.leadingAvatar({ class: [props.ui?.leadingAvatar, item.ui?.leadingAvatar] })"
-            data-part="leading-avatar"
+            data-part="leadingAvatar"
           />
         </slot>
 
@@ -158,7 +158,7 @@ defineExpose({
             :size="((item.ui?.trailingBadgeSize || props.ui?.trailingBadgeSize || ui.trailingBadgeSize()) as BadgeProps['size'])"
             v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: item.badge } : item.badge"
             :class="ui.trailingBadge({ class: [props.ui?.trailingBadge, item.ui?.trailingBadge] })"
-            data-part="trailing-badge"
+            data-part="trailingBadge"
           />
         </slot>
       </TabsTrigger>

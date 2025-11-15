@@ -180,20 +180,20 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
         data-part="grid"
       >
         <Calendar.GridHead>
-          <Calendar.GridRow :class="ui.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="grid-week-day-row">
-            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="ui.headCell({ class: props.ui?.headCell })" data-part="head-cell">
+          <Calendar.GridRow :class="ui.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="gridWeekDaysRow">
+            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="ui.headCell({ class: props.ui?.headCell })" data-part="headCell">
               <slot name="week-day" :day="day">
                 {{ day }}
               </slot>
             </Calendar.HeadCell>
           </Calendar.GridRow>
         </Calendar.GridHead>
-        <Calendar.GridBody :class="ui.gridBody({ class: props.ui?.gridBody })" data-part="grid-body">
+        <Calendar.GridBody :class="ui.gridBody({ class: props.ui?.gridBody })" data-part="gridBody">
           <Calendar.GridRow
             v-for="(weekDates, index) in month.rows"
             :key="`weekDates-${index}`"
             :class="ui.gridRow({ class: props.ui?.gridRow })"
-            data-part="grid-row"
+            data-part="gridRow"
           >
             <Calendar.Cell
               v-for="weekDate in weekDates"
@@ -206,7 +206,7 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
                 :day="weekDate"
                 :month="month.value"
                 :class="ui.cellTrigger({ class: props.ui?.cellTrigger })"
-                data-part="cell-trigger"
+                data-part="cellTrigger"
               >
                 <slot name="day" :day="weekDate">
                   {{ weekDate.day }}
