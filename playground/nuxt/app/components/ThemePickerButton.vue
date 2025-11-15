@@ -35,7 +35,7 @@ const color = computed(() => {
     variant="outline"
     :icon="props.icon"
     :label="props.label"
-    class="capitalize ring-default rounded-sm text-[11px]"
+    class="capitalize ring-default rounded-sm text-2.75"
     :class="[props.selected ? 'bg-elevated' : 'hover:bg-elevated/50']"
   >
     <template v-if="props.chip || slots.leading" #leading>

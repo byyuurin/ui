@@ -17,9 +17,9 @@ export default (options: Required<ModuleOptions>) => ct({
       subtle: '',
     },
     size: {
-      sm: 'h-4 min-w-4 text-[0.5rem]',
-      md: 'h-5 min-w-5 text-[0.75rem]',
-      lg: 'h-6 min-w-6 text-[1rem]',
+      sm: 'h-4 min-w-4 text-2',
+      md: 'h-5 min-w-5 text-3',
+      lg: 'h-6 min-w-6 text-4',
     },
   },
   compoundVariants: [

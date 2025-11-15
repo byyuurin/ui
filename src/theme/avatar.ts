@@ -11,31 +11,31 @@ export default ct({
   variants: {
     size: {
       '3xs': {
-        root: 'size-4 text-[0.5rem]',
+        root: 'size-4 text-2',
       },
       '2xs': {
-        root: 'size-5 text-[0.625rem]',
+        root: 'size-5 text-2.5',
       },
       'xs': {
-        root: 'size-6 text-xs',
+        root: 'size-6 text-3',
       },
       'sm': {
-        root: 'size-7 text-sm',
+        root: 'size-7 text-3.5',
       },
       'md': {
-        root: 'size-8 text-base',
+        root: 'size-8 text-4',
       },
       'lg': {
-        root: 'size-9 text-lg',
+        root: 'size-9 text-4.5',
       },
       'xl': {
-        root: 'size-10 text-xl',
+        root: 'size-10 text-5',
       },
       '2xl': {
-        root: 'size-11 text-[1.375rem]',
+        root: 'size-11 text-5.5',
       },
       '3xl': {
-        root: 'size-12 text-2xl',
+        root: 'size-12 text-6',
       },
     },
   },

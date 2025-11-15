@@ -51,7 +51,7 @@ export default (options: Required<ModuleOptions>) => {
       size: {
         xs: {
           ...input.variants.size.xs,
-          label: 'p-1 text-[0.625rem]/3 gap-1',
+          label: 'p-1 text-2.5/3 gap-1',
           item: 'p-1 text-xs gap-1',
           itemLeadingIcon: 'size-4',
           itemLeadingAvatarSize: '3xs',
@@ -62,7 +62,7 @@ export default (options: Required<ModuleOptions>) => {
         },
         sm: {
           ...input.variants.size.sm,
-          label: 'p-1.5 text-[0.625rem]/3 gap-1.5',
+          label: 'p-1.5 text-2.5/3 gap-1.5',
           item: 'p-1.5 text-xs gap-1.5',
           itemLeadingIcon: 'size-4',
           itemLeadingAvatarSize: '3xs',
@@ -73,7 +73,7 @@ export default (options: Required<ModuleOptions>) => {
         },
         md: {
           ...input.variants.size.md,
-          label: 'p-1.5 text-xs gap-1.5',
+          label: 'p-1.5 text-3/4 gap-1.5',
           item: 'p-1.5 text-sm gap-1.5',
           itemLeadingIcon: 'size-5',
           itemLeadingAvatarSize: '2xs',
@@ -84,7 +84,7 @@ export default (options: Required<ModuleOptions>) => {
         },
         lg: {
           ...input.variants.size.lg,
-          label: 'p-2 text-xs gap-2',
+          label: 'p-2 text-3/4 gap-2',
           item: 'p-2 text-sm gap-2',
           itemLeadingIcon: 'size-5',
           itemLeadingAvatarSize: '2xs',
@@ -95,7 +95,7 @@ export default (options: Required<ModuleOptions>) => {
         },
         xl: {
           ...input.variants.size.xl,
-          label: 'p-2 text-sm gap-2',
+          label: 'p-2 text-3.5/5 gap-2',
           item: 'p-2 text-base gap-2',
           itemLeadingIcon: 'size-6',
           itemLeadingAvatarSize: 'xs',

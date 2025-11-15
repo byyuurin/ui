@@ -168,7 +168,7 @@ const controls: ControlItems<NavigationMenuProps<typeof items.value>> = [
     >
       <UNavigationMenu :items="items" v-bind="attrs">
         <template #composables-content="{ item }">
-          <div class="grid gap-2 p-4 lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]" :class="attrs.contentOrientation === 'horizontal' ? 'lg:w-[500px]' : ''">
+          <div class="grid gap-2 p-4 lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]" :class="attrs.contentOrientation === 'horizontal' ? 'lg:w-125' : ''">
             <Placeholder class="size-full min-h-48" label="#[slot]-content" />
             <ul>
               <li v-for="child in item.children" :key="child.label">

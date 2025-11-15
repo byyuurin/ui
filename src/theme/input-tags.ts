@@ -28,27 +28,27 @@ export default (options: Required<ModuleOptions>) => {
       size: {
         xs: {
           ...input.variants.size.xs,
-          item: 'text-[0.625rem]/3',
+          item: 'text-2.5/3',
           itemDeleteIcon: 'size-3',
         },
         sm: {
           ...input.variants.size.sm,
-          item: 'text-[0.625rem]/3',
+          item: 'text-2.5/3',
           itemDeleteIcon: 'size-3',
         },
         md: {
           ...input.variants.size.md,
-          item: 'text-xs',
+          item: 'text-3/4',
           itemDeleteIcon: 'size-3.5',
         },
         lg: {
           ...input.variants.size.lg,
-          item: 'text-xs',
+          item: 'text-3/4',
           itemDeleteIcon: 'size-3.5',
         },
         xl: {
           ...input.variants.size.xl,
-          item: 'text-sm',
+          item: 'text-3.5/5',
           itemDeleteIcon: 'size-4',
         },
       },

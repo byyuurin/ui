@@ -59,70 +59,70 @@ export default (options: Required<ModuleOptions>) => ct({
       orientation: 'horizontal',
       size: 'xs',
       class: {
-        track: 'h-[6px]',
+        track: 'h-1.5',
       },
     },
     {
       orientation: 'horizontal',
       size: 'sm',
       class: {
-        track: 'h-[7px]',
+        track: 'h-1.75',
       },
     },
     {
       orientation: 'horizontal',
       size: 'md',
       class: {
-        track: 'h-[8px]',
+        track: 'h-2',
       },
     },
     {
       orientation: 'horizontal',
       size: 'lg',
       class: {
-        track: 'h-[9px]',
+        track: 'h-2.25',
       },
     },
     {
       orientation: 'horizontal',
       size: 'xl',
       class: {
-        track: 'h-[10px]',
+        track: 'h-2.5',
       },
     },
     {
       orientation: 'vertical',
       size: 'xs',
       class: {
-        track: 'w-[6px]',
+        track: 'w-1.5',
       },
     },
     {
       orientation: 'vertical',
       size: 'sm',
       class: {
-        track: 'w-[7px]',
+        track: 'w-1.75',
       },
     },
     {
       orientation: 'vertical',
       size: 'md',
       class: {
-        track: 'w-[8px]',
+        track: 'w-2',
       },
     },
     {
       orientation: 'vertical',
       size: 'lg',
       class: {
-        track: 'w-[9px]',
+        track: 'w-2.25',
       },
     },
     {
       orientation: 'vertical',
       size: 'xl',
       class: {
-        track: 'w-[10px]',
+        track: 'w-2.5',
       },
     },
   ],
