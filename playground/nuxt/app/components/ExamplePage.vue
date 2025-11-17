@@ -67,6 +67,7 @@ const toastProviderProps = ref<Pick<Required<AppProps['toaster'] & object>, 'dur
         <ExampleTable />
         <ExampleTabs />
         <ExampleTextarea />
+        <ExampleTimeline />
         <ExampleToast
           v-model:duration="toastProviderProps.duration"
           v-model:position="toastProviderProps.position"

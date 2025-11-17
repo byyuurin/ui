@@ -19,10 +19,14 @@ export type StaticSlot<P extends Record<string, any> | undefined = undefined> = 
   ? (props: SlotProps<P>) => any
   : (props?: SlotProps<undefined>) => any
 
-export type DynamicSlotsKeys<Name extends string | undefined, Suffix extends string | undefined = undefined> = (
+export type DynamicSlotsKeys<
+  Name extends string | undefined,
+  Suffix extends string | undefined = undefined,
+  Base extends boolean = true,
+> = (
   Name extends string
     ? Suffix extends string
-      ? Name | `${Name}-${Suffix}`
+      ? Base extends true ? Name | `${Name}-${Suffix}` : `${Name}-${Suffix}`
       : Name
     : never
 )
@@ -30,8 +34,9 @@ export type DynamicSlots<
   T extends { slot?: string },
   Suffix extends string | undefined = undefined,
   ExtraProps extends object = Record<string, never>,
+  Base extends boolean = true,
 > = {
-  [K in DynamicSlotsKeys<T['slot'], Suffix>]: StaticSlot<{ item: Extract<T, { slot: K extends `${infer Base}-${Suffix}` ? Base : K }> } & ExtraProps>
+  [K in DynamicSlotsKeys<T['slot'], Suffix, Base>]: StaticSlot<{ item: Extract<T, { slot: K extends `${infer Base}-${Suffix}` ? Base : K }> } & ExtraProps>
 }
 
 export type GetObjectField<MaybeObject, Key extends string> = MaybeObject extends Record<string, any>
