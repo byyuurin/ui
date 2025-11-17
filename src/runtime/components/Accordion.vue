@@ -2,9 +2,7 @@
 import type { AccordionRootEmits, AccordionRootProps, PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/accordion'
 import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
-
-type ExtractSlotItem<T extends AccordionItem> = Extract<NestedItem<T>, { slot: string }>
+import type { DynamicSlots, ExtractItem, GetItemKeys, StaticSlot } from '../types/utils'
 
 export interface AccordionItem extends ComponentBaseProps {
   label?: string
@@ -112,9 +110,9 @@ const ui = computed(() => {
         :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
       >
-        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as ExtractSlotItem<T>)" :index="index" :open="open" :ui="ui">
+        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :open="open" :ui="ui">
           <div :class="ui.body({ class: [props.ui?.body, item.ui?.body] })" data-part="body">
-            <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" :item="(item as ExtractSlotItem<T>)" :index="index" :open="open" :ui="ui">
+            <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :open="open" :ui="ui">
               {{ item.content }}
             </slot>
           </div>

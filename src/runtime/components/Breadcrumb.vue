@@ -2,9 +2,7 @@
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/breadcrumb'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
-
-type ExtractSlotItem<T extends BreadcrumbItem> = Extract<NestedItem<T>, { slot: string }>
+import type { DynamicSlots, ExtractItem, GetItemKeys, StaticSlot } from '../types/utils'
 
 export interface BreadcrumbItem extends Omit<LinkProps, 'raw' | 'custom'> {
   label?: string
@@ -90,8 +88,8 @@ const ui = computed(() => {
               :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: item.active ?? index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
               data-part="link"
             >
-              <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :active="item.active ?? index === items!.length - 1" :ui="ui">
-                <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :active="item.active ?? index === items!.length - 1" :index="index" :ui="ui">
+              <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :active="item.active ?? index === items!.length - 1" :ui="ui">
+                <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="(item as ExtractItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index" :ui="ui">
                   <Icon
                     v-if="item.icon"
                     :name="item.icon"
@@ -108,12 +106,12 @@ const ui = computed(() => {
                 </slot>
 
                 <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="linkLabel">
-                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractSlotItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index">
+                  <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey as string) }}
                   </slot>
                 </span>
 
-                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as ExtractSlotItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index"></slot>
+                <slot :name="(`${item.slot || 'item'}-trailing` as keyof DynamicSlots<T, 'trailing'>)" :item="(item as ExtractItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index"></slot>
               </slot>
             </LinkBase>
           </Link>

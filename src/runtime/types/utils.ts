@@ -81,6 +81,8 @@ type DotPathValue<T, P extends DotPathKeys<T> | (string & {})>
       ? T[P]
       : never
 
+export type ExtractItem<I, S extends string = 'slot'> = Extract<NestedItem<I>, { [Slot in S]: string }>
+
 export type GetItemKeys<I> = keyof Extract<NestedItem<I>, object> | DotPathKeys<Extract<NestedItem<I>, object>>
 
 export type GetItemValue<I, VK extends GetItemKeys<I> | undefined, T extends NestedItem<I> = NestedItem<I>>

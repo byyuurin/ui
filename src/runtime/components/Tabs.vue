@@ -3,9 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
 import theme from '#build/ui/tabs'
 import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
-import type { DynamicSlots, GetItemKeys, NestedItem, StaticSlot } from '../types/utils'
-
-type ExtractSlotItem<T extends TabsItem> = Extract<NestedItem<T>, { slot: string }>
+import type { DynamicSlots, ExtractItem, GetItemKeys, StaticSlot } from '../types/utils'
 
 export interface TabsItem {
   label?: string
@@ -174,7 +172,7 @@ defineExpose({
         :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
       >
-        <slot :name="((item.slot || 'content') as 'content')" :item="(item as ExtractSlotItem<T>)" :index="index" :ui="ui">
+        <slot :name="((item.slot || 'content') as 'content')" :item="(item as ExtractItem<T>)" :index="index" :ui="ui">
           {{ item.content }}
         </slot>
       </TabsContent>

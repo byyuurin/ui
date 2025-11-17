@@ -3,9 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuContentEmits as RekaDropdownMenuContentEmits, DropdownMenuContentProps as RekaDropdownMenuContentProps } from 'reka-ui'
 import type theme from '#build/ui/dropdown-menu'
 import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, IconProps, KbdProps, RuntimeAppConfig } from '../types'
-import type { ArrayOrNested, DynamicSlots, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
-
-type ExtractSlotItem<T extends ArrayOrNested<any>> = Extract<NestedItem<T>, { slot: string }>
+import type { ArrayOrNested, DynamicSlots, ExtractItem, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -78,8 +76,8 @@ const groups = computed<DropdownMenuItem[][]>(
 
 <template>
   <DefineItemTemplate v-slot="{ item, active, index }">
-    <slot :name="((item.slot || 'item') as keyof DropdownMenuContentSlots<T>)" :item="(item as Extract<NestedItem<T>, { slot: string; }>)" :index="index" :ui="ui">
-      <slot :name="(`${item.slot || 'item'}-leading` as keyof DropdownMenuContentSlots<T>)" :item="(item as Extract<NestedItem<T>, { slot: string; }>)" :active="active" :index="index" :ui="ui">
+    <slot :name="((item.slot || 'item') as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :ui="ui">
+      <slot :name="(`${item.slot || 'item'}-leading` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index" :ui="ui">
         <Icon
           v-if="item.loading"
           :name="loadingIcon || appConfig.ui.icons.loading"
@@ -111,7 +109,7 @@ const groups = computed<DropdownMenuItem[][]>(
           :class="props.ui.itemLabel({ class: [props.uiOverride?.itemLabel, item.ui?.itemLabel], active })"
           data-part="itemLabel"
         >
-          <slot :name="((`${item.slot || 'item'}-label`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
+          <slot :name="((`${item.slot || 'item'}-label`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
             {{ get(item, props.labelKey as string) }}
           </slot>
 
@@ -124,14 +122,14 @@ const groups = computed<DropdownMenuItem[][]>(
         </span>
 
         <span v-if="get(item, props.descriptionKey as string)" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })" data-part="itemDescription">
-          <slot :name="((`${item.slot || 'item'}-description`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index">
+          <slot :name="((`${item.slot || 'item'}-description`) as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
             {{ get(item, props.descriptionKey as string) }}
           </slot>
         </span>
       </span>
 
       <span :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })" data-part="itemTrailing">
-        <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractSlotItem<T>)" :active="active" :index="index" :ui="ui">
+        <slot :name="(`${item.slot || 'item'}-trailing` as keyof DropdownMenuContentSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index" :ui="ui">
           <Icon v-if="item.children?.length" :name="childrenIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" data-part="itemTrailingIcon" />
           <span v-else-if="item.kbds?.length" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })" data-part="itemTrailingKbds">
             <Kbd
