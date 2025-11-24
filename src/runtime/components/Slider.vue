@@ -125,7 +125,7 @@ function onChange(value: any) {
       :disabled="!props.tooltip"
       disable-closing-trigger
     >
-      <SliderThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb" />
+      <SliderThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb" :aria-label="thumbs === 1 ? 'Thumb' : `Thumb ${thumb} of ${thumbs}`" />
     </Tooltip>
   </SliderRoot>
 </template>
