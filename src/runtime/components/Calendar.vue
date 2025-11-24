@@ -114,7 +114,7 @@ defineSlots<CalendarSlots>()
 
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'size', 'color', 'variant', 'monthControls', 'yearControls', 'class', 'ui'), emit)
 
-const { code: locale, dir, t } = useLocale()
+const { dir, t } = useLocale()
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 
@@ -147,8 +147,6 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
     v-bind="rootProps"
     :model-value="(props.modelValue as DateValue | DateValue[])"
     :default-value="(props.defaultValue as DateValue)"
-    :locale="locale"
-    :dir="dir"
     :class="ui.root({ class: [props.class, props.ui?.root] })"
     data-part="root"
   >

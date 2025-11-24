@@ -56,11 +56,6 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
   autofocus?: boolean
   autofocusDelay?: number
   modelModifiers?: Pick<ModelModifiers, 'optional'>
-  /**
-   * The locale to use for formatting and parsing numbers.
-   * @default App.locale.code
-   */
-  locale?: string
   ui?: ComponentUIProps<typeof theme>
 }
 
@@ -102,8 +97,7 @@ const modelValue = useVModel(props, 'modelValue', emit, { defaultValue: props.de
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultValue', 'min', 'max', 'step', 'stepSnapping', 'formatOptions', 'disableWheelChange', 'invertWheelChange', 'readonly'), emit)
 
-const { t, code: codeLocale } = useLocale()
-const locale = computed(() => props.locale || codeLocale.value)
+const { t } = useLocale()
 const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormField<InputNumberProps>(props)
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
@@ -159,7 +153,7 @@ defineExpose({
 
 <template>
   <NumberFieldRoot
-    v-bind="{ ...rootProps, id, name, disabled, locale, modelValue }"
+    v-bind="{ ...rootProps, id, name, disabled, modelValue }"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
     @update:model-value="onUpdate"
