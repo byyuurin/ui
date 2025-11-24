@@ -259,7 +259,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
       </slot>
 
       <span
-        v-if="(!props.collapsed || props.orientation !== 'vertical') && (get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof NavigationMenuSlots<T>)])"
+        v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof NavigationMenuSlots<T>)]"
         :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })"
         data-part="linkLabel"
       >
@@ -277,7 +277,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
 
       <component
         :is="props.orientation === 'vertical' && item.children?.length && !props.collapsed ? AccordionTrigger : 'span'"
-        v-if="(!props.collapsed || props.orientation !== 'vertical') && (item.badge !== undefined || (orientation === 'horizontal' && (item.children?.length || !!slots[`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[`${item.slot || 'item'}-trailing` as keyof NavigationMenuSlots<T>])"
+        v-if="(item.badge !== undefined || (orientation === 'horizontal' && (item.children?.length || !!slots[`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>])) || (orientation === 'vertical' && item.children?.length) || item.trailingIcon || !!slots[`${item.slot || 'item'}-trailing` as keyof NavigationMenuSlots<T>])"
         as="span"
         :class="ui.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })"
         data-part="linkTrailing"
@@ -330,7 +330,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
           :is="
             (props.orientation === 'horizontal' && (item.children?.length || slots[(`${item.slot || 'item'}-content` as keyof NavigationMenuSlots<T>)]))
               ? NavigationMenuTrigger
-              : ((orientation === 'vertical' && item.children?.length && !collapsed && !(slotProps as any).href) ? AccordionTrigger : NavigationMenuLink)
+              : ((orientation === 'vertical' && item.children?.length && !props.collapsed && !(slotProps as any).href) ? AccordionTrigger : NavigationMenuLink)
           "
           :active="active || item.active"
           :disabled="item.disabled"
@@ -456,7 +456,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
     <template v-for="(list, listIndex) in lists" :key="`list-${listIndex}`">
       <component
         v-bind="props.orientation === 'vertical' && !props.collapsed ? { ...accordionProps, defaultValue: getAccordionDefaultValue(list) } : {}"
-        :is="props.orientation === 'vertical' && !props.collapsed ? AccordionRoot : NavigationMenuList"
+        :is="props.orientation === 'vertical' ? AccordionRoot : NavigationMenuList"
         as="ul"
         :class="ui.list({ class: props.ui?.list })"
         data-part="list"

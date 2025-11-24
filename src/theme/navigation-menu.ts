@@ -144,6 +144,8 @@ export default (options: Required<ModuleOptions>) => ct({
       collapsed: true,
       class: {
         link: 'px-1.5',
+        linkLabel: 'hidden',
+        linkTrailing: 'hidden',
         content: 'shadow-sm rounded-sm min-h-6 p-1',
       },
     },
