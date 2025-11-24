@@ -52,5 +52,6 @@ export * from '../components/Tooltip.vue'
 export * from './form'
 export * from './locale'
 export * from './style'
+export * from './utils'
 
 export type RuntimeAppConfig = AppConfig & { ui: AppConfigUI }
