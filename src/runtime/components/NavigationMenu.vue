@@ -1,6 +1,6 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
-import type { AccordionRootProps, NavigationMenuContentEmits, NavigationMenuContentProps, NavigationMenuRootEmits, NavigationMenuRootProps } from 'reka-ui'
+import type { MaybeArray, VariantProps } from '@byyuurin/ui-kit'
+import type { AccordionRootProps, NavigationMenuContentEmits, NavigationMenuContentProps, NavigationMenuRootProps } from 'reka-ui'
 import theme from '#build/ui/navigation-menu'
 import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkProps, PopoverProps, RuntimeAppConfig, TooltipProps } from '../types'
 import type { ArrayOrNested, DynamicSlots, EmitsToProps, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
@@ -57,16 +57,52 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
 }
 
 type ThemeVariants = VariantProps<typeof theme>
+type SingleOrMultipleType = 'single' | 'multiple'
+type Orientation = ThemeVariants['orientation']
 
-export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>> extends
+type NavigationMenuModelValue<
+  K extends SingleOrMultipleType = SingleOrMultipleType,
+  O extends Orientation = Orientation,
+> = O extends 'horizontal' ? string : K extends 'single' ? string : K extends 'multiple' ? string[] : MaybeArray<string>
+
+export interface NavigationMenuProps<
+  T extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>,
+  K extends SingleOrMultipleType = SingleOrMultipleType,
+  O extends Orientation = Orientation,
+> extends
   ComponentBaseProps,
-  Pick<NavigationMenuRootProps, 'modelValue' | 'defaultValue' | 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>,
+  Pick<NavigationMenuRootProps, 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>,
   Pick<AccordionRootProps, 'disabled' | 'type' | 'collapsible'> {
   /**
    * The element or component this component should render as.
    * @default "div"
    */
   as?: NavigationMenuRootProps['as']
+  /**
+   * Determines whether a "single" or "multiple" items can be selected at a time.
+   *
+   * Only works when `orientation` is `vertical`.
+   * @default "multiple"
+   */
+  type?: K
+  /**
+   * The controlled value of the active item(s).
+   * - In horizontal orientation: always `string`
+   * - In vertical orientation with `type="single"`: `string`
+   * - In vertical orientation with `type="multiple"`: `string[]`
+   *
+   * Use this when you need to control the state of the items. Can be binded with `v-model`
+   */
+  modelValue?: NavigationMenuModelValue<K, O>
+  /**
+   * The default active value of the item(s).
+   * - In horizontal orientation: always `string`
+   * - In vertical orientation with `type="single"`: `string`
+   * - In vertical orientation with `type="multiple"`: `string[]`
+   *
+   * Use when you do not need to control the state of the item(s).
+   */
+  defaultValue?: NavigationMenuModelValue<K, O>
   /**
    * The icon displayed to open the menu.
    * @default app.icons.chevronDown
@@ -87,7 +123,7 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
    * The orientation of the menu.
    * @default "horizontal"
    */
-  orientation?: NavigationMenuRootProps['orientation']
+  orientation?: O
   /**
    * Collapse the navigation menu to only show icons.
    * Only works when `orientation` is `vertical`.
@@ -129,7 +165,18 @@ export interface NavigationMenuProps<T extends ArrayOrNested<NavigationMenuItem>
   ui?: ComponentUIProps<typeof theme>
 }
 
-export interface NavigationMenuEmits extends NavigationMenuRootEmits {}
+export interface NavigationMenuEmits<
+  K extends SingleOrMultipleType = SingleOrMultipleType,
+  O extends Orientation = Orientation,
+> {
+  /**
+   * Event handler called when the value changes.
+   * - In horizontal orientation: emits `string`
+   * - In vertical orientation with `type="single"`: emits `string | undefined`
+   * - In vertical orientation with `type="multiple"`: emits `string[] | undefined`
+   */
+  'update:modelValue': [value: NavigationMenuModelValue<K, O> | undefined]
+}
 
 export type NavigationMenuSlots<
   A extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>,
@@ -148,7 +195,7 @@ export type NavigationMenuSlots<
 
 </script>
 
-<script setup lang="ts" generic="T extends ArrayOrNested<NavigationMenuItem>">
+<script setup lang="ts" generic="T extends ArrayOrNested<NavigationMenuItem>, K extends SingleOrMultipleType = SingleOrMultipleType, O extends Orientation = Orientation">
 import { createReusableTemplate, reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { AccordionContent, AccordionItem, AccordionRoot, AccordionTrigger, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot, NavigationMenuTrigger, NavigationMenuViewport, useForwardPropsEmits } from 'reka-ui'
@@ -166,10 +213,10 @@ import Tooltip from './Tooltip.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<NavigationMenuProps<T>>(), {
-  orientation: 'horizontal',
+const props = withDefaults(defineProps<NavigationMenuProps<T, K, O>>(), {
+  orientation: 'horizontal' as never,
   contentOrientation: 'horizontal',
-  type: 'multiple',
+  type: 'multiple' as never,
   labelKey: 'label',
   delayDuration: 0,
   externalIcon: true,
@@ -179,13 +226,11 @@ const props = withDefaults(defineProps<NavigationMenuProps<T>>(), {
   popover: true,
 })
 
-const emit = defineEmits<NavigationMenuEmits>()
+const emit = defineEmits<NavigationMenuEmits<K, O>>()
 const slots = defineSlots<NavigationMenuSlots<T>>()
 
 const rootProps = useForwardPropsEmits(computed(() => ({
   as: props.as,
-  modelValue: props.modelValue,
-  defaultValue: props.defaultValue,
   delayDuration: props.delayDuration,
   skipDelayDuration: props.skipDelayDuration,
   orientation: props.orientation,
@@ -446,7 +491,16 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
   </DefineItemTemplate>
 
   <NavigationMenuRoot
-    v-bind="{ ...rootProps, ...$attrs }"
+    v-bind="{
+      ...rootProps,
+
+      ...(props.orientation === 'horizontal' ? {
+        modelValue: props.modelValue as string,
+        defaultValue: props.defaultValue as string,
+      } : {}),
+
+      ...$attrs,
+    }"
     :class="ui.root({ class: [props.ui?.root, props.class] })"
     :data-collapsed="props.collapsed"
     data-part="root"
@@ -455,7 +509,11 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
 
     <template v-for="(list, listIndex) in lists" :key="`list-${listIndex}`">
       <component
-        v-bind="props.orientation === 'vertical' && !props.collapsed ? { ...accordionProps, defaultValue: getAccordionDefaultValue(list) } : {}"
+        v-bind="props.orientation === 'vertical' && !props.collapsed ? {
+          ...accordionProps,
+          modelValue: props.modelValue,
+          defaultValue: props.defaultValue ?? getAccordionDefaultValue(list),
+        } : {}"
         :is="props.orientation === 'vertical' ? AccordionRoot : NavigationMenuList"
         as="ul"
         :class="ui.list({ class: props.ui?.list })"
