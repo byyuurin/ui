@@ -84,7 +84,7 @@ const controls: ControlItems<TableProps<typeof data.value[number]>> = [
         <USwitch v-model="isEmpty" label="No Data" />
       </div>
       <UCard>
-        <UTable class="max-h-100" v-bind="attrs" :columns="columns" :column-pinning="{ right: ['status'] }" :data="isEmpty ? [] : data">
+        <UTable class="max-h-100" v-bind="attrs" :columns="columns" :data="isEmpty ? [] : data">
           <template #expanded="{ row }">
             <pre>{{ row.original }}</pre>
           </template>

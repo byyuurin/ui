@@ -27,8 +27,8 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     pinned: {
       true: {
-        th: 'sticky bg-default/75 data-[pinned=left]:left-0 data-[pinned=right]:right-0',
-        td: 'sticky bg-default/75 data-[pinned=left]:left-0 data-[pinned=right]:right-0',
+        th: 'sticky bg-default/75 z-1',
+        td: 'sticky bg-default/75 z-1',
       },
     },
     sticky: {
