@@ -9,12 +9,12 @@ export default (options: Required<ModuleOptions>) => ct({
     base: 'min-w-full',
     caption: 'sr-only',
     thead: 'relative',
-    tbody: '[&>tr]:data-[selectable=true]:hover:bg-elevated/50 [&>tr]:data-[selectable=true]:focus-visible:outline-primary',
+    tbody: 'isolate [&>tr]:data-[selectable=true]:hover:bg-elevated/50 [&>tr]:data-[selectable=true]:focus-visible:outline-primary',
     tfoot: 'relative',
     tr: 'data-[selected=true]:bg-elevated/50',
     th: 'px-4 py-3.5 text-sm text-highlighted text-left rtl:text-right font-semibold [&:has([role=checkbox])]:pe-0',
     td: 'p-4 text-sm text-muted whitespace-nowrap [&:has([role=checkbox])]:pe-0',
-    separator: 'absolute z-[1] left-0 w-full h-px bg-[--ui-border-accented]',
+    separator: 'absolute z-1 left-0 w-full h-px bg-[--ui-border-accented]',
     empty: 'py-6 text-center text-sm text-muted',
     loading: 'py-6 text-center',
   },
@@ -33,19 +33,19 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     sticky: {
       true: {
-        thead: 'sticky top-0 inset-x-0 bg-default/75 z-[1] backdrop-blur',
-        tfoot: 'sticky bottom-0 inset-x-0 bg-default/75 z-[1] backdrop-blur',
+        thead: 'sticky top-0 inset-x-0 bg-default/75 z-1 backdrop-blur',
+        tfoot: 'sticky bottom-0 inset-x-0 bg-default/75 z-1 backdrop-blur',
       },
       header: {
-        thead: 'sticky top-0 inset-x-0 bg-default/75 z-[1] backdrop-blur',
+        thead: 'sticky top-0 inset-x-0 bg-default/75 z-1 backdrop-blur',
       },
       footer: {
-        tfoot: 'sticky bottom-0 inset-x-0 bg-default/75 z-[1] backdrop-blur',
+        tfoot: 'sticky bottom-0 inset-x-0 bg-default/75 z-1 backdrop-blur',
       },
     },
     loading: {
       true: {
-        thead: 'after:content-empty after:absolute after:z-[1] after:h-px',
+        thead: 'after:content-empty after:absolute after:z-1 after:h-px',
       },
     },
     loadingAnimation: {
