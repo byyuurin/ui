@@ -166,6 +166,20 @@ const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakp
 const prevIcon = computed(() => props.prevIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronRight : appConfig.ui.icons.chevronLeft))
 const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
 
+const stopAutoplayOnInteraction = computed(() => {
+  if (typeof props.autoplay == 'boolean')
+    return true
+
+  return props.autoplay.stopOnInteraction ?? true
+})
+
+const stopAutoScrollOnInteraction = computed(() => {
+  if (typeof props.autoScroll === 'boolean')
+    return true
+
+  return props.autoScroll.stopOnInteraction ?? true
+})
+
 const options = computed<EmblaOptionsType>(() => ({
   ...(props.fade ? { align: 'center', containScroll: false } : {}),
   ...rootProps.value,
@@ -222,16 +236,27 @@ watch(options, () => {
   emblaApi.value?.reInit(options.value, plugins.value)
 }, { flush: 'post' })
 
+function stopOnInteraction() {
+  if (stopAutoplayOnInteraction.value)
+    emblaApi.value?.plugins().autoplay?.stop()
+
+  if (stopAutoScrollOnInteraction.value)
+    emblaApi.value?.plugins().autoScroll?.stop()
+}
+
 function scrollPrev() {
   emblaApi.value?.scrollPrev()
+  stopOnInteraction()
 }
 
 function scrollNext() {
   emblaApi.value?.scrollNext()
+  stopOnInteraction()
 }
 
 function scrollTo(index: number) {
   emblaApi.value?.scrollTo(index)
+  stopOnInteraction()
 }
 
 function onKeyDown(event: KeyboardEvent) {

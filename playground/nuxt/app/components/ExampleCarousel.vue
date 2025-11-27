@@ -17,8 +17,65 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
   { prop: 'dragFree', value: false, description: 'Enables momentum scrolling. The duration of the continued scrolling is proportional to how vigorous the drag gesture is.' },
   { prop: 'loop', value: false },
   { prop: 'autoplay', value: false },
+  { prop: 'autoScroll', value: false },
   { prop: 'classNames', value: false },
 ]
+
+const state = reactive({
+  autoplay: false,
+  autoScroll: false,
+})
+
+const carouselRef = useTemplateRef('carousel')
+
+function togglePlay(name: keyof typeof state) {
+  const autoplay = carouselRef.value?.emblaApi?.plugins().autoplay
+  const autoScroll = carouselRef.value?.emblaApi?.plugins().autoScroll
+
+  if (name === 'autoplay' && autoplay) {
+    if (autoplay.isPlaying())
+      autoplay.stop()
+    else
+      autoplay.play()
+  }
+
+  if (name === 'autoScroll' && autoScroll) {
+    if (autoScroll.isPlaying())
+      autoScroll.stop()
+    else
+      autoScroll.play()
+  }
+}
+
+onMounted(() => {
+  carouselRef.value?.emblaApi?.on('autoplay:play', startAutoplay)
+  carouselRef.value?.emblaApi?.on('autoplay:stop', stopAutoplay)
+  carouselRef.value?.emblaApi?.on('autoScroll:play', startAutoScroll)
+  carouselRef.value?.emblaApi?.on('autoScroll:stop', stopAutoScroll)
+})
+
+onUnmounted(() => {
+  carouselRef.value?.emblaApi?.off('autoplay:play', startAutoplay)
+  carouselRef.value?.emblaApi?.off('autoplay:stop', stopAutoplay)
+  carouselRef.value?.emblaApi?.off('autoScroll:play', startAutoScroll)
+  carouselRef.value?.emblaApi?.off('autoScroll:stop', stopAutoScroll)
+})
+
+function startAutoplay() {
+  state.autoplay = true
+}
+
+function stopAutoplay() {
+  state.autoplay = false
+}
+
+function startAutoScroll() {
+  state.autoScroll = true
+}
+
+function stopAutoScroll() {
+  state.autoScroll = false
+}
 </script>
 
 <template>
@@ -28,8 +85,31 @@ const controls: ControlItems<CarouselProps<typeof items[number]>> = [
     description="A carousel with motion and swipe built using Embla."
     :controls="controls"
   >
-    <div class="p-16">
+    <div class="absolute flex gap-2">
+      <UButton
+        :class="attrs.autoplay ? '' : 'hidden'"
+        variant="outline"
+        size="sm"
+        :aria-pressed="state.autoplay"
+        :icon="state.autoplay ? 'i-lucide:pause' : 'i-lucide:play'"
+        label="Autoplay"
+        :ui="{ base: 'rounded-full' }"
+        @click="togglePlay('autoplay')"
+      />
+      <UButton
+        :class="attrs.autoScroll ? '' : 'hidden'"
+        variant="outline"
+        size="sm"
+        :aria-pressed="state.autoScroll"
+        :icon="state.autoScroll ? 'i-lucide:pause' : 'i-lucide:play'"
+        label="AutoScroll"
+        :ui="{ base: 'rounded-full' }"
+        @click="togglePlay('autoScroll')"
+      />
+    </div>
+    <div class="p-12 pt-20" :class="attrs.orientation === 'vertical' ? 'sm:pt-22' : ''">
       <UCarousel
+        ref="carousel"
         v-slot="{ item }"
         v-bind="attrs"
         :items="items"
