@@ -75,6 +75,7 @@ const toastProviderProps = ref<Pick<Required<AppProps['toaster'] & object>, 'dur
           v-model:max="toastProviderProps.max"
         />
         <ExampleTooltip />
+        <ExampleTree />
         <USeparator icon="i-lucide:box" :ui="{ icon: 'opacity-60' }" />
         <ExampleScrollArea />
         <ExampleNative />

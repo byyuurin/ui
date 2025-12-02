@@ -9,6 +9,8 @@ export const icons = {
   chevronDoubleLeft: 'i-lucide-chevrons-left',
   chevronDoubleRight: 'i-lucide-chevrons-right',
   ellipsis: 'i-lucide-ellipsis',
+  folder: 'i-lucide-folder',
+  folderOpen: 'i-lucide-folder-open',
   plus: 'i-lucide-plus',
   minus: 'i-lucide-minus',
   external: 'i-lucide-arrow-up-right',

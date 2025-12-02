@@ -61,6 +61,7 @@ export default byyuurin(
       'src/runtime/components/Drawer.vue',
       'src/runtime/components/Modal.vue',
       'src/runtime/components/Select.vue',
+      'src/runtime/components/Tree.vue',
     ],
     rules: {
       'vue/no-template-shadow': 'off',
