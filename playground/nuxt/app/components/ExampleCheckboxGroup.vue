@@ -26,7 +26,12 @@ const controls: ControlItems<CheckboxGroupProps<typeof items>> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="CheckboxGroup" description="A set of checklist buttons to select multiple option from a list." :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="CheckboxGroup"
+    description="A set of checklist buttons to select multiple option from a list."
+    :controls="controls"
+  >
     <div class="flex flex-col items-start gap-4">
       <UCheckboxGroup v-bind="attrs" v-model="value" :items="items" />
       <UCheckboxGroup v-bind="attrs" v-model="value" :items="values" />

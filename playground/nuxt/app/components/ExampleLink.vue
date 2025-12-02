@@ -13,7 +13,12 @@ const controls: ControlItems<LinkProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Link" :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Link"
+    description="A wrapper around with extra props."
+    :controls="controls"
+  >
     <ul class="flex flex-col gap-4">
       <li><ULink v-bind="attrs" :label="attrs.label || 'text'" /></li>
       <li><ULink v-bind="attrs" to="/other" :target="undefined" label="Route to other page" /></li>

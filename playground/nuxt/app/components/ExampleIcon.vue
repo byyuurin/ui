@@ -9,7 +9,12 @@ const controls: ControlItems<IconProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Icon" description="A component to display any icon from Iconify or another component." :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Icon"
+    description="A component to display any icon from Iconify or another component."
+    :controls="controls"
+  >
     <div>
       <UIcon v-bind="attrs" class="size-8" />
     </div>

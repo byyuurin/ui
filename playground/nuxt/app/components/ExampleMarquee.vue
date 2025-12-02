@@ -12,7 +12,12 @@ const controls: ControlItems<MarqueeProps> = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Marquee" description="A component to create infinite scrolling content." :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Marquee"
+    description="A component to create infinite scrolling content."
+    :controls="controls"
+  >
     <UMarquee class="max-h-70" v-bind="attrs">
       <UIcon name="i-simple-icons:github" class="size-10 shrink-0" />
       <UIcon name="i-simple-icons:discord" class="size-10 shrink-0" />

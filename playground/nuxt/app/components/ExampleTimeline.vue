@@ -46,7 +46,12 @@ const items = [
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="Timeline" description="A component that displays a sequence of events with dates, titles, icons or avatars." :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="Timeline"
+    description="A component that displays a sequence of events with dates, titles, icons or avatars."
+    :controls="controls"
+  >
     <UTimeline v-bind="attrs" :items="items">
       <template #custom-date>
         <Placeholder label="#date" label-position="left" />

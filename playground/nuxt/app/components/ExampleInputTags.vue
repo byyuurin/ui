@@ -21,7 +21,12 @@ const value = ref(['Vue', 'Nuxt'])
 </script>
 
 <template>
-  <ExampleView v-slot="attrs" title="InputTags" description="An input element that displays interactive tags." :controls="controls">
+  <ExampleView
+    v-slot="attrs"
+    title="InputTags"
+    description="An input element that displays interactive tags."
+    :controls="controls"
+  >
     <div class="flex flex-col gap-4">
       <UInputTags v-bind="attrs" v-model="value" />
       <UInputTags v-bind="attrs" v-model="value" :icon="leadingIcon" />

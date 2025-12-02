@@ -29,7 +29,7 @@ export interface InputTagsProps<T extends InputTagsItem = InputTagsItem> extends
   autofocusDelay?: number
   /**
    * The icon displayed to delete a tag.
-   * @default appConfig.ui.icons.close
+   * @default app.icons.close
    */
   deleteIcon?: IconProps['name']
   /** Highlight the ring color like a focus state. */

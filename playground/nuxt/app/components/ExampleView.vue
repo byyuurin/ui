@@ -132,7 +132,7 @@ onMounted(() => {
         }"
         class="relative h-full bg-neutral/2 transition xl:grid-col-span-2"
       >
-        <div class="absolute top-4 right-4">
+        <div v-if="props.controls.length > 0" class="absolute top-4 right-4">
           <UDrawer v-model:open="openControls" :title="`${props.title} props`" inset :overlay="false" :ui="{ content: 'ring-6 ring-default ring-offset-2 ring-offset-primary/80' }">
             <UButton class="md:hidden" color="neutral" variant="ghost" icon="i-lucide:settings-2" />
             <template #body>

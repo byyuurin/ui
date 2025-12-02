@@ -63,6 +63,7 @@ export type TabsSlots<T extends TabsItem = TabsItem> = {
   'list-leading': StaticSlot
   'list-trailing': StaticSlot
 } & DynamicSlots<T, undefined, { index: number, ui: ComponentStyler<typeof theme> }>
+
 </script>
 
 <script lang="ts" setup generic="T extends TabsItem">
