@@ -4,6 +4,7 @@ import type { SelectArrowProps, SelectContentEmits, SelectContentProps, SelectRo
 import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ChipProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ModelModifiers } from '../types/input'
 import type { AcceptableValue, ArrayOrNested, Defined, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, MaybeNull, NestedItem, StaticSlot } from '../types/utils'
 
 export type SelectValue = Exclude<AcceptableValue, boolean>
@@ -88,6 +89,7 @@ export interface SelectProps<
   defaultValue?: MaybeNull<GetModelValue<T, VK, M>>
   /** The controlled value of the Select. Can be bind as `v-model`. */
   modelValue?: MaybeNull<GetModelValue<T, VK, M>>
+  modelModifiers?: Omit<ModelModifiers<GetModelValue<T, VK, M>>, 'lazy'>
   /** Whether multiple options can be selected or not. */
   multiple?: M & boolean
   /** Highlight the ring color like a focus state. */
@@ -126,13 +128,13 @@ export interface SelectSlots<
 import { reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { SelectArrow, SelectContent, SelectGroup, SelectItem as RekaSelectItem, SelectItemIndicator, SelectItemText, SelectLabel, SelectPortal, SelectRoot, SelectSeparator, SelectTrigger, useForwardPropsEmits } from 'reka-ui'
-import { computed, onMounted, shallowRef, toRef } from 'vue'
+import { computed, onMounted, shallowRef, toRaw, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { usePortal } from '../composables/usePortal'
-import { get, getDisplayValue, isArrayOfArray } from '../utils'
+import { get, getDisplayValue, isArrayOfArray, looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Chip from './Chip.vue'
@@ -219,6 +221,21 @@ onMounted(() => {
 })
 
 function onUpdate(value: any) {
+  if (toRaw(props.modelValue) === value)
+    return
+
+  if (props.modelModifiers?.trim)
+    value = value?.trim() ?? null
+
+  if (props.modelModifiers?.number)
+    value = looseToNumber(value)
+
+  if (props.modelModifiers?.nullable)
+    value ??= null
+
+  if (props.modelModifiers?.optional)
+    value ??= undefined
+
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emit('change', event)
