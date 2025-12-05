@@ -39,7 +39,7 @@ export interface TextareaProps<T extends TextareaValue = TextareaValue> extends 
   autoresizeDelay?: number
   modelValue?: T
   defaultValue?: T
-  modelModifiers?: ModelModifiers
+  modelModifiers?: ModelModifiers<T>
   ui?: ComponentUIProps<typeof theme>
 }
 

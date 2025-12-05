@@ -8,7 +8,9 @@ import type { MaybeNull, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRootProps, 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'stepSnapping' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions' | 'disableWheelChange' | 'invertWheelChange' | 'readonly'> {
+type InputNumberValue = MaybeNull<number>
+
+export interface InputNumberProps<T extends InputNumberValue = InputNumberValue> extends ComponentBaseProps, Pick<NumberFieldRootProps, 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'stepSnapping' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions' | 'disableWheelChange' | 'invertWheelChange' | 'readonly'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -55,12 +57,12 @@ export interface InputNumberProps extends ComponentBaseProps, Pick<NumberFieldRo
   decrementDisabled?: boolean
   autofocus?: boolean
   autofocusDelay?: number
-  modelModifiers?: Pick<ModelModifiers, 'optional'>
+  modelModifiers?: Pick<ModelModifiers<T>, 'optional'>
   ui?: ComponentUIProps<typeof theme>
 }
 
-export interface InputNumberEmits {
-  'update:modelValue': [value: number]
+export interface InputNumberEmits<T extends InputNumberValue = InputNumberValue> {
+  'update:modelValue': [value: T]
   'blur': [event: FocusEvent]
   'change': [event: Event]
 }
@@ -71,7 +73,7 @@ export interface InputNumberSlots {
 }
 </script>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends InputNumberValue = InputNumberValue">
 import { reactivePick, useVModel } from '@vueuse/core'
 import { NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput, NumberFieldRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
@@ -84,21 +86,21 @@ import Button from './Button.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<InputNumberProps>(), {
+const props = withDefaults(defineProps<InputNumberProps<T>>(), {
   orientation: 'horizontal',
   increment: true,
   decrement: true,
 })
 
-const emit = defineEmits<InputNumberEmits>()
+const emit = defineEmits<InputNumberEmits<T>>()
 defineSlots<InputNumberSlots>()
 
-const modelValue = useVModel(props, 'modelValue', emit, { defaultValue: props.defaultValue })
+const modelValue = useVModel<InputNumberProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emit, { defaultValue: props.defaultValue })
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultValue', 'min', 'max', 'step', 'stepSnapping', 'formatOptions', 'disableWheelChange', 'invertWheelChange', 'readonly'), emit)
 
 const { t } = useLocale()
-const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormField<InputNumberProps>(props)
+const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormField<InputNumberProps<T>>(props)
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
 const appConfig = useAppConfig() as RuntimeAppConfig

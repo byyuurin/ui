@@ -39,7 +39,7 @@ export interface InputProps<T extends InputValue = InputValue> extends Component
   disabled?: boolean
   defaultValue?: T
   modelValue?: T
-  modelModifiers?: ModelModifiers
+  modelModifiers?: ModelModifiers<T>
   ui?: ComponentUIProps<typeof theme>
 }
 
