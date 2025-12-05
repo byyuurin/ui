@@ -54,7 +54,9 @@ import { useAppConfig } from '#imports'
 import { injectFormErrors, injectFormInputs, provideFormField, provideFormInputId } from '../composables/useFormField'
 import { cv, merge } from '../utils/style'
 
-const props = defineProps<FormFieldProps>()
+const props = withDefaults(defineProps<FormFieldProps>(), {
+  error: undefined,
+})
 const slots = defineSlots<FormFieldSlots>()
 
 const formErrors = injectFormErrors()
@@ -138,7 +140,7 @@ const ui = computed(() => {
     <div :class="(props.label || !!slots.label || props.description || !!slots.description) && ui.container({ class: props.ui?.container })" data-part="container">
       <slot :error="error"></slot>
 
-      <div v-if="(typeof error === 'string' && error) || !!slots.error" :id="`${ariaId}-error`" :class="ui.error({ class: props.ui?.error })" data-part="error">
+      <div v-if="props.error !== false && ((typeof error === 'string' && error) || !!slots.error)" :id="`${ariaId}-error`" :class="ui.error({ class: props.ui?.error })" data-part="error">
         <slot name="error" :error="error">
           {{ error }}
         </slot>
