@@ -97,8 +97,8 @@ export type DropdownMenuSlots<
   'item-label': StaticSlot<{ item: T, active?: boolean, index: number }>
   'item-description': StaticSlot<{ item: T, active?: boolean, index: number }>
   'item-trailing': StaticSlot<{ item: T, active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
-  'content-top': StaticSlot
-  'content-bottom': StaticSlot
+  'content-top': StaticSlot<{ sub: boolean }>
+  'content-bottom': StaticSlot<{ sub: boolean }>
 }
 & DynamicSlots<MergeTypes<T>, 'label' | 'description', { active?: boolean, index: number }>
 & DynamicSlots<MergeTypes<T>, 'leading' | 'trailing', { active?: boolean, index: number, ui: ComponentStyler<typeof theme> }>
