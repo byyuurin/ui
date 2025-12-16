@@ -26,6 +26,12 @@ export default defineLocale({
     modal: {
       close: 'Close',
     },
+    select: {
+      create: 'Create "{label}"',
+      noData: 'No data',
+      noMatch: 'No matching data',
+      search: 'Search…',
+    },
     table: {
       noData: 'No data',
     },

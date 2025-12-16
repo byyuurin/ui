@@ -26,6 +26,12 @@ export default defineLocale({
     modal: {
       close: '關閉',
     },
+    select: {
+      create: '建立「{label}」',
+      noData: '沒有資料',
+      noMatch: '沒有相符的資料',
+      search: '搜尋…',
+    },
     table: {
       noData: '沒有資料',
     },

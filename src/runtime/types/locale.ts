@@ -27,6 +27,12 @@ export interface Messages {
   modal: {
     close: string
   }
+  select: {
+    create: string
+    noData: string
+    noMatch: string
+    search: string
+  }
   table: {
     noData: string
   }

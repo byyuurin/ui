@@ -85,9 +85,9 @@ export type ExtractItem<I, S extends string = 'slot'> = Extract<NestedItem<I>, {
 
 export type GetItemKeys<I> = keyof Extract<NestedItem<I>, object> | DotPathKeys<Extract<NestedItem<I>, object>>
 
-export type GetItemValue<I, VK extends GetItemKeys<I> | undefined, T extends NestedItem<I> = NestedItem<I>>
+export type GetItemValue<I, VK extends Nullable<GetItemKeys<I>>, T extends NestedItem<I> = NestedItem<I>>
   = T extends object
-    ? VK extends undefined
+    ? VK extends undefined | null
       ? T
       : VK extends DotPathKeys<T>
         ? DotPathValue<T, VK>
@@ -96,7 +96,7 @@ export type GetItemValue<I, VK extends GetItemKeys<I> | undefined, T extends Nes
 
 export type GetModelValue<
   T,
-  VK extends GetItemKeys<T> | undefined,
+  VK extends Nullable<GetItemKeys<T>>,
   M extends boolean,
 > = M extends true
   ? GetItemValue<T, VK>[]
@@ -104,7 +104,7 @@ export type GetModelValue<
 
 export interface GetModelValueEmits<
   T,
-  VK extends GetItemKeys<T> | undefined,
+  VK extends Nullable<GetItemKeys<T>>,
   M extends boolean,
 > {
   /** Event handler called when the value changes. */

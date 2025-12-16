@@ -8,8 +8,8 @@ const items = [
   ['Apple', 'Banana', 'Blueberry', 'Grapes', 'Pineapple'],
   ['Aubergine', 'Broccoli', 'Carrot', 'Courgette', 'Leek'],
   [{ label: 'Others (disabled)', value: 'Others', disabled: true }],
-  [{ label: 'Icon', value: 'Icon', icon: 'i-lucide:circle-user-round' }],
-  [{ label: 'Avatar', value: 'Avatar', avatar: { src: 'https://i.pravatar.cc/100?img=5' } }],
+  [{ label: 'Icon', value: 'icon', icon: 'i-lucide:circle-user-round' }],
+  [{ label: 'Avatar', value: 'avatar', avatar: { src: 'https://i.pravatar.cc/100?img=5' } }],
 ]
 
 const controls: ControlItems<SelectProps<typeof items>> = [
@@ -17,6 +17,7 @@ const controls: ControlItems<SelectProps<typeof items>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'variant', value: 'outline', options: ['outline', 'soft', 'subtle', 'ghost', 'none'] },
   { prop: 'placeholder', value: 'placeholder', placeholder: 'placeholder' },
+  { prop: 'searchInput', value: false },
   { prop: 'multiple', value: false },
   { prop: 'arrow', value: false },
   { prop: 'highlight', value: false },

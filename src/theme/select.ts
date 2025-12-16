@@ -21,7 +21,10 @@ export default (options: Required<ModuleOptions>) => {
       content: [
         'z-1 max-h-60 w-[--reka-select-trigger-width] bg-default shadow-lg rounded-md ring ring-default overflow-hidden origin-[--reka-select-content-transform-origin] pointer-events-auto flex flex-col',
         'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
+        'origin-[--reka-combobox-content-transform-origin] w-[--reka-combobox-trigger-width]',
       ],
+      input: 'border-b border-default',
+      focusScope: 'flex flex-col min-h-0',
       viewport: 'relative divide-y divide-default scroll-py-1 overflow-y-auto flex-1',
       group: 'p-1 isolate',
       empty: 'text-center text-muted',
@@ -105,17 +108,14 @@ export default (options: Required<ModuleOptions>) => {
           empty: 'p-2 text-base',
         },
       },
+      searchInput: {
+        false: {
+          input: 'sr-only',
+        },
+      },
     },
     compoundVariants: [
-      ...input.compoundVariants.map((item) => {
-        return {
-          ...item,
-          class: {
-            ...item.class,
-            base: typeof item.class.base === 'string' ? item.class.base.replace(/focus-visible:/g, 'focus:') : item.class.base,
-          },
-        }
-      }) as any,
+      ...input.compoundVariants,
     ],
     defaultVariants: {
       ...input.defaultVariants,

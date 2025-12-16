@@ -1,6 +1,6 @@
 import { get } from '@byyuurin/ui-kit'
 import { isEqual } from 'ohash'
-import type { GetItemKeys, Nullable } from '../types/utils'
+import type { GetItemKeys, MaybeNull, Nullable } from '../types/utils'
 
 export * from './form'
 export * from './link'
@@ -63,8 +63,8 @@ export function getDisplayValue<T extends Array<any>, V>(
   items: T,
   value: Nullable<V>,
   options: {
-    valueKey?: GetItemKeys<T>
-    labelKey?: GetItemKeys<T>
+    valueKey?: MaybeNull<GetItemKeys<T>>
+    labelKey?: MaybeNull<GetItemKeys<T>>
   } = {},
 ): string | undefined {
   const { valueKey, labelKey } = options
