@@ -12,11 +12,11 @@ const items = [
         children: [
           {
             label: 'useAuth.ts',
-            icon: 'i-vscode-icons-file-type-typescript',
+            icon: 'i-vscode-icons:file-type-typescript',
           },
           {
             label: 'useUser.ts',
-            icon: 'i-vscode-icons-file-type-typescript',
+            icon: 'i-vscode-icons:file-type-typescript',
           },
         ],
       },
@@ -26,11 +26,11 @@ const items = [
         children: [
           {
             label: 'Card.vue',
-            icon: 'i-vscode-icons-file-type-vue',
+            icon: 'i-vscode-icons:file-type-vue',
           },
           {
             label: 'Button.vue',
-            icon: 'i-vscode-icons-file-type-vue',
+            icon: 'i-vscode-icons:file-type-vue',
           },
         ],
       },
@@ -38,11 +38,11 @@ const items = [
   },
   {
     label: 'app.vue',
-    icon: 'i-vscode-icons-file-type-vue',
+    icon: 'i-vscode-icons:file-type-vue',
   },
   {
     label: 'nuxt.config.ts',
-    icon: 'i-vscode-icons-file-type-nuxt',
+    icon: 'i-vscode-icons:file-type-nuxt',
   },
 ] satisfies TreeItem[]
 
