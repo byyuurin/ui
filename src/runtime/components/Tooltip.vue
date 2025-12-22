@@ -67,9 +67,8 @@ const ui = computed(() => {
 
 <template>
   <TooltipRoot v-slot="{ open }" v-bind="rootProps" :disabled="!(props.text || props.kbds?.length || !!slots.content) || props.disabled">
-    <TooltipTrigger v-if="!!slots.default" as-child :class="props.class">
-      <slot :open="open">
-      </slot>
+    <TooltipTrigger v-if="!!slots.default || props.reference" v-bind="$attrs" as-child :reference="props.reference" :class="props.class">
+      <slot :open="open"></slot>
     </TooltipTrigger>
 
     <TooltipPortal v-bind="portalProps">
