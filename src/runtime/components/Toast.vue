@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps, ToastRootEmits, ToastRootProps } from 'reka-ui'
 import theme from '#build/ui/toast'
-import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, ProgressProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkPropsKeys, ProgressProps, RuntimeAppConfig } from '../types'
 import type { StaticSlot, StringOrVNode } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -31,7 +31,7 @@ export interface ToastProps extends ComponentBaseProps, Pick<ToastRootProps, 'de
    * Display a close button to dismiss the toast.
    * @default true
    */
-  close?: boolean | Partial<ButtonProps>
+  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed in the close button.
    * @default app.icons.close

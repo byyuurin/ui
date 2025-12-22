@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import theme from '#build/ui/drawer'
-import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -40,7 +40,7 @@ export interface DrawerProps extends ComponentBaseProps, DialogRootProps {
    * Display a close button to dismiss the drawer.
    * @default true
    */
-  close?: boolean | Partial<ButtonProps>
+  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /** @default app.icons.close */
   closeIcon?: IconProps['name']
   /**
@@ -169,7 +169,7 @@ const ui = computed(() => {
                     variant="ghost"
                     :icon="props.closeIcon || appConfig.ui.icons.close"
                     :aria-label="t('modal.close')"
-                    v-bind="(typeof props.close === 'object' ? props.close as Partial<ButtonProps> : {})"
+                    v-bind="(typeof props.close === 'object' ? props.close : {})"
                     :class="ui.close({ class: props.ui?.close })"
                     data-part="close"
                   />

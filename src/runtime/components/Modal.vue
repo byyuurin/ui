@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { DialogContentEmits, DialogContentProps, DialogRootEmits, DialogRootProps } from 'reka-ui'
 import theme from '#build/ui/modal'
-import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { EmitsToProps, StaticSlot } from '../types/utils'
 
 export interface ModalProps extends ComponentBaseProps, DialogRootProps {
@@ -33,7 +33,7 @@ export interface ModalProps extends ComponentBaseProps, DialogRootProps {
    * Display a close button to dismiss the modal.
    * @default true
    */
-  close?: boolean | Partial<ButtonProps>
+  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /** @default app.icons.close */
   closeIcon?: IconProps['name']
   /**
@@ -157,7 +157,7 @@ const ui = computed(() => {
                     variant="ghost"
                     color="neutral"
                     :icon="props.closeIcon || appConfig.ui.icons.close"
-                    v-bind="typeof props.close === 'boolean' ? {} : props.close"
+                    v-bind="typeof props.close === 'object' ? props.close : {}"
                     :aria-label="t('modal.close')"
                     :class="ui.close({ class: props.ui?.close })"
                     data-part="close"

@@ -9,7 +9,7 @@ import type { FadeOptionsType } from 'embla-carousel-fade'
 import type { WheelGesturesPluginOptions } from 'embla-carousel-wheel-gestures'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/carousel'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { AcceptableValue, StaticSlot } from '../types/utils'
 
 export type CarouselValue = AcceptableValue
@@ -31,7 +31,7 @@ export interface CarouselProps<T extends CarouselItem = CarouselItem> extends Co
    * Configure the prev button when arrows are enabled.
    * @default { size: 'md', variant: 'link' }
    */
-  prev?: ButtonProps
+  prev?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed in the prev button.
    * @default app.icons.chevronLeft
@@ -41,7 +41,7 @@ export interface CarouselProps<T extends CarouselItem = CarouselItem> extends Co
    * Configure the next button when arrows are enabled.
    * @default { size: 'md', variant: 'link' }
    */
-  next?: ButtonProps
+  next?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed in the next button.
    * @default app.icons.chevronRight

@@ -79,6 +79,12 @@ export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
   raw?: boolean
 }
 
+/**
+ * Link-related props that can be omitted from ButtonProps when link functionality is not needed.
+ * Use this with `Omit<ButtonProps, LinkPropsKeys>` in components where buttons should not act as links.
+ */
+export type LinkPropsKeys = 'to' | 'href' | 'target' | 'rel' | 'noRel' | 'external' | 'prefetch' | 'prefetchOn' | 'prefetchedClass' | 'noPrefetch' | 'trailingSlash' | 'replace' | 'ariaCurrentValue' | 'active' | 'activeClass' | 'exact' | 'exactQuery' | 'exactHash' | 'inactiveClass' | 'download' | 'ping' | 'referrerpolicy' | 'hreflang' | 'media'
+
 export interface LinkSlots {
   default: StaticSlot<{ active: boolean }>
 }

@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { NumberFieldRootProps } from 'reka-ui'
 import theme from '#build/ui/input-number'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
@@ -35,7 +35,7 @@ export interface InputNumberProps<T extends InputNumberValue = InputNumberValue>
    * Configure the increment button. The `color` and `size` are inherited.
    * @default { variant: 'link' }
    */
-  increment?: boolean | ButtonProps
+  increment?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed to increment the value.
    * @default app.icons.plus
@@ -47,7 +47,7 @@ export interface InputNumberProps<T extends InputNumberValue = InputNumberValue>
    * Configure the decrement button. The `color` and `size` are inherited.
    * @default { variant: 'link' }
    */
-  decrement?: boolean | ButtonProps
+  decrement?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed to decrement the value.
    * @default app.icons.minus

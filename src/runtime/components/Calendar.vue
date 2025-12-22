@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DateValue } from '@internationalized/date'
 import type { CalendarCellTriggerProps, CalendarRootEmits, CalendarRootProps, DateRange, RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui'
 import theme from '#build/ui/calendar'
-import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
 type CalendarDefaultValue<R extends boolean = false, M extends boolean = false> = R extends true
@@ -35,7 +35,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   /**
    * Configure the next year button.
    */
-  nextYear?: ButtonProps
+  nextYear?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon to use for the next month control.
    * @default app.icons.chevronRight
@@ -44,7 +44,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   /**
    * Configure the next month button.
    */
-  nextMonth?: ButtonProps
+  nextMonth?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon to use for the previous year control.
    * @default app.icons.chevronDoubleLeft
@@ -53,7 +53,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   /**
    * Configure the prev year button.
    */
-  prevYear?: ButtonProps
+  prevYear?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon to use for the previous month control.
    * @default app.icons.chevronLeft
@@ -62,7 +62,7 @@ export interface CalendarProps<R extends boolean = false, M extends boolean = fa
   /**
    * Configure the prev month button.
    */
-  prevMonth?: ButtonProps
+  prevMonth?: Omit<ButtonProps, LinkPropsKeys>
   /**
    * @default "md"
    */

@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/alert'
-import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -36,7 +36,7 @@ export interface AlertProps extends ComponentBaseProps {
    * Display a close button to dismiss the alert.
    * @default false
    */
-  close?: boolean | Partial<ButtonProps>
+  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
   /**
    * The icon displayed in the close button.
    * @default app.icons.close
