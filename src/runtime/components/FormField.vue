@@ -23,8 +23,11 @@ export interface FormFieldProps extends ComponentBaseProps {
   error?: string | boolean
   hint?: string
   /**
-   * @default "md"
+   * The orientation of the form field.
+   * @default "vertical"
    */
+  orientation?: ThemeVariants['orientation']
+  /** @default "md" */
   size?: ThemeVariants['size']
   required?: boolean
   /** If true, validation on input will be active immediately instead of waiting for a blur event. */
@@ -115,7 +118,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" :data-orientation="props.orientation" data-part="root">
     <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
       <div v-if="props.label || !!slots.label" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })" data-part="labelWrapper">
         <Label :for="id" :class="ui.label({ class: props.ui?.label })" data-part="label">

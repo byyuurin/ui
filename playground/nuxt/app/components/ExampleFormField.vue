@@ -3,6 +3,7 @@ import type { FormFieldProps } from '@byyuurin/ui'
 import type { ControlItems } from './ExampleView.vue'
 
 const controls: ControlItems<FormFieldProps> = [
+  { prop: 'orientation', value: 'vertical', options: ['horizontal', 'vertical'] },
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   { prop: 'label', value: 'Label' },
   { prop: 'description', value: 'Description' },
