@@ -161,7 +161,7 @@ export interface SelectSlots<
 </script>
 
 <script lang="ts" setup generic="T extends ArrayOrNested<SelectItem>, VK extends Nullable<GetItemKeys<T>> = 'value', M extends boolean = false">
-import { createReusableTemplate, reactivePick, useVModel } from '@vueuse/core'
+import { createReusableTemplate, reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
 import { ComboboxAnchor, ComboboxArrow, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxLabel, ComboboxPortal, ComboboxRoot, ComboboxSeparator, ComboboxTrigger, FocusScope, useFilter, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, shallowRef, toRaw, toRef } from 'vue'
@@ -199,7 +199,7 @@ const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTempla
 
 const { t } = useLocale()
 
-const searchTerm = useVModel<SelectProps<T, VK, M>, 'searchTerm', 'update:searchTerm'>(props, 'searchTerm', emit, { passive: true })
+const searchTerm = defineModel<string>('searchTerm', { default: '' })
 
 const { contains } = useFilter({ sensitivity: 'base' })
 
@@ -251,14 +251,14 @@ const filteredGroups = computed(() => {
       return false
 
     if (typeof item !== 'object')
-      return contains(String(item), searchTerm.value!)
+      return contains(String(item), searchTerm.value)
 
     if (item.type && ['label', 'separator'].includes(item.type))
       return true
 
     return fields.some((field) => {
       const value = get(item, field)
-      return value != null && contains(String(value), searchTerm.value!)
+      return value != null && contains(String(value), searchTerm.value)
     })
   })).filter((group) => group.some((item) => !isSelectItem(item) || (!item.type || !['label', 'separator'].includes(item.type))))
 })
@@ -345,6 +345,12 @@ function onUpdateOpen(value: boolean) {
 
     emit('focus', event)
     emitFormFocus()
+    clearTimeout(timeoutId)
+  }
+  else {
+    const event = new FocusEvent('blur')
+    emit('blur', event)
+    emitFormBlur()
 
     // Since we use `displayValue` prop inside ComboboxInput we should reset searchTerm manually
     // https://reka-ui.com/docs/components/combobox#api-reference
@@ -356,19 +362,13 @@ function onUpdateOpen(value: boolean) {
       }, STATE_ANIMATION_DELAY_MS)
     }
   }
-  else {
-    const event = new FocusEvent('blur')
-    emit('blur', event)
-    emitFormBlur()
-    clearTimeout(timeoutId)
-  }
 }
 
 function onCreate(e: Event) {
   e.preventDefault()
   e.stopPropagation()
 
-  emit('create', searchTerm.value!)
+  emit('create', searchTerm.value)
 }
 
 function onSelect(e: Event, item: SelectItem) {
