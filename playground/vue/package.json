@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@byyuurin/ui": "workspace:*",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@vue/tsconfig": "^0.8.1",
-    "unocss": "^66.5.5",
+    "unocss": "^66.5.10",
     "unplugin-vue-router": "^0.12.0"
   }
 }
