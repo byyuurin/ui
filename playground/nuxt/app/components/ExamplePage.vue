@@ -63,6 +63,7 @@ const toastProviderProps = ref<Pick<Required<AppProps['toaster'] & object>, 'dur
         <ExampleSeparator />
         <ExampleSkeleton />
         <ExampleSlider />
+        <ExampleStepper />
         <ExampleSwitch />
         <ExampleTable />
         <ExampleTabs />
