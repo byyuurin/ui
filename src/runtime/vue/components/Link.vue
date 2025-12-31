@@ -217,7 +217,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
           ...inheritProps,
           href: to,
           target: isExternal ? '_blank' : undefined,
-          active,
+          active: active ?? false,
           isExternal,
         }"
       >
@@ -235,7 +235,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
       }"
       :class="resolveLinkClass()"
     >
-      <slot :active="active">
+      <slot :active="active ?? false">
         {{ props.label }}
       </slot>
     </LinkBase>
