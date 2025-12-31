@@ -1,15 +1,15 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import type { ButtonHTMLAttributes } from 'vue'
 import type { RouteLocationRaw, RouterLinkProps } from 'vue-router'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../types'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from '../types/html'
 import type { StaticSlot } from '../types/utils'
 
 interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
    * Route Location the link should navigate to when clicked on.
    */
-  to?: RouteLocationRaw // need to manually type to avoid breaking typedPages
+  to?: RouteLocationRaw
   /**
    * An alias for `to`. If used with `to`, `href` will be ignored
    */
@@ -21,11 +21,11 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   /**
    * Where to display the linked URL, as the name for a browsing context.
    */
-  target?: '_blank' | '_parent' | '_self' | '_top' | (string & {})
+  target?: '_blank' | '_parent' | '_self' | '_top' | (string & {}) | null
   /**
    * A rel attribute value to apply on the link. Defaults to "noopener noreferrer" for external links.
    */
-  rel?: 'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc' | (string & {})
+  rel?: 'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc' | (string & {}) | null
   /**
    * If set to true, no rel attribute will be added to the link
    */
@@ -49,9 +49,14 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
    * Escape hatch to disable `prefetch` attribute.
    */
   noPrefetch?: boolean
+  /**
+   * An option to either add or remove trailing slashes in the `href` for this specific link.
+   * Overrides the global `trailingSlash` option if provided.
+   */
+  trailingSlash?: 'append' | 'remove'
 }
 
-export interface LinkProps extends ComponentBaseProps, NuxtLinkProps {
+export interface LinkProps extends ComponentBaseProps, Omit<NuxtLinkProps, 'custom'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
   /**
    * The element or component this component should render as when not a link.
    * @default "button"

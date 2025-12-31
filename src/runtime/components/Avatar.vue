@@ -3,6 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/avatar'
 import type { ChipProps, ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ImgHTMLAttributes } from '../types/html'
 import type { StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -12,7 +13,7 @@ interface InnerAs {
   img?: PrimitiveProps['as']
 }
 
-export interface AvatarProps extends ComponentBaseProps {
+export interface AvatarProps extends ComponentBaseProps, /** @vue-ignore */ Omit<ImgHTMLAttributes, 'src' | 'alt'> {
   /**
    * The element or component this component should render as.
    * @default "span"

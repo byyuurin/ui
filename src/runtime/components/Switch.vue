@@ -3,11 +3,12 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { SwitchRootProps } from 'reka-ui'
 import theme from '#build/ui/switch'
 import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonHTMLAttributes } from '../types/html'
 import type { StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'> {
+export interface SwitchProps extends ComponentBaseProps, Pick<SwitchRootProps, 'disabled' | 'id' | 'name' | 'required' | 'value' | 'defaultValue'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled' | 'value' | 'name'> {
   /**
    * The element or component this component should render as.
    *  @default "div"

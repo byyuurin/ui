@@ -4,6 +4,7 @@ import type { ComboboxArrowProps, ComboboxContentEmits, ComboboxContentProps, Co
 import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ButtonProps, ChipProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, InputProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
+import type { ButtonHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
 import type { AcceptableValue, ArrayOrNested, Defined, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, MaybeNull, NestedItem, Nullable, StaticSlot } from '../types/utils'
 
@@ -34,7 +35,7 @@ export interface SelectProps<
   T extends ArrayOrNested<SelectItem> = ArrayOrNested<SelectItem>,
   VK extends Nullable<GetItemKeys<T>> = 'value',
   M extends boolean = false,
-> extends ComponentBaseProps, UseComponentIconsProps, Pick<ComboboxRootProps, 'open' | 'defaultOpen' | 'disabled' | 'name' | 'resetSearchTermOnBlur' | 'resetSearchTermOnSelect' | 'resetModelValueOnClear' | 'highlightOnHover'> {
+> extends ComponentBaseProps, UseComponentIconsProps, Pick<ComboboxRootProps, 'open' | 'defaultOpen' | 'disabled' | 'name' | 'resetSearchTermOnBlur' | 'resetSearchTermOnSelect' | 'resetModelValueOnClear' | 'highlightOnHover'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled' | 'value' | 'name'> {
   id?: string
   /** The placeholder text when the select is empty. */
   placeholder?: string

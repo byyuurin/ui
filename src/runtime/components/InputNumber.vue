@@ -3,6 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { NumberFieldRootProps } from 'reka-ui'
 import theme from '#build/ui/input-number'
 import type { ButtonProps, ComponentBaseProps, ComponentUIProps, IconProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
+import type { InputHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
@@ -10,7 +11,7 @@ type ThemeVariants = VariantProps<typeof theme>
 
 type InputNumberValue = MaybeNull<number>
 
-export interface InputNumberProps<T extends InputNumberValue = InputNumberValue> extends ComponentBaseProps, Pick<NumberFieldRootProps, 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'stepSnapping' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions' | 'disableWheelChange' | 'invertWheelChange' | 'readonly'> {
+export interface InputNumberProps<T extends InputNumberValue = InputNumberValue> extends ComponentBaseProps, Pick<NumberFieldRootProps, 'modelValue' | 'defaultValue' | 'min' | 'max' | 'step' | 'stepSnapping' | 'disabled' | 'required' | 'id' | 'name' | 'formatOptions' | 'disableWheelChange' | 'invertWheelChange' | 'readonly'>, /** @vue-ignore */ Omit<InputHTMLAttributes, 'disabled' | 'min' | 'max' | 'readonly' | 'required' | 'step' | 'name' | 'placeholder'> {
   /**
    * The element or component this component should render as.
    * @default "div"

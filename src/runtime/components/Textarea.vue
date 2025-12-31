@@ -4,6 +4,7 @@ import type { PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/textarea'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { TextareaHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
 import type { MaybeNull, Nullable, StaticSlot } from '../types/utils'
 
@@ -11,7 +12,7 @@ type TextareaValue = MaybeNull<string | number>
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface TextareaProps<T extends TextareaValue = TextareaValue> extends ComponentBaseProps, UseComponentIconsProps {
+export interface TextareaProps<T extends TextareaValue = TextareaValue> extends ComponentBaseProps, UseComponentIconsProps, /** @vue-ignore */ Omit<TextareaHTMLAttributes, 'name' | 'placeholder' | 'required' | 'autofocus' | 'disabled' | 'rows'> {
   /**
    * The element or component this component should render as.
    * @default "div"

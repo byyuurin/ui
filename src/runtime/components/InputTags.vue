@@ -4,12 +4,13 @@ import type { AcceptableInputValue, TagsInputRootEmits, TagsInputRootProps } fro
 import theme from '#build/ui/input-tags'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { InputHTMLAttributes } from '../types/html'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
 export type InputTagsItem = AcceptableInputValue
-export interface InputTagsProps<T extends InputTagsItem = InputTagsItem> extends ComponentBaseProps, Pick<TagsInputRootProps<T>, 'modelValue' | 'defaultValue' | 'addOnPaste' | 'addOnTab' | 'addOnBlur' | 'duplicate' | 'disabled' | 'delimiter' | 'max' | 'id' | 'convertValue' | 'displayValue' | 'name' | 'required'>, UseComponentIconsProps {
+export interface InputTagsProps<T extends InputTagsItem = InputTagsItem> extends ComponentBaseProps, Pick<TagsInputRootProps<T>, 'modelValue' | 'defaultValue' | 'addOnPaste' | 'addOnTab' | 'addOnBlur' | 'duplicate' | 'disabled' | 'delimiter' | 'max' | 'id' | 'convertValue' | 'displayValue' | 'name' | 'required'>, UseComponentIconsProps, /** @vue-ignore */ Omit<InputHTMLAttributes, 'disabled' | 'max' | 'required' | 'name' | 'placeholder'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -67,7 +68,7 @@ import Icon from './Icon.vue'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<InputTagsProps>(), {
-  // type: 'text',
+  type: 'text',
   autofocusDelay: 0,
 })
 
@@ -86,6 +87,7 @@ const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.inputTags))
   return styler({
     ...props,
+    type: undefined,
     color: color.value,
     size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,

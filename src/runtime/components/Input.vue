@@ -1,10 +1,10 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PrimitiveProps } from 'reka-ui'
-import type { InputHTMLAttributes } from 'vue'
 import theme from '#build/ui/input'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { InputHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
 import type { AcceptableValue, MaybeNull, Nullable, StaticSlot } from '../types/utils'
 
@@ -12,7 +12,7 @@ export type InputValue = AcceptableValue
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface InputProps<T extends InputValue = InputValue> extends ComponentBaseProps, UseComponentIconsProps {
+export interface InputProps<T extends InputValue = InputValue> extends ComponentBaseProps, UseComponentIconsProps, /** @vue-ignore */ Omit<InputHTMLAttributes, 'name' | 'type' | 'placeholder' | 'required' | 'autocomplete' | 'autofocus' | 'disabled'> {
   /**
    * The element or component this component should render as.
    * @default "div"

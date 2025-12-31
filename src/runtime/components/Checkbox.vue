@@ -3,11 +3,12 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { CheckboxRootEmits, CheckboxRootProps, PrimitiveProps } from 'reka-ui'
 import theme from '#build/ui/checkbox'
 import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ButtonHTMLAttributes } from '../types/html'
 import type { StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'> {
+export interface CheckboxProps extends ComponentBaseProps, Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled' | 'value' | 'name'> {
   /**
    * The element or component this component should render as.
    * @default "div"

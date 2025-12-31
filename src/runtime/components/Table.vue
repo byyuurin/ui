@@ -7,6 +7,7 @@ import type { PrimitiveProps } from 'reka-ui'
 import type { Ref, WatchOptions } from 'vue'
 import theme from '#build/ui/table'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
+import type { TableHTMLAttributes } from '../types/html'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
 declare module '@tanstack/table-core' {
@@ -49,7 +50,7 @@ export interface TableOptions<T extends TableData = TableData> extends Omit<Core
 
 type ThemeVariants = VariantProps<typeof theme>
 
-export interface TableProps<T extends TableData = TableData> extends ComponentBaseProps, TableOptions<T> {
+export interface TableProps<T extends TableData = TableData> extends ComponentBaseProps, TableOptions<T>, /** @vue-ignore */ TableHTMLAttributes {
   /**
    * The element or component this component should render as.
    * @default "div"

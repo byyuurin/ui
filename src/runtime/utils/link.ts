@@ -2,6 +2,46 @@ import { reactivePick } from '@vueuse/core'
 import { diff, isEqual } from 'ohash/utils'
 import type { LinkProps } from '../types'
 
+export const linkKeys = [
+  'active',
+  'activeClass',
+  'ariaCurrentValue',
+  'as',
+  'disabled',
+  'download',
+  'exact',
+  'exactActiveClass',
+  'exactHash',
+  'exactQuery',
+  'external',
+  'form',
+  'formaction',
+  'formenctype',
+  'formmethod',
+  'formnovalidate',
+  'formtarget',
+  'href',
+  'hreflang',
+  'inactiveClass',
+  'media',
+  'noPrefetch',
+  'noRel',
+  'onClick',
+  'ping',
+  'prefetch',
+  'prefetchOn',
+  'prefetchedClass',
+  'referrerpolicy',
+  'rel',
+  'replace',
+  'target',
+  'title',
+  'to',
+  'trailingSlash',
+  'type',
+  'viewTransition',
+] as const
+
 export function pickLinkProps(
   link: LinkProps & { [key: string]: any },
 ) {
@@ -10,38 +50,9 @@ export function pickLinkProps(
   const ariaKeys = keys.filter((key) => key.startsWith('aria-')) as Array<`aria-${string}`>
   const dataKeys = keys.filter((key) => key.startsWith('data-')) as Array<`data-${string}`>
 
-  const pickProps: (keyof LinkProps | 'download' | 'title' | 'onClick')[] = [
-    'active',
-    'activeClass',
-    'ariaCurrentValue',
-    'as',
-    'disabled',
-    'exact',
-    'exactActiveClass',
-    'exactHash',
-    'exactQuery',
-    'external',
-    'href',
-    'download',
-    'inactiveClass',
-    'noPrefetch',
-    'noRel',
-    'prefetch',
-    'prefetchedClass',
-    'rel',
-    'replace',
-    'target',
-    'to',
-    'type',
-    'title',
-    'onClick',
-    'title',
-    'onClick',
-  ] as const
-
   return reactivePick(
     link,
-    ...pickProps,
+    ...linkKeys,
     ...ariaKeys,
     ...dataKeys,
   )

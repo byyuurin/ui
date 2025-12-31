@@ -1,9 +1,10 @@
 <script lang="ts">
 import theme from '#build/ui/form'
 import type { ComponentBaseProps, Form, FormData, FormError, FormErrorEvent, FormErrorWithId, FormEvent, FormInputEvents, FormSchema, FormSubmitEvent, InferInput, InferOutput, RuntimeAppConfig } from '../types'
+import type { FormHTMLAttributes } from '../types/html'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
-export interface FormProps<S extends FormSchema, T extends boolean = true, N extends boolean = false> extends ComponentBaseProps {
+export interface FormProps<S extends FormSchema, T extends boolean = true, N extends boolean = false> extends ComponentBaseProps, /** @vue-ignore */ Omit<FormHTMLAttributes, 'name'> {
   id?: string | number
   /** Schema to validate the form state. Supports Standard Schema objects, Yup, Joi, and Superstructs. */
   schema?: S
