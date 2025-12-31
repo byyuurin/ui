@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { TabsRootEmits, TabsRootProps } from 'reka-ui'
+import type { ComponentPublicInstance } from 'vue'
 import theme from '#build/ui/tabs'
 import type { AvatarProps, BadgeProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { DynamicSlots, ExtractItem, GetItemKeys, StaticSlot } from '../types/utils'
@@ -69,7 +70,6 @@ export type TabsSlots<T extends TabsItem = TabsItem> = {
 <script lang="ts" setup generic="T extends TabsItem">
 import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
-import type { ComponentPublicInstance } from 'vue'
 import { computed, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { get } from '../utils'

@@ -7,13 +7,13 @@ import { icons } from './theme/app'
 export function getDefaultUIConfig(colors?: string[]): AppConfigUI<VariantsColor> {
   return {
     colors: pick({
-      primary: 'green',
-      secondary: 'blue',
+      primary: 'orange',
+      secondary: 'teal',
       success: 'green',
       info: 'blue',
       warning: 'yellow',
       error: 'red',
-      neutral: 'slate',
+      neutral: 'stone',
     }, [...(colors || []), 'neutral' as any]),
     icons,
   }

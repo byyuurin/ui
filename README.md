@@ -98,13 +98,13 @@ export default setup({
   },
   ui: {
     colors: {
-      primary: 'green',
-      secondary: 'blue',
+      primary: 'orange',
+      secondary: 'teal',
       success: 'green',
       info: 'blue',
       warning: 'yellow',
       error: 'red',
-      neutral: 'slate',
+      neutral: 'stone',
     },
     icons: {
       close: 'i-lucide-x',
@@ -117,6 +117,8 @@ export default setup({
       chevronDoubleLeft: 'i-lucide-chevrons-left',
       chevronDoubleRight: 'i-lucide-chevrons-right',
       ellipsis: 'i-lucide-ellipsis',
+      folder: 'i-lucide-folder',
+      folderOpen: 'i-lucide-folder-open',
       plus: 'i-lucide-plus',
       minus: 'i-lucide-minus',
       external: 'i-lucide-arrow-up-right',

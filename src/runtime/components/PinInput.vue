@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { PinInputRootEmits, PinInputRootProps } from 'reka-ui'
+import type { ComponentPublicInstance } from 'vue'
 import theme from '#build/ui/pin-input'
 import type { ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
 
@@ -41,7 +42,6 @@ export type PinInputEmits<T extends PinInputType = 'text'> = PinInputRootEmits<T
 <script setup lang="ts" generic="T extends PinInputType = 'text' | 'number'">
 import { reactivePick } from '@vueuse/core'
 import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
-import type { ComponentPublicInstance } from 'vue'
 import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'

@@ -24,7 +24,7 @@ const neutral = computed({
 
 const colorsToOmit = ['inherit', 'current', 'transparent', 'black', 'white', 'dark', 'light', ...neutralColors]
 const primaryColors = [...Object.keys(omit(colors, colorsToOmit as any))]
-const primaryLocal = useLocalStorage('--ui-primary', 'light')
+const primaryLocal = useLocalStorage('--ui-primary', 'orange')
 const primary = computed({
   get() {
     return appConfig.ui.colors.primary
