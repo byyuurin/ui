@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { ComboboxArrowProps, ComboboxContentEmits, ComboboxContentProps, ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'
 import theme from '#build/ui/select'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, ChipProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, InputProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ButtonProps, ChipProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, InputProps, LinkPropsKeys, RuntimeAppConfig } from '../types'
 import type { ModelModifiers } from '../types/input'
 import type { AcceptableValue, ArrayOrNested, Defined, EmitsToProps, GetItemKeys, GetItemValue, GetModelValue, GetModelValueEmits, MaybeArray, MaybeNull, NestedItem, Nullable, StaticSlot } from '../types/utils'
 
@@ -34,7 +34,7 @@ export interface SelectProps<
   T extends ArrayOrNested<SelectItem> = ArrayOrNested<SelectItem>,
   VK extends Nullable<GetItemKeys<T>> = 'value',
   M extends boolean = false,
-> extends ComponentBaseProps, UseComponentIconsProps, Pick<ComboboxRootProps, 'open' | 'defaultOpen' | 'disabled' | 'name' | 'resetSearchTermOnBlur' | 'resetSearchTermOnSelect' | 'highlightOnHover'> {
+> extends ComponentBaseProps, UseComponentIconsProps, Pick<ComboboxRootProps, 'open' | 'defaultOpen' | 'disabled' | 'name' | 'resetSearchTermOnBlur' | 'resetSearchTermOnSelect' | 'resetModelValueOnClear' | 'highlightOnHover'> {
   id?: string
   /** The placeholder text when the select is empty. */
   placeholder?: string
@@ -66,6 +66,17 @@ export interface SelectProps<
    * @default app.icons.check
    */
   selectedIcon?: IconProps['name']
+  /**
+   * Display a clear button to reset the model value.
+   * Can be an object to pass additional props to the Button.
+   * @default false
+   */
+  clear?: boolean | Partial<Omit<ButtonProps, LinkPropsKeys>>
+  /**
+   * The icon displayed in the clear button.
+   * @default app.icons.close
+   */
+  clearIcon?: IconProps['name']
   /**
    * The content of the menu.
    * @default { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }
@@ -131,6 +142,7 @@ export type SelectEmits<A extends ArrayOrNested<SelectItem>, VK extends Nullable
   'blur': [event: FocusEvent]
   'focus': [event: FocusEvent]
   'create': [item: string]
+  'clear': []
   /** Event handler when highlighted element changes. */
   'highlight': [payload: {
     ref: HTMLElement
@@ -163,7 +175,7 @@ export interface SelectSlots<
 <script lang="ts" setup generic="T extends ArrayOrNested<SelectItem>, VK extends Nullable<GetItemKeys<T>> = 'value', M extends boolean = false">
 import { createReusableTemplate, reactivePick } from '@vueuse/core'
 import { defu } from 'defu'
-import { ComboboxAnchor, ComboboxArrow, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxLabel, ComboboxPortal, ComboboxRoot, ComboboxSeparator, ComboboxTrigger, FocusScope, useFilter, useForwardPropsEmits } from 'reka-ui'
+import { ComboboxAnchor, ComboboxArrow, ComboboxCancel, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxLabel, ComboboxPortal, ComboboxRoot, ComboboxSeparator, ComboboxTrigger, FocusScope, useFilter, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, shallowRef, toRaw, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
@@ -174,6 +186,7 @@ import { usePortal } from '../composables/usePortal'
 import { compare, get, getDisplayValue, isArrayOfArray, looseToNumber } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
+import Button from './Button.vue'
 import Chip from './Chip.vue'
 import Icon from './Icon.vue'
 import Input from './Input.vue'
@@ -189,6 +202,7 @@ const props = withDefaults(defineProps<SelectProps<T, VK, M>>(), {
   descriptionKey: 'description',
   resetSearchTermOnBlur: true,
   resetSearchTermOnSelect: true,
+  resetModelValueOnClear: true,
   autofocusDelay: 0,
 })
 
@@ -203,10 +217,11 @@ const searchTerm = defineModel<string>('searchTerm', { default: '' })
 
 const { contains } = useFilter({ sensitivity: 'base' })
 
-const rootProps = useForwardPropsEmits(reactivePick(props, 'modelValue', 'defaultValue', 'open', 'defaultOpen', 'required', 'multiple', 'resetSearchTermOnBlur', 'resetSearchTermOnSelect', 'highlightOnHover'), emit)
+const rootProps = useForwardPropsEmits(reactivePick(props, 'modelValue', 'defaultValue', 'open', 'defaultOpen', 'required', 'multiple', 'resetSearchTermOnBlur', 'resetSearchTermOnSelect', 'resetModelValueOnClear', 'highlightOnHover'), emit)
 const portalProps = usePortal(toRef(() => props.portal))
 const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as ComboboxContentProps)
 const arrowProps = toRef(() => props.arrow as ComboboxArrowProps)
+const clearProps = computed(() => typeof props.clear === 'object' ? props.clear : {})
 const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t('select.search'), ...props.searchInput ? {} : { readonly: true } }) as InputProps)
 
 const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormChange, emitFormInput, emitFormBlur, emitFormFocus } = useFormField<SelectProps<T, VK, M>>(props)
@@ -387,6 +402,17 @@ function isSelectItem(item: SelectItem): item is Exclude<SelectItem, SelectValue
   return typeof item === 'object' && item !== null
 }
 
+function isModelValueEmpty(modelValue: GetModelValue<T, VK, M>): boolean {
+  if (props.multiple && Array.isArray(modelValue))
+    return modelValue.length === 0
+
+  return modelValue == null || modelValue === ''
+}
+
+function onClear() {
+  emit('clear')
+}
+
 defineExpose({
   triggerRef: toRef(() => triggerRef.value?.$el as HTMLButtonElement),
 })
@@ -451,9 +477,22 @@ defineExpose({
           </template>
         </slot>
 
-        <span v-if="isTrailing || !!slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
+        <span v-if="isTrailing || !!slots.trailing || props.clear" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
           <slot name="trailing" :model-value="(modelValue as Defined<GetModelValue<T, VK, M>>)" :open="open" :ui="ui">
-            <Icon v-if="trailingIconName" :name="trailingIconName" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailingIcon" />
+            <ComboboxCancel v-if="props.clear && !isModelValueEmpty(modelValue as GetModelValue<T, VK, M>)" as-child>
+              <Button
+                as="span"
+                :icon="props.clearIcon || appConfig.ui.icons.close"
+                variant="link"
+                color="neutral"
+                tabindex="-1"
+                v-bind="clearProps"
+                :class="ui.trailingClear({ class: props.ui?.trailingClear })"
+                data-part="trailingClear"
+                @click.stop="onClear"
+              />
+            </ComboboxCancel>
+            <Icon v-else-if="trailingIconName" :name="trailingIconName" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })" data-part="trailingIcon" />
           </slot>
         </span>
       </ComboboxTrigger>

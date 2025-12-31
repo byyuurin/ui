@@ -19,6 +19,7 @@ const controls: ControlItems<SelectProps<typeof items>> = [
   { prop: 'placeholder', value: 'placeholder', placeholder: 'placeholder' },
   { prop: 'searchInput', value: false },
   { prop: 'multiple', value: false },
+  { prop: 'clear', value: false },
   { prop: 'arrow', value: false },
   { prop: 'highlight', value: false },
   { prop: 'disabled', value: false },

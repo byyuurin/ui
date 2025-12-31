@@ -23,6 +23,7 @@ export default (options: Required<ModuleOptions>) => {
         'data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in]',
         'origin-[--reka-combobox-content-transform-origin] w-[--reka-combobox-trigger-width]',
       ],
+      trailingClear: 'p-0',
       input: 'border-b border-default',
       focusScope: 'flex flex-col min-h-0',
       viewport: 'relative divide-y divide-default scroll-py-1 overflow-y-auto flex-1',
