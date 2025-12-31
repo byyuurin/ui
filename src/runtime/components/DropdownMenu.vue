@@ -116,7 +116,7 @@ import DropdownMenuContent from './DropdownMenuContent.vue'
 
 const props = withDefaults(defineProps<DropdownMenuProps<T>>(), {
   portal: true,
-  modal: true,
+  modal: false,
   externalIcon: true,
   labelKey: 'label',
   descriptionKey: 'description',

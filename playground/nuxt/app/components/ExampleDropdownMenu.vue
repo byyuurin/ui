@@ -104,6 +104,7 @@ const items = [
 
 const controls: ControlItems<DropdownMenuProps<typeof items>> = [
   { prop: 'size', value: 'md', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+  { prop: 'modal', value: false },
   { prop: 'arrow', value: false },
   { prop: 'disabled', value: false },
 ]
