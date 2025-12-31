@@ -3,7 +3,7 @@ import type { ConfigProviderProps, TooltipProviderProps } from 'reka-ui'
 import type { Locale, Messages, ToastProviderProps } from '../types'
 import type { MaybeNull, StaticSlot } from '../types/utils'
 
-export interface AppProps<T extends Messages = Messages> extends Omit<ConfigProviderProps, 'useId' | 'dir' | 'locale'> {
+export interface AppProps<T extends Messages = Messages> extends Omit<ConfigProviderProps, 'useId' | 'locale'> {
   toaster?: MaybeNull<ToastProviderProps>
   tooltip?: TooltipProviderProps
   locale?: Locale<T>
@@ -42,7 +42,7 @@ providePortalTarget(portal)
 </script>
 
 <template>
-  <ConfigProvider :use-id="() => (useId() as string)" :dir="locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
+  <ConfigProvider :use-id="() => (useId() as string)" :dir="props.dir || locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
     <TooltipProvider v-bind="tooltipProps">
       <ToastProvider v-if="props.toaster !== null" v-bind="toastProviderProps">
         <slot></slot>
