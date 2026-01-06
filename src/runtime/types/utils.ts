@@ -12,7 +12,7 @@ export type DeepPartial<T> = {
 }
 
 type SlotProps<T> = T extends Record<string, any>
-  ? { [P in keyof T & string]: T[P] extends undefined ? T[P] | undefined : T[P] }
+  ? { [P in keyof T]: T[P] }
   : Record<string, never>
 
 export type StaticSlot<P extends Record<string, any> | undefined = undefined> = P extends Record<string, any>
