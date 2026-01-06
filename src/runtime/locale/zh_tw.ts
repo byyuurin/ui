@@ -19,6 +19,9 @@ export default defineLocale({
       next: '下一頁',
       goto: '跳轉到第 {page} 頁',
     },
+    fileUpload: {
+      removeFile: '移除 {filename}',
+    },
     inputNumber: {
       increment: '增加',
       decrement: '減少',

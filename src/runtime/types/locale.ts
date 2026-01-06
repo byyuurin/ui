@@ -20,6 +20,9 @@ export interface Messages {
     next: string
     goto: string
   }
+  fileUpload: {
+    removeFile: string
+  }
   inputNumber: {
     increment: string
     decrement: string

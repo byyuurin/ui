@@ -19,6 +19,9 @@ export default defineLocale({
       next: 'Next',
       goto: 'Go to slide {page}',
     },
+    fileUpload: {
+      removeFile: 'Remove {filename}',
+    },
     inputNumber: {
       increment: 'Increment',
       decrement: 'Decrement',
