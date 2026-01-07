@@ -45,6 +45,7 @@ import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Tooltip from './Tooltip.vue'
 
@@ -86,8 +87,9 @@ const { id, name, size, color, disabled, ariaAttrs, emitFormChange, emitFormInpu
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.slider))
+
   return styler({
-    ...props,
+    ...pick(props, ['orientation']),
     size: size.value,
     color: color.value,
     disabled: disabled.value,

@@ -100,6 +100,7 @@ import { Calendar as BaseCalendar, RangeCalendar } from 'reka-ui/namespaced'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
@@ -120,8 +121,9 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.calendar))
+
   return styler({
-    ...props,
+    ...pick(props, ['color', 'variant', 'size']),
     outsideView: props.numberOfMonths === 1,
   })
 })

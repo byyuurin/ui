@@ -62,6 +62,7 @@ import { ToastAction, ToastClose, ToastDescription, ToastRoot, ToastTitle, useFo
 import { computed, nextTick, onMounted, shallowRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Button from './Button.vue'
@@ -84,7 +85,7 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.toast))
   return styler({
-    ...props,
+    ...pick(props, ['color', 'orientation']),
     title: !!props.title || !!slots.title,
   })
 })

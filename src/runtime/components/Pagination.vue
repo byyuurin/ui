@@ -101,6 +101,7 @@ import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, Pa
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
@@ -125,7 +126,7 @@ const { dir } = useLocale()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.pagination))
-  return styler(props)
+  return styler(pick(props, []))
 })
 
 const firstIcon = computed(() => props.firstIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleRight : appConfig.ui.icons.chevronDoubleLeft))

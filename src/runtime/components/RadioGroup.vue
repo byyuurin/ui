@@ -87,7 +87,7 @@ import { Label, RadioGroupIndicator, RadioGroupItem as RekaRadioGroupItem, Radio
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
-import { get } from '../utils'
+import { get, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<RadioGroupProps<T, VK>>(), {
@@ -109,9 +109,9 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.radioGroup))
   return styler({
-    ...props,
-    color: color.value,
+    ...pick(props, ['required', 'orientation', 'variant', 'indicator']),
     size: size.value,
+    color: color.value,
     disabled: disabled.value,
   })
 })

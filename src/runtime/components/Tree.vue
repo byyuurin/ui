@@ -110,7 +110,7 @@ import { defu } from 'defu'
 import { TreeItem, TreeRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, shallowRef } from 'vue'
 import { useAppConfig } from '#imports'
-import { get } from '../utils'
+import { get, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -187,8 +187,7 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.tree))
-
-  return styler(props)
+  return styler(pick(props, ['color', 'size']))
 })
 
 const defaultExpanded = computed(() => props.defaultExpanded ?? props.items?.flatMap((item) => getDefaultOpenedItems(item)))

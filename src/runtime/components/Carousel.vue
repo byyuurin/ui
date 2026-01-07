@@ -116,6 +116,7 @@ import { Primitive, useForwardProps } from 'reka-ui'
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
@@ -158,7 +159,7 @@ const { t, dir } = useLocale()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.carousel))
-  return styler(props)
+  return styler(pick(props, ['orientation']))
 })
 
 const rootProps = useForwardProps(reactivePick(props, 'active', 'align', 'breakpoints', 'containScroll', 'dragFree', 'dragThreshold', 'duration', 'inViewThreshold', 'loop', 'skipSnaps', 'slidesToScroll', 'startIndex', 'watchDrag', 'watchResize', 'watchSlides', 'watchFocus'))

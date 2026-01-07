@@ -44,6 +44,7 @@ import { TooltipArrow, TooltipContent, TooltipPortal, TooltipRoot, TooltipTrigge
 import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { usePortal } from '../composables/usePortal'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Kbd from './Kbd.vue'
 
@@ -61,7 +62,7 @@ const arrowProps = toRef(() => props.arrow as TooltipArrowProps)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.tooltip))
-  return styler(props)
+  return styler(pick(props, []))
 })
 </script>
 

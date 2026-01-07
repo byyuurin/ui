@@ -44,6 +44,7 @@ import { reactivePick } from '@vueuse/core'
 import { Separator, useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -60,7 +61,7 @@ const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orien
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.separator))
-  return styler(props)
+  return styler(pick(props, ['color', 'orientation', 'size', 'type']))
 })
 </script>
 

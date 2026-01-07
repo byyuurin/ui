@@ -42,6 +42,7 @@ import { computed, shallowRef, watch } from 'vue'
 import ImageComponent from '#build/ui-image-component'
 import { useAppConfig } from '#imports'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Chip from './Chip.vue'
 import Icon from './Icon.vue'
@@ -64,8 +65,9 @@ const { size } = useAvatarGroup(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.avatar))
+
   return styler({
-    ...props,
+    ...pick(props, []),
     size: size.value,
   })
 })

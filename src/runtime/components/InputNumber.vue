@@ -82,6 +82,7 @@ import { useAppConfig } from '#imports'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
@@ -107,10 +108,11 @@ const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.inputNumber))
+
   return styler({
-    ...props,
-    size: fieldGroupSize.value || formFieldSize.value,
+    ...pick(props, ['variant', 'orientation', 'disabled']),
     color: color.value,
+    size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
     fieldGroup: orientation.value,
     increment: props.orientation === 'vertical' ? (!!props.increment || !!props.decrement) : !!props.increment,

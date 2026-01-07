@@ -13,6 +13,7 @@ import { reactivePick } from '@vueuse/core'
 import { ScrollAreaCorner, ScrollAreaRoot, ScrollAreaScrollbar, ScrollAreaThumb, ScrollAreaViewport } from 'reka-ui'
 import { computed, ref } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ScrollAreaProps>(), {
@@ -24,7 +25,7 @@ const rootProps = reactivePick(props, 'type', 'dir', 'scrollHideDelay')
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.scrollArea))
-  return styler(props)
+  return styler(pick(props, []))
 })
 
 defineExpose({

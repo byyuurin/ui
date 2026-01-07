@@ -76,7 +76,7 @@ import { CheckboxGroupRoot, useForwardProps, useForwardPropsEmits } from 'reka-u
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
-import { get, omit } from '../utils'
+import { get, omit, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Checkbox from './Checkbox.vue'
 
@@ -158,10 +158,12 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.checkboxGroup))
+
   return styler({
-    ...props,
+    ...pick(props, ['required', 'orientation', 'variant']),
     size: size.value,
     color: color.value,
+    disabled: disabled.value,
   })
 })
 </script>

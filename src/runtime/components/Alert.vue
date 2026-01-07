@@ -63,6 +63,7 @@ import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Button from './Button.vue'
@@ -82,7 +83,7 @@ const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.alert))
 
   return styler({
-    ...props,
+    ...pick(props, ['color', 'variant', 'orientation']),
     title: !!props.title || !!slots.title,
   })
 })

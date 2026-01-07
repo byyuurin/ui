@@ -39,6 +39,7 @@ import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -55,11 +56,12 @@ const { isLeading, leadingIconName, isTrailing, trailingIconName } = useComponen
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.badge))
+
   return styler({
-    ...props,
+    ...pick(props, ['color', 'variant']),
     size: size.value,
-    fieldGroup: orientation.value,
     square: props.square || (!slots.default && !props.label),
+    fieldGroup: orientation.value,
   })
 })
 </script>

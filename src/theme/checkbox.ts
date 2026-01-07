@@ -87,9 +87,6 @@ export default (options: Required<ModuleOptions>) => ct({
         description: 'cursor-not-allowed',
       },
     },
-    checked: {
-      true: '',
-    },
   },
   compoundVariants: [
     { size: 'xs', variant: 'card', class: { root: 'p-2.5' } },

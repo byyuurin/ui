@@ -31,6 +31,7 @@ import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { provideAvatarGroup } from '../composables/useAvatarGroup'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 
@@ -79,7 +80,7 @@ const hiddenCount = computed(() => {
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.avatarGroup))
-  return styler(props)
+  return styler(pick(props, ['size']))
 })
 
 provideAvatarGroup(computed(() => props))

@@ -78,6 +78,7 @@ import { computed, nextTick, onMounted, onUnmounted, reactive, readonly, ref, sh
 import { useAppConfig } from '#imports'
 import { injectFormBus, injectFormState, provideFormBus, provideFormErrors, provideFormInputs, provideFormLoading, provideFormOptions, provideFormState } from '../composables/useFormField'
 import { FormValidationException } from '../types/form'
+import { pick } from '../utils'
 import { getAtPath, setAtPath, validateSchema } from '../utils/form'
 import { cv, merge } from '../utils/style'
 
@@ -454,7 +455,7 @@ defineExpose(api)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.form))
-  return styler(props)
+  return styler(pick(props, []))
 })
 </script>
 

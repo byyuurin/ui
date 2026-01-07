@@ -50,7 +50,7 @@ import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
-import { get, pickLinkProps } from '../utils'
+import { get, pick, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -71,7 +71,7 @@ const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl'
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.breadcrumb))
-  return styler(props)
+  return styler(pick(props, []))
 })
 </script>
 

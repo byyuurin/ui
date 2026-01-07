@@ -52,6 +52,7 @@ import { Primitive, ProgressIndicator, ProgressRoot, useForwardPropsEmits } from
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<ProgressProps>(), {
@@ -143,7 +144,7 @@ function stepVariant(index: number | string) {
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.progress))
-  return styler(props)
+  return styler(pick(props, ['animation', 'size', 'color', 'orientation', 'inverted']))
 })
 </script>
 

@@ -64,7 +64,7 @@ import { computed, nextTick, onMounted, shallowRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
-import { looseToNumber } from '../utils'
+import { looseToNumber, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -89,10 +89,11 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.textarea))
+
   return styler({
-    ...props,
-    size: size.value,
+    ...pick(props, ['variant', 'loading', 'autoresize']),
     color: color.value,
+    size: size.value,
     highlight: highlight.value,
     leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,

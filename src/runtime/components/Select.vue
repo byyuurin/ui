@@ -184,7 +184,7 @@ import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { useLocale } from '../composables/useLocale'
 import { usePortal } from '../composables/usePortal'
-import { compare, get, getDisplayValue, isArrayOfArray, looseToNumber } from '../utils'
+import { compare, get, getDisplayValue, isArrayOfArray, looseToNumber, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Button from './Button.vue'
@@ -236,14 +236,15 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.select))
+
   return styler({
-    ...props,
-    fieldGroup: orientation.value,
-    size: fieldGroupSize.value || formFieldSize.value,
+    ...pick(props, ['variant', 'loading']),
     color: color.value,
+    size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
     leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,
+    fieldGroup: orientation.value,
     searchInput: !!props.searchInput,
   })
 })

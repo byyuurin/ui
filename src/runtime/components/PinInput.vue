@@ -45,7 +45,7 @@ import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
 import { computed, onMounted, ref } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
-import { looseToNumber } from '../utils'
+import { looseToNumber, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<PinInputProps<T>>(), {
@@ -64,9 +64,9 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.pinInput))
   return styler({
-    ...props,
-    size: size.value,
+    ...pick(props, ['variant']),
     color: color.value,
+    size: size.value,
     highlight: highlight.value,
   })
 })

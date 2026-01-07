@@ -54,6 +54,7 @@ import { CheckboxIndicator, CheckboxRoot, Label, Primitive, useForwardProps } fr
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -70,15 +71,17 @@ const slots = defineSlots<CheckboxSlots>()
 const modelValue = useVModel(props, 'modelValue', emit)
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, size, name, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<CheckboxProps>(props)
+const { id: _id, name, size, color, disabled, ariaAttrs, emitFormChange, emitFormInput } = useFormField<CheckboxProps>(props)
 const id = _id.value ?? useId()
 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.checkbox))
+
   return styler({
-    ...props,
+    ...pick(props, ['variant', 'indicator', 'required']),
     size: size.value,
+    color: color.value,
     disabled: disabled.value,
   })
 })

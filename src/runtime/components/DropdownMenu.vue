@@ -110,7 +110,7 @@ import { reactivePick } from '@vueuse/core'
 import { DropdownMenuArrow, DropdownMenuRoot, DropdownMenuTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
-import { omit } from '../utils'
+import { omit, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import DropdownMenuContent from './DropdownMenuContent.vue'
 
@@ -132,7 +132,7 @@ const getProxySlots = () => omit(slots, ['default'])
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.dropdownMenu))
-  return styler(props)
+  return styler(pick(props, ['size']))
 })
 </script>
 

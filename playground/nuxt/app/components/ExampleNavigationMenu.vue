@@ -145,10 +145,11 @@ const controls: ControlItems<NavigationMenuProps<typeof items.value>> = [
   { prop: 'variant', value: 'pill', options: ['pill', 'link'] },
   { prop: 'arrow', value: false },
   { prop: 'unmountOnHide', value: true },
-  { prop: 'collapsed', value: false, description: 'Collapse the navigation menu to only show icons.', warning: 'Only works when `orientation` is `vertical`.' },
   { prop: 'tooltip', value: true, description: 'Display a tooltip on the items when the menu is collapsed with the label of the item.' },
   { prop: 'popover', value: true, description: 'Display a popover on the items when the menu is collapsed with the children list.' },
   { prop: 'highlight', value: false, description: 'Display a line next to the active item.' },
+  { prop: 'collapsed', value: false, description: 'Collapse the navigation menu to only show icons.', warning: 'Only works when `orientation` is `vertical`.' },
+  { prop: 'disabled', value: false, description: 'When `true`, prevents the user from interacting with the accordion and all its items', warning: 'Only works when `orientation` is `vertical`.' },
 ]
 </script>
 

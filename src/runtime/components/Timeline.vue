@@ -60,6 +60,7 @@ import { useVModel } from '@vueuse/core'
 import { Primitive, Separator } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 
@@ -101,7 +102,7 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.timeline))
-  return styler(props)
+  return styler(pick(props, ['orientation', 'size', 'color', 'reverse']))
 })
 </script>
 

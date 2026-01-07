@@ -211,6 +211,7 @@ import { upperFirst } from 'scule'
 import { computed, ref, shallowRef, toRef, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 defineOptions({ inheritAttrs: false })
@@ -477,8 +478,9 @@ const { t } = useLocale()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.table))
+
   return styler({
-    ...props,
+    ...pick(props, ['loading', 'loadingColor', 'loadingAnimation']),
     sticky: props.virtualize ? false : props.sticky,
     virtualize: !!props.virtualize,
   })

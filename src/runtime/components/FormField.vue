@@ -55,6 +55,7 @@ import { Label, Primitive } from 'reka-ui'
 import { computed, ref, useId, watch } from 'vue'
 import { useAppConfig } from '#imports'
 import { injectFormErrors, injectFormInputs, provideFormField, provideFormInputId } from '../composables/useFormField'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<FormFieldProps>(), {
@@ -113,7 +114,7 @@ provideFormField(computed(() => ({
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.formField))
-  return styler(props)
+  return styler(pick(props, ['size', 'required', 'orientation']))
 })
 </script>
 

@@ -102,6 +102,7 @@ import { useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 import theme from '#build/ui/link'
 import { useAppConfig, useRoute } from '#imports'
+import { pick } from '../utils'
 import { isPartiallyEqual } from '../utils/link'
 import { cv, merge } from '../utils/style'
 import LinkBase from './LinkBase.vue'
@@ -170,7 +171,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any) {
   if (props.raw)
     return [props.class, active ? props.activeClass : props.inactiveClass]
 
-  return ui.value.base({ ...props, active })
+  return ui.value.base({ ...pick(props, ['class', 'disabled']), active })
 }
 </script>
 

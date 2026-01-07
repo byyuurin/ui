@@ -48,7 +48,7 @@ import { computed, ref, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { usePortal } from '../composables/usePortal'
 import { provideToastMax, useToast } from '../composables/useToast'
-import { omit } from '../utils'
+import { omit, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Toast from './Toast.vue'
 
@@ -87,8 +87,9 @@ const swipeDirection = computed(() => {
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.toastProvider))
+
   return styler({
-    ...props,
+    ...pick(props, ['position']),
     swipeDirection: swipeDirection.value,
   })
 })

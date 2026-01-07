@@ -56,7 +56,7 @@ import { reactivePick } from '@vueuse/core'
 import { AccordionContent, AccordionHeader, AccordionItem, AccordionRoot, AccordionTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
-import { get } from '../utils'
+import { get, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -74,7 +74,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.accordion))
-  return styler(props)
+  return styler(pick(props, ['disabled']))
 })
 </script>
 

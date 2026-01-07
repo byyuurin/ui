@@ -69,6 +69,7 @@ import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { usePortal } from '../composables/usePortal'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Button from './Button.vue'
 
@@ -109,7 +110,7 @@ const { t } = useLocale()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.modal))
-  return styler(props)
+  return styler(pick(props, ['transition', 'fullscreen', 'overlay']))
 })
 </script>
 

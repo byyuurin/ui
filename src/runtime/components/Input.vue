@@ -64,7 +64,7 @@ import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
-import { looseToNumber } from '../utils'
+import { looseToNumber, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -91,14 +91,14 @@ const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.input))
 
   return styler({
-    ...props,
+    ...pick(props, ['variant', 'loading']),
     type: props.type as ThemeVariants['type'],
     color: color.value,
     size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,
-    fieldGroup: orientation.value,
     leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,
+    fieldGroup: orientation.value,
   })
 })
 

@@ -61,6 +61,7 @@ import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -85,9 +86,9 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.inputTags))
+
   return styler({
-    ...props,
-    type: undefined,
+    ...pick(props, ['variant', 'loading']),
     color: color.value,
     size: fieldGroupSize.value || formFieldSize.value,
     highlight: highlight.value,

@@ -25,6 +25,7 @@ import { reactivePick } from '@vueuse/core'
 import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<CollapsibleProps>(), {
@@ -38,7 +39,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.collapsible))
-  return styler(props)
+  return styler(pick(props, []))
 })
 </script>
 

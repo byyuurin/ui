@@ -201,7 +201,7 @@ import { defu } from 'defu'
 import { AccordionContent, AccordionItem, AccordionRoot, AccordionTrigger, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot, NavigationMenuTrigger, NavigationMenuViewport, useForwardPropsEmits } from 'reka-ui'
 import { computed, toRef } from 'vue'
 import { useAppConfig } from '#imports'
-import { get, isArrayOfArray, pickLinkProps } from '../utils'
+import { get, isArrayOfArray, pick, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Badge from './Badge.vue'
@@ -265,8 +265,9 @@ const lists = computed<NavigationMenuItem[][]>(
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.navigationMenu))
+
   return styler({
-    ...props,
+    ...pick(props, ['orientation', 'collapsed', 'color', 'variant', 'highlight']),
     contentOrientation: props.orientation === 'vertical' ? undefined : props.contentOrientation,
     highlightColor: props.highlightColor || props.color,
   })

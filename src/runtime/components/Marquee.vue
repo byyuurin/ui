@@ -50,6 +50,7 @@ export interface MarqueeSlots {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<MarqueeProps>(), {
@@ -63,8 +64,7 @@ defineSlots<MarqueeSlots>()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.marquee))
-
-  return styler(props)
+  return styler(pick(props, ['pauseOnHover', 'orientation', 'reverse', 'overlay']))
 })
 </script>
 

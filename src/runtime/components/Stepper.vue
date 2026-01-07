@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { StepperRootEmits, StepperRootProps } from 'reka-ui'
 import theme from '#build/ui/stepper'
-import type { ComponentBaseProps, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
+import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, IconProps, RuntimeAppConfig } from '../types'
 import type { DynamicSlots, ExtractItem, StaticSlot } from '../types/utils'
 
 export interface StepperItem extends ComponentBaseProps {
@@ -44,7 +44,7 @@ export type StepperEmits<T extends StepperItem = StepperItem> = Omit<StepperRoot
 }
 
 export type StepperSlots<T extends StepperItem = StepperItem> = {
-  indicator: StaticSlot<{ item: T, ui: ComponentUIProps<typeof theme> }>
+  indicator: StaticSlot<{ item: T, ui: ComponentStyler<typeof theme> }>
   title: StaticSlot<{ item: T }>
   description: StaticSlot<{ item: T }>
   content: StaticSlot<{ item: T }>
@@ -56,6 +56,7 @@ import { reactivePick } from '@vueuse/core'
 import { StepperDescription, StepperIndicator, StepperItem, StepperRoot, StepperSeparator, StepperTitle, StepperTrigger, useForwardProps } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -72,7 +73,7 @@ const appConfig = useAppConfig() as RuntimeAppConfig
 
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.stepper))
-  return styler(props)
+  return styler(pick(props, ['orientation', 'size', 'color']))
 })
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'orientation', 'linear'))

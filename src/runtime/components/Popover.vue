@@ -103,7 +103,7 @@ const Component = computed(() => props.mode === 'hover' ? HoverCard : Popover)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.popover))
-  return styler(props)
+  return styler()
 })
 </script>
 

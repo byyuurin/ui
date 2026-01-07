@@ -42,7 +42,7 @@ import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { injectFormLoading } from '../composables/useFormField'
-import { omit, pickLinkProps } from '../utils'
+import { omit, pick, pickLinkProps } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
@@ -97,14 +97,13 @@ const ui = computed(() => {
   const styler = cv(merge(theme, uiConfig))
 
   return styler({
-    ...props,
-    loading: isLoading.value,
+    ...pick(props, ['color', 'variant', 'block']),
     size: size.value,
-    fieldGroup: orientation.value,
-    block: props.block,
+    loading: isLoading.value,
     square: props.square || (!slots.default && !props.label),
     leading: isLeading.value,
     trailing: isTrailing.value,
+    fieldGroup: orientation.value,
   })
 })
 </script>

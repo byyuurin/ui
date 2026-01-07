@@ -145,6 +145,7 @@ import { useAppConfig } from '#imports'
 import { useFileUpload } from '../composables/useFileUpload'
 import { useFormField } from '../composables/useFormField'
 import { useLocale } from '../composables/useLocale'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Button from './Button.vue'
@@ -197,11 +198,13 @@ const position = computed(() => {
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.fileUpload))
+
   return styler({
-    ...props,
+    ...pick(props, ['dropzone', 'interactive', 'color', 'size', 'multiple', 'highlight']),
     variant: variant.value,
     layout: layout.value,
     position: position.value,
+    disabled: disabled.value,
   })
 })
 

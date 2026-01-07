@@ -33,6 +33,7 @@ export interface KbdSlots {
 import { Primitive } from 'reka-ui'
 import { useAppConfig } from '#imports'
 import { useKbd } from '../composables/useKbd'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = withDefaults(defineProps<KbdProps>(), {
@@ -45,7 +46,7 @@ const { getKbdKey } = useKbd()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.kbd))
-  return styler(props)
+  return styler(pick(props, ['color', 'variant', 'size']))
 })
 </script>
 

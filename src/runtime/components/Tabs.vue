@@ -72,7 +72,7 @@ import { reactivePick } from '@vueuse/core'
 import { TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, useForwardPropsEmits } from 'reka-ui'
 import { computed, ref } from 'vue'
 import { useAppConfig } from '#imports'
-import { get } from '../utils'
+import { get, pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Avatar from './Avatar.vue'
 import Badge from './Badge.vue'
@@ -94,7 +94,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'unmountOnHide'
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.tabs))
-  return styler(props)
+  return styler(pick(props, ['color', 'variant', 'size', 'orientation']))
 })
 
 const triggersRef = ref<ComponentPublicInstance[]>([])

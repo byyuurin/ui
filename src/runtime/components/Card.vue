@@ -34,6 +34,7 @@ export interface CardSlots {
 import { Primitive } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 const props = defineProps<CardProps>()
@@ -42,7 +43,7 @@ const slots = defineSlots<CardSlots>()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.card))
-  return styler(props)
+  return styler(pick(props, ['variant']))
 })
 </script>
 

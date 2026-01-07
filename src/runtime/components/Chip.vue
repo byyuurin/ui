@@ -45,6 +45,7 @@ import { Primitive, Slot } from 'reka-ui'
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 
 defineOptions({ inheritAttrs: false })
@@ -63,7 +64,11 @@ const { size } = useAvatarGroup(props)
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.chip))
-  return styler({ ...props, size: size.value })
+
+  return styler({
+    ...pick(props, ['color', 'position', 'inset', 'standalone']),
+    size: size.value,
+  })
 })
 </script>
 

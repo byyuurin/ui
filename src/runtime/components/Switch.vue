@@ -52,6 +52,7 @@ import { Label, Primitive, SwitchRoot, SwitchThumb, useForwardProps } from 'reka
 import { computed, useId } from 'vue'
 import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
+import { pick } from '../utils'
 import { cv, merge } from '../utils/style'
 import Icon from './Icon.vue'
 
@@ -71,13 +72,12 @@ const id = _id.value ?? useId()
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.switch))
+
   return styler({
-    ...props,
+    ...pick(props, ['required', 'loading']),
     size: size.value,
     color: color.value,
     disabled: disabled.value || props.loading,
-    checked: false,
-    unchecked: false,
   })
 })
 
