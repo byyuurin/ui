@@ -9,7 +9,7 @@ export interface LinkSlots {
   default: StaticSlot<{ active: boolean }>
 }
 
-export interface LinkProps extends ComponentBaseProps, Omit<RouterLinkProps, 'custom'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
+export interface LinkProps extends ComponentBaseProps, Partial<Omit<RouterLinkProps, 'custom'>>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
   /**
    * The element or component this component should render as when not a link.
    * @default "button"
