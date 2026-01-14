@@ -2,7 +2,7 @@
 import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuContentEmits as RekaDropdownMenuContentEmits, DropdownMenuContentProps as RekaDropdownMenuContentProps } from 'reka-ui'
 import type theme from '#build/ui/dropdown-menu'
-import type { ComponentBaseProps, ComponentStyler, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, IconProps, KbdProps, RuntimeAppConfig } from '../types'
+import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, IconProps, KbdProps, RuntimeAppConfig } from '../types'
 import type { ArrayOrNested, DynamicSlots, ExtractItem, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
@@ -92,8 +92,8 @@ const groups = computed<DropdownMenuItem[][]>(
         />
         <Avatar
           v-else-if="item.avatar"
+          :size="((item.ui?.itemLeadingAvatarSize || props.uiOverride?.itemLeadingAvatarSize || props.ui.itemLeadingAvatarSize()) as AvatarProps['size'])"
           v-bind="item.avatar"
-          :size="item.avatar.size || props.size"
           :class="props.ui.itemLeadingAvatar({ class: [props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })"
           data-part="itemLeadingAvatar"
         />
