@@ -45,10 +45,11 @@ export type StepperEmits<T extends StepperItem = StepperItem> = Omit<StepperRoot
 
 export type StepperSlots<T extends StepperItem = StepperItem> = {
   indicator: StaticSlot<{ item: T, ui: ComponentStyler<typeof theme> }>
+  wrapper: StaticSlot<{ item: T }>
   title: StaticSlot<{ item: T }>
   description: StaticSlot<{ item: T }>
   content: StaticSlot<{ item: T }>
-} & DynamicSlots<T>
+} & DynamicSlots<T, 'wrapper' | 'title' | 'description', { item: T }>
 </script>
 
 <script setup lang="ts" generic="T extends StepperItem">
@@ -146,22 +147,24 @@ defineExpose({
         </div>
 
         <div :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper] })" data-part="wrapper">
-          <StepperTitle as="div" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })" data-part="title">
-            <slot name="title" :item="item">
-              {{ item.title }}
-            </slot>
-          </StepperTitle>
+          <slot :name="((item.slot ? `${item.slot}-wrapper` : 'wrapper') as keyof StepperSlots<T>)" :item="(item as ExtractItem<T>)">
+            <StepperTitle v-if="item.title || !!slots[(item.slot ? `${item.slot}-title` : 'title') as keyof StepperSlots<T>]" as="div" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })" data-part="title">
+              <slot :name="((item.slot ? `${item.slot}-title` : 'title') as keyof StepperSlots<T>)" :item="(item as ExtractItem<T>)">
+                {{ item.title }}
+              </slot>
+            </StepperTitle>
 
-          <StepperDescription as="div" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })" data-part="description">
-            <slot name="description" :item="item">
-              {{ item.description }}
-            </slot>
-          </StepperDescription>
+            <StepperDescription v-if="item.description || !!slots[(item.slot ? `${item.slot}-description` : 'description') as keyof StepperSlots<T>]" as="div" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })" data-part="description">
+              <slot :name="((item.slot ? `${item.slot}-description` : 'description') as keyof StepperSlots<T>)" :item="(item as ExtractItem<T>)">
+                {{ item.description }}
+              </slot>
+            </StepperDescription>
+          </slot>
         </div>
       </StepperItem>
     </div>
 
-    <div v-if="currentStep?.content || !!slots.content || currentStep?.slot" :class="ui.content({ class: props.ui?.content })" data-part="content">
+    <div v-if="currentStep?.content || !!slots.content || (currentStep?.slot && !!slots[currentStep.slot as keyof StepperSlots<T>])" :class="ui.content({ class: props.ui?.content })" data-part="content">
       <slot :name="((currentStep?.slot || 'content') as keyof StepperSlots<T>)" :item="(currentStep as ExtractItem<T>)">
         {{ currentStep?.content }}
       </slot>

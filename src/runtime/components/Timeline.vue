@@ -48,10 +48,11 @@ export interface TimelineEmits {
 
 export type TimelineSlots<T extends TimelineItem = TimelineItem> = {
   indicator: StaticSlot<{ item: T }>
+  wrapper: StaticSlot<{ item: T }>
   date: StaticSlot<{ item: T }>
   title: StaticSlot<{ item: T }>
   description: StaticSlot<{ item: T }>
-} & DynamicSlots<T, 'indicator' | 'date' | 'title' | 'description', { item: T }, false>
+} & DynamicSlots<T, 'indicator' | 'wrapper' | 'date' | 'title' | 'description', { item: T }>
 
 </script>
 
@@ -139,21 +140,23 @@ const ui = computed(() => {
       </div>
 
       <div :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper] })" data-part="wrapper">
-        <div v-if="item.date" :class="ui.date({ class: [props.ui?.date, item.ui?.date] })" data-part="date">
-          <slot :name="((item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
-            {{ item.date }}
-          </slot>
-        </div>
-        <div v-if="item.title || !!slots.title" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })" data-part="title">
-          <slot :name="((item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
-            {{ item.title }}
-          </slot>
-        </div>
-        <div v-if="item.description || !!slots.description" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })" data-part="description">
-          <slot :name="((item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
-            {{ item.description }}
-          </slot>
-        </div>
+        <slot :name="((item.slot ? `${item.slot}-wrapper` : 'wrapper') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
+          <div v-if="item.date || !!slots[(item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>]" :class="ui.date({ class: [props.ui?.date, item.ui?.date] })" data-part="date">
+            <slot :name="((item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
+              {{ item.date }}
+            </slot>
+          </div>
+          <div v-if="item.title || !!slots[(item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>]" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })" data-part="title">
+            <slot :name="((item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
+              {{ item.title }}
+            </slot>
+          </div>
+          <div v-if="item.description || !!slots[(item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>]" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })" data-part="description">
+            <slot :name="((item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
+              {{ item.description }}
+            </slot>
+          </div>
+        </slot>
       </div>
     </div>
   </Primitive>

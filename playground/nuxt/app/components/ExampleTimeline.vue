@@ -36,12 +36,6 @@ const items = [
     description: 'QA testing and performance optimization. Deployed the application to production.',
     icon: 'i-lucide-check-circle',
   },
-  {
-    slot: 'custom' as const,
-    date: 'date',
-    title: 'title',
-    description: 'description',
-  },
 ] satisfies TimelineItem[]
 </script>
 
@@ -52,21 +46,6 @@ const items = [
     description="A component that displays a sequence of events with dates, titles, icons or avatars."
     :controls="controls"
   >
-    <UTimeline v-bind="attrs" :items="items">
-      <template #custom-date>
-        <Placeholder label="#date" label-position="left" />
-      </template>
-      <template #custom-title>
-        <Placeholder label="#title" label-position="left" />
-      </template>
-      <template #custom-description>
-        <Placeholder label="#description" label-position="left" />
-      </template>
-      <template #custom-indicator>
-        <UTooltip text="#indicator">
-          <Placeholder label="#" label-position="left" />
-        </UTooltip>
-      </template>
-    </UTimeline>
+    <UTimeline v-bind="attrs" :items="items" />
   </ExampleView>
 </template>
