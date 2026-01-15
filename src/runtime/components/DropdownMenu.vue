@@ -11,7 +11,7 @@ export interface DropdownMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'cust
   icon?: IconProps['name']
   color?: ThemeVariants['color']
   avatar?: AvatarProps
-  content?: Omit<DropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DropdownMenuContentEmits>>
+  content?: Omit<DropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> & ComponentBaseProps & Partial<EmitsToProps<DropdownMenuContentEmits>>
   kbds?: KbdProps['value'][] | KbdProps[]
   /**
    * The item type.
@@ -27,7 +27,7 @@ export interface DropdownMenuItem extends Omit<LinkProps, 'type' | 'raw' | 'cust
   children?: ArrayOrNested<DropdownMenuItem>
   onSelect?: (e: Event) => void
   onUpdateChecked?: (checked: boolean) => void
-  ui?: Pick<ComponentUIProps<typeof theme>, 'item' | 'label' | 'separator' | 'itemLeadingIcon' | 'itemLeadingAvatarSize' | 'itemLeadingAvatar' | 'itemWrapper' | 'itemLabel' | 'itemDescription' | 'itemLabelExternalIcon' | 'itemTrailing' | 'itemTrailingIcon' | 'itemTrailingKbds' | 'itemTrailingKbdsSize'>
+  ui?: Pick<ComponentUIProps<typeof theme>, 'content' | 'item' | 'label' | 'separator' | 'itemLeadingIcon' | 'itemLeadingAvatarSize' | 'itemLeadingAvatar' | 'itemWrapper' | 'itemLabel' | 'itemDescription' | 'itemLabelExternalIcon' | 'itemTrailing' | 'itemTrailingIcon' | 'itemTrailingKbds' | 'itemTrailingKbdsSize'>
   [key: string]: any
 }
 

@@ -1,14 +1,10 @@
 <script lang="ts">
-import type { VariantProps } from '@byyuurin/ui-kit'
 import type { DropdownMenuContentEmits as RekaDropdownMenuContentEmits, DropdownMenuContentProps as RekaDropdownMenuContentProps } from 'reka-ui'
 import type theme from '#build/ui/dropdown-menu'
 import type { AvatarProps, ComponentBaseProps, ComponentStyler, ComponentUIProps, DropdownMenuItem, DropdownMenuSlots, IconProps, KbdProps, RuntimeAppConfig } from '../types'
 import type { ArrayOrNested, DynamicSlots, ExtractItem, GetItemKeys, MergeTypes, NestedItem, StaticSlot } from '../types/utils'
 
-type ThemeVariants = VariantProps<typeof theme>
-
 export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuItem>> extends ComponentBaseProps, Omit<RekaDropdownMenuContentProps, 'as' | 'asChild' | 'forceMount'> {
-  size?: ThemeVariants['size']
   items?: T
   portal?: boolean | string | HTMLElement
   sub?: boolean
@@ -21,9 +17,9 @@ export interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuIt
   uiOverride?: ComponentUIProps<typeof theme>
 }
 
-export interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
+interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
 
-export type DropdownMenuContentSlots<
+type DropdownMenuContentSlots<
   A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,
   T extends NestedItem<A> = NestedItem<A>,
 > = Pick<DropdownMenuSlots<A>, 'item' | 'item-leading' | 'item-label' | 'item-description' | 'item-trailing' | 'content-top' | 'content-bottom'> & {
@@ -149,7 +145,7 @@ const groups = computed<DropdownMenuItem[][]>(
   </DefineItemTemplate>
 
   <DropdownMenu.Portal v-bind="portalProps">
-    <component :is="(props.sub ? DropdownMenu.SubContent : DropdownMenu.Content)" v-bind="{ ...contentProps, ...$attrs }" :class="props.class">
+    <component :is="(props.sub ? DropdownMenu.SubContent : DropdownMenu.Content)" :class="props.ui.content({ class: [props.uiOverride?.content, props.class] })" v-bind="contentProps">
       <slot name="content-top" :sub="props.sub ?? false"></slot>
 
       <div role="presentation" :class="props.ui.viewport({ class: props.uiOverride?.viewport })" data-part="viewport">
@@ -173,12 +169,11 @@ const groups = computed<DropdownMenuItem[][]>(
 
               <DropdownMenuContent
                 sub
-                :class="props.class"
+                :class="item.ui?.content"
                 :ui="props.ui"
                 :ui-override="props.uiOverride"
                 :portal="props.portal"
                 :items="(item.children as T)"
-                side="right"
                 align="start"
                 :align-offset="-4"
                 :side-offset="3"
