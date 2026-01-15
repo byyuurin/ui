@@ -47,6 +47,7 @@ export default byyuurin(
   {
     files: [
       'src/runtime/components/Calendar.vue',
+      'src/runtime/components/ContextMenuContent.vue',
       'src/runtime/components/DropdownMenuContent.vue',
       'src/runtime/components/Popover.vue',
     ],
