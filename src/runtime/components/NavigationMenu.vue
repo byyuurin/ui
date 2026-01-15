@@ -16,8 +16,8 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
   icon?: IconProps['name']
   avatar?: AvatarProps
   /**
-   * Display a chip on the item.
-   * `{ size: 'xs', variant: 'outline' }`
+   * Display a badge on the item.
+   * `{ size: 'sm', color: 'neutral', variant: 'outline' }`
    */
   badge?: string | number | BadgeProps
   /**
@@ -58,7 +58,7 @@ export interface NavigationMenuItem extends ComponentBaseProps, Omit<LinkProps, 
 
 type ThemeVariants = VariantProps<typeof theme>
 type SingleOrMultipleType = 'single' | 'multiple'
-type Orientation = ThemeVariants['orientation']
+type Orientation = NavigationMenuRootProps['orientation']
 
 type NavigationMenuModelValue<
   K extends SingleOrMultipleType = SingleOrMultipleType,
@@ -72,7 +72,7 @@ export interface NavigationMenuProps<
 > extends
   ComponentBaseProps,
   Pick<NavigationMenuRootProps, 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>,
-  Pick<AccordionRootProps, 'disabled' | 'type' | 'collapsible'> {
+  Pick<AccordionRootProps, 'disabled' | 'collapsible'> {
   /**
    * The element or component this component should render as.
    * @default "div"
@@ -483,7 +483,7 @@ function getAccordionDefaultValue(list: NavigationMenuItem[], level = 0) {
             :item="childItem"
             :index="childIndex"
             :level="level + 1"
-            :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })"
+            :class="ui.childItem({ class: [props.ui?.childItem, childItem.ui?.childItem] })"
             data-part="childItem"
           />
         </AccordionRoot>
