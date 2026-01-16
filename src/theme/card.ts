@@ -3,7 +3,7 @@ import { ct } from '@byyuurin/ui-kit'
 
 export default ct({
   parts: {
-    root: 'rounded divide-y',
+    root: 'rounded divide-y overflow-hidden',
     header: 'flex flex-wrap items-center gap-1 p-4 sm:px-6',
     body: 'flex-1 overflow-y-auto p-4 sm:p-6 empty:hidden',
     footer: 'flex items-center gap-1.5 p-4 sm:px-6',
