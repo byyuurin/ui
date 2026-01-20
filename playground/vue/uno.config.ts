@@ -1,5 +1,5 @@
 import { createUnoPreset } from '@byyuurin/ui/unocss'
-import { defineConfig, presetWebFonts, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetWebFonts, presetWind4, transformerDirectives } from 'unocss'
 import uiConfig from './ui.config'
 
 export default defineConfig({
@@ -15,6 +15,5 @@ export default defineConfig({
   ],
   transformers: [
     transformerDirectives(),
-    transformerVariantGroup(),
   ],
 })

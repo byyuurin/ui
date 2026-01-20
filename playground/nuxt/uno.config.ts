@@ -1,4 +1,4 @@
-import { defineConfig, presetWind4, transformerDirectives, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetWind4, transformerDirectives } from 'unocss'
 import { createUnoPreset } from '../../src/unocss'
 
 export default defineConfig({
@@ -8,6 +8,5 @@ export default defineConfig({
   ],
   transformers: [
     transformerDirectives(),
-    transformerVariantGroup(),
   ],
 })
