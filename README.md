@@ -13,19 +13,16 @@ https://byyuurin-ui.netlify.app/
 ## Installation
 
 ```bash [pnpm]
-pnpm add @byyuurin/ui
+pnpm add @byyuurin/ui unocss
 ```
 
 ```bash [yarn]
-yarn add @byyuurin/ui
+yarn add @byyuurin/ui unocss
 ```
 
 ```bash [npm]
-npm install @byyuurin/ui
+npm install @byyuurin/ui unocss
 ```
-
-> [!WARNING]
-> If you're using pnpm, ensure that you either set [`shamefully-hoist=true`](https://pnpm.io/settings#shamefully-hoist) in your `.npmrc` file or install `@byyuurin/ui-kit` in your project's root directory.
 
 ### Nuxt
 

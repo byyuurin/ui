@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import type { Resolver } from '@nuxt/kit'
@@ -7,6 +8,7 @@ import { loadConfig } from '@unocss/config'
 import type { UserShortcuts } from '@unocss/core'
 import { genExport } from 'knitwork'
 import type { NuxtTemplate, NuxtTypeTemplate } from 'nuxt/schema'
+import { normalize } from 'pathe'
 import { kebabCase } from 'scule'
 import { neutralColors } from './defaults'
 import type { ModuleOptions } from './module'
@@ -21,9 +23,29 @@ export function buildTemplates(options: ModuleOptions) {
 }
 
 export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt?: Nuxt) {
-  const templates: NuxtTemplate[] = []
+  const _require = createRequire(import.meta.url)
 
+  const templates: NuxtTemplate[] = []
   const isDev = process.argv.includes('--uiDev')
+
+  const imports = {
+    unoCore: resolveImport('unoCore', '@unocss/core'),
+    unoPresetWind4: resolveImport('unoPreset', '@unocss/preset-wind4'),
+    unoMerge: resolveImport('unoMerge', '@byyuurin/uno-merge'),
+    uiKit: resolveImport('uiKit', '@byyuurin/ui-kit'),
+  }
+
+  function resolveImport(name: string, packageName: string) {
+    try {
+      const realPath = _require.resolve(packageName)
+      return normalize(realPath)
+    }
+    catch {
+      // eslint-disable-next-line no-console
+      console.warn(`[@byyuurin/ui] Cloud not resolve dependency: ${packageName}`)
+      return packageName
+    }
+  }
 
   function writeThemeTemplate(theme: Record<string, any>, path?: string) {
     for (const component in theme) {
@@ -43,7 +65,7 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
               [
                 `// @unocss-include`,
                 `import type { ModuleOptions } from '@byyuurin/ui'`,
-                `import { ct } from '@byyuurin/ui-kit'`,
+                `import { ct } from '${imports.uiKit}'`,
                 `import template from ${JSON.stringify(templatePath)}`,
               ].join('\n'),
               `const options: ModuleOptions = ${JSON.stringify(options, null, 2)}`,
@@ -57,7 +79,7 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
 
           // For production build
           return [
-            `// @unocss-include\nimport { ct } from '@byyuurin/ui-kit'`,
+            `// @unocss-include\nimport { ct } from '${imports.uiKit}'`,
             `export default ct(${json})`,
           ].join('\n\n')
         },
@@ -113,11 +135,11 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
           )
         }
 
-        return `import { createUnoMerge } from '@byyuurin/uno-merge'
+        return `import { createUnoMerge } from '${imports.unoMerge}'
 import { createUnoPreset } from '@byyuurin/ui/unocss'
-import type { UserConfig } from '@unocss/core'
-import { mergeConfigs } from '@unocss/core'
-import { presetWind4 } from '@unocss/preset-wind4'
+import type { UserConfig } from '${imports.unoCore}'
+import { mergeConfigs } from '${imports.unoCore}'
+import { presetWind4 } from '${imports.unoPresetWind4}'
 ${userConfigSource.join('\n')}
 
 export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
