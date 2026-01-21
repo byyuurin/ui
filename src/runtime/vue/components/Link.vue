@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PrimitiveProps } from 'reka-ui'
-import type { RouterLinkProps } from 'vue-router'
+import type { RouterLink as _RouterLink, RouterLinkProps } from 'vue-router'
 import type { ComponentBaseProps, RuntimeAppConfig } from '../../types'
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from '../../types/html'
 import type { StaticSlot } from '../../types/utils'
@@ -59,7 +59,7 @@ import { reactiveOmit, reactivePick } from '@vueuse/core'
 import { isEqual } from 'ohash/utils'
 import { useForwardProps } from 'reka-ui'
 import { hasProtocol } from 'ufo'
-import { computed } from 'vue'
+import { computed, getCurrentInstance, resolveComponent } from 'vue'
 import theme from '#build/ui/link'
 import { useAppConfig, useRoute } from '#imports'
 import LinkBase from '../../components/LinkBase.vue'
@@ -76,7 +76,21 @@ const props = withDefaults(defineProps<LinkProps>(), {
 })
 defineSlots<LinkSlots>()
 
-const route = useRoute()
+// Check if vue-router is available by checking for the injection key
+const hasRouter = computed(() => {
+  const app = getCurrentInstance()?.appContext.app
+  return !!(app?.config?.globalProperties?.$router)
+})
+
+const RouterLink = computed(() => hasRouter.value ? (resolveComponent('RouterLink') as unknown as typeof _RouterLink) : null)
+
+// Only try to get route if router exists
+const route = computed(() => {
+  if (!hasRouter.value)
+    return null
+
+  return useRoute()
+})
 
 const inheritProps = useForwardProps(reactivePick(props, 'as', 'type', 'disabled'))
 const routerLinkProps = useForwardProps(reactiveOmit(props, 'as', 'type', 'disabled', 'active', 'exact', 'exactQuery', 'exactHash', 'activeClass', 'inactiveClass', 'to', 'href', 'raw', 'custom', 'class'))
@@ -98,14 +112,14 @@ function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
     return props.active
 
   if (props.exactQuery === 'partial') {
-    if (!isPartiallyEqual(linkRoute.query, route.query))
+    if (!isPartiallyEqual(linkRoute.query, route.value?.query))
       return false
   }
-  else if (props.exactQuery === true && !isEqual(linkRoute.query, route.query)) {
+  else if (props.exactQuery === true && !isEqual(linkRoute.query, route.value?.query)) {
     return false
   }
 
-  if (props.exactHash && linkRoute.hash !== route.hash)
+  if (props.exactHash && linkRoute.hash !== route.value?.hash)
     return false
 
   if (props.exact && isExactActive)
@@ -145,7 +159,7 @@ function resolveLinkClass({ route, isActive, isExactActive }: any = {}) {
 </script>
 
 <template>
-  <template v-if="!isExternal && !!to">
+  <template v-if="RouterLink && !isExternal && !!to">
     <RouterLink v-slot="{ href, navigate, route: linkRoute, isActive, isExactActive }" v-bind="routerLinkProps" :to="to" custom>
       <template v-if="custom">
         <slot
