@@ -2,18 +2,21 @@ import MagicString from 'magic-string'
 import { resolvePathSync } from 'mlly'
 import { normalize } from 'pathe'
 import type { UnpluginOptions } from 'unplugin'
-import { runtimeDir } from '../unplugin'
+import type { UIOptions } from '../unplugin'
+import { resolveRouterMode, runtimeDir } from '../unplugin'
 
 /**
  * This plugin normalises Nuxt environment (#imports) and `import.meta.client` within the UI components.
  */
-// ref: https://github.com/nuxt/ui/blob/0f99a4cdbcbca3090ef0a58f475be46de4eeb9ff/src/plugins/nuxt-environment.ts
-export default function NuxtEnvironmentPlugin(): UnpluginOptions {
+// ref: https://github.com/nuxt/ui/blob/b34cf8a13491fec5b27a15a8ae5bd143e19aeb9d/src/plugins/nuxt-environment.ts
+export default function NuxtEnvironmentPlugin(options: UIOptions): UnpluginOptions {
+  const routerMode = resolveRouterMode(options)
+
   const name = 'byyuurin:ui'
 
   const resolve = {
     id: '#imports',
-    filename: resolvePathSync('../runtime/vue/stubs', { extensions: ['.ts', '.mjs', '.js'], url: import.meta.url }),
+    filename: resolvePathSync(`../runtime/vue/stubs/${routerMode}`, { extensions: ['.ts', '.mjs', '.js'], url: import.meta.url }),
   }
 
   return {

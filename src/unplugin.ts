@@ -30,6 +30,13 @@ export interface UIOptions extends Omit<ModuleOptions, 'fonts'> {
    * Override options for `unplugin-vue-components`
    */
   components?: Partial<ComponentsOptions>
+  /**
+   * Router integration mode
+   * - `true` (default): Use vue-router integration
+   * - `false`: Disable routing, use anchor tags
+   * @default true
+   */
+  router?: boolean
 }
 
 export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOptions = {}, meta) => {
@@ -47,7 +54,7 @@ export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOp
   )
 
   return [
-    NuxtEnvironmentPlugin(),
+    NuxtEnvironmentPlugin(options),
     ComponentImportPlugin(options, meta),
     AutoImportPlugin(options, meta),
     PluginsPlugin(options),
@@ -74,3 +81,12 @@ export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOp
     },
   ].flat(1)
 })
+
+export type RouterMode = 'vue-router' | 'none'
+
+export function resolveRouterMode(options: UIOptions): RouterMode {
+  if (options.router === false)
+    return 'none'
+
+  return 'vue-router'
+}
