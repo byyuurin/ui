@@ -16,8 +16,8 @@ importers:
         specifier: ^0.7.2
         version: 0.7.2
       '@byyuurin/uno-merge':
-        specifier: ^0.3.3
-        version: 0.3.3(@unocss/core@66.6.0)
+        specifier: ^0.3.4
+        version: 0.3.4(@unocss/core@66.6.0)
       '@iconify/vue':
         specifier: ^5.0.0
         version: 5.0.0(vue@3.5.26(typescript@5.8.3))
@@ -431,8 +431,8 @@ packages:
   '@byyuurin/ui-kit@0.7.2':
     resolution: {integrity: sha512-Cs3wGYb46h6fDLEI1efajlzrJqyjHkLqop+7GfoBN5OzxR8SAgkyqWlG40oW/e/qHWhSJxxJ3zImndPvUkgMmA==}
 
-  '@byyuurin/uno-merge@0.3.3':
-    resolution: {integrity: sha512-I+ieH+K/n0J/M/4koNfpzI1aRP1bbO+L9rw1+NSHED7rtk/wAejimk6xcJZgU825TsW6M326u3q8d0G+3dBaQg==}
+  '@byyuurin/uno-merge@0.3.4':
+    resolution: {integrity: sha512-zSA824WOlLCZ5BV0n0WA46E7Gwazgt/Bb4f7tljw5Ha9xsWUX0SUJs4UaBquicW4WVN2npTkednWWJZyHkFcRQ==}
     peerDependencies:
       '@unocss/core': '>=66.1.0'
 
@@ -6922,7 +6922,7 @@ snapshots:
 
   '@byyuurin/ui-kit@0.7.2': {}
 
-  '@byyuurin/uno-merge@0.3.3(@unocss/core@66.6.0)':
+  '@byyuurin/uno-merge@0.3.4(@unocss/core@66.6.0)':
     dependencies:
       '@unocss/core': 66.6.0
 

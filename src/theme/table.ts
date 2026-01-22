@@ -45,7 +45,7 @@ export default (options: Required<ModuleOptions>) => ct({
     },
     loading: {
       true: {
-        thead: 'after:content-empty after:absolute after:z-1 after:h-px',
+        thead: 'after:absolute after:z-1 after:h-px',
       },
     },
     loadingAnimation: {

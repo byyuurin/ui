@@ -9,7 +9,7 @@ export default (options: Required<ModuleOptions>) => ct({
     list: 'isolate min-w-0',
     label: 'w-full flex items-center gap-1.5 font-semibold text-xs/5 text-highlighted px-2.5 py-1.5',
     item: 'min-w-0',
-    link: 'group relative w-full flex items-center gap-1.5 font-medium text-sm before:content-empty before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
+    link: 'group relative w-full flex items-center gap-1.5 font-medium text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
     linkLeadingIcon: 'shrink-0 size-5',
     linkLeadingAvatar: 'shrink-0',
     linkLeadingAvatarSize: '2xs',
@@ -22,7 +22,7 @@ export default (options: Required<ModuleOptions>) => ct({
     childList: 'isolate',
     childLabel: 'text-xs text-highlighted',
     childItem: '',
-    childLink: 'group relative size-full flex items-start text-start text-sm before:content-empty before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
+    childLink: 'group relative size-full flex items-start text-start text-sm before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
     childLinkWrapper: 'min-w-0',
     childLinkIcon: 'size-5 shrink-0',
     childLinkLabel: 'truncate',
@@ -154,7 +154,7 @@ export default (options: Required<ModuleOptions>) => ct({
       highlight: true,
       class: {
         link: [
-          'after:content-empty after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full',
+          'after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full',
           options.theme.transitions && 'after:transition-colors',
         ],
       },
@@ -165,7 +165,7 @@ export default (options: Required<ModuleOptions>) => ct({
       level: true,
       class: {
         link: [
-          'after:content-empty after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full',
+          'after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full',
           options.theme.transitions && 'after:transition-colors',
         ],
       },

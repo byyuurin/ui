@@ -1,9 +1,48 @@
-import type { Preset } from '@unocss/core'
+import type { Postprocessor, Preset } from '@unocss/core'
 import { colors as twColors } from '@unocss/preset-wind4/colors'
 import type { Theme } from '@unocss/preset-wind4/theme'
 import { parseColor } from '@unocss/preset-wind4/utils'
 import { resolveColors } from './defaults'
 import type { ModuleOptions } from './module'
+
+/**
+ * Normalize pseudo-element (`::before` / `::after`) content behavior to align with TailwindCSS.
+ *
+ * In TailwindCSS, all `before:*` and `after:*` variants implicitly define `content`,
+ * so pseudo-elements are always rendered without requiring explicit
+ * `before:content-empty` or `after:content-empty`.
+ *
+ * UnoCSS requires `content` to be explicitly defined, which can cause styles
+ * to silently break when migrating from TailwindCSS.
+ *
+ * This postprocessor normalizes the behavior by:
+ * - Replacing `content: ""` with a CSS variable reference
+ * - Injecting a default `content` definition for all pseudo-element variants
+ *
+ * This ensures consistent rendering of pseudo-elements and prevents migration
+ * issues caused by missing `content` declarations.
+ */
+export const normalizePseudoElementContent: Postprocessor = (util) => {
+  if (util.layer === 'properties')
+    return
+
+  util.entries.forEach((i) => {
+    const CONTENT_EMPTY = '""'
+
+    if (i[0] === 'content' && i[1] === CONTENT_EMPTY) {
+      i[1] = 'var(--un-content)'
+      util.entries.unshift(['--un-content', CONTENT_EMPTY])
+    }
+  })
+
+  if (!/(?:before|after)(?:\\:|-).+/.test(util.selector))
+    return
+
+  if (util.entries.some((i) => i[0] === 'content' || i[0] === '--un-content'))
+    return
+
+  util.entries.unshift(['content', 'var(--un-content)'])
+}
 
 export type PresetOptions = Pick<(ModuleOptions['theme'] & {}), 'colors'>
 
@@ -162,6 +201,9 @@ export function createUnoPreset(options: PresetOptions = {}) {
 }`
         },
       },
+    ],
+    postprocess: [
+      normalizePseudoElementContent,
     ],
   }
 
