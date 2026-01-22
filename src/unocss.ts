@@ -140,6 +140,10 @@ export function createUnoPreset(options: PresetOptions = {}) {
           return result
         },
       ],
+      [
+        /^(?:from|via|to|stops)-(default(?:\/(\d+|\[--.+\]))?)$/,
+        ([matched]) => matched.replace('default', '[--ui-bg]'),
+      ],
     ],
     safelist: Object.keys(keyframes).map((s) => `keyframes-${s}`),
     preflights: [

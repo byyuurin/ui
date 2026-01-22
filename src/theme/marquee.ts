@@ -27,7 +27,7 @@ export default ct({
     },
     overlay: {
       true: {
-        root: 'before:absolute before:pointer-events-none before:z-2 before:from-[--ui-bg] before:to-transparent after:absolute after:pointer-events-none after:z-2 after:from-[--ui-bg] after:to-transparent',
+        root: 'before:absolute before:pointer-events-none before:z-2 before:from-default before:to-transparent after:absolute after:pointer-events-none after:z-2 after:from-default after:to-transparent',
       },
     },
   },
