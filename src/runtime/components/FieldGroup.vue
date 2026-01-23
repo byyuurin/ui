@@ -54,7 +54,7 @@ provideFieldGroup(computed(() => ({
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.base({ class: props.class })" :data-orientation="props.orientation" data-part="base">
+  <Primitive :as="props.as" :data-orientation="props.orientation" data-part="base" :class="ui.base({ class: props.class })">
     <slot></slot>
   </Primitive>
 </template>

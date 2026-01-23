@@ -340,28 +340,28 @@ defineExpose({
     :as="props.as"
     role="region"
     tabindex="0"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
     aria-roledescription="carousel"
     :data-orientation="props.orientation"
     data-part="root"
+    :class="ui.root({ class: [props.class, props.ui?.root] })"
     @keydown="onKeyDown"
   >
-    <div ref="emblaRef" :class="ui.viewport({ class: props.ui?.viewport })" data-part="viewport">
-      <div :class="ui.container({ class: props.ui?.container })" data-part="container">
+    <div ref="emblaRef" data-part="viewport" :class="ui.viewport({ class: props.ui?.viewport })">
+      <div data-part="container" :class="ui.container({ class: props.ui?.container })">
         <div
           v-for="(item, index) in props.items"
           :key="index"
           v-bind="props.dots ? { role: 'tabpanel' } : { 'role': 'group', 'aria-roledescription': 'slide' }"
-          :class="ui.item({ class: [props.ui?.item, ...(isCarouselItem(item) ? [item.ui?.item, item.class] : [])] })"
           data-part="item"
+          :class="ui.item({ class: [props.ui?.item, ...(isCarouselItem(item) ? [item.ui?.item, item.class] : [])] })"
         >
           <slot :item="item" :index="index"></slot>
         </div>
       </div>
     </div>
 
-    <div v-if="props.arrows || props.dots" :class="ui.controls({ class: props.ui?.controls })" data-part="controls">
-      <div v-if="props.arrows" :class="ui.arrows({ class: props.ui?.arrows })" data-part="arrows">
+    <div v-if="props.arrows || props.dots" data-part="controls" :class="ui.controls({ class: props.ui?.controls })">
+      <div v-if="props.arrows" data-part="arrows" :class="ui.arrows({ class: props.ui?.arrows })">
         <Button
           :disabled="!canScrollPrev"
           :icon="prevIcon"
@@ -369,8 +369,8 @@ defineExpose({
           variant="outline"
           :aria-label="t('carousel.prev')"
           v-bind="typeof props.prev === 'object' ? props.prev : undefined"
-          :class="ui.prev({ class: props.ui?.prev })"
           data-part="prev"
+          :class="ui.prev({ class: props.ui?.prev })"
           @click="scrollPrev"
         />
         <Button
@@ -380,21 +380,21 @@ defineExpose({
           variant="outline"
           :aria-label="t('carousel.next')"
           v-bind="typeof props.next === 'object' ? props.next : undefined"
-          :class="ui.next({ class: props.ui?.next })"
           data-part="next"
+          :class="ui.next({ class: props.ui?.next })"
           @click="scrollNext"
         />
       </div>
 
-      <div v-if="props.dots" role="tablist" :aria-label="t('carousel.dots')" :class="ui.dots({ class: props.ui?.dots })" data-part="dots">
+      <div v-if="props.dots" role="tablist" :aria-label="t('carousel.dots')" data-part="dots" :class="ui.dots({ class: props.ui?.dots })">
         <template v-for="(_, index) in scrollSnaps" :key="index">
           <button
             type="button"
             role="tab"
             :aria-label="t('carousel.goto', { page: index + 1 })"
             :aria-selected="selectedIndex === index"
-            :class="ui.dot({ class: props.ui?.dot, active: selectedIndex === index })"
             data-part="dot"
+            :class="ui.dot({ class: props.ui?.dot, active: selectedIndex === index })"
             :data-state="selectedIndex === index ? 'active' : undefined"
             @click="scrollTo(index)"
           ></button>

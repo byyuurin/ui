@@ -66,34 +66,34 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Separator v-bind="rootProps" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <div :class="ui.border({ class: props.ui?.border, start: props.align === 'start' })" data-part="border"></div>
+  <Separator v-bind="rootProps" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-part="border" :class="ui.border({ class: props.ui?.border, start: props.align === 'start' })"></div>
 
     <template v-if="props.label || props.icon || props.avatar || !!slots.default">
-      <div :class="ui.container({ class: props.ui?.container })" data-part="container">
+      <div data-part="container" :class="ui.container({ class: props.ui?.container })">
         <slot :ui="ui">
           <span
             v-if="props.label"
-            :class="ui.label({ class: props.ui?.label })"
             data-part="label"
+            :class="ui.label({ class: props.ui?.label })"
           >{{ props.label }}</span>
           <Icon
             v-else-if="props.icon"
             :name="props.icon"
-            :class="ui.icon({ class: props.ui?.icon })"
             data-part="icon"
+            :class="ui.icon({ class: props.ui?.icon })"
           />
           <Avatar
             v-else-if="props.avatar"
             :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
             v-bind="props.avatar"
-            :class="ui.avatar({ class: props.ui?.avatar })"
             data-part="avatar"
+            :class="ui.avatar({ class: props.ui?.avatar })"
           />
         </slot>
       </div>
 
-      <div :class="ui.border({ class: props.ui?.border, end: props.align === 'end' })" data-part="border"></div>
+      <div data-part="border" :class="ui.border({ class: props.ui?.border, end: props.align === 'end' })"></div>
     </template>
   </Separator>
 </template>

@@ -120,13 +120,13 @@ const ui = computed(() => {
     <Component.Portal v-bind="portalProps">
       <Component.Content
         v-bind="contentProps"
-        :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
         data-part="content"
+        :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
         v-on="contentEvents"
       >
         <slot name="content" v-bind="((close ? { close } : {}) as any)"></slot>
 
-        <Component.Arrow v-if="!!props.arrow" v-bind="arrowProps" :class="ui.arrow({ class: props.ui?.arrow })" data-part="arrow" />
+        <Component.Arrow v-if="!!props.arrow" v-bind="arrowProps" data-part="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Component.Content>
     </Component.Portal>
   </Component.Root>

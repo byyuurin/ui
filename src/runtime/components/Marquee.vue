@@ -69,8 +69,8 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :data-orientation="props.orientation" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <div v-for="i in props.repeat" :key="i" :class="ui.content({ class: props.ui?.content })" data-part="content">
+  <Primitive :as="props.as" :data-orientation="props.orientation" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div v-for="i in props.repeat" :key="i" data-part="content" :class="ui.content({ class: props.ui?.content })">
       <slot></slot>
     </div>
   </Primitive>
@@ -81,7 +81,6 @@ const ui = computed(() => {
   from {
     transform: translate3d(0, 0, 0);
   }
-
   to {
     transform: translate3d(calc(-100% - var(--gap)), 0, 0);
   }
@@ -91,7 +90,6 @@ const ui = computed(() => {
   from {
     transform: translate3d(0, 0, 0);
   }
-
   to {
     transform: translate3d(calc(100% + var(--gap)), 0, 0);
   }
@@ -101,7 +99,6 @@ const ui = computed(() => {
   from {
     transform: translate3d(0, 0, 0);
   }
-
   to {
     transform: translate3d(0, calc(-100% - var(--gap)), 0);
   }
@@ -111,7 +108,6 @@ const ui = computed(() => {
   from {
     transform: translate3d(0, calc(-100% - var(--gap)), 0);
   }
-
   to {
     transform: translate3d(0, calc(-100% * var(--gap)), 0);
   }

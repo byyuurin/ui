@@ -130,13 +130,13 @@ const ui = computed(() => {
     </DialogTrigger>
 
     <DialogPortal v-bind="portalProps">
-      <DialogOverlay v-if="props.overlay" :class="ui.overlay({ class: props.ui?.overlay })" data-part="overlay" />
+      <DialogOverlay v-if="props.overlay" data-part="overlay" :class="ui.overlay({ class: props.ui?.overlay })" />
 
       <DialogContent
-        :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
-        v-bind="contentProps"
         :data-direction="props.direction"
         data-part="content"
+        :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
+        v-bind="contentProps"
         @after-enter="emit('after-enter')"
         @after-leave="emit('after-leave')"
         v-on="contentEvents"
@@ -148,14 +148,14 @@ const ui = computed(() => {
         <slot name="content" :close="close">
           <div
             v-if="slots.header || (props.title || !!slots.title) || (props.description || !!slots.description) || (props.close || !!slots.close)"
-            :class="ui.header({ class: props.ui?.header })"
             data-part="header"
+            :class="ui.header({ class: props.ui?.header })"
           >
             <slot name="header" :close="close">
               <DialogTitle
                 v-if="props.title || slots.title"
-                :class="ui.title({ class: props.ui?.title })"
                 data-part="title"
+                :class="ui.title({ class: props.ui?.title })"
               >
                 <slot name="title">
                   {{ props.title }}
@@ -171,16 +171,16 @@ const ui = computed(() => {
                     :icon="props.closeIcon || appConfig.ui.icons.close"
                     :aria-label="t('modal.close')"
                     v-bind="(typeof props.close === 'object' ? props.close : {})"
-                    :class="ui.close({ class: props.ui?.close })"
                     data-part="close"
+                    :class="ui.close({ class: props.ui?.close })"
                   />
                 </slot>
               </DialogClose>
 
               <DialogDescription
                 v-if="props.description || !!slots.description"
-                :class="ui.description({ class: props.ui?.description })"
                 data-part="description"
+                :class="ui.description({ class: props.ui?.description })"
               >
                 <slot name="description">
                   {{ props.description }}
@@ -189,11 +189,11 @@ const ui = computed(() => {
             </slot>
           </div>
 
-          <div v-if="slots.body" :class="ui.body({ class: props.ui?.body })" data-part="body">
+          <div v-if="slots.body" data-part="body" :class="ui.body({ class: props.ui?.body })">
             <slot name="body" :close="close"></slot>
           </div>
 
-          <div v-if="slots.footer" :class="ui.footer({ class: props.ui?.footer })" data-part="footer">
+          <div v-if="slots.footer" data-part="footer" :class="ui.footer({ class: props.ui?.footer })">
             <slot name="footer" :close="close"></slot>
           </div>
         </slot>

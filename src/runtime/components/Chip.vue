@@ -75,14 +75,14 @@ const ui = computed(() => {
 <template>
   <Primitive
     :as="props.as"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
     <Slot v-bind="$attrs">
       <slot></slot>
     </Slot>
 
-    <span v-if="show" :class="ui.base({ class: props.ui?.base })" data-part="base">
+    <span v-if="show" data-part="base" :class="ui.base({ class: props.ui?.base })">
       <slot name="content">
         {{ props.text }}
       </slot>

@@ -79,39 +79,39 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <AccordionRoot v-bind="rootProps" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <AccordionRoot v-bind="rootProps" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <AccordionItem
       v-for="(item, index) in props.items"
       v-slot="{ open }"
       :key="index"
       :value="item.value || String(index)"
       :disabled="item.disabled"
-      :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class] })"
       data-part="item"
+      :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class] })"
     >
-      <AccordionHeader as="div" :class="ui.header({ class: [props.ui?.header, item.ui?.header] })" data-part="header">
-        <AccordionTrigger :class="ui.trigger({ class: [props.ui?.trigger, item.ui?.trigger], disabled: item.disabled })" data-part="trigger">
+      <AccordionHeader as="div" data-part="header" :class="ui.header({ class: [props.ui?.header, item.ui?.header] })">
+        <AccordionTrigger data-part="trigger" :class="ui.trigger({ class: [props.ui?.trigger, item.ui?.trigger], disabled: item.disabled })">
           <slot name="leading" v-bind="{ item, index, open, ui }">
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })" data-part="leadingIcon" />
+            <Icon v-if="item.icon" :name="item.icon" data-part="leadingIcon" :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item.ui?.leadingIcon] })" />
           </slot>
 
-          <span v-if="get(item, props.labelKey as string) || !!slots.default" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })" data-part="label">
+          <span v-if="get(item, props.labelKey as string) || !!slots.default" data-part="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })">
             <slot v-bind="{ item, index, open }">{{ get(item, props.labelKey as string) }}</slot>
           </span>
 
           <slot name="trailing" v-bind="{ item, index, open, ui }">
-            <Icon :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" :class="ui.trailingIcon({ class: [props.ui?.trailingIcon, item.ui?.trailingIcon] })" data-part="trailingIcon" />
+            <Icon :name="item.trailingIcon || props.trailingIcon || appConfig.ui.icons.chevronDown" data-part="trailingIcon" :class="ui.trailingIcon({ class: [props.ui?.trailingIcon, item.ui?.trailingIcon] })" />
           </slot>
         </AccordionTrigger>
       </AccordionHeader>
 
       <AccordionContent
         v-if="item.content || !!slots.content || (item.slot && slots[item.slot as keyof AccordionSlots<T>]) || !!slots.body || (item.slot && slots[`${item.slot}-body` as keyof AccordionSlots<T>])"
-        :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
         data-part="content"
+        :class="ui.content({ class: [props.ui?.content, item.ui?.content] })"
       >
         <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :open="open" :ui="ui">
-          <div :class="ui.body({ class: [props.ui?.body, item.ui?.body] })" data-part="body">
+          <div data-part="body" :class="ui.body({ class: [props.ui?.body, item.ui?.body] })">
             <slot :name="((item.slot ? `${item.slot}-body` : 'body') as keyof AccordionSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :open="open" :ui="ui">
               {{ item.content }}
             </slot>

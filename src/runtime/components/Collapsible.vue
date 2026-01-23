@@ -47,14 +47,14 @@ const ui = computed(() => {
   <CollapsibleRoot
     v-slot="{ open }"
     v-bind="rootProps"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
     <CollapsibleTrigger v-if="!!slots.default" as-child>
       <slot :open="open"></slot>
     </CollapsibleTrigger>
 
-    <CollapsibleContent :class="ui.content({ class: props.ui?.content })" data-part="content">
+    <CollapsibleContent data-part="content" :class="ui.content({ class: props.ui?.content })">
       <slot name="content"></slot>
     </CollapsibleContent>
   </CollapsibleRoot>
@@ -65,7 +65,6 @@ const ui = computed(() => {
   from {
     height: var(--reka-collapsible-content-height);
   }
-
   to {
     height: 0;
   }
@@ -75,7 +74,6 @@ const ui = computed(() => {
   from {
     height: 0;
   }
-
   to {
     height: var(--reka-collapsible-content-height);
   }

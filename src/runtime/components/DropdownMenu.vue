@@ -154,14 +154,14 @@ const ui = computed(() => {
       :external-icon="props.externalIcon"
       :ui="ui"
       :ui-override="props.ui"
-      :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
       data-part="content"
+      :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })"
     >
       <template v-for="(_, name) in getProxySlots()" #[name]="slotProps">
         <slot :name="(name as keyof DropdownMenuSlots<T>)" v-bind="slotProps"></slot>
       </template>
 
-      <DropdownMenuArrow v-if="props.arrow" v-bind="arrowProps" :class="ui.arrow({ class: props.ui?.arrow })" data-part="arrow" />
+      <DropdownMenuArrow v-if="props.arrow" v-bind="arrowProps" data-part="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
     </DropdownMenuContent>
   </DropdownMenuRoot>
 </template>

@@ -73,11 +73,11 @@ const ui = computed(() => {
     </TooltipTrigger>
 
     <TooltipPortal v-bind="portalProps">
-      <TooltipContent v-bind="contentProps" :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })" data-part="content">
+      <TooltipContent v-bind="contentProps" data-part="content" :class="ui.content({ class: [props.ui?.content, !slots.default && props.class] })">
         <slot name="content" :ui="ui">
-          <span v-if="props.text" :class="ui.text({ class: props.ui?.text })" data-part="text">{{ props.text }}</span>
+          <span v-if="props.text" data-part="text" :class="ui.text({ class: props.ui?.text })">{{ props.text }}</span>
 
-          <span v-if="props.kbds?.length" :class="ui.kbds({ class: props.ui?.kbds })" data-part="kbds">
+          <span v-if="props.kbds?.length" data-part="kbds" :class="ui.kbds({ class: props.ui?.kbds })">
             <Kbd
               v-for="(kbd, index) in props.kbds"
               :key="index"
@@ -87,7 +87,7 @@ const ui = computed(() => {
           </span>
         </slot>
 
-        <TooltipArrow v-if="props.arrow" v-bind="arrowProps" :class="ui.arrow({ class: props.ui?.arrow })" data-part="arrow" />
+        <TooltipArrow v-if="props.arrow" v-bind="arrowProps" data-part="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </TooltipContent>
     </TooltipPortal>
   </TooltipRoot>

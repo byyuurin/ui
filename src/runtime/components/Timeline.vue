@@ -108,15 +108,15 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :data-orientation="props.orientation" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <Primitive :as="props.as" :data-orientation="props.orientation" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div
       v-for="(item, index) in props.items"
       :key="item.value ?? index"
-      :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class] })"
       data-part="item"
+      :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class] })"
       :data-state="getItemState(index)"
     >
-      <div :class="ui.container({ class: [props.ui?.container, item.ui?.container] })" data-part="container">
+      <div data-part="container" :class="ui.container({ class: [props.ui?.container, item.ui?.container] })">
         <Avatar
           :size="props.size"
           :icon="item.icon"
@@ -125,8 +125,8 @@ const ui = computed(() => {
             icon: ui.indicatorIcon({ class: props.ui?.indicatorIcon }),
             fallback: ui.indicatorFallback({ class: props.ui?.indicatorFallback }),
           }"
-          :class="ui.indicator({ class: [props.ui?.indicator, item.ui?.indicator] })"
           data-part="indicator"
+          :class="ui.indicator({ class: [props.ui?.indicator, item.ui?.indicator] })"
         >
           <slot :name="((item.slot ? `${item.slot}-indicator` : 'indicator') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)"></slot>
         </Avatar>
@@ -134,24 +134,24 @@ const ui = computed(() => {
         <Separator
           v-if="index < items.length - 1"
           :orientation="props.orientation"
-          :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator] })"
           data-part="separator"
+          :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator] })"
         />
       </div>
 
-      <div :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper] })" data-part="wrapper">
+      <div data-part="wrapper" :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper] })">
         <slot :name="((item.slot ? `${item.slot}-wrapper` : 'wrapper') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
-          <div v-if="item.date || !!slots[(item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>]" :class="ui.date({ class: [props.ui?.date, item.ui?.date] })" data-part="date">
+          <div v-if="item.date || !!slots[(item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>]" data-part="date" :class="ui.date({ class: [props.ui?.date, item.ui?.date] })">
             <slot :name="((item.slot ? `${item.slot}-date` : 'date') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
               {{ item.date }}
             </slot>
           </div>
-          <div v-if="item.title || !!slots[(item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>]" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })" data-part="title">
+          <div v-if="item.title || !!slots[(item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>]" data-part="title" :class="ui.title({ class: [props.ui?.title, item.ui?.title] })">
             <slot :name="((item.slot ? `${item.slot}-title` : 'title') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
               {{ item.title }}
             </slot>
           </div>
-          <div v-if="item.description || !!slots[(item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>]" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })" data-part="description">
+          <div v-if="item.description || !!slots[(item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>]" data-part="description" :class="ui.description({ class: [props.ui?.description, item.ui?.description] })">
             <slot :name="((item.slot ? `${item.slot}-description` : 'description') as keyof TimelineSlots<T>)" :item="(item as ExtractItem<T>)">
               {{ item.description }}
             </slot>

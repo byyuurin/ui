@@ -35,8 +35,8 @@ const ui = computed(() => {
     aria-label="loading"
     aria-live="polite"
     role="alert"
-    :class="ui.base({ class: props.class })"
     data-part="base"
+    :class="ui.base({ class: props.class })"
   >
     <slot></slot>
   </Primitive>

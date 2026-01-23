@@ -134,8 +134,8 @@ function getOffset(index: number) {
         '--translate': expanded ? 'calc(var(--offset) * var(--translate-factor))' : 'calc(var(--before) * var(--gap))',
         '--transform': 'translateY(var(--translate)) scale(var(--scale))',
       }"
-      :class="ui.base({ class: props.ui?.base })"
       data-part="base"
+      :class="ui.base({ class: props.ui?.base })"
       @update:open="onUpdateOpen($event, toast.id)"
       @click="toast.onClick && toast.onClick(toast)"
     />
@@ -143,8 +143,8 @@ function getOffset(index: number) {
     <ToastPortal v-bind="portalProps">
       <ToastViewport
         :data-expanded="expanded"
-        :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
         data-part="viewport"
+        :class="ui.viewport({ class: [props.ui?.viewport, props.class] })"
         :style="{
           '--scale-factor': '0.05',
           '--translate-factor': position?.startsWith('top') ? '1px' : '-1px',
@@ -169,6 +169,7 @@ function getOffset(index: number) {
       scale(var(--scale));
   }
 }
+
 @keyframes toast-closed {
   from {
     transform: var(--transform);
@@ -179,6 +180,7 @@ function getOffset(index: number) {
     );
   }
 }
+
 @keyframes toast-slide-left {
   from {
     transform: translateX(0) translateY(var(--translate));
@@ -187,6 +189,7 @@ function getOffset(index: number) {
     transform: translateX(-100%) translateY(var(--translate));
   }
 }
+
 @keyframes toast-slide-right {
   from {
     transform: translateX(0) translateY(var(--translate));

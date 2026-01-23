@@ -207,8 +207,8 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
   <DefineItemTemplate v-slot="{ item, index, level }">
     <li
       role="presentation"
-      :class="props.nested && level > 1 ? ui.itemWithChildren({ class: [props.ui?.itemWithChildren, item.ui?.itemWithChildren] }) : ui.item({ class: [props.ui?.item, item.ui?.item] })"
       :data-part="props.nested && level > 1 ? 'itemWithChildren' : 'item'"
+      :class="props.nested && level > 1 ? ui.itemWithChildren({ class: [props.ui?.itemWithChildren, item.ui?.itemWithChildren] }) : ui.item({ class: [props.ui?.item, item.ui?.item] })"
     >
       <TreeItem
         v-slot="{ isExpanded, isSelected, isIndeterminate, handleSelect, handleToggle }"
@@ -227,8 +227,8 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
             :is="as.link"
             :type="as.link === 'button' ? 'button' : undefined"
             :disabled="item.disabled || props.disabled"
-            :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], selected: isSelected, disabled: item.disabled || props.disabled })"
             data-part="link"
+            :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], selected: isSelected, disabled: item.disabled || props.disabled })"
             :style="!props.nested && level > 1 ? { paddingLeft: flattenedPaddingFormula(level) } : undefined"
           >
             <slot
@@ -244,18 +244,18 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
                 <Icon
                   v-if="item.icon"
                   :name="item.icon"
-                  :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon] })"
                   data-part="linkLeadingIcon"
+                  :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon] })"
                 />
                 <Icon
                   v-else-if="item.children?.length"
                   :name="isExpanded ? (props.expandedIcon ?? appConfig.ui.icons.folderOpen) : (props.collapsedIcon ?? appConfig.ui.icons.folder)"
-                  :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon] })"
                   data-part="linkLeadingIcon"
+                  :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon] })"
                 />
               </slot>
 
-              <span v-if="getItemLabel(item) || slots[(`${item.slot || 'item'}-label` as keyof TreeSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="linkLabel">
+              <span v-if="getItemLabel(item) || slots[(`${item.slot || 'item'}-label` as keyof TreeSlots<T>)]" data-part="linkLabel" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })">
                 <slot
                   :name="(`${item.slot || 'item'}-label` as keyof TreeSlots<T>)"
                   v-bind="{ index, level, expanded: isExpanded, selected: isSelected, indeterminate: isIndeterminate, handleSelect, handleToggle, ui }"
@@ -267,8 +267,8 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
 
               <span
                 v-if="item.trailingIcon || item.children?.length || slots[(`${item.slot || 'item'}-trailing` as keyof TreeSlots<T>)]"
-                :class="ui.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })"
                 data-part="linkTrailing"
+                :class="ui.linkTrailing({ class: [props.ui?.linkTrailing, item.ui?.linkTrailing] })"
               >
                 <slot
                   :name="(`${item.slot || 'item'}-trailing` as keyof TreeSlots<T>)"
@@ -278,14 +278,14 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
                   <Icon
                     v-if="item.trailingIcon"
                     :name="item.trailingIcon"
-                    :class="ui.linkTrailingIcon({ class: [props.trailingIcon, item.ui?.linkTrailingIcon] })"
                     data-part="linkTrailingIcon"
+                    :class="ui.linkTrailingIcon({ class: [props.trailingIcon, item.ui?.linkTrailingIcon] })"
                   />
                   <Icon
                     v-else-if="item.children?.length"
                     :name="props.trailingIcon ?? appConfig.ui.icons.chevronDown"
-                    :class="ui.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon] })"
                     data-part="linkTrailingIcon"
+                    :class="ui.linkTrailingIcon({ class: [props.ui?.linkTrailingIcon, item.ui?.linkTrailingIcon] })"
                   />
                 </slot>
               </span>
@@ -296,8 +296,8 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
         <ul
           v-if="props.nested && item.children?.length && isExpanded"
           role="group"
-          :class="ui.listWithChildren({ class: [props.ui?.listWithChildren, item.ui?.listWithChildren] })"
           data-part="listWithChildren"
+          :class="ui.listWithChildren({ class: [props.ui?.listWithChildren, item.ui?.listWithChildren] })"
         >
           <ReuseTreeTemplate :items="item.children" :level="level + 1" />
         </ul>
@@ -320,8 +320,8 @@ function onUpdate(value: M extends true ? Array<T[number]> : T[number]) {
     :default-expanded="defaultExpanded"
     :selection-behavior="props.selectionBehavior"
     :multiple="props.multiple"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="onUpdate"
   >
     <template v-if="!props.nested">

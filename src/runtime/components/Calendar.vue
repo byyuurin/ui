@@ -149,10 +149,10 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
     v-bind="rootProps"
     :model-value="(props.modelValue as DateValue | DateValue[])"
     :default-value="(props.defaultValue as DateValue)"
-    :class="ui.root({ class: [props.class, props.ui?.root] })"
     data-part="root"
+    :class="ui.root({ class: [props.class, props.ui?.root] })"
   >
-    <Calendar.Header :class="ui.header({ class: props.ui?.header })" data-part="header">
+    <Calendar.Header data-part="header" :class="ui.header({ class: props.ui?.header })">
       <Calendar.Prev v-if="props.yearControls" :prev-page="date => paginateYear(date, -1)" :aria-label="t('calendar.prevYear')" as-child>
         <Button :icon="prevYearIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.prevYear" />
       </Calendar.Prev>
@@ -160,7 +160,7 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
         <Button :icon="prevMonthIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.prevMonth" />
       </Calendar.Prev>
 
-      <Calendar.Heading v-slot="{ headingValue }" :class="ui.heading({ class: props.ui?.heading })" data-part="heading">
+      <Calendar.Heading v-slot="{ headingValue }" data-part="heading" :class="ui.heading({ class: props.ui?.heading })">
         <slot name="heading" :value="headingValue">
           {{ headingValue }}
         </slot>
@@ -172,41 +172,41 @@ const Calendar = computed(() => props.range ? RangeCalendar : BaseCalendar)
         <Button :icon="nextYearIcon" :size="props.size" color="neutral" variant="ghost" v-bind="props.nextYear" />
       </Calendar.Next>
     </Calendar.Header>
-    <div :class="ui.body({ class: props.ui?.body })" data-part="body">
+    <div data-part="body" :class="ui.body({ class: props.ui?.body })">
       <Calendar.Grid
         v-for="month in grid"
         :key="month.value.toString()"
-        :class="ui.grid({ class: props.ui?.grid })"
         data-part="grid"
+        :class="ui.grid({ class: props.ui?.grid })"
       >
         <Calendar.GridHead>
-          <Calendar.GridRow :class="ui.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })" data-part="gridWeekDaysRow">
-            <Calendar.HeadCell v-for="day in weekDays" :key="day" :class="ui.headCell({ class: props.ui?.headCell })" data-part="headCell">
+          <Calendar.GridRow data-part="gridWeekDaysRow" :class="ui.gridWeekDaysRow({ class: props.ui?.gridWeekDaysRow })">
+            <Calendar.HeadCell v-for="day in weekDays" :key="day" data-part="headCell" :class="ui.headCell({ class: props.ui?.headCell })">
               <slot name="week-day" :day="day">
                 {{ day }}
               </slot>
             </Calendar.HeadCell>
           </Calendar.GridRow>
         </Calendar.GridHead>
-        <Calendar.GridBody :class="ui.gridBody({ class: props.ui?.gridBody })" data-part="gridBody">
+        <Calendar.GridBody data-part="gridBody" :class="ui.gridBody({ class: props.ui?.gridBody })">
           <Calendar.GridRow
             v-for="(weekDates, index) in month.rows"
             :key="`weekDates-${index}`"
-            :class="ui.gridRow({ class: props.ui?.gridRow })"
             data-part="gridRow"
+            :class="ui.gridRow({ class: props.ui?.gridRow })"
           >
             <Calendar.Cell
               v-for="weekDate in weekDates"
               :key="weekDate.toString()"
               :date="weekDate"
-              :class="ui.cell({ class: props.ui?.cell })"
               data-part="cell"
+              :class="ui.cell({ class: props.ui?.cell })"
             >
               <Calendar.CellTrigger
                 :day="weekDate"
                 :month="month.value"
-                :class="ui.cellTrigger({ class: props.ui?.cellTrigger })"
                 data-part="cellTrigger"
+                :class="ui.cellTrigger({ class: props.ui?.cellTrigger })"
               >
                 <slot name="day" :day="weekDate">
                   {{ weekDate.day }}

@@ -285,9 +285,9 @@ defineExpose({
     <template v-if="props.preview && modelValue && (Array.isArray(modelValue) ? modelValue.length : true)">
       <slot name="files-top" :files="modelValue" :open="open" :remove-file="removeFile"></slot>
 
-      <div :class="ui.files({ class: props.ui?.files })" data-part="files">
+      <div data-part="files" :class="ui.files({ class: props.ui?.files })">
         <slot name="files" :files="modelValue">
-          <div v-for="(file, index) in Array.isArray(modelValue) ? modelValue : [modelValue]" :key="index" :class="ui.file({ class: props.ui?.file })" data-part="file">
+          <div v-for="(file, index) in Array.isArray(modelValue) ? modelValue : [modelValue]" :key="index" data-part="file" :class="ui.file({ class: props.ui?.file })">
             <slot name="file" :file="file" :index="index">
               <slot name="file-leading" :file="file" :index="index" :ui="ui">
                 <Avatar
@@ -295,19 +295,19 @@ defineExpose({
                   :src="createObjectUrl(file)"
                   :icon="props.fileIcon || appConfig.ui.icons.file"
                   :size="props.size"
-                  :class="ui.fileLeadingAvatar({ class: props.ui?.fileLeadingAvatar })"
                   data-part="fileLeadingAvatar"
+                  :class="ui.fileLeadingAvatar({ class: props.ui?.fileLeadingAvatar })"
                 />
               </slot>
 
-              <div :class="ui.fileWrapper({ class: props.ui?.fileWrapper })" data-part="fileWrapper">
-                <span :class="ui.fileName({ class: props.ui?.fileName })" data-part="fileName">
+              <div data-part="fileWrapper" :class="ui.fileWrapper({ class: props.ui?.fileWrapper })">
+                <span data-part="fileName" :class="ui.fileName({ class: props.ui?.fileName })">
                   <slot name="file-name" :file="file" :index="index">
                     {{ (file as File).name }}
                   </slot>
                 </span>
 
-                <span :class="ui.fileSize({ class: props.ui?.fileSize })" data-part="fileSize">
+                <span data-part="fileSize" :class="ui.fileSize({ class: props.ui?.fileSize })">
                   <slot name="file-size" :file="file" :index="index">
                     {{ formatFileSize((file as File).size) }}
                   </slot>
@@ -328,8 +328,8 @@ defineExpose({
                   }"
                   :aria-label="t('fileUpload.removeFile', { filename: (file as File).name })"
                   :trailing-icon="props.fileDeleteIcon || appConfig.ui.icons.close"
-                  :class="ui.fileTrailingButton({ class: props.ui?.fileTrailingButton })"
                   data-part="fileTrailingButton"
+                  :class="ui.fileTrailingButton({ class: props.ui?.fileTrailingButton })"
                   @click.stop.prevent="removeFile(index)"
                 />
               </slot>
@@ -342,7 +342,7 @@ defineExpose({
     </template>
   </DefineFilesTemplate>
 
-  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <Primitive :as="props.as" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <slot :open="open" :remove-file="removeFile" :ui="ui">
       <component
         :is="variant === 'button' ? 'button' : 'div'"
@@ -351,8 +351,8 @@ defineExpose({
         :role="variant === 'button' ? undefined : 'button'"
         :tabindex="props.interactive && disabled ? 0 : -1"
         :data-dragging="isDragging"
-        :class="ui.base({ class: props.ui?.base })"
         data-part="base"
+        :class="ui.base({ class: props.ui?.base })"
         @click="props.interactive && !disabled && open()"
         @keydown.space.prevent
         @keyup.enter.space="props.interactive && !disabled && open()"
@@ -361,34 +361,34 @@ defineExpose({
 
         <div
           v-if="props.preview && position === 'inside' ? (props.multiple ? !(modelValue as File[])?.length : !modelValue) : true"
-          :class="ui.wrapper({ class: props.ui?.wrapper })"
           data-part="wrapper"
+          :class="ui.wrapper({ class: props.ui?.wrapper })"
         >
           <slot name="leading" :ui="ui">
             <Icon
               v-if="variant === 'button'"
               :name="props.icon || appConfig.ui.icons.upload"
-              :class="ui.icon({ class: props.ui?.icon })"
               data-part="icon"
+              :class="ui.icon({ class: props.ui?.icon })"
             />
             <Avatar
               v-else
               :icon="props.icon || appConfig.ui.icons.upload"
               :size="props.size"
               :ui="{ icon: props.ui?.icon }"
-              :class="ui.avatar({ class: props.ui?.avatar })"
               data-part="avatar"
+              :class="ui.avatar({ class: props.ui?.avatar })"
             />
           </slot>
 
           <template v-if="variant !== 'button'">
-            <div v-if="props.label || slots.label" :class="ui.label({ class: props.ui?.label })" data-part="label">
+            <div v-if="props.label || slots.label" data-part="label" :class="ui.label({ class: props.ui?.label })">
               <slot name="label">
                 {{ props.label }}
               </slot>
             </div>
 
-            <div v-if="props.description || slots.description" :class="ui.description({ class: props.ui?.description })">
+            <div v-if="props.description || slots.description" data-part="description" :class="ui.description({ class: props.ui?.description })">
               <slot name="description">
                 {{ props.description }}
               </slot>

@@ -76,36 +76,36 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" aria-label="breadcrumb" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <ol :class="ui.list({ class: props.ui?.list })" data-part="list">
+  <Primitive :as="props.as" aria-label="breadcrumb" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <ol data-part="list" :class="ui.list({ class: props.ui?.list })">
       <template v-for="(item, index) in props.items" :key="index">
-        <li :class="ui.item({ class: [props.ui?.item, item.ui?.item] })" data-part="item">
+        <li data-part="item" :class="ui.item({ class: [props.ui?.item, item.ui?.item] })">
           <Link v-slot="{ active, ...slotProps }" v-bind="pickLinkProps(item)" custom>
             <LinkBase
               v-bind="slotProps"
               as="span"
               :aria-current="(item.active ?? active) && (index === items!.length - 1) ? 'page' : undefined"
-              :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: item.active ?? index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
               data-part="link"
+              :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: item.active ?? index === items!.length - 1, disabled: item.disabled, to: !!item.to })"
             >
               <slot :name="((item.slot || 'item') as keyof BreadcrumbSlots<T>)" :item="(item as ExtractItem<T>)" :index="index" :active="item.active ?? index === items!.length - 1" :ui="ui">
                 <slot :name="(`${item.slot || 'item'}-leading` as keyof BreadcrumbSlots<T>)" :item="(item as ExtractItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index" :ui="ui">
                   <Icon
                     v-if="item.icon"
                     :name="item.icon"
-                    :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: item.active ?? index === items!.length - 1 })"
                     data-part="linkLeadingIcon"
+                    :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, item.ui?.linkLeadingIcon], active: item.active ?? index === items!.length - 1 })"
                   />
                   <Avatar
                     v-else-if="item.avatar"
                     :size="((props.ui?.linkLeadingAvatarSize || ui.linkLeadingAvatarSize()) as AvatarProps['size'])"
                     v-bind="item.avatar"
-                    :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active: item.active ?? index === items!.length - 1 })"
                     data-part="linkLeadingAvatar"
+                    :class="ui.linkLeadingAvatar({ class: [props.ui?.linkLeadingAvatar, item.ui?.linkLeadingAvatar], active: item.active ?? index === items!.length - 1 })"
                   />
                 </slot>
 
-                <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })" data-part="linkLabel">
+                <span v-if="get(item, props.labelKey as string) || slots[(`${item.slot || 'item'}-label` as keyof BreadcrumbSlots<T>)]" data-part="linkLabel" :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })">
                   <slot :name="(`${item.slot || 'item'}-label` as keyof DynamicSlots<T, 'label'>)" :item="(item as ExtractItem<T>)" :active="item.active ?? index === items!.length - 1" :index="index">
                     {{ get(item, props.labelKey as string) }}
                   </slot>
@@ -117,9 +117,9 @@ const ui = computed(() => {
           </Link>
         </li>
 
-        <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator] })" data-part="separator">
+        <li v-if="index < items!.length - 1" role="presentation" aria-hidden="true" data-part="separator" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator] })">
           <slot name="separator" :ui="ui">
-            <Icon :name="separatorIcon" :class="ui.separatorIcon({ class: [props.ui?.separatorIcon, item.ui?.separatorIcon] })" data-part="separatorIcon" />
+            <Icon :name="separatorIcon" data-part="separatorIcon" :class="ui.separatorIcon({ class: [props.ui?.separatorIcon, item.ui?.separatorIcon] })" />
           </slot>
         </li>
       </template>

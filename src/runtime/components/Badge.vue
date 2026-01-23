@@ -67,25 +67,25 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.base({ class: [props.ui?.base, props.class] })" data-part="base">
+  <Primitive :as="props.as" data-part="base" :class="ui.base({ class: [props.ui?.base, props.class] })">
     <slot name="leading" :ui="ui">
       <Icon
         v-if="isLeading && leadingIconName"
         :name="leadingIconName"
-        :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
         data-part="leadingIcon"
+        :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       />
       <Avatar
         v-else-if="props.avatar"
         :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
         v-bind="props.avatar"
-        :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
         data-part="leadingAvatar"
+        :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
       />
     </slot>
 
     <slot :ui="ui">
-      <span v-if="props.label" :class="ui.label({ class: props.ui?.label })" data-part="label">
+      <span v-if="props.label" data-part="label" :class="ui.label({ class: props.ui?.label })">
         {{ props.label }}
       </span>
     </slot>
@@ -94,8 +94,8 @@ const ui = computed(() => {
       <Icon
         v-if="isTrailing && trailingIconName"
         :name="trailingIconName"
-        :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
         data-part="trailingIcon"
+        :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       />
     </slot>
   </Primitive>

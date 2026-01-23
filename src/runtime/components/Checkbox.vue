@@ -96,46 +96,46 @@ function onUpdate(value: any) {
 </script>
 
 <template>
-  <Primitive :as="(props.variant && props.variant !== 'list') ? Label : props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <div :class="ui.container({ class: props.ui?.container })" data-part="container">
+  <Primitive :as="(props.variant && props.variant !== 'list') ? Label : props.as" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-part="container" :class="ui.container({ class: props.ui?.container })">
       <CheckboxRoot
         v-bind="{ id, ...rootProps, ...$attrs, ...ariaAttrs, name, disabled }"
         v-model="modelValue"
-        :class="ui.base({ class: props.ui?.base })"
         data-part="base"
+        :class="ui.base({ class: props.ui?.base })"
         @update:model-value="onUpdate"
       >
         <template #default="{ modelValue }">
-          <CheckboxIndicator :class="ui.indicator({ class: props.ui?.indicator })" data-part="indicator">
+          <CheckboxIndicator data-part="indicator" :class="ui.indicator({ class: props.ui?.indicator })">
             <Icon
               v-if="modelValue === 'indeterminate'"
               :name="props.indeterminateIcon || appConfig.ui.icons.minus"
-              :class="ui.icon({ class: props.ui?.icon })"
               data-part="icon"
+              :class="ui.icon({ class: props.ui?.icon })"
             />
             <Icon
               v-else
               :name="props.icon || appConfig.ui.icons.check"
-              :class="ui.icon({ class: props.ui?.icon })"
               data-part="icon"
+              :class="ui.icon({ class: props.ui?.icon })"
             />
           </CheckboxIndicator>
         </template>
       </CheckboxRoot>
     </div>
-    <div v-if="props.label || !!slots.label || props.description || !!slots.description" :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
+    <div v-if="props.label || !!slots.label || props.description || !!slots.description" data-part="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
       <component
         :is="(!props.variant || props.variant === 'list') ? Label : 'p'"
         v-if="props.label || !!slots.label"
         :for="id"
-        :class="ui.label({ class: props.ui?.label })"
         data-part="label"
+        :class="ui.label({ class: props.ui?.label })"
       >
         <slot name="label" :label="props.label">
           {{ props.label }}
         </slot>
       </component>
-      <p v-if="props.description || !!slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
+      <p v-if="props.description || !!slots.description" data-part="description" :class="ui.description({ class: props.ui?.description })">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>

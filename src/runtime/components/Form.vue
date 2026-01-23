@@ -463,8 +463,8 @@ const ui = computed(() => {
   <component
     :is="parentBus ? 'div' : 'form'"
     :id="formId"
-    :class="ui.base({ class: props.class })"
     data-part="base"
+    :class="ui.base({ class: props.class })"
     @submit.prevent="onSubmitWrapper"
   >
     <slot :errors="errors" :loading="loading"></slot>

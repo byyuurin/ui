@@ -180,12 +180,12 @@ function onUpdate(value: any) {
     :model-value="(props.modelValue as MaybeArray<Exclude<RadioGroupItem, boolean>>)"
     :default-value="(props.defaultValue as MaybeArray<Exclude<RadioGroupItem, boolean>>)"
     :orientation="props.orientation"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="onUpdate"
   >
-    <fieldset v-bind="ariaAttrs" :class="ui.fieldset({ class: props.ui?.fieldset })" data-part="fieldset">
-      <legend v-if="props.legend || !!slots.legend" :class="ui.legend({ class: props.ui?.legend })" data-part="legend">
+    <fieldset v-bind="ariaAttrs" data-part="fieldset" :class="ui.fieldset({ class: props.ui?.fieldset })">
+      <legend v-if="props.legend || !!slots.legend" data-part="legend" :class="ui.legend({ class: props.ui?.legend })">
         <slot name="legend">
           {{ props.legend }}
         </slot>
@@ -194,29 +194,29 @@ function onUpdate(value: any) {
         :is="(!props.variant || props.variant === 'list') ? 'div' : Label"
         v-for="item in normalizedItems"
         :key="item.value"
-        :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class], disabled: item.disabled })"
         data-part="item"
+        :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class], disabled: item.disabled })"
       >
-        <div :class="ui.container({ class: [props.ui?.container, item.ui?.container], disabled: item.disabled })" data-part="container">
+        <div data-part="container" :class="ui.container({ class: [props.ui?.container, item.ui?.container], disabled: item.disabled })">
           <RekaRadioGroupItem
             :id="item.id"
             :value="item.value"
             :disabled="item.disabled"
-            :class="ui.base({ class: [props.ui?.base, item.ui?.base], disabled: item.disabled, indicator: props.indicator })"
             data-part="base"
+            :class="ui.base({ class: [props.ui?.base, item.ui?.base], disabled: item.disabled, indicator: props.indicator })"
             :data-indicator="props.indicator"
           >
-            <RadioGroupIndicator :class="ui.indicator({ class: [props.ui?.indicator, item.ui?.indicator], disabled: item.disabled })" data-part="indicator" force-mount />
+            <RadioGroupIndicator data-part="indicator" :class="ui.indicator({ class: [props.ui?.indicator, item.ui?.indicator], disabled: item.disabled })" force-mount />
           </RekaRadioGroupItem>
         </div>
 
-        <div v-if="(item.label || !!slots.label) || (item.description || !!slots.description)" :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper], disabled: item.disabled })" data-part="wrapper">
-          <component :is="(!props.variant || props.variant === 'list') ? Label : 'p'" :for="item.id" :class="ui.label({ class: [props.ui?.label, item.ui?.label], disabled: item.disabled })" data-part="label">
+        <div v-if="(item.label || !!slots.label) || (item.description || !!slots.description)" data-part="wrapper" :class="ui.wrapper({ class: [props.ui?.wrapper, item.ui?.wrapper], disabled: item.disabled })">
+          <component :is="(!props.variant || props.variant === 'list') ? Label : 'p'" :for="item.id" data-part="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label], disabled: item.disabled })">
             <slot name="label" :item="item" :model-value="(modelValue as RadioGroupValue)">
               {{ item.label }}
             </slot>
           </component>
-          <p v-if="item.description || !!slots.description" :class="ui.description({ class: [props.ui?.description, item.ui?.description], disabled: item.disabled })" data-part="description">
+          <p v-if="item.description || !!slots.description" data-part="description" :class="ui.description({ class: [props.ui?.description, item.ui?.description], disabled: item.disabled })">
             <slot name="description" :item="item" :model-value="(modelValue as RadioGroupValue)">
               {{ item.description }}
             </slot>

@@ -114,11 +114,11 @@ const ui = computed(() => {
     :type="props.type"
     :disabled="props.disabled || props.loading"
     v-bind="omit(linkProps, ['type', 'disabled', 'onClick'])"
-    data-part="base"
     custom
   >
     <LinkBase
       v-bind="slotProps"
+      data-part="base"
       :class="ui.base({
         class: [props.ui?.base, props.class],
         active,
@@ -131,23 +131,23 @@ const ui = computed(() => {
         <Icon
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
-          :class="ui.leadingIcon({ class: props.ui?.leadingIcon, active })"
           data-part="leadingIcon"
+          :class="ui.leadingIcon({ class: props.ui?.leadingIcon, active })"
         />
         <Avatar
           v-else-if="props.avatar"
           :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
           v-bind="props.avatar"
-          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar, active })"
           data-part="leadingAvatar"
+          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar, active })"
         />
       </slot>
 
       <slot :ui="ui">
         <span
           v-if="props.label"
-          :class="ui.label({ class: props.ui?.label, active })"
           data-part="label"
+          :class="ui.label({ class: props.ui?.label, active })"
         >
           {{ label }}
         </span>
@@ -157,8 +157,8 @@ const ui = computed(() => {
         <Icon
           v-if="isTrailing && trailingIconName"
           :name="trailingIconName"
-          :class="ui.trailingIcon({ class: props.ui?.trailingIcon, active })"
           data-part="trailingIcon"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon, active })"
         />
       </slot>
     </LinkBase>

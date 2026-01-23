@@ -109,14 +109,14 @@ function onChange(value: any) {
     v-bind="{ ...rootProps, ...ariaAttrs, id, name, disabled }"
     v-model="sliderValue"
     :default-value="defaultSliderValue"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :data-steps="thumbs"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="emitFormInput()"
     @value-commit="onChange"
   >
-    <SliderTrack :class="ui.track({ class: props.ui?.track })" data-part="track">
-      <SliderRange :class="ui.range({ class: props.ui?.range })" data-part="range" />
+    <SliderTrack data-part="track" :class="ui.track({ class: props.ui?.track })">
+      <SliderRange data-part="range" :class="ui.range({ class: props.ui?.range })" />
     </SliderTrack>
 
     <Tooltip
@@ -127,7 +127,7 @@ function onChange(value: any) {
       :disabled="!props.tooltip"
       disable-closing-trigger
     >
-      <SliderThumb :class="ui.thumb({ class: props.ui?.thumb })" data-part="thumb" :aria-label="thumbs === 1 ? 'Thumb' : `Thumb ${thumb} of ${thumbs}`" />
+      <SliderThumb :aria-label="thumbs === 1 ? 'Thumb' : `Thumb ${thumb} of ${thumbs}`" data-part="thumb" :class="ui.thumb({ class: props.ui?.thumb })" />
     </Tooltip>
   </SliderRoot>
 </template>

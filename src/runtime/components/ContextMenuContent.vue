@@ -67,33 +67,33 @@ const groups = computed<ContextMenuItem[][]>(
         <Icon
           v-if="item.loading"
           :name="props.loadingIcon || appConfig.ui.icons.loading"
-          :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, loading: true })"
           data-part="itemLeadingIcon"
+          :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, loading: true })"
         />
         <Icon
           v-else-if="item.icon"
           :name="item.icon"
-          :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, active })"
           data-part="itemLeadingIcon"
+          :class="props.ui.itemLeadingIcon({ class: [props.uiOverride?.itemLeadingIcon, item.ui?.itemLeadingIcon], color: item.color, active })"
         />
         <Avatar
           v-else-if="item.avatar"
           v-bind="item.avatar"
           :size="((item.ui?.itemLeadingAvatarSize || props.uiOverride?.itemLeadingAvatarSize || props.ui.itemLeadingAvatarSize()) as AvatarProps['size'])"
-          :class="props.ui.itemLeadingAvatar({ class: [props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })"
           data-part="itemLeadingAvatar"
+          :class="props.ui.itemLeadingAvatar({ class: [props.uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })"
         />
       </slot>
 
       <span
         v-if="(get(item, props.labelKey as string) || !!slots[`${item.slot || 'item'}-label` as keyof ContextMenuSlots<T>]) || (get(item, props.descriptionKey as string) || !!slots[`${item.slot || 'item'}-description` as keyof ContextMenuSlots<T>])"
-        :class="props.ui.itemWrapper({ class: [props.uiOverride?.itemWrapper, item.ui?.itemWrapper] })"
         data-part="itemWrapper"
+        :class="props.ui.itemWrapper({ class: [props.uiOverride?.itemWrapper, item.ui?.itemWrapper] })"
       >
         <span
           v-if="get(item, props.labelKey as string) || !!slots[`${item.slot || 'item'}-label` as keyof ContextMenuSlots<T>]"
-          :class="props.ui.itemLabel({ class: [props.uiOverride?.itemLabel, item.ui?.itemLabel], active })"
           data-part="itemLabel"
+          :class="props.ui.itemLabel({ class: [props.uiOverride?.itemLabel, item.ui?.itemLabel], active })"
         >
           <slot :name="((`${item.slot || 'item'}-label`) as keyof ContextMenuSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
             {{ get(item, props.labelKey as string) }}
@@ -102,22 +102,22 @@ const groups = computed<ContextMenuItem[][]>(
           <Icon
             v-if="item.target === '_blank' && props.externalIcon !== false"
             :name="typeof props.externalIcon === 'string' ? props.externalIcon : appConfig.ui.icons.external"
-            :class="props.ui.itemLabelExternalIcon({ class: [props.uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item.color, active })"
             data-part="itemLabelExternalIcon"
+            :class="props.ui.itemLabelExternalIcon({ class: [props.uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item.color, active })"
           />
         </span>
 
-        <span v-if="get(item, props.descriptionKey as string) || !!slots[`${item.slot || 'item'}-description` as keyof ContextMenuSlots<T>]" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })" data-part="itemDescription">
+        <span v-if="get(item, props.descriptionKey as string) || !!slots[`${item.slot || 'item'}-description` as keyof ContextMenuSlots<T>]" data-part="itemDescription" :class="props.ui.itemDescription({ class: [props.uiOverride?.itemDescription, item.ui?.itemDescription] })">
           <slot :name="((`${item.slot || 'item'}-description`) as keyof ContextMenuSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index">
             {{ get(item, props.descriptionKey as string) }}
           </slot>
         </span>
       </span>
 
-      <span :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })" data-part="itemTrailing">
+      <span data-part="itemTrailing" :class="props.ui.itemTrailing({ class: [props.uiOverride?.itemTrailing, item.ui?.itemTrailing] })">
         <slot :name="(`${item.slot || 'item'}-trailing` as keyof ContextMenuSlots<T>)" :item="(item as ExtractItem<T>)" :active="active" :index="index" :ui="ui">
-          <Icon v-if="item.children?.length" :name="childrenIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" data-part="itemTrailingIcon" />
-          <span v-else-if="item.kbds?.length" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })" data-part="itemTrailingKbds">
+          <Icon v-if="item.children?.length" :name="childrenIcon" data-part="itemTrailingIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color, active })" />
+          <span v-else-if="item.kbds?.length" data-part="itemTrailingKbds" :class="props.ui.itemTrailingKbds({ class: [props.uiOverride?.itemTrailingKbds, item.ui?.itemTrailingKbds] })">
             <Kbd
               v-for="(kbd, kbdIndex) in item.kbds"
               :key="kbdIndex"
@@ -128,7 +128,7 @@ const groups = computed<ContextMenuItem[][]>(
         </slot>
 
         <ContextMenu.ItemIndicator as-child>
-          <Icon :name="props.checkedIcon || appConfig.ui.icons.check" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color })" data-part="itemTrailingIcon" />
+          <Icon :name="props.checkedIcon || appConfig.ui.icons.check" data-part="itemTrailingIcon" :class="props.ui.itemTrailingIcon({ class: [props.uiOverride?.itemTrailingIcon, item.ui?.itemTrailingIcon], color: item.color })" />
         </ContextMenu.ItemIndicator>
       </span>
     </slot>
@@ -138,21 +138,21 @@ const groups = computed<ContextMenuItem[][]>(
     <component :is="(props.sub ? ContextMenu.SubContent : ContextMenu.Content)" :class="props.ui.content({ class: [props.uiOverride?.content, props.class] })" v-bind="contentProps">
       <slot name="content-top" :sub="props.sub ?? false"></slot>
 
-      <div role="presentation" :class="props.ui.viewport({ class: props.uiOverride?.viewport })" data-part="viewport">
-        <ContextMenu.Group v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" :class="props.ui.group({ class: props.uiOverride?.group })" data-part="group">
+      <div role="presentation" data-part="viewport" :class="props.ui.viewport({ class: props.uiOverride?.viewport })">
+        <ContextMenu.Group v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" data-part="group" :class="props.ui.group({ class: props.uiOverride?.group })">
           <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
-            <ContextMenu.Label v-if="item.type === 'label'" :class="props.ui.label({ class: [props.uiOverride?.label, item.ui?.label, item.class] })" data-part="label">
+            <ContextMenu.Label v-if="item.type === 'label'" data-part="label" :class="props.ui.label({ class: [props.uiOverride?.label, item.ui?.label, item.class] })">
               <ReuseItemTemplate :item="item" :index="index" />
             </ContextMenu.Label>
-            <ContextMenu.Separator v-else-if="item.type === 'separator'" :class="props.ui.separator({ class: [props.uiOverride?.separator, item.ui?.separator, item.class] })" data-part="separator" />
+            <ContextMenu.Separator v-else-if="item.type === 'separator'" data-part="separator" :class="props.ui.separator({ class: [props.uiOverride?.separator, item.ui?.separator, item.class] })" />
             <ContextMenu.Sub v-else-if="item?.children?.length" :open="item.open" :default-open="item.defaultOpen">
               <ContextMenu.SubTrigger
                 as="button"
                 type="button"
                 :disabled="item.disabled"
                 :text-value="get(item, props.labelKey as string)"
-                :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color })"
                 data-part="item"
+                :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color })"
               >
                 <ReuseItemTemplate :item="item" :index="index" />
               </ContextMenu.SubTrigger>
@@ -185,8 +185,8 @@ const groups = computed<ContextMenuItem[][]>(
               :model-value="item.checked"
               :disabled="item.disabled"
               :text-value="get(item, props.labelKey as string)"
-              :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color })"
               data-part="item"
+              :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color })"
               @update:model-value="item.onUpdateChecked"
               @select="item.onSelect"
             >
@@ -199,7 +199,7 @@ const groups = computed<ContextMenuItem[][]>(
                 :text-value="get(item, props.labelKey as string)"
                 @select="item.onSelect"
               >
-                <LinkBase v-bind="slotProps" :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color, active })" data-part="item">
+                <LinkBase v-bind="slotProps" data-part="item" :class="props.ui.item({ class: [props.uiOverride?.item, item.ui?.item, item.class], color: item.color, active })">
                   <ReuseItemTemplate :item="item" :active="active" :index="index" />
                 </LinkBase>
               </ContextMenu.Item>

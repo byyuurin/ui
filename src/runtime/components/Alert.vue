@@ -92,46 +92,46 @@ const ui = computed(() => {
 <template>
   <Primitive
     :as="props.as"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :data-orientation="props.orientation"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
   >
     <slot name="leading" :ui="ui">
       <Avatar
         v-if="props.avatar"
         :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
         v-bind="props.avatar"
-        :class="ui.avatar({ class: props.ui?.avatar })"
         data-part="avatar"
+        :class="ui.avatar({ class: props.ui?.avatar })"
       />
       <Icon
         v-else-if="props.icon"
         :name="props.icon"
-        :class="ui.icon({ class: props.ui?.icon })"
         data-part="icon"
+        :class="ui.icon({ class: props.ui?.icon })"
       />
     </slot>
 
-    <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <div v-if="props.title || slots.title" :class="ui.title({ class: props.ui?.title })" data-part="title">
+    <div data-part="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <div v-if="props.title || slots.title" data-part="title" :class="ui.title({ class: props.ui?.title })">
         <slot name="title">
           {{ props.title }}
         </slot>
       </div>
-      <div v-if="props.description || slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
+      <div v-if="props.description || slots.description" data-part="description" :class="ui.description({ class: props.ui?.description })">
         <slot name="description">
           {{ props.description }}
         </slot>
       </div>
 
-      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" :class="ui.actions({ class: props.ui?.actions })" data-part="actions">
+      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" data-part="actions" :class="ui.actions({ class: props.ui?.actions })">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
         </slot>
       </div>
     </div>
 
-    <div v-if="(props.orientation === 'horizontal' && (props.actions?.length || slots.actions)) || props.close" :class="ui.actions({ class: props.ui?.actions, orientation: 'horizontal' })" data-part="actions">
+    <div v-if="(props.orientation === 'horizontal' && (props.actions?.length || slots.actions)) || props.close" data-part="actions" :class="ui.actions({ class: props.ui?.actions, orientation: 'horizontal' })">
       <template v-if="props.orientation === 'horizontal' && (props.actions?.length || slots.actions)">
         <slot name="actions">
           <Button v-for="(action, index) in props.actions" :key="index" size="xs" v-bind="action" />
@@ -146,8 +146,8 @@ const ui = computed(() => {
           variant="link"
           :aria-label="t('alert.close')"
           v-bind="typeof props.close === 'object' ? props.close as Partial<ButtonProps> : {}"
-          :class="ui.close({ class: props.ui?.close })"
           data-part="close"
+          :class="ui.close({ class: props.ui?.close })"
           @click="emit('update:open', false)"
         />
       </slot>

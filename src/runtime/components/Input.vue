@@ -162,21 +162,21 @@ defineExpose({
 </script>
 
 <template>
-  <Primitive :as="as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <span v-if="isLeading || !!props.avatar || !!slots.leading" :class="ui.leading({ class: props.ui?.leading })" data-part="leading">
+  <Primitive :as="as" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <span v-if="isLeading || !!props.avatar || !!slots.leading" data-part="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading" :ui="ui">
         <Icon
           v-if="isLeading && leadingIconName"
           :name="leadingIconName"
-          :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
           data-part="leadingIcon"
+          :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
         />
         <Avatar
           v-else-if="props.avatar"
           :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])"
           v-bind="props.avatar"
-          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
           data-part="leadingAvatar"
+          :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })"
         />
       </slot>
     </span>
@@ -189,8 +189,8 @@ defineExpose({
       :required="props.required"
       :autocomplete="props.autocomplete"
       v-bind="{ id, name, disabled, ...$attrs, ...ariaAttrs }"
-      :class="ui.base({ class: props.ui?.base })"
       data-part="base"
+      :class="ui.base({ class: props.ui?.base })"
       @input="onInput"
       @blur="onBlur"
       @change="onChange"
@@ -199,13 +199,13 @@ defineExpose({
 
     <slot :ui="ui"></slot>
 
-    <span v-if="isTrailing || slots.trailing" :class="ui.trailing({ class: props.ui?.trailing })" data-part="trailing">
+    <span v-if="isTrailing || slots.trailing" data-part="trailing" :class="ui.trailing({ class: props.ui?.trailing })">
       <slot name="trailing" :ui="ui">
         <Icon
           v-if="trailingIconName"
           :name="trailingIconName"
-          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
           data-part="trailingIcon"
+          :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
         />
       </slot>
     </span>

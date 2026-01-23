@@ -159,8 +159,8 @@ defineExpose({
 <template>
   <NumberFieldRoot
     v-bind="{ ...rootProps, id, name, disabled, modelValue }"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="onUpdate"
   >
     <NumberFieldInput
@@ -168,13 +168,13 @@ defineExpose({
       ref="inputRef"
       :placeholder="props.placeholder"
       :required="props.required"
-      :class="ui.base({ class: props.ui?.base })"
       data-part="base"
+      :class="ui.base({ class: props.ui?.base })"
       @blur="onBlur"
       @focus="emitFormFocus"
     />
 
-    <div v-if="props.increment" :class="ui.increment({ class: props.ui?.increment })" data-part="increment">
+    <div v-if="props.increment" data-part="increment" :class="ui.increment({ class: props.ui?.increment })">
       <NumberFieldIncrement :disabled="disabled || incrementDisabled" as-child>
         <slot name="increment">
           <Button
@@ -189,7 +189,7 @@ defineExpose({
       </NumberFieldIncrement>
     </div>
 
-    <div v-if="props.decrement" :class="ui.decrement({ class: props.ui?.decrement })" data-part="decrement">
+    <div v-if="props.decrement" data-part="decrement" :class="ui.decrement({ class: props.ui?.decrement })">
       <NumberFieldDecrement :disabled="disabled || decrementDisabled" as-child>
         <slot name="decrement">
           <Button

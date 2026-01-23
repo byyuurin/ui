@@ -112,9 +112,9 @@ defineExpose({
     ref="el"
     v-slot="{ remaining, duration, open }"
     v-bind="rootProps"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :data-orientation="props.orientation"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     :style="{ '--height': height }"
   >
     <slot name="leading" :ui="ui">
@@ -122,19 +122,19 @@ defineExpose({
         v-if="props.avatar"
         :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])"
         v-bind="props.avatar"
-        :class="ui.avatar({ class: props.ui?.avatar })"
         data-part="avatar"
+        :class="ui.avatar({ class: props.ui?.avatar })"
       />
       <Icon
         v-else-if="props.icon"
         :name="props.icon"
-        :class="ui.icon({ class: props.ui?.icon })"
         data-part="icon"
+        :class="ui.icon({ class: props.ui?.icon })"
       />
     </slot>
 
-    <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <ToastTitle v-if="props.title || !!slots.title" :class="ui.title({ class: props.ui?.title })" data-part="title">
+    <div data-part="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <ToastTitle v-if="props.title || !!slots.title" data-part="title" :class="ui.title({ class: props.ui?.title })">
         <slot name="title">
           <component :is="props.title()" v-if="typeof props.title === 'function'" />
           <component :is="props.title" v-else-if="typeof props.title === 'object'" />
@@ -143,7 +143,7 @@ defineExpose({
           </template>
         </slot>
       </ToastTitle>
-      <ToastDescription v-if="props.description || !!slots.description" :class="ui.description({ class: props.ui?.description })" data-part="description">
+      <ToastDescription v-if="props.description || !!slots.description" data-part="description" :class="ui.description({ class: props.ui?.description })">
         <slot name="description">
           <component :is="props.description()" v-if="typeof props.description === 'function'" />
           <component :is="props.description" v-else-if="typeof props.description === 'object'" />
@@ -153,7 +153,7 @@ defineExpose({
         </slot>
       </ToastDescription>
 
-      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" :class="ui.actions({ class: props.ui?.actions })" data-part="actions">
+      <div v-if="props.orientation === 'vertical' && (props.actions?.length || slots.actions)" data-part="actions" :class="ui.actions({ class: props.ui?.actions })">
         <slot name="actions">
           <ToastAction v-for="(action, index) in props.actions" :key="index" :alt-text="action.label || 'Action'" as-child @click.stop>
             <Button size="xs" :color="props.color" v-bind="action" />
@@ -164,8 +164,8 @@ defineExpose({
 
     <div
       v-if="(props.orientation === 'horizontal' && (props.actions?.length || !!slots.actions)) || props.close"
-      :class="ui.actions({ class: props.ui?.actions })"
       data-part="actions"
+      :class="ui.actions({ class: props.ui?.actions })"
     >
       <template v-if="props.orientation === 'horizontal'">
         <slot name="actions">
@@ -184,8 +184,8 @@ defineExpose({
             variant="link"
             :aria-label="t('toast.close')"
             v-bind="typeof props.close === 'object' ? props.close : {}"
-            :class="ui.close({ class: props.ui?.close })"
             data-part="close"
+            :class="ui.close({ class: props.ui?.close })"
             @click.stop
           />
         </slot>
@@ -198,6 +198,7 @@ defineExpose({
       :color="props.color"
       v-bind="(typeof props.progress === 'object' ? props.progress : {})"
       size="sm"
+      data-part="progress"
       :class="ui.progress({ class: props.ui?.progress })"
     />
   </ToastRoot>

@@ -108,8 +108,8 @@ defineExpose({
     :placeholder="props.placeholder"
     :model-value="(modelValue as PinInputValue<T>)"
     :default-value="(props.defaultValue as PinInputValue<T>)"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="emitFormInput"
     @complete="onComplete"
   >
@@ -119,8 +119,8 @@ defineExpose({
       :ref="el => (inputsRef[index as number] = el as ComponentPublicInstance)"
       :index="(index as number)"
       :disabled="disabled"
-      :class="ui.base({ class: props.ui?.base })"
       data-part="base"
+      :class="ui.base({ class: props.ui?.base })"
       @blur="onBlur"
       @focus="emitFormFocus"
     />

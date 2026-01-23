@@ -51,7 +51,7 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.base({ class: props.class })" data-part="base">
+  <Primitive :as="props.as" data-part="base" :class="ui.base({ class: props.class })">
     <slot>{{ getKbdKey(props.value) }}</slot>
   </Primitive>
 </template>

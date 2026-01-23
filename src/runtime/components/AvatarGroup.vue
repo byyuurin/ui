@@ -87,8 +87,8 @@ provideAvatarGroup(computed(() => props))
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" :class="ui.base({ class: props.ui?.base })" data-part="base" />
-    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" :class="ui.base({ class: props.ui?.base })" data-part="base" />
+  <Primitive :as="props.as" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <Avatar v-if="hiddenCount > 0" :text="`+${hiddenCount}`" data-part="base" :class="ui.base({ class: props.ui?.base })" />
+    <component :is="avatar" v-for="(avatar, index) in visibleAvatars" :key="index" data-part="base" :class="ui.base({ class: props.ui?.base })" />
   </Primitive>
 </template>

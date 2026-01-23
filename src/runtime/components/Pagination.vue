@@ -136,21 +136,21 @@ const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? appConf
 </script>
 
 <template>
-  <PaginationRoot v-slot="{ page, pageCount }" v-bind="rootProps" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
-    <PaginationList v-slot="{ items }" :class="ui.list({ class: props.ui?.list })" data-part="list">
-      <PaginationFirst v-if="props.showControls || !!slots.first" :class="ui.first({ class: props.ui?.first })" as-child data-part="first">
+  <PaginationRoot v-slot="{ page, pageCount }" v-bind="rootProps" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <PaginationList v-slot="{ items }" data-part="list" :class="ui.list({ class: props.ui?.list })">
+      <PaginationFirst v-if="props.showControls || !!slots.first" data-part="first" :class="ui.first({ class: props.ui?.first })" as-child>
         <slot name="first">
           <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="firstIcon" :to="props.to?.(1)" />
         </slot>
       </PaginationFirst>
-      <PaginationPrev v-if="props.showControls || !!slots.prev" :class="ui.prev({ class: props.ui?.prev })" as-child data-part="perv">
+      <PaginationPrev v-if="props.showControls || !!slots.prev" data-part="perv" :class="ui.prev({ class: props.ui?.prev })" as-child>
         <slot name="prev">
           <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="prevIcon" :to="page > 1 ? props.to?.(page - 1) : undefined" />
         </slot>
       </PaginationPrev>
 
       <template v-for="(item, index) in items" :key="index">
-        <PaginationListItem v-if="item.type === 'page'" :value="item.value" :class="ui.item({ class: props.ui?.item })" as-child data-part="item">
+        <PaginationListItem v-if="item.type === 'page'" :value="item.value" data-part="item" :class="ui.item({ class: props.ui?.item })" as-child>
           <slot name="item" v-bind="{ item, index, page, pageCount }">
             <Button
               :color="props.page === item.value ? props.activeColor : props.color"
@@ -164,19 +164,19 @@ const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? appConf
           </slot>
         </PaginationListItem>
 
-        <PaginationEllipsis v-else :class="ui.ellipsis({ class: props.ui?.ellipsis })" as-child data-part="ellipsis">
+        <PaginationEllipsis v-else data-part="ellipsis" :class="ui.ellipsis({ class: props.ui?.ellipsis })" as-child>
           <slot name="ellipsis" :ui="ui">
             <Button as="div" :color="props.color" :variant="props.variant" :size="props.size" :icon="ellipsisIcon || appConfig.ui.icons.ellipsis" />
           </slot>
         </PaginationEllipsis>
       </template>
 
-      <PaginationNext v-if="props.showControls || !!slots.next" :class="ui.next({ class: props.ui?.next })" as-child data-part="next">
+      <PaginationNext v-if="props.showControls || !!slots.next" data-part="next" :class="ui.next({ class: props.ui?.next })" as-child>
         <slot name="next">
           <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="nextIcon" :to="page < pageCount ? props.to?.(page + 1) : undefined" />
         </slot>
       </PaginationNext>
-      <PaginationLast v-if="props.showControls || !!slots.last" :class="ui.last({ class: props.ui?.last })" as-child data-part="last">
+      <PaginationLast v-if="props.showControls || !!slots.last" data-part="last" :class="ui.last({ class: props.ui?.last })" as-child>
         <slot name="last">
           <Button :color="props.color" :variant="props.variant" :size="props.size" :icon="lastIcon" :to="props.to?.(pageCount)" />
         </slot>

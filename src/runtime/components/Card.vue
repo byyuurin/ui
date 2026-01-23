@@ -48,19 +48,19 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.root({ class: [props.class, props.ui?.root] })" data-part="root">
+  <Primitive :as="props.as" data-part="root" :class="ui.root({ class: [props.class, props.ui?.root] })">
     <slot name="content">
       <div
         v-if="slots.header || props.title || slots.title || props.description || slots.description "
-        :class="ui.header({ class: props.ui?.header })"
         data-part="header"
+        :class="ui.header({ class: props.ui?.header })"
       >
         <slot name="header">
           <Primitive
             v-if="props.title || slots.title"
             :as="!!slots.title ? undefined : 'h2'"
-            :class="ui.title({ class: props.ui?.title })"
             data-part="title"
+            :class="ui.title({ class: props.ui?.title })"
           >
             <slot name="title">
               {{ props.title }}
@@ -70,8 +70,8 @@ const ui = computed(() => {
             v-if="props.description || slots.description"
             :as="!!slots.description ? undefined : 'p'"
             :as-child="!!slots.description"
-            :class="ui.description({ class: props.ui?.description })"
             data-part="description"
+            :class="ui.description({ class: props.ui?.description })"
           >
             <slot name="description">
               {{ props.description }}
@@ -80,11 +80,11 @@ const ui = computed(() => {
         </slot>
       </div>
 
-      <div v-if="!!slots.default" :class="ui.body({ class: props.ui?.body })" data-part="body">
+      <div v-if="!!slots.default" data-part="body" :class="ui.body({ class: props.ui?.body })">
         <slot></slot>
       </div>
 
-      <div v-if="!!slots.footer" :class="ui.footer({ class: props.ui?.footer })" data-part="footer">
+      <div v-if="!!slots.footer" data-part="footer" :class="ui.footer({ class: props.ui?.footer })">
         <slot name="footer"></slot>
       </div>
     </slot>

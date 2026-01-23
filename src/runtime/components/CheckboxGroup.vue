@@ -171,12 +171,12 @@ const ui = computed(() => {
 <template>
   <CheckboxGroupRoot
     v-bind="{ ...rootProps, id, name, disabled }"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
     data-part="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
     @update:model-value="onUpdate"
   >
-    <fieldset v-bind="ariaAttrs" :class="ui.fieldset({ class: props.ui?.fieldset })" data-part="fieldset">
-      <legend v-if="props.legend || !!slots.legend" :class="ui.legend({ class: props.ui?.legend })" data-part="legend">
+    <fieldset v-bind="ariaAttrs" data-part="fieldset" :class="ui.fieldset({ class: props.ui?.fieldset })">
+      <legend v-if="props.legend || !!slots.legend" data-part="legend" :class="ui.legend({ class: props.ui?.legend })">
         <slot name="legend">
           {{ props.legend }}
         </slot>
@@ -189,8 +189,8 @@ const ui = computed(() => {
         :variant="props.variant"
         :disabled="item.disabled || disabled"
         :ui="{ ...(props.ui ? omit(props.ui, ['root']) : undefined), ...(item.ui || {}) }"
-        :class="ui.item({ disabled: item.disabled || disabled, class: [props.ui?.item, item.ui?.item, item.class] })"
         data-part="item"
+        :class="ui.item({ disabled: item.disabled || disabled, class: [props.ui?.item, item.ui?.item, item.class] })"
       >
         <template v-for="(_, name) in getProxySlots()" #[name]>
           <slot :name="name" :item="item"></slot>

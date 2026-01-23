@@ -500,16 +500,16 @@ defineExpose({
     <tr
       :role="props.onSelect ? 'button' : undefined"
       :tabindex="props.onSelect ? 0 : undefined"
+      :data-selected="row.getIsSelected()"
+      :data-selectable="!!props.onSelect || !!props.onHover || !!props.onContextmenu"
+      :data-expanded="row.getIsExpanded()"
+      data-part="tr"
       :class="ui.tr({
         class: [
           props.ui?.tr,
           resolveValue(tableApi.options.meta?.class?.tr, row),
         ],
       })"
-      :data-selected="row.getIsSelected()"
-      :data-selectable="!!props.onSelect || !!props.onHover || !!props.onContextmenu"
-      :data-expanded="row.getIsExpanded()"
-      data-part="tr"
       :style="[resolveValue(tableApi.options.meta?.style?.tr, row), style]"
       @click="onRowSelect($event, row)"
       @pointerenter="onRowHover($event, row)"
@@ -521,6 +521,8 @@ defineExpose({
         :key="cell.id"
         :colspan="resolveValue(cell.column.columnDef.meta?.colspan?.td, cell)"
         :rowspan="resolveValue(cell.column.columnDef.meta?.rowspan?.td, cell)"
+        :data-pinned="cell.column.getIsPinned()"
+        data-part="td"
         :class="ui.td({
           class: [
             props.ui?.td,
@@ -528,8 +530,6 @@ defineExpose({
           ],
           pinned: !!cell.column.getIsPinned(),
         })"
-        :data-pinned="cell.column.getIsPinned()"
-        data-part="td"
         :style="[
           getColumnStyles(cell.column),
           resolveValue(cell.column.columnDef.meta?.style?.td, cell),
@@ -541,23 +541,23 @@ defineExpose({
       </td>
     </tr>
 
-    <tr v-if="row.getIsExpanded()" :class="ui.tr({ class: props.ui?.tr })" data-part="tr">
-      <td :colspan="row.getAllCells().length" :class="ui.td({ class: props.ui?.td })" data-part="td">
+    <tr v-if="row.getIsExpanded()" data-part="tr" :class="ui.tr({ class: props.ui?.tr })">
+      <td :colspan="row.getAllCells().length" data-part="td" :class="ui.td({ class: props.ui?.td })">
         <slot name="expanded" :row="row"></slot>
       </td>
     </tr>
   </DefineRowTemplate>
 
   <DefineTableTemplate>
-    <table ref="tableRef" :class="ui.base({ class: props.ui?.base })" data-part="base">
-      <caption v-if="caption || !!slots.caption" :class="ui.caption({ class: [props.ui?.caption] })" data-part="caption">
+    <table ref="tableRef" data-part="base" :class="ui.base({ class: props.ui?.base })">
+      <caption v-if="caption || !!slots.caption" data-part="caption" :class="ui.caption({ class: [props.ui?.caption] })">
         <slot name="caption">
           {{ caption }}
         </slot>
       </caption>
 
-      <thead :class="ui.thead({ class: [props.ui?.thead] })" data-part="thead">
-        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" :class="ui.tr({ class: [props.ui?.tr] })" data-part="tr">
+      <thead data-part="thead" :class="ui.thead({ class: [props.ui?.thead] })">
+        <tr v-for="headerGroup in tableApi.getHeaderGroups()" :key="headerGroup.id" data-part="tr" :class="ui.tr({ class: [props.ui?.tr] })">
           <th
             v-for="header in headerGroup.headers"
             :key="header.id"
@@ -565,6 +565,7 @@ defineExpose({
             :scope="header.colSpan > 1 ? 'colgroup' : 'col'"
             :colspan="header.colSpan > 1 ? header.colSpan : undefined"
             :rowspan="header.rowSpan > 1 ? header.rowSpan : undefined"
+            data-part="th"
             :class="ui.th({
               class: [
                 props.ui?.th,
@@ -572,7 +573,6 @@ defineExpose({
               ],
               pinned: !!header.column.getIsPinned(),
             })"
-            data-part="th"
             :style="[
               getColumnStyles(header.column),
               resolveValue(header.column.columnDef.meta?.style?.th, header),
@@ -584,10 +584,10 @@ defineExpose({
           </th>
         </tr>
 
-        <tr :class="ui.separator({ class: [props.ui?.separator] })" data-part="separator"></tr>
+        <tr data-part="separator" :class="ui.separator({ class: [props.ui?.separator] })"></tr>
       </thead>
 
-      <tbody :class="ui.tbody({ class: [props.ui?.tbody] })" data-part="tbody">
+      <tbody data-part="tbody" :class="ui.tbody({ class: [props.ui?.tbody] })">
         <slot name="body-top"></slot>
 
         <template v-if="rows.length">
@@ -609,13 +609,13 @@ defineExpose({
         </template>
 
         <tr v-else-if="props.loading && !!slots.loading">
-          <td :colspan="tableApi.getAllLeafColumns().length" :class="ui.loading({ class: props.ui?.loading })" data-part="loading">
+          <td :colspan="tableApi.getAllLeafColumns().length" data-part="loading" :class="ui.loading({ class: props.ui?.loading })">
             <slot name="loading"></slot>
           </td>
         </tr>
 
         <tr v-else>
-          <td :colspan="tableApi.getAllLeafColumns().length" :class="ui.empty({ class: props.ui?.empty })" data-part="empty">
+          <td :colspan="tableApi.getAllLeafColumns().length" data-part="empty" :class="ui.empty({ class: props.ui?.empty })">
             <slot name="empty">
               {{ props.empty || t('table.noData') }}
             </slot>
@@ -627,21 +627,22 @@ defineExpose({
 
       <tfoot
         v-if="hasFooter"
-        :class="ui.tfoot({ class: props.ui?.tfoot })"
         data-part="tfoot"
+        :class="ui.tfoot({ class: props.ui?.tfoot })"
         :style="virtualizer ? {
           transform: `translateY(${virtualizer.getTotalSize() - virtualizer.getVirtualItems().length * virtualizerProps.estimateSize}px)`,
         } : undefined"
       >
-        <tr :class="ui.separator({ class: props.ui?.separator })" data-part="separator"></tr>
+        <tr data-part="separator" :class="ui.separator({ class: props.ui?.separator })"></tr>
 
-        <tr v-for="footerGroup in tableApi.getFooterGroups()" :key="footerGroup.id" :class="ui.tr({ class: props.ui?.tr })" data-part="tr">
+        <tr v-for="footerGroup in tableApi.getFooterGroups()" :key="footerGroup.id" data-part="tr" :class="ui.tr({ class: props.ui?.tr })">
           <th
             v-for="header in footerGroup.headers"
             :key="header.id"
             :data-pinned="header.column.getIsPinned()"
             :colspan="header.colSpan > 1 ? header.colSpan : undefined"
             :rowspan="header.rowSpan > 1 ? header.rowSpan : undefined"
+            data-part="th"
             :class="ui.th({
               class: [
                 props.ui?.th,
@@ -649,7 +650,6 @@ defineExpose({
               ],
               pinned: !!header.column.getIsPinned(),
             })"
-            data-part="th"
             :style="[
               getColumnStyles(header.column),
               resolveValue(header.column.columnDef.meta?.style?.th, header),
@@ -664,7 +664,7 @@ defineExpose({
     </table>
   </DefineTableTemplate>
 
-  <Primitive ref="rootRef" :as="props.as" v-bind="$attrs" :class="ui.root({ class: [props.ui?.root, props.class] })" data-part="root">
+  <Primitive ref="rootRef" :as="props.as" v-bind="$attrs" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div v-if="virtualizer" :style="{ height: `${virtualizer.getTotalSize()}px` }">
       <ReuseTableTemplate />
     </div>

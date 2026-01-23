@@ -119,37 +119,37 @@ const ui = computed(() => {
 </script>
 
 <template>
-  <Primitive :as="props.as" :class="ui.root({ class: [props.ui?.root, props.class] })" :data-orientation="props.orientation" data-part="root">
-    <div :class="ui.wrapper({ class: props.ui?.wrapper })" data-part="wrapper">
-      <div v-if="props.label || !!slots.label" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })" data-part="labelWrapper">
-        <Label :for="id" :class="ui.label({ class: props.ui?.label })" data-part="label">
+  <Primitive :as="props.as" :data-orientation="props.orientation" data-part="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+    <div data-part="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <div v-if="props.label || !!slots.label" data-part="labelWrapper" :class="ui.labelWrapper({ class: props.ui?.labelWrapper })">
+        <Label :for="id" data-part="label" :class="ui.label({ class: props.ui?.label })">
           <slot name="label" :label="props.label">
             {{ props.label }}
           </slot>
         </Label>
-        <span v-if="props.hint || !!slots.hint" :id="`${ariaId}-hint`" :class="ui.hint({ class: props.ui?.hint })" data-part="hint">
+        <span v-if="props.hint || !!slots.hint" :id="`${ariaId}-hint`" data-part="hint" :class="ui.hint({ class: props.ui?.hint })">
           <slot name="hint" :hint="props.hint">
             {{ props.hint }}
           </slot>
         </span>
       </div>
 
-      <p v-if="props.description || !!slots.description" :id="`${ariaId}-description`" :class="ui.description({ class: props.ui?.description })" data-part="description">
+      <p v-if="props.description || !!slots.description" :id="`${ariaId}-description`" data-part="description" :class="ui.description({ class: props.ui?.description })">
         <slot name="description" :description="props.description">
           {{ props.description }}
         </slot>
       </p>
     </div>
 
-    <div :class="(props.label || !!slots.label || props.description || !!slots.description) && ui.container({ class: props.ui?.container })" data-part="container">
+    <div data-part="container" :class="(props.label || !!slots.label || props.description || !!slots.description) && ui.container({ class: props.ui?.container })">
       <slot :error="error"></slot>
 
-      <div v-if="props.error !== false && ((typeof error === 'string' && error) || !!slots.error)" :id="`${ariaId}-error`" :class="ui.error({ class: props.ui?.error })" data-part="error">
+      <div v-if="props.error !== false && ((typeof error === 'string' && error) || !!slots.error)" :id="`${ariaId}-error`" data-part="error" :class="ui.error({ class: props.ui?.error })">
         <slot name="error" :error="error">
           {{ error }}
         </slot>
       </div>
-      <div v-else-if="props.help || !!slots.help" :class="ui.help({ class: props.ui?.help })" data-part="help">
+      <div v-else-if="props.help || !!slots.help" data-part="help" :class="ui.help({ class: props.ui?.help })">
         <slot name="help" :help="props.help">
           {{ props.help }}
         </slot>
