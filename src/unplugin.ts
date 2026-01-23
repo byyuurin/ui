@@ -6,7 +6,7 @@ import { createUnplugin } from 'unplugin'
 import type { Options as AutoImportOptions } from 'unplugin-auto-import/types'
 import type { Options as ComponentsOptions } from 'unplugin-vue-components/types'
 import { name as packageName } from '../package.json'
-import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
+import { defaultOptions, getDefaultConfig, resolveColors } from './defaults'
 import type { ModuleOptions } from './module'
 import AppConfigPlugin from './plugins/app-config'
 import AutoImportPlugin from './plugins/auto-import'
@@ -50,7 +50,7 @@ export const unplugin = createUnplugin<UIOptions | undefined>((userOptions: UIOp
       ui: options.ui,
       colorMode: options.colorMode,
     },
-    { ui: getDefaultUIConfig(options.theme.colors) },
+    { ui: getDefaultConfig(options.theme) },
   )
 
   return [

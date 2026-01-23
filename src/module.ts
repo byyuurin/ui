@@ -6,7 +6,7 @@ import type { UnocssNuxtOptions } from '@unocss/nuxt'
 import { defu } from 'defu'
 import { name, version } from '../package.json'
 import type { VariantsColor, VariantsSize } from './defaults'
-import { defaultOptions, getDefaultUIConfig, resolveColors } from './defaults'
+import { defaultOptions, getDefaultConfig, resolveColors } from './defaults'
 import { addTemplates } from './templates'
 
 export type * from './runtime/types'
@@ -85,7 +85,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.ui = options
     nuxt.options.alias['#ui'] = resolve('./runtime')
-    nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, getDefaultUIConfig(options.theme.colors))
+    nuxt.options.appConfig.ui = defu(nuxt.options.appConfig.ui || {}, getDefaultConfig(options.theme))
 
     // Isolate root node from portaled components
     nuxt.options.app.rootAttrs ||= {}

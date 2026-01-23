@@ -4,7 +4,7 @@ import { pick } from './runtime/utils'
 import type { AppConfigUI } from './setup'
 import { icons } from './theme/app'
 
-export function getDefaultUIConfig(colors?: string[]): AppConfigUI<VariantsColor> {
+export function getDefaultConfig(theme?: ModuleOptions['theme']): AppConfigUI<VariantsColor> {
   return {
     colors: pick({
       primary: 'orange',
@@ -14,7 +14,7 @@ export function getDefaultUIConfig(colors?: string[]): AppConfigUI<VariantsColor
       warning: 'yellow',
       error: 'red',
       neutral: 'stone',
-    }, [...(colors || []), 'neutral' as any]),
+    }, [...(theme?.colors || []), 'neutral' as any]),
     icons,
   }
 }
@@ -48,3 +48,24 @@ function pickColorNames<Color extends keyof typeof colors>(colors: Color[]) {
 export const neutralColors = pickColorNames(['slate', 'gray', 'zinc', 'neutral', 'stone', 'light', 'dark'])
 export type NeutralColor = typeof neutralColors[number]
 export type Color = keyof Omit<typeof colors, NeutralColor | 'black' | 'white'> | (string & {})
+
+/**
+ * Override default variants from module options
+ * @param result - The theme result object
+ * @param defaultVariants - The default variants from module options
+ * @param defaultVariants.color - The default color variant
+ * @param defaultVariants.size - The default size variant
+ * @returns The theme result with overridden default variants
+ */
+export function applyDefaultVariants(result: any, defaultVariants?: { color?: string, size?: string }): any {
+  if (!result || !defaultVariants)
+    return result
+
+  if (defaultVariants.color && result.defaultVariants?.color && result.defaultVariants.color === 'primary')
+    result.defaultVariants.color = defaultVariants.color
+
+  if (defaultVariants.size && result.defaultVariants?.size && result.defaultVariants.size === 'md')
+    result.defaultVariants.size = defaultVariants.size
+
+  return result
+}

@@ -9,13 +9,17 @@ export default byyuurin(
         'no-console': ['error', { allow: ['trace'] }],
       },
     },
+    typescript: {
+      overrides: {
+        'unicorn/explicit-length-check': 'off',
+      },
+    },
     vue: {
       overrides: {
         'vue/block-tag-newline': ['warn', { blocks: { script: { maxEmptyLines: 1 } } }],
 
         'ts/no-empty-object-type': 'off',
         'vue/no-extra-parens': 'off',
-        'unicorn/explicit-length-check': 'off',
       },
     },
     formatters: {

@@ -10,7 +10,7 @@ import { genExport } from 'knitwork'
 import type { NuxtTemplate, NuxtTypeTemplate } from 'nuxt/schema'
 import { normalize } from 'pathe'
 import { kebabCase } from 'scule'
-import { neutralColors } from './defaults'
+import { applyDefaultVariants, neutralColors } from './defaults'
 import type { ModuleOptions } from './module'
 import type { AppConfigUI } from './setup'
 import * as theme from './theme'
@@ -54,12 +54,17 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
         write: true,
         getContents: () => {
           const template = theme[component]
-          const result = typeof template === 'function' ? template(options) : template
+          let result = typeof template === 'function' ? template(options) : template
+
+          // Override default variants
+          result = applyDefaultVariants(result, options.theme?.defaultVariants)
+
           const json = JSON.stringify(result, null, 2)
 
           // For local development, import directly from theme
           if (isDev) {
             const templatePath = fileURLToPath(new URL(`theme/${path ? `${path}/` : ''}${kebabCase(component)}`, import.meta.url))
+            const themeUtilsPath = fileURLToPath(new URL('defaults', import.meta.url))
 
             return [
               [
@@ -67,11 +72,11 @@ export function getTemplates(options: ModuleOptions, uiConfig: AppConfigUI, nuxt
                 `import type { ModuleOptions } from '@byyuurin/ui'`,
                 `import { ct } from '${imports.uiKit}'`,
                 `import template from ${JSON.stringify(templatePath)}`,
+                `import { applyDefaultVariants } from ${JSON.stringify(themeUtilsPath)}`,
               ].join('\n'),
               `const options: ModuleOptions = ${JSON.stringify(options, null, 2)}`,
-              `const result = typeof template === 'function' ? (template as Function)(options) : template`,
-              `if (result?.defaultVariants?.color && options.theme?.defaultVariants?.color)\n  result.defaultVariants.color = options.theme.defaultVariants.color`,
-              `if (result?.defaultVariants?.size && options.theme?.defaultVariants?.size)\n  result.defaultVariants.size = options.theme.defaultVariants.size`,
+              `let result = typeof template === 'function' ? (template as Function)(options) : template`,
+              `result = applyDefaultVariants(result, options.theme?.defaultVariants)`,
               `const theme = ct(${json})`,
               `export default result as typeof theme`,
             ].join('\n\n')
