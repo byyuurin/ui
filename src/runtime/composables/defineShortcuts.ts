@@ -1,4 +1,4 @@
-// ref: https://github.com/nuxt/ui/blob/ece0568dfc06c92c40ed186b18e8ebead101f44c/src/runtime/composables/defineShortcuts.ts
+// ref: https://github.com/nuxt/ui/blob/bd344d743d21b192cade7cec072e8616e2699430/src/runtime/composables/defineShortcuts.ts
 import { useActiveElement, useDebounceFn, useEventListener } from '@vueuse/core'
 import type { MaybeRef } from 'vue'
 import { computed, ref, toValue } from 'vue'
@@ -252,7 +252,8 @@ export function defineShortcuts(config: MaybeRef<ShortcutsConfig>, options: Shor
 
       // shift modifier is only checked in combination with alphabet keys and some extra keys
       // (shift with special characters would change the key)
-      if ((alphabetKey || shiftableKey) && e.shiftKey !== shortcut.shiftKey)
+      // also check shift if the shortcut explicitly requires it or if shift is pressed
+      if ((alphabetKey || shiftableKey || shortcut.shiftKey || e.shiftKey) && e.shiftKey !== shortcut.shiftKey)
         continue
 
       if (shortcut.enabled) {
