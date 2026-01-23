@@ -1,7 +1,11 @@
+// ref: https://github.com/nuxt/ui/blob/182af209fcf61043bd4a3bca264c1f6a65a06fa7/src/runtime/composables/useOverlay.ts
+
 import { createSharedComposable } from '@vueuse/core'
 import type { Component } from 'vue'
 import { markRaw, reactive, shallowReactive } from 'vue'
 import type { ComponentEmit, ComponentProps } from 'vue-component-type-helpers'
+
+type CloseEventArgTypeSimple<T> = T extends (event: 'close', arg_0: infer Arg, ...args: any[]) => void ? Arg : never
 
 /**
  * This is a workaround for a design limitation in TypeScript.
@@ -12,7 +16,7 @@ import type { ComponentEmit, ComponentProps } from 'vue-component-type-helpers'
  *
  * @see https://github.com/microsoft/TypeScript/issues/32164
  */
-type CloseEventArgType<T> = T extends {
+type CloseEventArgTypeComplex<T> = T extends {
   (event: 'close', arg_0: infer Arg, ...args: any[]): void
   (...args: any[]): void
   (...args: any[]): void
@@ -31,6 +35,8 @@ type CloseEventArgType<T> = T extends {
   (...args: any[]): void
   (...args: any[]): void
 } ? Arg : never
+
+type CloseEventArgType<T> = CloseEventArgTypeSimple<T> | CloseEventArgTypeComplex<T>
 
 export interface OverlayOptions<ComponentProps = Record<string, any>> {
   defaultOpen?: boolean
