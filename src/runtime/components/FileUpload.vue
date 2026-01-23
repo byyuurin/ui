@@ -237,7 +237,7 @@ function onUpdate(files: File[], reset = false) {
     }
   }
   else {
-    modelValue.value = files?.[0] as MaybeNull<(M extends true ? File[] : File)>
+    modelValue.value = (files?.[0] ?? null) as MaybeNull<(M extends true ? File[] : File)>
   }
 
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
