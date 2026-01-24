@@ -41,11 +41,8 @@ export function resolveColors(colors?: string[]) {
     : [...defaultColors]
 }
 
-function pickColorNames<Color extends keyof typeof colors>(colors: Color[]) {
-  return colors
-}
-
-export const neutralColors = pickColorNames(['slate', 'gray', 'zinc', 'neutral', 'stone', 'light', 'dark'])
+type ColorName = keyof typeof colors
+export const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'light', 'dark'] satisfies ColorName[]
 export type NeutralColor = typeof neutralColors[number]
 export type Color = keyof Omit<typeof colors, NeutralColor | 'black' | 'white'> | (string & {})
 

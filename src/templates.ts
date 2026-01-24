@@ -176,17 +176,16 @@ export const { merge: unoMerge } = await createUnoMerge(mergeConfigs([
   templates.push({
     filename: 'types/ui.d.ts',
     getContents() {
-      const appIcon = Object.keys(uiConfig.icons ?? {}).map((s) => `'${s}'`).join(' | ')
-      const appNeutralColor = neutralColors.map((s) => `'${s}'`).join(' | ')
+      const union = (values: string[]) => values.map((s) => `'${s}'`).join(' | ')
 
       return `import * as ui from '#build/ui'
 import type { UIConfig } from '@byyuurin/ui'
 import type { colors } from '@unocss/preset-wind4/colors'
 
-type NeutralColor = ${appNeutralColor}
+type NeutralColor = ${union(neutralColors)}
 type Color = keyof Omit<typeof colors, NeutralColor | 'black' | 'white'> | (string & {})
 
-type AppConfigIcons = Record<${appIcon} | (string & {}), string>
+type AppConfigIcons = Record<${union(Object.keys(uiConfig.icons ?? {}))} | (string & {}), string>
 
 export type AppConfigUI = {
   colors?: {
