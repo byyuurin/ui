@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { defineNuxtPlugin, useAppConfig, useHead, useNuxtApp } from '#imports'
 
 const themeShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
+const newline = '\n    '
 
 function getColor(color: keyof typeof colors, shade: typeof themeShades[number]) {
   if (color in colors && typeof colors[color] === 'object' && shade in colors[color])
@@ -13,7 +14,7 @@ function getColor(color: keyof typeof colors, shade: typeof themeShades[number])
 }
 
 function generateShades(key: string, value: string) {
-  return themeShades.map((shade) => `--ui-color-${key}-${shade}: var(--colors-${value === 'neutral' ? 'tw-neutral' : value}-${shade}, ${getColor(value as keyof typeof colors, shade)});`).join('\n  ')
+  return themeShades.map((shade) => `--ui-color-${key}-${shade}: var(--colors-${value === 'neutral' ? 'tw-neutral' : value}-${shade}, ${getColor(value as keyof typeof colors, shade)});`).join(newline)
 }
 
 function generateColor(key: string, shade: number) {
@@ -28,17 +29,18 @@ export default defineNuxtPlugin(() => {
     // eslint-disable-next-line unused-imports/no-unused-vars
     const { neutral, ...colors } = appConfig.ui.colors
 
-    return `:root {
-  ${Object.entries(appConfig.ui.colors).map(([key, value]) => generateShades(key, value)).join('\n  ')}
-}
-:root,
-.light {
-  ${Object.keys(colors).map((key) => generateColor(key, 500)).join('\n  ')}
-}
-.dark {
-  ${Object.keys(colors).map((key) => generateColor(key, 400)).join('\n  ')}
-}
-`
+    return `@layer theme {
+  :root, host {
+    ${Object.entries(appConfig.ui.colors).map(([key, value]) => generateShades(key, value)).join(newline)}
+  }
+  :root,
+  .light {
+    ${Object.keys(colors).map((key) => generateColor(key, 500)).join(newline)}
+  }
+  .dark {
+    ${Object.keys(colors).map((key) => generateColor(key, 400)).join(newline)}
+  }
+}`
   })
 
   // Head

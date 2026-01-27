@@ -3,7 +3,7 @@ import { defineConfig, presetWebFonts, presetWind4, transformerDirectives } from
 import uiConfig from './ui.config'
 
 export default defineConfig({
-  mergeSelectors: false,
+  outputToCssLayers: true,
   presets: [
     presetWind4(),
     createUnoPreset(uiConfig.uno),

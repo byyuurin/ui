@@ -56,6 +56,7 @@ import { createUnoPreset } from '@byyuurin/ui/unocss'
 import { defineConfig, presetWind4 } from 'unocss'
 
 export default defineConfig({
+  outputToCssLayers: true,
   presets: [
     presetWind4(),
     createUnoPreset({
@@ -64,6 +65,10 @@ export default defineConfig({
   ],
 })
 ```
+
+> [!NOTE]
+> This preset relies on CSS layers to ensure generated CSS variables
+> can be properly overridden. Make sure `outputToCssLayers` is enabled.
 
 > [!IMPORTANT]
 > The preset colors configuration must be the same as your nuxt configuration
@@ -160,7 +165,7 @@ export default defineConfig({
 })
 ```
 
-3. Add UnoCSS preset in your `uno.config.ts`:
+1. Add UnoCSS preset in your `uno.config.ts`:
 
 ```ts
 import { createUnoPreset } from '@byyuurin/ui/unocss' // <---
@@ -168,6 +173,7 @@ import { defineConfig, presetWebFonts, presetWind4 } from 'unocss'
 import uiConfig from './ui.config' // <---
 
 export default defineConfig({
+  outputToCssLayers: true, // <--
   presets: [
     presetWind4(),
     createUnoPreset(uiConfig.uno), // <---
@@ -179,6 +185,10 @@ export default defineConfig({
   ],
 })
 ```
+
+> [!NOTE]
+> This preset relies on CSS layers to ensure generated CSS variables
+> can be properly overridden. Make sure `outputToCssLayers` is enabled.
 
 4. Add the UI Vue plugin in your `src/main.ts`
 
