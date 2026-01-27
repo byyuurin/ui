@@ -3,7 +3,7 @@ import type { VariantProps } from '@byyuurin/ui-kit'
 import type { CheckboxGroupRootEmits, CheckboxGroupRootProps, CheckboxRootProps } from 'reka-ui'
 import theme from '#build/ui/checkbox-group'
 import type { CheckboxProps, ComponentBaseProps, ComponentUIProps, RuntimeAppConfig } from '../types'
-import type { AcceptableValue, GetItemKeys, GetModelValue, StaticSlot } from '../types/utils'
+import type { AcceptableValue, GetItemKeys, GetModelValue, GetModelValueEmits, StaticSlot } from '../types/utils'
 
 type ThemeVariants = VariantProps<typeof theme>
 
@@ -59,9 +59,9 @@ export interface CheckboxGroupProps<T extends CheckboxGroupItem[] = CheckboxGrou
   ui?: ComponentUIProps<typeof theme>
 }
 
-export type CheckboxGroupEmits<T extends CheckboxGroupItem[] = CheckboxGroupItem[]> = CheckboxGroupRootEmits<T[number]> & {
+export type CheckboxGroupEmits<T extends CheckboxGroupItem[] = CheckboxGroupItem[], VK extends GetItemKeys<T> = 'value'> = Omit<CheckboxGroupRootEmits, 'update:modelValue'> & {
   change: [event: Event]
-}
+} & GetModelValueEmits<T, VK, true>
 
 export interface CheckboxGroupSlots<T extends CheckboxGroupItem[] = CheckboxGroupItem[]> {
   legend: StaticSlot
@@ -87,7 +87,7 @@ const props = withDefaults(defineProps<CheckboxGroupProps<T, VK>>(), {
   orientation: 'vertical',
 })
 
-const emit = defineEmits<CheckboxGroupEmits<T>>()
+const emit = defineEmits<CheckboxGroupEmits<T, VK>>()
 const slots = defineSlots<CheckboxGroupSlots>()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emit)
