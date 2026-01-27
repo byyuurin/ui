@@ -5,9 +5,9 @@ export default ct({
   parts: {
     overlay: 'fixed inset-0 bg-elevated/75',
     content: 'fixed bg-default divide-y divide-default flex flex-col focus:outline-none',
-    header: 'flex flex-wrap items-center gap-1 p-4 sm:px-6',
-    body: 'flex-1 overflow-y-auto p-4 sm:p-6',
-    footer: 'flex items-center gap-1 p-4 sm:p-6',
+    header: 'flex flex-wrap items-center gap-1 p-4',
+    body: 'flex-1 overflow-y-auto p-4',
+    footer: 'flex items-center gap-1 p-4',
     title: 'flex-grow text-xl text-highlighted font-semibold',
     description: 'w-full text-muted text-sm',
     close: 'ms-auto',
