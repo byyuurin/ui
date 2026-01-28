@@ -234,13 +234,15 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
   trailingIcon: appConfig.ui.icons.chevronDown,
 })))
 
+const size = computed(() => fieldGroupSize.value || formFieldSize.value)
+
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.select))
 
   return styler({
     ...pick(props, ['variant', 'loading']),
     color: color.value,
-    size: fieldGroupSize.value || formFieldSize.value,
+    size: size.value,
     highlight: highlight.value,
     leading: isLeading.value || !!props.avatar || !!slots.leading,
     trailing: isTrailing.value || !!slots.trailing,
@@ -485,6 +487,7 @@ defineExpose({
               <Button
                 as="span"
                 :icon="props.clearIcon || appConfig.ui.icons.close"
+                :size="size"
                 variant="link"
                 color="neutral"
                 tabindex="-1"
@@ -509,7 +512,7 @@ defineExpose({
             <Input
               autofocus
               autocomplete="off"
-              :size="props.size"
+              :size="size"
               v-bind="searchInputProps"
               data-part="input"
               :class="ui.input({ class: props.ui?.input })"

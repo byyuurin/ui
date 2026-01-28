@@ -73,68 +73,68 @@ function onSubmit(event: FormSubmitEvent<typeof state>) {
     description="A form component with built-in validation and submission handling."
     :controls="controls"
   >
-    <div class="w-full">
-      <UForm
-        ref="formRef"
-        class="grid grid-cols-3 gap-4"
-        v-bind="attrs"
-        :schema="schema"
-        :state="state"
-        @submit="onSubmit"
-      >
-        <UFormField label="Input" name="input">
-          <UInput v-model="state.input" class="w-full" />
-        </UFormField>
+    <UForm
+      ref="formRef"
+      class="grid xl:cols-3 gap-4"
+      v-bind="attrs"
+      :schema="schema"
+      :state="state"
+      @submit="onSubmit"
+    >
+      <UFormField label="Input" name="input">
+        <UInput v-model="state.input" class="w-full" />
+      </UFormField>
 
-        <UFormField label="Input Number" name="inputNumber">
-          <UInputNumber v-model="state.inputNumber" class="w-full" />
-        </UFormField>
+      <UFormField label="Input Number" name="inputNumber">
+        <UInputNumber v-model="state.inputNumber" class="w-full" />
+      </UFormField>
 
-        <UFormField label="Input Tags" name="inputTags">
-          <UInputTags v-model="state.inputTags" class="w-full" />
-        </UFormField>
+      <UFormField label="Input Tags" name="inputTags">
+        <UInputTags v-model="state.inputTags" class="w-full" />
+      </UFormField>
 
-        <UFormField label="Select" name="select">
-          <USelect v-model="state.select" class="w-full" :items="items" />
-        </UFormField>
+      <UFormField label="Select" name="select">
+        <USelect v-model="state.select" class="w-full" :items="items" />
+      </UFormField>
 
-        <UFormField label="Select (Multiple)" name="selectMultiple">
-          <USelect v-model="state.selectMultiple" class="w-full" :items="items" multiple />
-        </UFormField>
+      <UFormField label="Select (Multiple)" name="selectMultiple">
+        <USelect v-model="state.selectMultiple" class="w-full" :items="items" multiple />
+      </UFormField>
 
-        <UFormField label="Textarea" name="textarea">
-          <UTextarea v-model="state.textarea" class="w-full" />
-        </UFormField>
+      <UFormField label="Textarea" name="textarea">
+        <UTextarea v-model="state.textarea" class="w-full" />
+      </UFormField>
 
-        <UFormField label="Switch" name="switch">
-          <USwitch v-model="state.switch" label="Switch me" />
-        </UFormField>
+      <UFormField label="Switch" name="switch">
+        <USwitch v-model="state.switch" label="Switch me" />
+      </UFormField>
 
-        <UFormField label="Checkbox" name="checkbox">
-          <UCheckbox v-model="state.checkbox" label="Check me" />
-        </UFormField>
+      <UFormField label="Checkbox" name="checkbox">
+        <UCheckbox v-model="state.checkbox" label="Check me" />
+      </UFormField>
 
-        <UFormField label="Slider" name="slider">
-          <USlider v-model="state.slider" />
-        </UFormField>
+      <UFormField label="Slider" name="slider">
+        <USlider v-model="state.slider" />
+      </UFormField>
 
-        <UFormField label="Checkbox Group" name="checkboxGroup">
-          <UCheckboxGroup v-model="state.checkboxGroup" :items="items" />
-        </UFormField>
+      <UFormField label="Checkbox Group" name="checkboxGroup">
+        <UCheckboxGroup v-model="state.checkboxGroup" :items="items" />
+      </UFormField>
 
-        <UFormField label="Radio Group" name="radioGroup">
-          <URadioGroup v-model="state.radioGroup" :items="items" />
-        </UFormField>
+      <UFormField label="Radio Group" name="radioGroup">
+        <URadioGroup v-model="state.radioGroup" :items="items" />
+      </UFormField>
 
-        <UFormField label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">
-          <UPinInput v-model="state.pin" />
-        </UFormField>
+      <UFormField label="Pin Input" name="pin" :error-pattern="/(pin)\..*/">
+        <UPinInput v-model="state.pin" />
+      </UFormField>
 
-        <div class="grid-col-span-3 flex gap-2 items-start">
-          <UButton type="submit" label="Submit" />
-          <UButton variant="outline" label="Clear" @click="formRef?.clear()" />
-        </div>
-      </UForm>
-    </div>
+      <div class="xl:grid-col-span-3"></div>
+
+      <div class="flex gap-2 items-start">
+        <UButton class="flex-grow justify-center" type="submit" label="Submit" />
+        <UButton class="flex-grow justify-center" variant="outline" label="Clear" @click="formRef?.clear()" />
+      </div>
+    </UForm>
   </ExampleView>
 </template>

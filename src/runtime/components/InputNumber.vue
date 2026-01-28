@@ -105,6 +105,8 @@ const { t } = useLocale()
 const { id, name, size: formFieldSize, color, highlight, disabled, ariaAttrs, emitFormBlur, emitFormFocus, emitFormInput, emitFormChange } = useFormField<InputNumberProps<T>>(props)
 const { size: fieldGroupSize, orientation } = useFieldGroup(props)
 
+const size = computed(() => fieldGroupSize.value || formFieldSize.value)
+
 const appConfig = useAppConfig() as RuntimeAppConfig
 const ui = computed(() => {
   const styler = cv(merge(theme, appConfig.ui.inputNumber))
@@ -112,7 +114,7 @@ const ui = computed(() => {
   return styler({
     ...pick(props, ['variant', 'orientation', 'disabled']),
     color: color.value,
-    size: fieldGroupSize.value || formFieldSize.value,
+    size: size.value,
     highlight: highlight.value,
     fieldGroup: orientation.value,
     increment: props.orientation === 'vertical' ? (!!props.increment || !!props.decrement) : !!props.increment,
@@ -179,7 +181,7 @@ defineExpose({
         <slot name="increment">
           <Button
             :icon="incrementIcon"
-            :size="props.size"
+            :size="size"
             :color="color"
             variant="link"
             :aria-label="t('inputNumber.increment')"
@@ -194,7 +196,7 @@ defineExpose({
         <slot name="decrement">
           <Button
             :icon="decrementIcon"
-            :size="props.size"
+            :size="size"
             :color="color"
             variant="link"
             :aria-label="t('inputNumber.decrement')"
